@@ -107,6 +107,7 @@ button:hover {
     padding: 20px;
     position: relative;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .left__footer {
@@ -233,6 +234,7 @@ button:hover {
 
 .home__form {
     margin-bottom: 10px;
+    position: relative;
 }
 
 .home__library {
@@ -244,7 +246,7 @@ button:hover {
     width: 25px;
     height: 25px;
     background-image: url(img/pencil.png);
-    top: 20px;
+    top: 5px;
     right: 20px;
     border-radius: 0;
 }
@@ -327,8 +329,8 @@ button:hover {
 .list__category {
     position: relative;
     display: block;
-    width: 9px;
-    height: 9px;
+    width: 7px;
+    height: 7px;
     margin-top: -3px;
     border-radius: 50%;
 }
@@ -377,4 +379,93 @@ button:hover {
     background-color: #2b363e;
     width: 8px;
     height: 8px;
+}
+
+.home__content {
+    overflow-y: scroll;
+    height: calc(100% - 50px);
+}
+
+/* LECTURE */
+
+/* Côté entretien */
+
+.interview__content {
+}
+
+.interview__content p, .interview__context {
+    margin-left: 25px;
+    display: inline-block;
+    width: calc(100% - 50px);
+}
+
+.interview__context {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+.interview__content span {
+    width: 15px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.interview__context, .question__content, .answer__content {
+    border-bottom: solid 1px grey;
+    padding-bottom: 12px;
+}
+
+.question__content {
+    font-family: 'Source-SemiBold';
+}
+
+.answer__content {
+    font-family: 'Source-Light';
+}
+
+.interview__context {
+    font-family: 'Source-LightItalic';
+}
+
+/* Côté menu */
+
+.interview__data, .interview__subdata {
+    font-size: 1.2em;
+    margin: 5px;
+}
+
+.interview__subdata {
+    padding-left: 15px;
+}
+
+.interview__data span {
+    margin-right: 3px;
+}
+
+.interview__annotation {
+    width: calc(100% - 40px);
+    height: fit-content;
+    position: absolute;
+    background-color: rgba(255,255,255,0.1);
+    bottom: 20px;
+    padding: 15px;
+    box-sizing: border-box;
+    border: solid 1px white;
+    font-family: 'Source-LightItalic';
+}
+
+.read__tools {
+    position: absolute;
+    width: 20px;
+    height: 80px;
+    top: 30px;
+    right: 20px;
+}
+
+.read__tools button {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 10px;
+    border-radius: 0;
 }

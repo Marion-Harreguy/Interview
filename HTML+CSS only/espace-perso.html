@@ -27,80 +27,85 @@
     </header>
 
     <main class="main row">
-        <div class="left col-12 col-md-5 col-lg-4 col-xl-3">
+        <div class="left col-12 col-md-5 col-lg-4 col-xl-4">
             <aside class="left__menu left__menu--home">
                 <h1 class="home__name">Name Name</h1>
-                <form class="home__form">
-                    <input class="home__form__input" type="text" name="city" value="Grenoble" placeholder="Ville">
-                    <input class="home__form__input" type="text" name="structure" value="Université Grenoble Alpes" placeholder="Structure">
-                    <button class="home__form__button" type="submit"></button>
-                </form>
-                <div class="home__library">
-                    <h1 class="library__title">Ma bibliothèque</h1>
-                    <select class="library__order">
-                        <option value="alphabet" selected>Alphabétique</option>
-                        <option value="chronologique" selected>Chronologique</option>
-                        <option value="tag" selected>Tag</option>
-                    </select>
+                <div class="home__content">
+                    <form class="home__form">
+                        <button class="home__form__button" type="submit"></button>
+                        <input class="home__form__input" type="text" name="city" value="Grenoble" placeholder="Ville">
+                        <input class="home__form__input" type="text" name="structure" value="Université Grenoble Alpes" placeholder="Structure">
+                        <!-- Lors de la modification des infos, display cet input :
+                            <input class="home__form__input" type="text" name="status" value="Professeur de sociologie" placeholder="Statut"> 
+                        -->
+                    </form>
+                    <div class="home__library">
+                        <h1 class="library__title">Ma bibliothèque</h1>
+                        <select class="library__order">
+                            <option value="alphabet" selected>Alphabétique</option>
+                            <option value="chronologique" selected>Chronologique</option>
+                            <option value="tag" selected>Tag</option>
+                        </select>
 
-                    <h2 class="library__section">Mes entretiens en cours <button type="button"></button></h2>
+                        <h2 class="library__section">Mes entretiens en cours <button type="button"></button></h2>
 
-                    <div class="section__list">
-                        <div class="list__interview">
-                            <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
-                            <div class="list__interview__categories">
-                                <span class="list__category list__category--red"></span>
-                                <span class="list__category list__category--blue"></span>
-                                <span class="list__category list__category--green"></span>
-                                <span class="list__category list__category--orange"></span>
+                        <div class="section__list">
+                            <div class="list__interview">
+                                <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
+                                <div class="list__interview__categories">
+                                    <span class="list__category list__category--red"></span>
+                                    <span class="list__category list__category--blue"></span>
+                                    <span class="list__category list__category--green"></span>
+                                    <span class="list__category list__category--orange"></span>
+                                </div>
+                            </div>
+                            <div class="list__interview">
+                                <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
+                                <div class="list__interview__categories">
+                                    <span class="list__category list__category--blue"></span>
+                                </div>
+                            </div>
+                            <div class="list__interview">
+                                <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
+                                <div class="list__interview__categories">
+                                    <span class="list__category list__category--green"></span>
+                                    <span class="list__category list__category--orange"></span>
+                                </div>
+                            </div>
+                            <div class="list__interview">
+                                <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
+                                <div class="list__interview__categories">
+                                    <span class="list__category list__category--red"></span>
+                                    <span class="list__category list__category--green"></span>
+                                    <span class="list__category list__category--orange"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="list__interview">
-                            <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
-                            <div class="list__interview__categories">
-                                <span class="list__category list__category--blue"></span>
-                            </div>
-                        </div>
-                        <div class="list__interview">
-                            <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
-                            <div class="list__interview__categories">
-                                <span class="list__category list__category--green"></span>
-                                <span class="list__category list__category--orange"></span>
-                            </div>
-                        </div>
-                        <div class="list__interview">
-                            <h3 class="list__interview__title">Jean-Daniel Feket — La visualisation des données</h3>
-                            <div class="list__interview__categories">
-                                <span class="list__category list__category--red"></span>
-                                <span class="list__category list__category--green"></span>
-                                <span class="list__category list__category--orange"></span>
-                            </div>
-                        </div>
+
+                        <h2 class="library__section">Mes entretiens publiés</h2>
+                        <h2 class="library__section">Mes entretiens enregistrés</h2>
+                        <h2 class="library__section">Mes recherches enregistrées</h2>
                     </div>
 
-                    <h2 class="library__section">Mes entretiens publiés</h2>
-                    <h2 class="library__section">Mes entretiens enregistrés</h2>
-                    <h2 class="library__section">Mes recherches enregistrées</h2>
-                </div>
-
-                <div class="home__categories">
-                    <h1 class="categories__title">Mes catégories</h1>
-                    <div class="categories__list">
-                        <div class="home__category">
-                            <input class="category-button category-button--red" type="radio">
-                            <label>Mémoire</label>
-                        </div>
-                        <div class="home__category">
-                            <input class="category-button category-button--blue" type="radio">
-                            <label>DNSEP</label>
-                        </div>
-                        <div class="home__category">
-                            <input class="category-button category-button--orange" type="radio">
-                            <label>Article ESAD</label>
-                        </div>
-                        <div class="home__category home__category--add">
-                            <input class="category-button category-button--add" type="radio">
-                            <input class="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie">
+                    <div class="home__categories">
+                        <h1 class="categories__title">Mes catégories</h1>
+                        <div class="categories__list">
+                            <div class="home__category">
+                                <input class="category-button category-button--red" type="radio">
+                                <label>Mémoire</label>
+                            </div>
+                            <div class="home__category">
+                                <input class="category-button category-button--blue" type="radio">
+                                <label>DNSEP</label>
+                            </div>
+                            <div class="home__category">
+                                <input class="category-button category-button--orange" type="radio">
+                                <label>Article ESAD</label>
+                            </div>
+                            <div class="home__category home__category--add">
+                                <input class="category-button category-button--add" type="radio">
+                                <input class="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,7 +116,7 @@
             </footer>
         </div>
 
-        <div class="right col-12 col-md-7 col-lg-8 col-xl-9">
+        <div class="right col-12 col-md-7 col-lg-8 col-xl-8">
             <div class="right__presentation">
             </div>
         </div>
