@@ -12,6 +12,41 @@ body {
     font-family: 'Source-Light';
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* Pour contrer bootstrap */
+
+input, input:-internal-autofill-selected, input:focus, input:active {
+    outline: none !important;
+    border: none !important;
+    border-bottom: solid 1px lightgrey !important;
+    background-color: #2b363e !important;
+    color: white !important;
+    font-size: 1em !important;
+    font-family: 'Source-Light' !important;
+}
+
+button, button:focus, button:active {
+    background-color: transparent;
+    border: solid 1px white;
+    border-radius: 20px;
+    color: white;
+    outline: none;
+}
+
+button:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+
 /* HEADER */
 
 .header {
@@ -38,7 +73,6 @@ body {
 
 .nav__link a {
     color: white;
-    text-decoration: none;
     text-transform: uppercase;
     padding: 0 3px;
 }
@@ -62,6 +96,7 @@ body {
 .left {
     padding: 20px;
     box-sizing: border-box;
+    height: 100%;
 }
 
 .left__menu {
@@ -69,6 +104,9 @@ body {
     width: 100%;
     border: solid 1px white;
     border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    overflow-y: scroll;
 }
 
 .left__footer {
@@ -79,12 +117,15 @@ body {
 
 .left__footer a {
     opacity: 0.4;
-    text-decoration: none;
-    color: white;
 }
 
 .left__footer a:hover {
     opacity: 1;
+}
+
+.left__menu h1 {
+    font-family: 'Source-SemiBold';
+    font-size: 1.3em;
 }
 
 
@@ -93,6 +134,9 @@ body {
 .right {
     height: 100%;
     background-color: rgba(255,255,255,0.1);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 15px;
 }
 
 /* FONTS */
@@ -130,4 +174,207 @@ body {
 @font-face {
     font-family: 'Source-SemiBold';
     src: url(fonts/SourceSansPro-Semibold.otf);
+}
+
+/* LOGIN */
+
+.login__nav {
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    text-align: right;
+}
+
+.login__nav a {
+    display: block;
+    font-size: 0.8em;
+    line-height: 1.3em;
+    width: 100%;
+    opacity: 0.6;
+}
+
+.login__nav a:hover {
+    opacity: 1;
+}
+
+.login__form {
+    margin-top: 25px;
+}
+
+.login__form__input {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.login__form__button {
+    width: 80px;
+    margin-top: 35px;
+    margin-left: calc(50% - 40px);
+}
+
+.right__presentation {
+    margin-top: 15px;
+    font-size: 1.2em;
+}
+
+.presentation__title {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.presentation__img {
+    width: 35%;
+    display: inline-block;
+    margin: 0 15px 15px 0;
+}
+
+/* HOME */
+
+.home__form {
+    margin-bottom: 10px;
+}
+
+.home__library {
+    position: relative;
+}
+
+.home__form__button {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url(img/pencil.png);
+    top: 20px;
+    right: 20px;
+    border-radius: 0;
+}
+
+.home__form__input, .home__name {
+    line-height: 1.3em;
+}
+
+.home__form__input {
+    width: 100%;
+    font-size: 1.3em !important;
+    margin-top: 0;
+    border-bottom: none !important;
+}
+
+.home__library h1, .home__library h2, .home__categories h1 {
+    font-family: 'Source-SemiBold';
+    font-size: 1.3em;
+    margin-top: 20px;
+}
+
+.home__library h1, .home__categories h1 {
+    text-transform: uppercase;
+}
+
+.home__library h2 {
+    border-bottom: solid 1px white;
+    padding-bottom: 5px;
+    width: 100%;
+    position: relative;
+    margin-top: 10px;
+}
+
+.home__library h2 button {
+    position: absolute;
+    right: 2px;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    bottom: 7px;
+}
+
+.home__library h2 button:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+
+.library__order, .library__order:focus {
+    position: absolute;
+    outline: none;
+    top: 0;
+    right: 0;
+    border: solid 1px white;
+    border-radius: 20px !important;
+    background-color: transparent;
+    color: white;
+    text-align: center !important;
+    width: 90px;
+    font-size: 0.9em;
+    margin-top: 3px;
+}
+
+.list__interview {
+    position: relative;
+    border-bottom: solid 0.3px grey;
+    margin-top: 7px;
+}
+
+.list__interview__title {
+    font-size: 1em;
+    width: calc(100% - 25px);
+}
+.list__interview__categories {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    width: 15px;
+    height: fit-content;
+}
+
+.list__category {
+    position: relative;
+    display: block;
+    width: 9px;
+    height: 9px;
+    margin-top: -3px;
+    border-radius: 50%;
+}
+
+.list__category--red, .category-span--red {
+    background-color: fuchsia;
+}
+
+.list__category--blue, .category-span--blue {
+    background-color: skyblue;
+}
+
+.list__category--orange, .category-span--orange {
+    background-color: orange;
+}
+
+.list__category--green, .category-span--green {
+    background-color: green;
+}
+
+.home__categories {
+    position: relative;
+    margin-top: 40px;
+}
+
+.home__category {
+    position: relative;
+}
+
+.home__category label, .new-category-name {
+    vertical-align: top;
+    position: absolute;
+    left: 25px;
+    top: -2.5px;
+}
+
+/* TODO : Colorer les radio */
+
+.category-button, [type="radio"], .category-button:focus, .category-button:active, .category-button:-internal-autofill-selected {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.category-button:after {
+    background-color: #2b363e;
+    width: 8px;
+    height: 8px;
 }
