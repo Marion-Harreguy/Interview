@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- NOTRE STYLE -->
+    <link rel="stylesheet" href="./style.css">
+    <title>WRITE</title>
+</head>
+<body>
+    <header class="header">
+        <nav class="header__nav">
+            <ul>
+                <li class="nav__link">
+                    <a href="/">Inter.view</a>
+                </li>
+                <li class="nav__link">
+                    <a href="/search">Rechercher</a>
+                </li>
+                <li class="nav__link">
+                    <a href="/">Mon Espace</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main row">
+        <div class="left col-12 col-md-5 col-lg-4 col-xl-4">
+            <aside class="left__menu left__menu--top left__menu--top--closed">
+                <h1>Name Name </h1>
+            </aside>
+            <aside class="left__menu left__menu--bottom left__menu--write">
+                <div class="write__tools">
+                    <button class="tools__close" type="button"></button>
+                    <button class="tools__publish" type="button"></button>
+                    <button class="tools__delete" type="button"></button>
+                </div>
+
+                <div class="interview__meta">
+                    <form class="write__form">
+                        <input class="write__form__input write__form__input--title" type="text" name="title" placeholder="Titre">
+                        <input class="write__form__input" type="text" name="year" placeholder="Année">
+                        <input class="write__form__input" type="text" name="languages" placeholder="Langue(s)">
+                        <input class="write__form__input" type="text" name="author" placeholder="Auteur">
+                        <input class="write__form__input" type="text" name="interviewed" placeholder="Enquêté">
+                        <input class="write__form__input" type="text" name="interviewed-town" placeholder="Ville">
+                        <input class="write__form__input" type="text" name="interviewed-structure" placeholder="Structure">
+                        <input class="write__form__input" type="text" name="interviewed-status" placeholder="Statut">
+                        <button class="write__form__button" type="radio" name="royalty-free"></button>
+                        <label class="write__form__input write__form__input--royalty" for="royalty-free">Libre de droit</label>
+                    </form> 
+
+                    <div class="write__categories">
+                        <div class="categories__list">
+                            <div class="write__category">
+                                <input class="category-button category-button--red" type="radio">
+                                <label>Mémoire</label>
+                            </div>
+                            <div class="write__category">
+                                <input class="category-button category-button--blue" type="radio">
+                                <label>DNSEP</label>
+                            </div>
+                            <div class="write__category">
+                                <input class="category-button category-button--orange" type="radio">
+                                <label>Article ESAD</label>
+                            </div>
+                            <div class="write__category write__category--add">
+                                <input class="category-button category-button--add" type="radio">
+                                <input class="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+
+                <!-- <div class="interview__annotation">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis exercitationem delectus nemo, quam magnam non facilis expedita rerum maxime iste eius consectetur odio totam repellat, debitis excepturi, assumenda quo vitae!</p>
+                </div> -->
+            </aside>
+
+            <footer class="left__footer">
+                <a class="footer__logout" href="/logout">Déconnexion</a>
+                <span>&bull;</span>
+                <a class="footer__legal-mentions" href="/legal">Mentions légales</a>
+            </footer>
+        </div>
+
+        <div class="right col-12 col-md-7 col-lg-8 col-xl-8">
+            <div class="interview__add">
+                <button class="interview__add__button interview__add__button--context">Contexte</button>
+                <button class="interview__add__button interview__add__button--question">Question</button>
+                <button class="interview__add__button interview__add__button--answer">Réponse</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- scripts -->
+
+    <!-- BOOTSTRAP -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>
