@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +52,34 @@ class User
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="user")
+     */
+    private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Interview", mappedBy="user")
+     */
+    private $interviews;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Interview", mappedBy="favorite")
+     */
+    private $favorite;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Structure", mappedBy="users")
+     */
+    private $structures;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->interviews = new ArrayCollection();
+        $this->favorite = new ArrayCollection();
+        $this->structures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +166,124 @@ class User
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getUser() === $this) {
+                $category->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Interview[]
+     */
+    public function getInterviews(): Collection
+    {
+        return $this->interviews;
+    }
+
+    public function addInterview(Interview $interview): self
+    {
+        if (!$this->interviews->contains($interview)) {
+            $this->interviews[] = $interview;
+            $interview->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInterview(Interview $interview): self
+    {
+        if ($this->interviews->contains($interview)) {
+            $this->interviews->removeElement($interview);
+            // set the owning side to null (unless already changed)
+            if ($interview->getUser() === $this) {
+                $interview->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Interview[]
+     */
+    public function getFavorite(): Collection
+    {
+        return $this->favorite;
+    }
+
+    public function addFavorite(Interview $favorite): self
+    {
+        if (!$this->favorite->contains($favorite)) {
+            $this->favorite[] = $favorite;
+            $favorite->addFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Interview $favorite): self
+    {
+        if ($this->favorite->contains($favorite)) {
+            $this->favorite->removeElement($favorite);
+            $favorite->removeFavorite($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Structure[]
+     */
+    public function getStructures(): Collection
+    {
+        return $this->structures;
+    }
+
+    public function addStructure(Structure $structure): self
+    {
+        if (!$this->structures->contains($structure)) {
+            $this->structures[] = $structure;
+            $structure->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStructure(Structure $structure): self
+    {
+        if ($this->structures->contains($structure)) {
+            $this->structures->removeElement($structure);
+            $structure->removeUser($this);
+        }
 
         return $this;
     }

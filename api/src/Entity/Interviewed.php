@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +52,22 @@ class Interviewed
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Interview", mappedBy="interviewed")
+     */
+    private $interviews;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Structure", inversedBy="intervieweds")
+     */
+    private $structure;
+
+    public function __construct()
+    {
+        $this->interviews = new ArrayCollection();
+        $this->structure = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +154,60 @@ class Interviewed
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Interview[]
+     */
+    public function getInterviews(): Collection
+    {
+        return $this->interviews;
+    }
+
+    public function addInterview(Interview $interview): self
+    {
+        if (!$this->interviews->contains($interview)) {
+            $this->interviews[] = $interview;
+            $interview->addInterviewed($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInterview(Interview $interview): self
+    {
+        if ($this->interviews->contains($interview)) {
+            $this->interviews->removeElement($interview);
+            $interview->removeInterviewed($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Structure[]
+     */
+    public function getStructure(): Collection
+    {
+        return $this->structure;
+    }
+
+    public function addStructure(Structure $structure): self
+    {
+        if (!$this->structure->contains($structure)) {
+            $this->structure[] = $structure;
+        }
+
+        return $this;
+    }
+
+    public function removeStructure(Structure $structure): self
+    {
+        if ($this->structure->contains($structure)) {
+            $this->structure->removeElement($structure);
+        }
 
         return $this;
     }
