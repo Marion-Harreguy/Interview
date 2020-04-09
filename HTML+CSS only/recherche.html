@@ -1,108 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- NOTRE STYLE -->
-    <link rel="stylesheet" href="./style.css">
-    <title>WRITE</title>
-</head>
-<body>
-    <header class="header">
-        <nav class="header__nav">
-            <ul>
-                <li class="nav__link">
-                    <a href="/">Inter.view</a>
-                </li>
-                <li class="nav__link">
-                    <a href="/search">Rechercher</a>
-                </li>
-                <li class="nav__link">
-                    <a href="/">Mon Espace</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
 
-    <main class="main row">
-        <div class="left col-12 col-md-5 col-lg-4 col-xl-4">
-            <aside class="left__menu left__menu--top left__menu--top--closed">
-                <h1>Name Name </h1>
-            </aside>
-            <aside class="left__menu left__menu--bottom left__menu--write">
-                <div class="write__tools">
-                    <button class="tools__close" type="button"></button>
-                    <button class="tools__publish" type="button"></button>
-                    <button class="tools__delete" type="button"></button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- BOOTSTRAP -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- FORKAWESOME -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
+        <!-- NOTRE STYLE -->
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./style2.css">
+        <title>SEARCH</title>
+    </head>
+
+    <body>
+        <header class="header">
+            <nav class="header__nav">
+                <ul>
+                    <li class="nav__link">
+                        <a href="/">Inter.view</a>
+                    </li>
+                    <li class="nav__link">
+                        <a href="/search">Rechercher</a>
+                    </li>
+                    <li class="nav__link">
+                        <a href="/">Mon Espace</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main row">
+            <div class="left col-12 col-md-5 col-lg-4 col-xl-4">
+                <aside class="left__menu left__menu left__menu--search">
+                    <div class="interview__meta">
+                        <h1>Recherche </h1>
+                        <form class="search__form">
+                            <div class="search__form--overflow">
+                                <input class="search__form__input search__form__input--title" type="text" name="title"
+                                    placeholder="Titre">
+                                <input class="search__form__input" type="text" name="place" placeholder="Lieu">
+                                <input class="search__form__input" type="text" name="languages" placeholder="Langue(s)">
+                                <input class="search__form__input" type="text" name="author" placeholder="Auteur">
+                                <input class="search__form__input" type="text" name="interviewed" placeholder="Enquêté">
+                                <input class="search__form__input" type="text" name="interviewed-structure"
+                                    placeholder="Structure(s)">
+                                <input class="search__form__input" type="text" name="tags" placeholder="Tags">
+
+                                <div class="search__form__date">
+                                    <h3>Dates</h3>
+                                    <div class="date__timeline">
+                                        <!-- une ligne -->
+                                        <div class="timeline__line"></div>
+                                        <div class="timeline__cursor timeline__cursor--beginning">
+                                            <div class="timeline__cursor__dot"></div>
+                                            <div class="timeline__cursor__date">1968</div>
+                                            <link rel="stylesheet" href="./style.css">
+                                        </div>
+                                        <div class="timeline__cursor timeline__cursor--end">
+                                            <div class="timeline__cursor__dot"></div>
+                                            <div class="timeline__cursor__date">2010</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <button class="search__form__button--royalty" type="radio" name="royalty-free"></button>
+                                <label class="search__form__input search__form__input--royalty" for="royalty-free">Libres
+                                    de droit</label>
+                            </div>
+                            <button class="search__form__button--submit" type="submit">Rechercher</button>
+                        </form>
+                    </div>
+
+
+                    <!-- <div class="interview__annotation">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis exercitationem delectus nemo, quam magnam non facilis expedita rerum maxime iste eius consectetur odio totam repellat, debitis excepturi, assumenda quo vitae!</p>
+                </div> -->
+                </aside>
+
+                <footer class="left__footer">
+                    <a class="footer__logout" href="/logout">Déconnexion</a>
+                    <span>&bull;</span>
+                    <a class="footer__legal-mentions" href="/legal">Mentions légales</a>
+                </footer>
+            </div>
+
+            <div class="right col-12 col-md-7 col-lg-8 col-xl-8">
+                <div class="research__tools">
+                    <h1 class="research__tools__title">Résultats</h1>
+                    <button class="research__tools__save glyphicon fa fa-bookmark" type="button"></button>
+                    <input class="research__tools__save--title">
+                    <div class="research__tools__categories">
+                        <input class="category-button category-button--red" type="radio">
+                        <input class="category-button category-button--green" type="radio">
+                        <input class="category-button category-button--blue" type="radio">
+                        <input class="category-button category-button--orange" type="radio">
+                    </div>
+                    <div class="research__tools__modes">
+                        <button class="research__tools__mode research__tools__mode--list fa fa-bars"></button>
+                        <button class="research__tools__mode research__tools__mode--map fa fa-globe-w"></button>
+                        <button class="research__tools__mode research__tools__mode--timeline fa fa-clock-o"></button>
+                    </div>
                 </div>
 
-                <div class="interview__meta">
-                    <form class="write__form">
-                        <input class="write__form__input write__form__input--title" type="text" name="title" placeholder="Titre">
-                        <input class="write__form__input" type="text" name="year" placeholder="Année">
-                        <input class="write__form__input" type="text" name="languages" placeholder="Langue(s)">
-                        <input class="write__form__input" type="text" name="author" placeholder="Auteur">
-                        <input class="write__form__input" type="text" name="interviewed" placeholder="Enquêté">
-                        <input class="write__form__input" type="text" name="interviewed-town" placeholder="Ville">
-                        <input class="write__form__input" type="text" name="interviewed-structure" placeholder="Structure">
-                        <input class="write__form__input" type="text" name="interviewed-status" placeholder="Statut">
-                        <button class="write__form__button" type="radio" name="royalty-free"></button>
-                        <label class="write__form__input write__form__input--royalty" for="royalty-free">Libre de droit</label>
-                    </form> 
+                <div class="research__results research__results--list">
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
 
-                    <div class="write__categories">
-                        <div class="categories__list">
-                            <div class="write__category">
-                                <input class="category-button category-button--red" type="radio">
-                                <label>Mémoire</label>
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+                    <div class="result-interview">
+                        <div class="result-interview__meta-list">
+                            <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                            <p class="result-interview__meta result-interview__meta--date">2008</p>
+                            <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                            <p class="result-interview__meta result-interview__meta--language">English</p>
+                            <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                            <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                            <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                University</p>
+                        </div>
+                        <div class="result-interview__tag-list">
+                            <p class="result-interview__tag">humanités</p>
+                            <p class="result-interview__tag">shs</p>
+                            <p class="result-interview__tag">design</p>
+                            <p class="result-interview__tag">collaboration</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="research__results research__results--map">
+                    <div class="result-map__map">
+
+                    </div>
+                    <div class="result-map__interview"></div>
+                </div>
+
+                <div class="research__results research__results--timeline">
+                    <div class="result-timeline__map">
+                        <div class="result-timeline__map__line__beginning">
+                            <div class="map__group__date">1910</div>
+                            <div class="map__group__cursor"></div>
+                        </div>
+                        <div class="result-timeline__map__line__end">
+                            <div class="map__group__date">2019</div>
+                            <div class="map__group__cursor"></div>
+                        </div>
+                        <div class="result-timeline__map__line"></div>
+                        <div class="result-timeline__map__group" style="left:100px">
+                            <div class="map__group__date">1910</div>
+                            <div class="map__group__cursor"></div>
+                            <div class="map__group__dot-list">
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
                             </div>
-                            <div class="write__category">
-                                <input class="category-button category-button--blue" type="radio">
-                                <label>DNSEP</label>
+                        </div>
+
+                        <div class="result-timeline__map__group" style="left:300px">
+                            <div class="map__group__date">1936</div>
+                            <div class="map__group__cursor"></div>
+                            <div class="map__group__dot-list">
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
                             </div>
-                            <div class="write__category">
-                                <input class="category-button category-button--orange" type="radio">
-                                <label>Article ESAD</label>
-                            </div>
-                            <div class="write__category write__category--add">
-                                <input class="category-button category-button--add" type="radio">
-                                <input class="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie">
+                        </div>
+
+                        <div class="result-timeline__map__group" style="left:400px">
+                            <div class="map__group__date">1982</div>
+                            <div class="map__group__cursor"></div>
+                            <div class="map__group__dot-list">
+                                <div class="map__group__dot"></div>
+                                <div class="map__group__dot"></div>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="result-timeline__interview">
+                        <div class="result-interview">
+                            <div class="result-interview__meta-list">
+                                <h4 class="result-interview__meta result-interview__meta--title">Titre</h4>
+                                <p class="result-interview__meta result-interview__meta--date">2008</p>
+                                <p class="result-interview__meta result-interview__meta--place">Philadelphia</p>
+                                <p class="result-interview__meta result-interview__meta--language">English</p>
+                                <p class="result-interview__meta result-interview__meta--author">Lissana Rousseau (a)</p>
+                                <p class="result-interview__meta result-interview__meta--interviewed">Nicolas Crove (e)</p>
+                                <p class="result-interview__meta result-interview__meta--structure">Massachussetts
+                                    University</p>
+                            </div>
+                            <div class="result-interview__tag-list">
+                                <p class="result-interview__tag">humanités</p>
+                                <p class="result-interview__tag">shs</p>
+                                <p class="result-interview__tag">design</p>
+                                <p class="result-interview__tag">collaboration</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-
-                <!-- <div class="interview__annotation">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis exercitationem delectus nemo, quam magnam non facilis expedita rerum maxime iste eius consectetur odio totam repellat, debitis excepturi, assumenda quo vitae!</p>
-                </div> -->
-            </aside>
-
-            <footer class="left__footer">
-                <a class="footer__logout" href="/logout">Déconnexion</a>
-                <span>&bull;</span>
-                <a class="footer__legal-mentions" href="/legal">Mentions légales</a>
-            </footer>
-        </div>
-
-        <div class="right col-12 col-md-7 col-lg-8 col-xl-8">
-            <div class="interview__add">
-                <button class="interview__add__button interview__add__button--context">Contexte</button>
-                <button class="interview__add__button interview__add__button--question">Question</button>
-                <button class="interview__add__button interview__add__button--answer">Réponse</button>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <!-- scripts -->
+        <!-- BOOTSTRAP -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 
-    <!-- BOOTSTRAP -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <!-- scripts -->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(".timeline__cursor").draggable({ axis: "x" });
+        </script>
 
-</body>
+    </body>
+
 </html>
