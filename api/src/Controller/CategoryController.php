@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/users/{id}/categories", name="category_")
  */
-class InterviewController extends AbstractController
+class CategoryController extends AbstractController
 {
     /**
      * TODO : définition des routes - annotations 
