@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="user_read", requirements={"id": "\d+"})
+     * @Route("/{id}", name="user_read", requirements={"id": "\d+"}, methods={"GET"})
      */
     public function read(User $user)
     {
@@ -48,7 +48,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="edit", requirements={"id": "\d+"})
+     * @Route("/{id}", name="edit", requirements={"id": "\d+"}, methods={"PUT", "PATCH"})
      */
     public function edit(User $user, Request $request)
     {
