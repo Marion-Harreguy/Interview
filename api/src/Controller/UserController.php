@@ -7,12 +7,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/api/users", name="user")
+ * @Route("/api/users", name="user_")
  */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="user_read", requirements={"id": "\d+"}, methods={"GET"})
+     * affiche un utilisateur
+     * 
+     * @Route("/{id}", name="read", requirements={"id": "\d+"}, methods={"GET"})
      */
     public function read(User $user)
     {
@@ -23,7 +25,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/", name="user_add", methods={"POST"})
+     * crée un nouvel utilisateur
+     * 
+     * @Route("/", name="add", methods={"POST"})
      */
     public function add(Request $request)
     {
@@ -48,6 +52,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * modifie un nouvel utilisateur
+     * 
      * @Route("/{id}", name="edit", requirements={"id": "\d+"}, methods={"PUT", "PATCH"})
      */
     public function edit(User $user, Request $request)
