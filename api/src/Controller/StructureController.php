@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
     /**
-     * @Route("api/structures", name="structure")
+     * @Route("/api/structures", name="structure-")
      */
 class StructureController extends AbstractController
 {
@@ -51,7 +51,7 @@ class StructureController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getManager()->flush();
-            
+
         }
 
         return $this->json([
