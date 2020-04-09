@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-     <!-- FORKAWESOME -->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
         
     <!-- NOTRE STYLE -->
     <link rel="stylesheet" href="./style.css">
@@ -17,7 +15,7 @@
         <nav class="header__nav">
             <ul>
                 <li class="nav__link">
-                    <a href="/">Inter.view</a>
+                    <a href="/"><h1>Inter.view</h1></a>
                 </li>
                 <li class="nav__link">
                     <a href="/search">Rechercher</a>
@@ -32,13 +30,13 @@
     <main class="main row">
         <div class="left col-12 col-md-5 col-lg-4 col-xl-4">
             <aside class="left__menu left__menu--top left__menu--top--closed">
-                <h1>Name Name </h1>
+                <h2>Name Name </h2>
             </aside>
             <aside class="left__menu left__menu--bottom left__menu--write">
                 <div class="write__tools">
-                    <button class="tools__close fa fa-times" type="button"></button>
-                    <button class="tools__publish fa fa-share-square-o" type="button"></button>
-                    <button class="tools__delete fa fa-trash" type="button"></button>
+                    <button class="tools__close" type="button"></button>
+                    <button class="tools__publish" type="button"></button>
+                    <button class="tools__delete" type="button"></button>
                 </div>
 
                 <div class="interview__meta">
@@ -51,26 +49,27 @@
                         <input class="write__form__input" type="text" name="interviewed-town" placeholder="Ville">
                         <input class="write__form__input" type="text" name="interviewed-structure" placeholder="Structure(s)">
                         <input class="write__form__input" type="text" name="interviewed-status" placeholder="Statut">
-                        <button class="write__form__button" type="radio" name="royalty-free"></button>
-                        <label class="write__form__input write__form__input--royalty" for="royalty-free">Libre de droit</label>
+                        <input class="write__form__input" type="text" name="interviewed-email" placeholder="Email de l'enquêté'">
+                        <button class="write__form__button" type="checkbox" name="royalty-free"></button>
+                        <label class="write__form__input write__form__input--royalty" for="royalty-free" id="royalty-free">Libre de droit</label>
                     </form> 
 
                     <div class="write__categories">
                         <div class="categories__list">
                             <div class="write__category">
-                                <input class="category-button category-button--red" type="radio">
-                                <label>Mémoire</label>
+                                <input class="category-button category-button--red" name="cat--memoire" type="checkbox" id="cat--memoire">
+                                <label for="cat--memoire">Mémoire</label>
                             </div>
                             <div class="write__category">
-                                <input class="category-button category-button--blue" type="radio">
-                                <label>DNSEP</label>
+                                <input class="category-button category-button--blue" name="cat--dnsep" type="checkbox" id="cat--dnsep">
+                                <label for="cat--dnsep">DNSEP</label>
                             </div>
                             <div class="write__category">
-                                <input class="category-button category-button--orange" type="radio">
-                                <label>Article ESAD</label>
+                                <input class="category-button category-button--orange" name="cat--esad" type="checkbox" id="cat--esad">
+                                <label for="cat--esad">Article ESAD</label>
                             </div>
                             <div class="write__category write__category--add">
-                                <input class="category-button category-button--add" type="radio">
+                                <button class="category-button category-button--add" type="button">
                                 <input class="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie">
                             </div>
                         </div>
