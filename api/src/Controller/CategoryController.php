@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/api/users/{id}/categories", name="category_")
+ * @Route("/api/users/{user_id}/categories", name="category_")
  */
 class CategoryController extends AbstractController
 {
