@@ -65,6 +65,7 @@ class Interviewed
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->interviews = new ArrayCollection();
         $this->structure = new ArrayCollection();
     }
