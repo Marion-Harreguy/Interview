@@ -86,6 +86,7 @@ class Interview
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->questions = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->interviewed = new ArrayCollection();

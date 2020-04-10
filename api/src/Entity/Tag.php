@@ -30,6 +30,7 @@ class Tag
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->interviews = new ArrayCollection();
     }
 
