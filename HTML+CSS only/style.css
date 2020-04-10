@@ -241,7 +241,7 @@ transform: rotate(-135deg);
 
 .nav__link a:hover {
     font-family: 'AGBHF';
-    padding: 0;
+    padding: 0px 0px;
 }
 
 
@@ -491,7 +491,7 @@ transform: rotate(-135deg);
     background-position: center;
 }
 
-.home__category--add {
+/* .home__category--add {
     height:15px;
     width:15px;
     margin-top: 2px;
@@ -502,7 +502,7 @@ transform: rotate(-135deg);
     background-position: center;
     border: solid 1px white;
     background-repeat: no-repeat;
-}
+} */
 
 .home__library h3 button:hover {
     background-color: rgba(255,255,255,0.3);
@@ -596,15 +596,21 @@ input[type="checkbox"]:checked.list__category--green + label::before, input[type
     background-color: #2b363e;
 }
 
-.search__form--overflow input[type="checkbox"]:checked + label::before {
-    box-shadow: inset 0px 0px 0px 3px white;
-    background-color: #2b363e;
+.write__form__button:checked + label::before, .search__form__button--royalty:checked + label::before {
+    box-shadow: inset 0px 0px 0px 4px #2b363e;
+    background-color: white;
 }
 
-.search__form--overflow input[type="checkbox"] + label::before {
+.write__form__button + label::before, .search__form__button--royalty + label::before{
     background-color: #2b363e;
     border: solid 1px white;
 }
+
+/* .write__form__button + label:focus, .search__form__button--royalty + label:focus{
+    margin-top:0;
+    top:0;
+    padding-top:0;
+} */
 
 /* box-shadow: inset 0px 0px 0px 3px #fff;
     background-color: #2b363e; */
@@ -631,7 +637,7 @@ TODO : Changer la background-image quand le placeholder est vide
 TEST ICI NE FONCTIONNE PAS
 */
 
-.write__category--add input:placeholder-shown > .category-button--add { 
+.new-category-name:placeholder-shown ~ .category-button--add { 
     background-image: url('icons/thick-plus.png');
 }
 
@@ -854,9 +860,11 @@ TEST ICI NE FONCTIONNE PAS
     font-family: 'Source-SemiBold' !important;
 }
 
+
 .write__form__input--royalty {
-    width: fit-content;
-    margin-left: 4px;
+    margin-left: 25px;
+    margin-top: -30px !important;
+    padding-top: 0;
 }
 
 
@@ -874,25 +882,14 @@ TEST ICI NE FONCTIONNE PAS
 .write__category label, .new-category-name, .new-category-name:focus {
     vertical-align: top;
     position: absolute;
-    left: 22px;
+    left: 25px;
     top: -5.5px;
     font-size: 1.2em;
 }
 
 .new-category-name, .new-category-name:focus {
-    margin-top: -3px;
+    margin-top: 0;
     width: 20vw;
-}
-
-.write__form__button, .write__form__button:focus, .write__form__button:active, .write__form__button:hover {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    padding: 0;
-}
-
-.write__form__button:active {
-    opacity: 1;
 }
 
 .interview__meta {
@@ -1061,11 +1058,11 @@ header {
     font-size: 1.2em;
 }
 
-.search__form__button--royalty {
+/* .search__form__button--royalty {
     width: 12px;
     height: 12px;
     padding: 0;
-}
+} */
 
 .search__form--overflow {
     width: 100%;
@@ -1088,10 +1085,14 @@ header {
     /* border-bottom: 0.2px solid lightgray !important; */
 }
 
+.search__form__input--royalty {
+    margin-left: 25px;
+}
+
 /* .search__form__input--title, .search__form__input--title:-internal-autofill-selected, .search__form__input--title:focus, .search__form__input--title:active {
     font-family: 'Source-SemiBold' !important;
 } */
-
+/* 
 .search__form__input--royalty {
     width: fit-content;
     margin-left: 4px;
@@ -1100,7 +1101,7 @@ header {
 .search__form__input--royalty {
     width: fit-content;
     margin-left: 4px;
-}
+} */
 
 
 /* MODE LISTE */
