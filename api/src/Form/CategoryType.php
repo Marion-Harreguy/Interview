@@ -13,10 +13,10 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('user')
-            ->add('interviews')
+            // ->add('createdAt')
+            // ->add('updatedAt')
+            // ->add('user')
+            // ->add('interviews')
         ;
     }
 
