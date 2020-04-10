@@ -10,3 +10,13 @@ App\Entity\Category:
     category_{1..30}:
         name: '<word()>'
         user: '@user*'
+
+App\Entity\Interviewed:
+    interviewed_{1..20}:
+       firstname: '<firstname()>'
+       lastname: '<lastname()>'
+       email: '<email()>'
+       job: '<jobTitle()>'
+       city: '<city()>'
+
+
