@@ -75,6 +75,7 @@ class User
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->categories = new ArrayCollection();
         $this->interviews = new ArrayCollection();
         $this->favorite = new ArrayCollection();

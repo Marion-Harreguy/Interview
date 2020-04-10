@@ -7,11 +7,14 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $em)
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        $loader = new InterviewDbNativeLoader();
 
-        $manager->flush();
+        $entities = $loader->loadFile(__DIR__ . '/fixtures.yaml')->getObjects();
+        foreach ($entities as $entity) {
+            $em->persist($entity);
+        };
+        $em->flush();
     }
 }
