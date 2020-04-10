@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="`user`")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -19,26 +21,31 @@ class User
     private $id;
 
     /**
+     * @var string user firstname
      * @ORM\Column(type="string", length=55)
      */
     private $firstname;
 
     /**
+     * @var string user lastname
      * @ORM\Column(type="string", length=55)
      */
     private $lastname;
 
     /**
+     * @var string user email to authentificate
      * @ORM\Column(type="string", length=200)
      */
     private $email;
 
     /**
+     * @var string hashed password
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
     /**
+     * @var text user biography
      * @ORM\Column(type="text", nullable=true)
      */
     private $biography;
@@ -75,6 +82,7 @@ class User
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->categories = new ArrayCollection();
         $this->interviews = new ArrayCollection();
         $this->favorite = new ArrayCollection();
@@ -122,9 +130,9 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): ?string   
     {
-        return $this->password;
+        return $this->password = $password;
     }
 
     public function setPassword(string $password): self
