@@ -9,7 +9,6 @@
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <!-- NOTRE STYLE -->
         <link rel="stylesheet" href="./style.css">
-        <link rel="stylesheet" href="./style2.css">
         <title>SEARCH</title>
     </head>
 
@@ -103,9 +102,9 @@
                         <label for="cat-memoire"></label>
                     </div>
                     <div class="research__tools__modes">
-                        <button class="research__tools__mode research__tools__mode--list"></button>
-                        <button class="research__tools__mode research__tools__mode--map"></button>
-                        <button class="research__tools__mode research__tools__mode--timeline"></button>
+                        <button onclick="show('list')" class="research__tools__mode research__tools__mode--list"></button>
+                        <button onclick="show('map')" class="research__tools__mode research__tools__mode--map"></button>
+                        <button onclick="show('timeline')" class="research__tools__mode research__tools__mode--timeline"></button>
                     </div>
                 </div>
 
@@ -298,7 +297,7 @@
                 </div>
 
                 <div class="research__results research__results--map">
-                    <div class="result-map__map">
+                    <div class="result-map__map" id="result-map__map">
 
                     </div>
                     <div class="result-map__interview"></div>
@@ -390,7 +389,13 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
             $(".timeline__cursor").draggable({ axis: "x" });
+
+            function show(mode){
+                $(".research__results").css('display','none');
+                $(".research__results--"+mode).css('display','block');
+            }
         </script>
+        <script src="index.js"></script>
 
     </body>
 

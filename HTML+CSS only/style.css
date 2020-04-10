@@ -101,6 +101,10 @@ input[type="checkbox"]:checked+label::before {
     background-color: #2b363e;
 }
 
+.header h1 {
+    font-size: 1.2em;
+}
+
 .header__nav ul{
     display: flex;
     justify-content: space-between;
@@ -277,8 +281,10 @@ input[type="checkbox"]:checked+label::before {
 }
 
 .right__presentation {
-    margin-top: 15px;
+    padding-top: 15px;
     font-size: 1.2em;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .presentation__title {
@@ -349,7 +355,7 @@ input[type="checkbox"]:checked+label::before {
 
 .library__new-interview {
     position: absolute;
-    right: 2px;
+    right: 5px;
     height: 15px;
     width: 15px;
     border-radius: 50%;
@@ -447,7 +453,7 @@ input[type="checkbox"]:checked+label::before {
     background-color: greenyellow;
 }
 
-input[type="checkbox"]:checked.category-span--red + label::before, input[type="checkbox"].category-button--red + label::before {
+input[type="checkbox"]:checked.category-span--red + label::before, input[type="checkbox"]:checked.category-button--red + label::before {
     box-shadow: inset 0px 0px 0px 3px pink;
     background-color: #2b363e;
 }
