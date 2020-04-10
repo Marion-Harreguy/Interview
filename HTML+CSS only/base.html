@@ -17,17 +17,21 @@
             <nav class="header__nav sticky-top navbar-expand-sm">
                 <div class="nav-container">
 
-                    <li class="nav__link nav-item active">
+                    <li class="nav__link nav-item nav-item--bar-hidden active">
                         <a class="nav-link" href="/">Inter.view</a>
                     </li>
 
-                    <button class="navbar-toggler first-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent20"
-    aria-controls="navbarSupportedContent20" aria-expanded="false" aria-label="Toggle navigation">
-    <div class="animated-icon1"><span></span><span></span><span></span></div>
-  </button>
+                    <button class="navbar-toggler first-button" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <div class="animated-icon1"><span></span><span></span><span></span></div>
+                    </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
+                            <li class="nav__link nav-item active nav-item--collapse-hidden">
+                                <a class="nav-link" href="/">Inter.view</a>
+                            </li>
                             <li class="nav__link nav-item">
                                 <a class="nav-link" href="/search">Rechercher</a>
                             </li>
@@ -71,20 +75,10 @@
 
         <script>
             $(document).ready(function () {
-
-$('.first-button').on('click', function () {
-
-  $('.animated-icon1').toggleClass('open');
-});
-$('.second-button').on('click', function () {
-
-  $('.animated-icon2').toggleClass('open');
-});
-$('.third-button').on('click', function () {
-
-  $('.animated-icon3').toggleClass('open');
-});
-});
+                $('.first-button').on('click', function () {
+                    $('.animated-icon1').toggleClass('open');
+                });
+            });
         </script>
 
     </body>
