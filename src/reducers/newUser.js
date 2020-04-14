@@ -1,26 +1,6 @@
 import { NEW_USER_INPUT_CHANGE, NEW_USER_SUBMIT } from '../actions';
 
 export const initialState = {
-
-  // Data in order to get a 200 response from API
-  // user: {
-  //   firstname: 'Jean',
-  //   lastname: 'Renée',
-  //   email: 'jr@lataupe.fr',
-  //   password: 'mignon',
-  //   biography: 'Je suis mignon',
-  // },
-
-  // structure: {
-  //   name: 'Le terrier',
-  //   city: 'fondujardin',
-  //   sector: 'tunnelier',
-  // },
-
-  // front: {
-  //   passwordConfirmation: 'mignon',
-  // },
-
   user: {
     firstname: '',
     lastname: '',
@@ -35,6 +15,7 @@ export const initialState = {
     sector: '',
   },
 
+  // Won't be sent to API
   front: {
     passwordConfirmation: '',
   },

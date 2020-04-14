@@ -36,14 +36,29 @@ a:hover {
 
 /* Pour contrer bootstrap */
 
-input, input:-internal-autofill-selected, input:focus, input:active {
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input, 
+input:-internal-autofill-selected,
+input:focus, 
+input:active {
   outline: none !important;
   border: none !important;
-  border-bottom: solid 1px lightgrey;
+  border-bottom: solid 0.5px grey !important;
   background-color: #2b363e !important;
   color: white !important;
   font-size: 1em;
+  // Remove background-color on Chrome when autofill
+  -webkit-box-shadow: 0 0 0 30px #2b363e inset !important;
   font-family: 'Source-Light' !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white!important;
+  font-size: 1em;
 }
 
 button, button:focus, button:active {
@@ -382,8 +397,11 @@ transform: rotate(-135deg);
 .login__form__button {
   width: fit-content;
   padding: 1px 16px 2px 16px;
-  margin-top: 45px;
+  margin-top: 70vh;
   margin-left: calc(50% - 40px);
+  left: 0;
+  top: 0;
+  position: absolute;
 }
 
 .login__form__button--create {
@@ -1328,3 +1346,22 @@ header {
   display:none;
 }
 
+// Invalid
+
+.invalid {
+  border-bottom-color: rgba(255,80,76,0.7) !important;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
+
+button:disabled:hover {
+  opacity: 1;
+  color: rgba(255,80,76,0.7);
+  border-color: rgba(255,80,76,0.7);
+}
+
+button:disabled:hover ~ .mandatory:placeholder-shown {
+  border-bottom-color: rgba(255,80,76,0.7) !important;
+}

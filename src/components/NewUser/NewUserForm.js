@@ -27,19 +27,22 @@ const NewUserForm = ({
   return (
 
     <form className="login__form" onSubmit={(evt) => { evt.preventDefault(); newUserSubmit(); }}>
-      <input className="login__form__input" data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={lastname} type="text" name="lastname" placeholder="Nom *" />
-      <input className="login__form__input" data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={firstname} type="text" name="firstname" placeholder="Prénom* " />
+
+      {/* Button is first because of CSS-related reasons */}
+      <button className="login__form__button login__form__button--create" type="submit" disabled={!canSubmitForm}>S'inscrire</button>
+        
+      <input className="login__form__input mandatory" data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={lastname} type="text" name="lastname" placeholder="Nom *" />
+      <input className="login__form__input mandatory" data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={firstname} type="text" name="firstname" placeholder="Prénom *" />
       {/* /\S+@\S+\.\S+/.test(emailValue)) = check if the string is an email */}
-      <input className={`login__form__input ${(email.length > 0 && !(/\S+@\S+\.\S+/.test(email))) && 'invalid'}`} data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={email} type="email" name="email" placeholder="Email *" />
+      <input className={`login__form__input mandatory ${(email.length > 0 && !(/\S+@\S+\.\S+/.test(email))) && 'invalid'}`} data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={email} type="email" name="email" placeholder="Email *" />
       <input className="login__form__input" data-type="structure" onChange={(evt) => { newUserInputChange(evt.target); }} value={structure} type="text" name="name" placeholder="Structure(s)" />
       <input className="login__form__input" data-type="structure" onChange={(evt) => { newUserInputChange(evt.target); }} value={city} type="text" name="city" placeholder="Ville de la structure" />
       <input className="login__form__input" data-type="structure" onChange={(evt) => { newUserInputChange(evt.target); }} value={sector} type="text" name="sector" placeholder="Secteur de la structure" />
       <input className="login__form__input" data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={biography} type="text" name="biography" placeholder="Biographie" />
 
-      <input className={`login__form__input ${(password.length > 0 && password.length < 3) && 'invalid'}`} data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={password} type="password" name="password" placeholder="Mot de passe *" />
-      <input className={`login__form__input ${(passwordConfirmation.length > 0 && password !== passwordConfirmation) && 'invalid'}`} onChange={(evt) => { newUserInputChange(evt.target); }} value={passwordConfirmation} type="password" data-type="front" name="passwordConfirmation" placeholder="Confirmation du mot de passe *" />
-
-      <button className="login__form__button login__form__button--create" type="submit" disabled={!canSubmitForm}>S'inscrire</button>
+      <input className={`login__form__input mandatory ${(password.length > 0 && password.length < 3) && 'invalid'}`} data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={password} type="password" name="password" placeholder="Mot de passe *" />
+      <input className={`login__form__input mandatory ${(passwordConfirmation.length > 0 && password !== passwordConfirmation) && 'invalid'}`} onChange={(evt) => { newUserInputChange(evt.target); }} value={passwordConfirmation} type="password" data-type="front" name="passwordConfirmation" placeholder="Confirmation du mot de passe *" />
+      
     </form>
 
 )};
