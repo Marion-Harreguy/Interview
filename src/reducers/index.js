@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import loginCreateForm from './loginCreateForm';
+import newUser from './newUser';
 
 export default combineReducers({
-  loginCreateForm,
+  newUser,
 });

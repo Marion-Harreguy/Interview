@@ -1,7 +1,5 @@
-// == Import : npm
 import { createStore, compose, applyMiddleware } from 'redux';
 
-// == Import : local
 import rootReducer from 'src/reducers';
 import logMiddleware from '../middleware/logMiddleware';
 import ajaxMiddleware from '../middleware/ajaxMiddleware';
@@ -13,16 +11,13 @@ const enhancers = composeEnhancers(
   applyMiddleware(
     logMiddleware,
     ajaxMiddleware,
-    // secondMiddleware,
   ),
 );
 
-// == Store
 const store = createStore(
   rootReducer,
   // preloadedState,
   enhancers,
 );
 
-// == Export
 export default store;

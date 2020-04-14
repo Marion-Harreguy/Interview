@@ -1,19 +1,18 @@
-// == Import npm
 import React from 'react';
 
 import Header from '../Header';
 import Footer from '../Footer';
-import LoginCreate from '../LoginCreate';
-// == Import
+import NewUser from '../NewUser';
+
+// Temporary : all style put in one file
 import './style.scss';
 
-// == Composant
 const App = () => (
   <div className="app">
     <Header />
     <main className="main row">
       <div className="left col-12 col-md-5 col-lg-4 col-xl-4">
-        <LoginCreate />
+        <NewUser />
         <Footer />
       </div>
 
@@ -26,5 +25,4 @@ const App = () => (
   </div>
 );
 
-// == Export
 export default App;
