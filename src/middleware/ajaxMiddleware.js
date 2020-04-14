@@ -19,10 +19,9 @@ export default (store) => (next) => (action) => {
     },
   };
 
-  console.log(JSON.stringify(postUser));
-
   switch (action.type) {
     case HANDLE_NEW_USER_FORM_SUBMIT:
+      console.log("AJAX REQUEST");
       // Je préviens mon app de se mettre en loading
       // store.dispatch(toggleLoading());
       axios.post('http://184.73.143.2/register', JSON.stringify(postUser))
@@ -33,14 +32,14 @@ export default (store) => (next) => (action) => {
           // un pour error qui n'a pas besoin de payload
           // Côté reducer, importer les 2 types d'action (success et error)
           // Pour modifier le state comme demandé
-          console.log(response);
-          console.log(response.data);
+          const newData = JSON.parse(response.data);
+          console.log(newData);
           // dispatcher une action qui dit 'LOGIN_SUCSESS' et qui aura comme payload
           // le nom de l'user pôur que mon reducer puisse:
           // * arrêter le loading
           // * Mettre le bon nom d'user dans le state
           // store.dispatch(handleNewUserFormSubmit(response.data));
-          store.dispatch(handleNewUserFormSubmit());
+          // store.dispatch(handleNewUserFormSubmit());
         })
         .catch((error) => {
           console.log(error);
@@ -50,7 +49,7 @@ export default (store) => (next) => (action) => {
           // * user -> anonyme
         //   store.dispatch(loginError());
         });
-      return;
+      break;
     default:
       next(action);
   }
