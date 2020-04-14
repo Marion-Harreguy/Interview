@@ -28,7 +28,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->headers->get('X-API-TOKEN');
+        return $request->headers->get('X-AUTH-TOKEN');
     }
 
     /**
@@ -37,44 +37,23 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-
-       if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
-           // No token?
-           $token = null;
-       }
-       // What you return here will be passed to getUser() as $credentials
-       return array(
-           'token' => $token,
-       );
-
-
-      // $credentials = [
-      //   'login' => $request->request->get('login'),
-      //   'password' => $request->request->get('password')
-      // ];
-        
-      //  // dd($credentials);
-      //   return $credentials;
-      //   //return $request->headers->get('X-AUTH-TOKEN');
+       return $request->headers->get('X-AUTH-TOKEN');
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-      dd($credentials);
-        $username = $credentials['login'];
-        //dd($credentials);
+ 
         if (null === $credentials) {
             // The token header was empty, authentication fails with HTTP Status
             // Code 401 "Unauthorized"
             return null;
         }
-
+     
         
         // if a User is returned, checkCredentials() is called
         return $this->em->getRepository(User::class)
-            // ->findOneBy(['apiToken' => $credentials])
-            ->findOneBy(['email' => $username])
-        ;
+        ->findOneBy(['apiToken' => $credentials])
+         ;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
