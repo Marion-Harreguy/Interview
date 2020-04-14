@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class LoginController extends AbstractController
 {
@@ -29,7 +30,7 @@ class LoginController extends AbstractController
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function add(Request $request, EntityManagerInterface $em)
+    public function add(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
         // On vérifie si l'on a une requête XMLHttpRequest
         // if($request->isXmlHttpRequest()) {
@@ -59,9 +60,10 @@ class LoginController extends AbstractController
         $user->setFirstname($data->user->firstname);
         $user->setLastname($data->user->lastname);
         $user->setEmail($data->user->email);
-        $user->setPassword($data->user->password);
         $user->setBiography($data->user->biography);
-
+        
+        $user->setPassword($passwordEncoder->encodePassword($user, $data->user->password));
+        
         //=============================//
         //Ajouter les données de base 
         //=============================//

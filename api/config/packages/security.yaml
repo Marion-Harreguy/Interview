@@ -21,7 +21,7 @@ security:
         check_path: login
         username_path: credentials.login
         password_path: credentials.password
-    
+
       guard:
         authenticators:
           - App\Security\TokenAuthenticator
