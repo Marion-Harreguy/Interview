@@ -15,12 +15,12 @@ class UserType extends AbstractType
             ->add('firstname')
             ->add('lastname')
             ->add('email')
-            ->add('password')
+            // ->add('password')
             ->add('biography')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('favorite')
-            ->add('structures')
+            // ->add('createdAt')
+            // ->add('updatedAt')
+            // ->add('favorite')
+            // ->add('structures')
         ;
     }
 

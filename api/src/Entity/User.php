@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -309,4 +310,47 @@ class User implements UserInterface
     {       
     }
 
+    /**
+     * Données principales de l'objet User
+     * @Groups("user")
+     */
+    public function getDataUser()
+    {
+        // on regroupe les metadonnées du user dans un tableau 
+        $dataUser = [
+            'id' => $this->getId(),
+            'firstname' => $this->getFirstname(),
+            'lastname' => $this->getLastname(),
+            'email' => $this->getEmail(),
+            'biograhy' => $this->getBiography(),
+        ];
+
+        return $dataUser;
+    }
+    
+    
+    /**
+     * Données sur la structure
+     * @Groups("user")
+     */
+    public function getDataStructure()
+    {
+        // on instancie un tableau de données de la structure
+        $dataStructure = [];
+
+        // on regroupe les informations utiles 
+        foreach ($this->getStructures() as $structure) {
+
+            $structure = [
+                'name' => $structure->getName(),
+                'city' => $structure->getCity(),
+                'sector' => $structure->getSector()
+            ];
+        }
+
+        // on injecte la liste des structures aux données de l'auteur 
+        $dataStructure = $structure;
+
+        return $dataStructure;
+    }
 }

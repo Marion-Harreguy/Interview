@@ -19,10 +19,9 @@ class InterviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Interview::class);
     }
 
-    // /**
-    //  * @return Interview[] Returns an array of Interview objects
-    //  */
-    /*
+    /**
+      * @return Interview[] Returns an array of Interview objects
+    */
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('i')
@@ -34,7 +33,6 @@ class InterviewRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Interview
