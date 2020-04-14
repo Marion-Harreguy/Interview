@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -45,6 +46,11 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
      * @var text user biography
      * @ORM\Column(type="text", nullable=true)
      */
@@ -80,6 +86,11 @@ class User implements UserInterface
      */
     private $structures;
 
+    /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
+     */
+    private $apiToken;
+    
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -130,11 +141,13 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ?string   
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->password = $password;
+        return (string) $this->password;
     }
-
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -296,17 +309,113 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername()
-    {       
-    }
-    public function eraseCredentials()
-    {       
-    }
-    public function getSalt()
-    {       
-    }
-    public function getRoles()
-    {       
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Données principales de l'objet User
+     * @Groups("user")
+     */
+    public function getDataUser()
+    {
+        // on regroupe les metadonnées du user dans un tableau 
+        $dataUser = [
+            'id' => $this->getId(),
+            'firstname' => $this->getFirstname(),
+            'lastname' => $this->getLastname(),
+            'email' => $this->getEmail(),
+            'biograhy' => $this->getBiography(),
+        ];
+
+        return $dataUser;
+    }
+
+
+    /**
+     * Données sur la structure
+     * @Groups("user")
+     */
+    public function getDataStructure()
+    {
+        // on instancie un tableau de données de la structure
+        $dataStructure = [];
+
+        // on regroupe les informations utiles 
+        foreach ($this->getStructures() as $structure) {
+
+            $structure = [
+                'name' => $structure->getName(),
+                'city' => $structure->getCity(),
+                'sector' => $structure->getSector()
+            ];
+        }
+
+        // on injecte la liste des structures aux données de l'auteur 
+        $dataStructure = $structure;
+
+        return $dataStructure;
+    }
+
+    /**
+     * Get the value of apiToken
+     */ 
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * Set the value of apiToken
+     *
+     * @return  self
+     */ 
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
 }
