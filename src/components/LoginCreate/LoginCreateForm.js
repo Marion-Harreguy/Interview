@@ -29,7 +29,7 @@ const LoginCreateForm = ({
     <input className="login__form__input" data-type="structure" onChange={(evt) => { handleInputChange(evt.target); }} value={townValue} type="text" name="city" placeholder="Ville" />
     <input className="login__form__input" data-type="user" onChange={(evt) => { handleInputChange(evt.target); }} value={descriptionValue} type="text" name="biography" placeholder="Description" />
 
-    <input className={`login__form__input ${(passwordValue.length > 0 && passwordValue.length < 8) && 'invalid'}`} data-type="user" onChange={(evt) => { handleInputChange(evt.target); }} value={passwordValue} type="password" name="password" placeholder="Mot de passe *" />
+    <input className={`login__form__input ${(passwordValue.length > 0 && passwordValue.length < 3) && 'invalid'}`} data-type="user" onChange={(evt) => { handleInputChange(evt.target); }} value={passwordValue} type="password" name="password" placeholder="Mot de passe *" />
     <input className={`login__form__input ${(passwordConfirmationValue.length > 0 && passwordValue !== passwordConfirmationValue) && 'invalid'}`} onChange={(evt) => { handleInputChange(evt.target); }} value={passwordConfirmationValue} type="password" data-type="user" name="passwordConfirmation" placeholder="Confirmation du mot de passe *" />
 
     <button className="login__form__button login__form__button--create" type="submit" disabled={!canSubmitForm}>S'inscrire</button>

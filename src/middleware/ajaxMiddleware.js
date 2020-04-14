@@ -5,11 +5,27 @@ import {
 } from '../actions';
 
 export default (store) => (next) => (action) => {
+
+  const postUser = {
+    user: {
+      firstname: store.getState().loginCreateForm.newUser.user.firstname,
+      lastname: store.getState().loginCreateForm.newUser.user.lastname,
+      email: store.getState().loginCreateForm.newUser.user.email,
+      password: store.getState().loginCreateForm.newUser.user.password,
+      biography: store.getState().loginCreateForm.newUser.user.biography,
+    },
+    structure: {
+      ...store.getState().loginCreateForm.newUser.structure,
+    },
+  };
+
+  console.log(JSON.stringify(postUser));
+
   switch (action.type) {
     case HANDLE_NEW_USER_FORM_SUBMIT:
       // Je préviens mon app de se mettre en loading
       // store.dispatch(toggleLoading());
-      axios.post('http://localhost:3001/login', store.getState().newUser)
+      axios.post('http://184.73.143.2/register', JSON.stringify(postUser))
         .then((response) => {
           // Créer 2 nouveaux actions types 'LOGIN_SUCCESS' et 'LOGIN_ERROR'
           // Créer 2 actions creators un pour success
@@ -17,7 +33,7 @@ export default (store) => (next) => (action) => {
           // un pour error qui n'a pas besoin de payload
           // Côté reducer, importer les 2 types d'action (success et error)
           // Pour modifier le state comme demandé
-
+          console.log(response);
           console.log(response.data);
           // dispatcher une action qui dit 'LOGIN_SUCSESS' et qui aura comme payload
           // le nom de l'user pôur que mon reducer puisse:
