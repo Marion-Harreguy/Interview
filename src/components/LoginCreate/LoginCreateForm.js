@@ -7,33 +7,35 @@ import './style.scss';
 
 // == Composant
 const LoginCreateForm = ({
-    surnameValue,
-    nameValue,
-    emailValue,
-    structureValue,
-    townValue,
-    descriptionValue,
-    passwordValue,
-    passwordConfirmationValue,
-    handleInputChange,
-    handleFormSubmit
-  }) => (
+  surnameValue,
+  nameValue,
+  emailValue,
+  structureValue,
+  townValue,
+  descriptionValue,
+  passwordValue,
+  passwordConfirmationValue,
+  handleInputChange,
+  handleFormSubmit,
+}) => {
+  const canSubmitForm = (surnameValue.length > 0 && nameValue.length > 0);
+  return (
 
-  <form className="login__form" onSubmit={() => handleFormSubmit(event)}>
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={surnameValue} type="text" name="surname" placeholder="Nom" />
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={nameValue} type="text" name="name" placeholder="Prénom" />
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={emailValue} type="email" name="email" placeholder="Email" />
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={structureValue} type="text" name="structure" placeholder="Structure(s)" />
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={townValue} type="text" name="town" placeholder="Ville" />
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={descriptionValue} type="text" name="description" placeholder="Description" />
+  <form className="login__form" onSubmit={(evt) => { evt.preventDefault(); handleFormSubmit();}}>
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={surnameValue} type="text" name="lastname" placeholder="Nom" />
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={nameValue} type="text" name="firstname" placeholder="Prénom" />
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={emailValue} type="email" name="email" placeholder="Email" />
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={structureValue} type="text" name="structure" placeholder="Structure(s)" />
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={townValue} type="text" name="town" placeholder="Ville" />
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={descriptionValue} type="text" name="biography" placeholder="Description" />
 
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={passwordValue} type="password" name="password" placeholder="Mot de passe" />
-    <input className="login__form__input" onChange={() => handleInputChange(event.target)} value={passwordConfirmationValue} type="password" name="password-confirmation" placeholder="Confirmation du mot de passe" />
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={passwordValue} type="password" name="password" placeholder="Mot de passe" />
+    <input className="login__form__input" onChange={(evt) => { handleInputChange(evt.target); }} value={passwordConfirmationValue} type="password" name="password-confirmation" placeholder="Confirmation du mot de passe" />
 
-    <button className="login__form__button login__form__button--create" type="submit">S'inscrire</button>
+    <button className="login__form__button login__form__button--create" type="submit" disabled={!canSubmitForm}>S'inscrire</button>
   </form>
 
-);
+)};
 
 LoginCreateForm.propTypes = {
   surnameValue: PropTypes.string.isRequired,
@@ -44,8 +46,8 @@ LoginCreateForm.propTypes = {
   descriptionValue: PropTypes.string.isRequired,
   passwordValue: PropTypes.string.isRequired,
   passwordConfirmationValue: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-
 }; 
 
 // Counter.propTypes = {

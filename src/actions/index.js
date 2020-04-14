@@ -1,10 +1,12 @@
-export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
-export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
+export const HANDLE_NEW_USER_INPUT_CHANGE = 'HANDLE_NEW_USER_INPUT_CHANGE';
+export const HANDLE_NEW_USER_FORM_SUBMIT = 'HANDLE_NEW_USER_FORM_SUBMIT';
 
-export const increment = () => ({
-  type: INCREMENT_COUNTER,
+export const handleNewUserInputChange = (payload) => ({
+  type: HANDLE_NEW_USER_INPUT_CHANGE,
+  payload,
 });
 
-export const decrement = () => ({
-  type: DECREMENT_COUNTER,
+export const handleNewUserFormSubmit = () => ({
+  type: HANDLE_NEW_USER_FORM_SUBMIT,
 });
+
