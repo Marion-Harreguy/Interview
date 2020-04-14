@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import {
   NEW_USER_SUBMIT,
+  FORGOTTEN_PASSWORD_SUBMIT,
+  LOGIN_SUBMIT,
   // Put the function we want to trigger after request
   // newUserError,
   // newUserSuccess,
@@ -14,6 +16,8 @@ export default (store) => (next) => (action) => {
     user: { ...store.getState().newUser.user },
     structure: { ...store.getState().newUser.structure },
   };
+
+  const userConnect = { ...store.getState().login };
 
   switch (action.type) {
     case NEW_USER_SUBMIT:
@@ -37,6 +41,29 @@ export default (store) => (next) => (action) => {
 
           // Make an error function
           // Store.dispatch(newUserError(error));
+        });
+      break;
+
+    case FORGOTTEN_PASSWORD_SUBMIT:
+      // If the user forgets his password
+
+      const phrase = store.getState().forgottenPassword.email;
+      console.log("L'utilisateur "+phrase+" a oublié son mot de passe");
+      break;
+
+    case LOGIN_SUBMIT:
+      // User trying to connect
+      console.log(userConnect);
+      axios.post('http://184.73.143.2/login', JSON.stringify(userConnect))
+        .then((response) => {
+          // User succesfully connect
+          // Fill the state with his datas
+
+          console.log("Succesfully connected !");
+        })
+        .catch((error) => {
+          // Tell the user what's wrong
+          console.log(error);
         });
       break;
     default:
