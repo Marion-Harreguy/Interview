@@ -90,6 +90,7 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
 
+        
         return $this->json([
             'message' => 'Add User'
             ], 
