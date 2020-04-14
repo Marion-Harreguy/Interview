@@ -86,6 +86,11 @@ class User implements UserInterface
      */
     private $structures;
 
+    /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
+     */
+    private $apiToken;
+    
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -392,5 +397,25 @@ class User implements UserInterface
         $dataStructure = $structure;
 
         return $dataStructure;
+    }
+
+    /**
+     * Get the value of apiToken
+     */ 
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * Set the value of apiToken
+     *
+     * @return  self
+     */ 
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
     }
 }

@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class UserController extends AbstractController
 {
+
     /**
      * Affiche un utilisateur
      * 
@@ -62,7 +63,14 @@ class UserController extends AbstractController
         $user->setFirstname($data->user->firstname);
         $user->setLastname($data->user->lastname);
         $user->setEmail($data->user->email);
+        $user->setPassword($data->user->password);
         $user->setBiography($data->user->biography);
+
+        //=============================//
+        //Ajouter les données de base 
+        //=============================//
+        $user->setRoles(['ROLE_USER']);
+        $user->setApiToken(uniqid());
        
         // On le sauvegarde en base de données
         // $em = $this->getDoctrine()->getManager();
