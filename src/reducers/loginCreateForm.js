@@ -8,6 +8,7 @@ export const initialState = {
       email: 'jr@lataupe.fr',
       password: 'mignon',
       biography: 'Je suis mignon',
+      passwordConfirmation: 'mignon',
     },
 
     structure: {
@@ -16,7 +17,6 @@ export const initialState = {
       sector: 'tunnelier',
     },
   },
-  passwordConfirmation: 'mignon',
   isLogged: false,
 };
 
@@ -27,8 +27,8 @@ const loginCreateForm = (state = initialState, action = {}) => {
         ...state,
         newUser: {
           ...state.newUser,
-          user: {
-            ...state.newUser.user,
+          [action.payload.dataset.type]: {
+            ...state.newUser[action.payload.dataset.type],
             [action.payload.name]: action.payload.value,
           },
         },

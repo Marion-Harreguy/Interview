@@ -22,7 +22,7 @@ const mapStateToProps = (state) => ({
   townValue: state.loginCreateForm.newUser.structure.city,
   descriptionValue: state.loginCreateForm.newUser.user.biography,
   passwordValue: state.loginCreateForm.newUser.user.password,
-  passwordConfirmationValue: state.loginCreateForm.passwordConfirmation,
+  passwordConfirmationValue: state.loginCreateForm.newUser.user.passwordConfirmation,
 });
 
 /* === Actions ===
