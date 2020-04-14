@@ -46,6 +46,11 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
      * @var text user biography
      * @ORM\Column(type="text", nullable=true)
      */
@@ -131,11 +136,13 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ?string   
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->password = $password;
+        return (string) $this->password;
     }
-
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -297,17 +304,50 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername()
-    {       
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
     }
-    public function eraseCredentials()
-    {       
-    }
+
+    /**
+     * @see UserInterface
+     */
     public function getSalt()
-    {       
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
-    public function getRoles()
-    {       
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -327,8 +367,8 @@ class User implements UserInterface
 
         return $dataUser;
     }
-    
-    
+
+
     /**
      * Données sur la structure
      * @Groups("user")
