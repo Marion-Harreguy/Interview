@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Structure;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class LoginController extends AbstractController
 {
@@ -16,15 +18,23 @@ class LoginController extends AbstractController
     /**
      * @Route("/login", name="login", methods={"POST"})
      */
-    public function login(Request $request)
+    public function login(Request $request, SerializerInterface $serializer )
     {
         $user = $this->getUser();
 
-        return $this->json([
-            'token' => $user->getApiToken(),
-            'username' => $user->getUsername(),
-            'roles' => $user->getRoles(),
-        ]);
+        $data = $serializer->normalize($user, null, ['groups' => ['user']]);
+
+        return $this->json(
+            $data,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
+        // return $this->json([
+        //     'token' => $user->getApiToken(),
+        //     'username' => $user->getUsername(),
+        //     'roles' => $user->getRoles(),
+        // ]);
     }
 
     /**
@@ -47,7 +57,7 @@ class LoginController extends AbstractController
         $structure->setSector($data->structure->sector);
         $em->persist($structure);
 
-            // TODO : Verifier le contenu des $data 
+        // TODO : Verifier le contenu des $data 
 
         // On instancie un nouvel utilisateur
         $user = new User();
@@ -61,9 +71,9 @@ class LoginController extends AbstractController
         $user->setLastname($data->user->lastname);
         $user->setEmail($data->user->email);
         $user->setBiography($data->user->biography);
-        
+
         $user->setPassword($passwordEncoder->encodePassword($user, $data->user->password));
-        
+
         //=============================//
         //Ajouter les données de base 
         //=============================//

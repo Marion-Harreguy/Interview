@@ -368,6 +368,7 @@ class User implements UserInterface
             'lastname' => $this->getLastname(),
             'email' => $this->getEmail(),
             'biograhy' => $this->getBiography(),
+            'tokenApi' => $this->getApiToken(),
         ];
 
         return $dataUser;
@@ -409,28 +410,30 @@ class User implements UserInterface
         // on instancie un tableau de données de la structure
         $dashboard = [];
 
-
         //on recupere les interviews 
         $interviewsPublishedListe = [];
         $interviewsWrittingListe = [];
+
         foreach ($this->getInterviews() as $interview) {
 
+
             if ($interview->getIsPublished() === true) {
+
                 $interviewsPublished = [
                     'id' => $interview->getId(),
                     'title' => $interview->getTitle(),
-                    'publish' => $interview->getIsPublished()
                 ];
                 $interviewsPublishedListe[] = $interviewsPublished;
             } else {
                 $interviewsWritting = [
                     'id' => $interview->getId(),
-                    'title' => $interview->getTitle(),
-                    'publish' => $interview->getIsPublished()
+                    'title' => $interview->getTitle()
                 ];
                 $interviewsWrittingListe[]  = $interviewsWritting;
             }
         }
+
+        //$dashboard["test"] = $categoriesList;
         $dashboard["publishedInterviews"] = $interviewsPublishedListe;
         $dashboard["writtingInterviews"] = $interviewsWrittingListe;
 
@@ -451,7 +454,8 @@ class User implements UserInterface
         foreach ($this->getCategories() as $categories) {
             $category = [
                 'id' => $categories->getId(),
-                'name' => $categories->getName()
+                'name' => $categories->getName(),
+                'interviews' => $categories->getInterviews()
             ];
             $categoriesList[] = $category;
         }
