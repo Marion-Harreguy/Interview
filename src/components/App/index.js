@@ -1,27 +1,39 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import store from 'src/store';
 
-import Header from '../Header';
+import HeaderContainer from '../../containers/HeaderContainer';
+import UserLibrary from '../UserLibrary';
+import UserLibraryRight from '../UserLibraryRight';
+import LegalMentions from '../LegalMentions';
+import ReadMeta from '../ReadMeta';
+import ReadContent from '../ReadContent';
+import SearchForm from '../SearchForm';
+import SearchResults from '../SearchResults';
+import WriteContent from '../WriteContent';
+import WriteMeta from '../WriteMeta';
 import Introduction from '../Introduction';
 import Footer from '../Footer';
 import PageNotFound from '../NotFound';
 import NewUser from '../NewUser';
 import LoginContainer from '../../containers/LoginContainer';
-import ForgottenPassword from '../../containers/ForgottenPasswordContainer';
+import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContainer';
 
 // Temporary : all style put in one file
 import './style.scss';
 
 const App = () => (
   <div className="app">
-    <Header />
+    <HeaderContainer />
     <main className="main row">
 
-    <div className="left col-12 col-md-5 col-lg-4 col-xl-4">
+      <div className="left col-12 col-md-5 col-lg-4 col-xl-4">
       <Switch>
         {/* PATH : / 
         If user is connected : userLibrary / if user is not connected : login */}
-        <Route exact path="/" 
+        <Route
+          exact
+          path="/"
           render={() => {
             if (store.getState().userData.isConnected) {
               return <UserLibrary />;
@@ -95,6 +107,7 @@ const App = () => (
           />
           <Route component={PageNotFound} />
         </Switch>
+        <Footer />
       </div>
     </main>
   </div>

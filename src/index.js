@@ -7,10 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from 'src/components/App';
 // Store
 import store from 'src/store';
-import { Router } from 'react-router-dom';
 
-
-// TODO : Add router
 const rootComponent = (
   <Provider store={store}>
     <Router>

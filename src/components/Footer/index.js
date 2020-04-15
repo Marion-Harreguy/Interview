@@ -1,13 +1,14 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import './style.scss';
 
 const Footer = () => (
-  // TODO : Put the right urls
+  // TODO : Handle logout
   <footer className="left__footer">
-    <a className="footer__logout" href="/logout">Déconnexion</a>
+    <NavLink exact to="/logout" className="footer__legal">Déconnexion</NavLink>
     <span>&bull;</span>
-    <a className="footer__legal-mentions" href="/legal">Mentions légales</a>
+    <NavLink exact to="/legal-mentions" className="footer__legal-mentions">Mentions légales</NavLink>
   </footer>
 );
 

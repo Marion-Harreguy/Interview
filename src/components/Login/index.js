@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import './style.scss';
 
@@ -9,12 +10,11 @@ const Login = ({ login, password, loginInputChange, loginSubmit}) => {
   const validEmail = !(/\S+@\S+\.\S+/.test(login));
 
   return (
-  // TODO : Put the right urls
     <aside className="left__menu left__menu--login">
-      <h2 className="login__title">Inscription</h2>
+      <h2 className="login__title">Connexion</h2>
       <nav className="login__nav">
-        <a href="/forgotten">Mot de passe oublié</a>
-        <a href="/">Connexion</a>
+        <NavLink exact to="/register">Inscription</NavLink>
+        <NavLink exact to="/forgotten">Mot de passe oublié</NavLink>
       </nav>
 
       <form className="login__form" onSubmit={(event) => { event.preventDefault(); loginSubmit()}}>
