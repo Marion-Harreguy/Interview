@@ -1,4 +1,4 @@
-import { MODIFY_USER_INFO, CHANGE_ORDER } from '../actions';
+import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY } from '../actions';
 
 export const initialState = {
   isConnected: true,
@@ -92,7 +92,13 @@ export const initialState = {
       },
     ],
   },
-  libraryOrder: "alphabet",
+  library: {
+    order: "alphabet",
+    publishedInterviews: false,
+    savedInterviews: false,
+    writtingInterviews: false,
+    // savedResearch: false,
+  },
 };
 
 const userData = (state = initialState, action = {}) => {
@@ -108,7 +114,38 @@ const userData = (state = initialState, action = {}) => {
     case CHANGE_ORDER:
       return {
         ...state,
-        libraryOrder: action.payload,
+        library: {
+          ...state.library,
+          order: action.payload,
+        },
+      };
+    case TOGGLE_SECTION:
+      return {
+        ...state,
+        library: {
+          ...state.library,
+          [action.payload]: !state.library[action.payload],
+        },
+      };
+    case TOGGLE_CATEGORY:
+      let newCategories = state.dashboard.categories.map((category) => {
+        if(category.id === action.payload){
+          return {
+          ...category,
+          displayed: !category.displayed,
+          }
+        }
+        return category;
+      });
+
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          categories: [
+            ...newCategories,
+          ],
+        },
       };
     default:
       return state;

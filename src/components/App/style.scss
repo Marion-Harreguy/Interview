@@ -502,6 +502,7 @@ transform: rotate(-135deg);
   width: 100%;
   position: relative;
   margin-top: 15px;
+  cursor: pointer;
 }
 
 .library__new-interview {
@@ -561,6 +562,7 @@ transform: rotate(-135deg);
   width: calc(100% - 25px);
   opacity: 0.8;
   cursor: pointer;
+  padding-bottom: 10px;
 }
 
 .list__interview__title:hover{
@@ -584,10 +586,29 @@ transform: rotate(-135deg);
   border-radius: 50%;
 }
 
+.section__list {
+  transition: height 5s ease-out;
+  cursor: pointer;
+}
+
+.section__list h3 {
+  cursor: pointer;
+}
+
+.section__list--closed {
+  height: 0px;
+  overflow: hidden;
+}
+
+.section__list--open {
+  height: fit-content;
+}
+
 /* .categories__title {
   margin-bottom: 10px;
 } */
 
+// Pastilles
 
 .list__category--red, input[type="checkbox"].category-span--red + label::before, input[type="checkbox"].category-button--red + label::before {
   background-color: pink;
@@ -622,6 +643,8 @@ input[type="checkbox"]:checked.list__category--green + label::before, input[type
   box-shadow: inset 0px 0px 0px 3px greenyellow;
   background-color: #2b363e;
 }
+
+// Libres de droit
 
 .write__form__button:checked + label::before, .search__form__button--royalty:checked + label::before {
   box-shadow: inset 0px 0px 0px 4px #2b363e;

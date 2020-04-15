@@ -24,8 +24,24 @@ import './style.scss';
 
 const App = () => {
   const isConnected = store.getState().userData.isConnected;
+
   return (
     <div className="app">
+
+      {/* Make category styles from userCategories */}
+      {
+      store.getState().userData.dashboard.categories.map((category) => (
+        // eslint-disable-next-line react/no-danger
+        <style key={category.id} dangerouslySetInnerHTML={{__html: `
+        .list__category--${category.id}, input[type="checkbox"].category-span--${category.id} + label::before, input[type="checkbox"].category-button--${category.id} + label::before { background-color: ${category.color}; }
+        .input[type="checkbox"]:checked.category-span--${category.id} + label::before, input[type="checkbox"]:checked.category-button--${category.id} + label::before {
+          box-shadow: inset 0px 0px 0px 3px ${category.color};
+          background-color: #2b363e;
+        }
+        `}} />
+      ))
+    }
+
       <HeaderContainer />
       <main className="main row">
 

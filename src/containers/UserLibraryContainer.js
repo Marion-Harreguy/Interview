@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 
 import UserLibrary from 'src/components/UserLibrary';
-import { modifyUserInfo, changeOrder } from '../actions';
+import { modifyUserInfo, changeOrder, toggleSection, toggleCategory } from '../actions';
 
 const mapStateToProps = (state) => ({
   user: state.userData.dataUser,
   structure: state.userData.dataStructure,
   dashboard: state.userData.dashboard,
-  order: state.userData.libraryOrder,
+  library: state.userData.library,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -16,6 +16,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeOrder: (newOrder) => {
     dispatch(changeOrder(newOrder));
+  },
+  toggleSection: (section) => {
+    dispatch(toggleSection(section));
+  },
+  toggleCategory: (category) => {
+    dispatch(toggleCategory(category));
   },
 });
 
