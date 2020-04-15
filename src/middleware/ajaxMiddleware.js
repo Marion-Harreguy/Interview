@@ -50,7 +50,7 @@ export default (store) => (next) => (action) => {
           // * user -> anonyme
         //   store.dispatch(loginError());
         });
-      return;
+      break;
     default:
       next(action);
   }
