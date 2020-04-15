@@ -17,7 +17,7 @@ export default (store) => (next) => (action) => {
     structure: { ...store.getState().newUser.structure },
   };
 
-  const userConnect = { ...store.getState().login };
+  const userConnect = { credentials: {...store.getState().login }};
 
   switch (action.type) {
     case NEW_USER_SUBMIT:
@@ -53,7 +53,12 @@ export default (store) => (next) => (action) => {
 
     case LOGIN_SUBMIT:
       // User trying to connect
+<<<<<<< HEAD
       console.log(userConnect);
+=======
+      console.log(JSON.stringify(userConnect));
+      // axios.post('http://184.73.143.2/login', JSON.stringify(userConnect))
+>>>>>>> 1c98edb7b0216cac11e35cb7d43a565308abb86d
       axios.post('http://184.73.143.2/login', JSON.stringify(userConnect) , {headers:{"Content-Type" : "application/json"}})
         .then((response) => {
           // User succesfully connect
