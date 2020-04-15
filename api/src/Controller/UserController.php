@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Structure;
 use App\Entity\User;
-// use App\Form\UserType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,10 +55,6 @@ class UserController extends AbstractController
     
         // On instancie un nouvel utilisateur
         $user = new User();
-
-        // le user suit un schema :
-        // User {} => contient les datas de l'utilisateur
-        // Structure [] 
 
         // On hydrate notre objet User
         $user->setFirstname($data->user->firstname);
@@ -141,12 +137,12 @@ class UserController extends AbstractController
         $structure->setCity($data->structure->city);
         $structure->setSector($data->structure->sector);
 
-        /*$form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($user);
 
-        if($form->isSubmitted() && $form->isValid()) 
-            // $user->setUpdatedAt(new \DateTime());*/
+        // if($form->isSubmitted() && $form->isValid()) 
+        //    $user->setUpdatedAt(new \DateTime());
 
         // On le sauvegarde en base de données
         $em = $this->getDoctrine()->getManager();
