@@ -90,7 +90,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", unique=true, nullable=true)
      */
     private $apiToken;
-    
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -373,7 +373,6 @@ class User implements UserInterface
         return $dataUser;
     }
 
-
     /**
      * Données sur la structure
      * @Groups("user")
@@ -383,25 +382,88 @@ class User implements UserInterface
         // on instancie un tableau de données de la structure
         $dataStructure = [];
 
+        $structureList = [];
         // on regroupe les informations utiles 
         foreach ($this->getStructures() as $structure) {
 
             $structure = [
+                'id' => $structure->getId(),
                 'name' => $structure->getName(),
                 'city' => $structure->getCity(),
                 'sector' => $structure->getSector()
             ];
+            $structureList[] = $structure;
         }
 
         // on injecte la liste des structures aux données de l'auteur 
-        $dataStructure = $structure;
+        $dataStructure[] = $structureList;
 
         return $dataStructure;
+    }
+    /**
+     * Données du dashboard de l'utilisateur
+     * @Groups("user")
+     */
+    public function getDashboard()
+    {
+        // on instancie un tableau de données de la structure
+        $dashboard = [];
+
+
+        //on recupere les interviews 
+        $interviewsPublishedListe = [];
+        $interviewsWrittingListe = [];
+        foreach ($this->getInterviews() as $interview) {
+
+            if ($interview->getIsPublished() === true) {
+                $interviewsPublished = [
+                    'id' => $interview->getId(),
+                    'title' => $interview->getTitle(),
+                    'publish' => $interview->getIsPublished()
+                ];
+                $interviewsPublishedListe[] = $interviewsPublished;
+            } else {
+                $interviewsWritting = [
+                    'id' => $interview->getId(),
+                    'title' => $interview->getTitle(),
+                    'publish' => $interview->getIsPublished()
+                ];
+                $interviewsWrittingListe[]  = $interviewsWritting;
+            }
+        }
+        $dashboard["publishedInterviews"] = $interviewsPublishedListe;
+        $dashboard["writtingInterviews"] = $interviewsWrittingListe;
+
+        //on recupere les interviews Favoris 
+        $favoritesListe = [];
+        foreach ($this->getFavorite() as $favorite) {
+            $favorites = [
+                'id' => $favorite->getId(),
+                'title' => $favorite->getTitle()
+            ];
+            $favoritesListe[] = $favorites;
+        }
+        $dashboard["savedInterviews"] = $favoritesListe;
+
+        // On recupere les catgories liées à l'utilisateur
+        $categoriesList = [];
+        // on regroupe les informations utiles 
+        foreach ($this->getCategories() as $categories) {
+            $category = [
+                'id' => $categories->getId(),
+                'name' => $categories->getName()
+            ];
+            $categoriesList[] = $category;
+        }
+        $dashboard["categories"] = $categoriesList;
+
+
+        return $dashboard;
     }
 
     /**
      * Get the value of apiToken
-     */ 
+     */
     public function getApiToken()
     {
         return $this->apiToken;
@@ -411,7 +473,7 @@ class User implements UserInterface
      * Set the value of apiToken
      *
      * @return  self
-     */ 
+     */
     public function setApiToken($apiToken)
     {
         $this->apiToken = $apiToken;
