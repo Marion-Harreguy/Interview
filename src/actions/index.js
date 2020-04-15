@@ -5,6 +5,7 @@ export const FORGOTTEN_PASSWORD_SUBMIT = 'FORGOTTEN_PASSWORD_SUBMIT';
 export const LOGIN_INPUT_CHANGE = 'LOGIN_INPUT_CHANGE';
 export const LOGIN_SUBMIT = 'LOGIN_SUBMIT';
 export const MODIFY_USER_INFO = 'MODIFY_USER_INFO';
+export const CHANGE_ORDER = 'CHANGE_ORDER';
 
 
 export const newUserInputChange = (payload) => ({
@@ -36,5 +37,10 @@ export const loginSubmit = () => ({
 
 export const modifyUserInfo = (payload) => ({
   type: MODIFY_USER_INFO,
+  payload,
+});
+
+export const changeOrder = (payload) => ({
+  type: CHANGE_ORDER,
   payload,
 });

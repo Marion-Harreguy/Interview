@@ -1,14 +1,14 @@
-import { MODIFY_USER_INFO } from '../actions';
+import { MODIFY_USER_INFO, CHANGE_ORDER } from '../actions';
 
 export const initialState = {
   isConnected: true,
   dataUser: {
-    id: '181',
+    id: 181,
     firstname: 'Patrick',
     lastname: 'Lebon',
     email: 'vrocher@tiscali.fr',
     status: 'Prof',
-    biograhy: 'Enim ipsum inventore sed libero et velit qui suscipit. Deserunt laudantium quibusdam enim nostrum soluta qui ipsam non. Velit reiciendis aperiam et fuga.',
+    biography: 'Enim ipsum inventore sed libero et velit qui suscipit. Deserunt laudantium quibusdam enim nostrum soluta qui ipsam non. Velit reiciendis aperiam et fuga.',
   },
   dataStructure: [
     {
@@ -70,24 +70,29 @@ export const initialState = {
         id: 477,
         name: 'accusantium',
         color: '#177456',
+        displayed: true,
       },
       {
         id: 482,
         name: 'sapiente',
         color: '#123926',
+        displayed: true,
       },
       {
         id: 487,
         name: 'et',
         color: '#100456',
+        displayed: true,
       },
       {
         id: 488,
         name: 'quas',
         color: '#100006',
+        displayed: true,
       },
     ],
   },
+  libraryOrder: "alphabet",
 };
 
 const userData = (state = initialState, action = {}) => {
@@ -100,7 +105,11 @@ const userData = (state = initialState, action = {}) => {
           [action.payload.name]: action.payload.value,
         },
       };
-      break;
+    case CHANGE_ORDER:
+      return {
+        ...state,
+        libraryOrder: action.payload,
+      };
     default:
       return state;
   }

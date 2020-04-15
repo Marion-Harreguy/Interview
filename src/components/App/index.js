@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import store from 'src/store';
 
 import HeaderContainer from '../../containers/HeaderContainer';
-import UserLibrary from '../UserLibrary';
+import UserLibraryContainer from '../../containers/UserLibraryContainer';
 import UserLibraryRight from '../UserLibraryRight';
 import LegalMentions from '../LegalMentions';
 import ReadMeta from '../ReadMeta';
@@ -32,13 +32,13 @@ const App = () => {
         <div className="left col-12 col-md-5 col-lg-4 col-xl-4">
           <Switch>
             {/* PATH : /
-            If user is connected : userLibrary / if user is not connected : login */}
+            If user is connected : UserLibraryContainer / if user is not connected : login */}
             <Route
               exact
               path="/"
               render={() => {
                 if (isConnected) {
-                  return <UserLibrary />;
+                  return <UserLibraryContainer />;
                 }
                 return <LoginContainer />;
               }}
@@ -77,7 +77,7 @@ const App = () => {
               }}
             />
             <Route render={() => {
-              if (isConnected) return <UserLibrary />;
+              if (isConnected) return <UserLibraryContainer />;
               return <LoginContainer />;
             }}
             />
@@ -88,7 +88,7 @@ const App = () => {
         <div className="right col-12 col-md-7 col-lg-8 col-xl-8">
           <Switch>
             {/* PATH : / 
-            If user is connected : userLibrary / if user is not connected : login */}
+            If user is connected : UserLibraryContainer / if user is not connected : login */}
             <Route exact path="/" 
               render={() => {
                 if (isConnected) {
