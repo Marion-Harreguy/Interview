@@ -1,12 +1,9 @@
-// == Import : npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
-// == Import : local
 import './style.scss';
 
-// == Composant
 const Header = () => (
+  // TODO : Put the right urls
   <header className="header">
     <nav className="header__nav">
       <ul>
@@ -23,5 +20,5 @@ const Header = () => (
     </nav>
   </header>
 );
-// == Export
+
 export default Header;
