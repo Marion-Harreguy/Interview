@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Structure;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class LoginController extends AbstractController
 {
@@ -17,15 +19,23 @@ class LoginController extends AbstractController
     /**
      * @Route("/login", name="login", methods={"POST"})
      */
-    public function login(Request $request)
+    public function login(Request $request, SerializerInterface $serializer )
     {
         $user = $this->getUser();
 
-        return $this->json([
-            'token' => $user->getApiToken(),
-            'username' => $user->getUsername(),
-            'roles' => $user->getRoles(),
-        ]);
+        $data = $serializer->normalize($user, null, ['groups' => ['user']]);
+
+        return $this->json(
+            $data,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
+        // return $this->json([
+        //     'token' => $user->getApiToken(),
+        //     'username' => $user->getUsername(),
+        //     'roles' => $user->getRoles(),
+        // ]);
     }
 
     /**
@@ -53,6 +63,7 @@ class LoginController extends AbstractController
         //=============================//
         // On instancie un nouvel utilisateur et une nouvelle structure
         $structure = new Structure();
+
         $user = new User();
         
         //$form = $this->createForm(UserType::class, $user);
