@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 const UserLibrary = ({ user, structure, dashboard, modifyUserInfo, order, changeOrder }) => (
   <aside className="left__menu--top left__menu left__menu--home">
@@ -21,19 +22,23 @@ const UserLibrary = ({ user, structure, dashboard, modifyUserInfo, order, change
         </select>
 
         <h3 className="library__section">Mes entretiens en cours
-          <button className="library__new-interview" type="button" />
+          <NavLink exact to="/create">
+            <button className="library__new-interview" type="button" />
+          </NavLink>
         </h3>
 
         <div className="section__list">
 
           { dashboard.writtingInterviews.map((interview) => (
             <div className="list__interview" key={interview.id}>
-              <h4 className="list__interview__title">{interview.title}</h4>
-              <div className="list__interview__categories">
-                { interview.categories.map((category) => (
-                  <span className={`list__category list__category--${category}`} key={category.id} />
-                ))}
-              </div>
+              <NavLink exact to={`/update/${interview.id}`}>
+                <h4 className="list__interview__title">{interview.title}</h4>
+                <div className="list__interview__categories">
+                  { interview.categories.map((category) => (
+                    <span className={`list__category list__category--${category}`} key={category.id} />
+                  ))}
+                </div>
+              </NavLink>
             </div>
           ))}
 
@@ -45,12 +50,14 @@ const UserLibrary = ({ user, structure, dashboard, modifyUserInfo, order, change
 
           { dashboard.publishedInterviews.map((interview) => (
             <div className="list__interview" key={interview.id}>
-              <h4 className="list__interview__title">{interview.title}</h4>
-              <div className="list__interview__categories">
-                { interview.categories.map((category) => (
-                  <span className={`list__category list__category--${category}`} key={category.id} />
-                ))}
-              </div>
+              <NavLink exact to={`/read/${interview.id}`}>
+                <h4 className="list__interview__title">{interview.title}</h4>
+                <div className="list__interview__categories">
+                  { interview.categories.map((category) => (
+                    <span className={`list__category list__category--${category}`} key={category.id} />
+                  ))}
+                </div>
+              </NavLink>
             </div>
           ))}
         </div>
@@ -61,12 +68,14 @@ const UserLibrary = ({ user, structure, dashboard, modifyUserInfo, order, change
 
           { dashboard.savedInterviews.map((interview) => (
             <div className="list__interview" key={interview.id}>
+              <NavLink exact to={`/read/${interview.id}`}>
               <h4 className="list__interview__title"> {interview.title}</h4>
               <div className="list__interview__categories">
                 { interview.categories.map((category) => (
                   <span className={`list__category list__category--${category}`} key={category.id} />
                 ))}
               </div>
+              </NavLink>
             </div>
           ))}
         </div>
