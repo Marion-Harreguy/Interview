@@ -4,6 +4,8 @@ export const FORGOTTEN_PASSWORD_INPUT_CHANGE = 'FORGOTTEN_PASSWORD_INPUT_CHANGE'
 export const FORGOTTEN_PASSWORD_SUBMIT = 'FORGOTTEN_PASSWORD_SUBMIT';
 export const LOGIN_INPUT_CHANGE = 'LOGIN_INPUT_CHANGE';
 export const LOGIN_SUBMIT = 'LOGIN_SUBMIT';
+export const MODIFY_USER_INFO = 'MODIFY_USER_INFO';
+
 
 export const newUserInputChange = (payload) => ({
   type: NEW_USER_INPUT_CHANGE,
@@ -30,4 +32,9 @@ export const loginInputChange = (payload) => ({
 
 export const loginSubmit = () => ({
   type: LOGIN_SUBMIT,
+});
+
+export const modifyUserInfo = (payload) => ({
+  type: MODIFY_USER_INFO,
+  payload,
 });

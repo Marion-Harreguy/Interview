@@ -17,7 +17,7 @@ export default (store) => (next) => (action) => {
     structure: { ...store.getState().newUser.structure },
   };
 
-  const userConnect = { credentials: {...store.getState().login }};
+  const userConnect = { credentials: { ...store.getState().login } };
 
   switch (action.type) {
     case NEW_USER_SUBMIT:
@@ -29,7 +29,7 @@ export default (store) => (next) => (action) => {
         .then((response) => {
 
           // Get user informations (id)
-          console.log("New user succesfully created!");
+          console.log('New user succesfully created!');
           const newUserData = JSON.parse(response);
 
           // Change state from this user informations

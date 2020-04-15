@@ -1,5 +1,8 @@
 import React from 'react';
 import './style.scss';
+import PictureA from './../../assets/images/introduction_A.png';
+import PictureB from './../../assets/images/introduction_B.png';
+import PictureC from './../../assets/images/introduction_C.png';
 
 const Introduction = () => (
   <div className="right__presentation">
@@ -9,9 +12,9 @@ const Introduction = () => (
     <p className="presentation__content">Entrez vos critères dans le moteur de recherche et trouvez les entretiens qui nourriront votre travail.</p>
 
     <p className="presentation__content">La plateforme offre trois modes de représentation pour les corpus de résultats :</p>
-    <img alt="Mode chronologique" className="presentation__img" src="../../assets/images/introduction_A.png" />
-    <img alt="Mode liste" className="presentation__img" src="../../assets/images/introduction_B.png" />
-    <img alt="Mode carte" className="presentation__img" src="../../assets/images/introduction_C.png" />
+    <div className="presentation__img"><img alt="Mode liste" src={PictureB} /></div>
+    <div className="presentation__img"><img alt="Mode chronologique" src={PictureC} /></div>
+    <div className="presentation__img"><img alt="Mode carte" src={PictureA} /></div>
 
     <p className="presentation__content">&bull; Liste par ordre alphabétique</p>
     <p className="presentation__content">&bull; Frise chronologique</p>

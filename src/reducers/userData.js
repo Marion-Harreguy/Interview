@@ -1,18 +1,19 @@
-import { } from '../actions';
+import { MODIFY_USER_INFO } from '../actions';
 
 export const initialState = {
-  isConnected: false,
+  isConnected: true,
   dataUser: {
     id: '181',
     firstname: 'Patrick',
     lastname: 'Lebon',
     email: 'vrocher@tiscali.fr',
+    status: 'Prof',
     biograhy: 'Enim ipsum inventore sed libero et velit qui suscipit. Deserunt laudantium quibusdam enim nostrum soluta qui ipsam non. Velit reiciendis aperiam et fuga.',
   },
   dataStructure: [
     {
       id: 68,
-      name: 'Peltier Millet SARL',
+      name: 'Peltier  dMillet SARL',
       city: 'Lejeune',
       sector: 'Le pouvoir de concrétiser vos projets à l\'état pur'
     },
@@ -91,21 +92,15 @@ export const initialState = {
 
 const userData = (state = initialState, action = {}) => {
   switch (action.type) {
-    // When user writes in the inputs
-    // case NEW_USER_INPUT_CHANGE:
-    //   return {
-    //     ...state,
-    //     [action.payload.dataset.type]: {
-    //       ...state[action.payload.dataset.type],
-    //       [action.payload.name]: action.payload.value,
-    //     },
-    //   };
-    // case NEW_USER_SUBMIT:
-    //   // When user submits the input — and a new user was created
-    //   // TODO : Change the state here
-    //   return {
-    //     ...state,
-    //   };
+    case MODIFY_USER_INFO:
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          [action.payload.name]: action.payload.value,
+        },
+      };
+      break;
     default:
       return state;
   }

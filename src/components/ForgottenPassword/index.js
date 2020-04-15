@@ -11,9 +11,9 @@ const ForgottenPassword = ({ email, forgottenPasswordInputChange, forgottenPassw
 
   return (
     <aside className="left__menu left__menu--login">
-      <h2 className="login__title">Mot De Passe Oublié ?</h2>
+      <h2 className="login__title">Mot de passe oublié ?</h2>
       <nav className="login__nav">
-        <NavLink exact to="/forgotten">Mot de passe oublié</NavLink>
+        <NavLink exact to="/register">Inscription</NavLink>
         <NavLink exact to="/">Connexion</NavLink>
       </nav>
 
