@@ -27,7 +27,7 @@ class UserController extends AbstractController
     public function read($id, UserRepository $userRepository, SerializerInterface $serializer)
     {
         // On récupère les informations complètes d'un utilisateur
-       $user = $userRepository->findCompleteUser($id);
+        $user = $userRepository->findCompleteUser($id);
         // dd($user);
         // On utilise le Serializer pour normaliser notre objet User
         $data = $serializer->normalize($user, null, ['groups' => ['user']]);
