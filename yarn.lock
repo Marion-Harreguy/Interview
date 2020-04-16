@@ -1924,16 +1924,6 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
-bundle-stats-webpack-plugin@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/bundle-stats-webpack-plugin/-/bundle-stats-webpack-plugin-2.2.0.tgz#c5647bb52b14a04066638783e60e835a70647d02"
-  integrity sha512-ubYREqH1hUbhtiu16jS7Ic462DkZt8v6SJILnkJW6gsUljBPK08gI6oZ+fmSh0pAvR8/9o63MnzTOL86bJu2YQ==
-  dependencies:
-    "@bundle-stats/cli-utils" "^2.2.0"
-    "@bundle-stats/utils" "^2.2.0"
-    core-js "^3.1.4"
-    lodash "4.17.15"
-
 bundle-stats@*:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/bundle-stats/-/bundle-stats-2.2.0.tgz#1a12b58fb065e1c7130dd8620aa69b38364f01fa"

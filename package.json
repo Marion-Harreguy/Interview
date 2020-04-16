@@ -1,5 +1,8 @@
 {
-  "name": "react-modele",
+  "name": "interview",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "?",
   "scripts": {
     "build:dev": "./node_modules/.bin/webpack --mode development --module-bind js=babel-loader",
     "build:prod": "./node_modules/.bin/webpack --mode production --module-bind js=babel-loader",
