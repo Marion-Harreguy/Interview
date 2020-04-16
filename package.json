@@ -1,7 +1,9 @@
 {
   "name": "react-modele",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --open  --config config/webpack.dev.js",
+    "build:dev": "./node_modules/.bin/webpack --mode development --module-bind js=babel-loader",
+    "build:prod": "./node_modules/.bin/webpack --mode production --module-bind js=babel-loader",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --open  --dev --config config/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js",
@@ -11,14 +13,14 @@
     "test:watch": "NODE_PATH=./ mocha --watch --require tests/.setup.js tests/**/*.test.js"
   },
   "devDependencies": {
-    "@babel/core": "*",
+    "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "*",
     "@babel/plugin-proposal-object-rest-spread": "*",
-    "@babel/preset-env": "*",
-    "@babel/preset-react": "*",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
     "@babel/register": "*",
     "babel-eslint": "*",
-    "babel-loader": "*",
+    "babel-loader": "^8.1.0",
     "bundle-stats": "*",
     "chai": "*",
     "clean-webpack-plugin": "*",

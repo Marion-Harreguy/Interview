@@ -4,10 +4,15 @@ import {
   NEW_USER_SUBMIT,
   FORGOTTEN_PASSWORD_SUBMIT,
   LOGIN_SUBMIT,
+  MODIFY_USER_INFO,
   // Put the function we want to trigger after request
   // newUserError,
   // newUserSuccess,
 } from '../actions';
+
+import {
+  connectWebsocket,
+} from '../actions/socket';
 
 export default (store) => (next) => (action) => {
 
@@ -18,6 +23,8 @@ export default (store) => (next) => (action) => {
   };
 
   const userConnect = { credentials: { ...store.getState().login } };
+
+  const userInfo = { ...store.getState().userData.dataUser};
 
   switch (action.type) {
     case NEW_USER_SUBMIT:
@@ -56,15 +63,23 @@ export default (store) => (next) => (action) => {
       console.log(userConnect);
       axios.post('http://184.73.143.2/login', JSON.stringify(userConnect) , {headers:{"Content-Type" : "application/json"}})
         .then((response) => {
-          // User succesfully connect
-          // Fill the state with his datas
-
-          console.log("Succesfully connected !");
-          console.log(response);
+          store.dispatch(connectWebsocket(response.data));
         })
         .catch((error) => {
           // Tell the user what's wrong
+          // console.log(error);
+        });
+      break;
+
+    case MODIFY_USER_INFO:
+      axios.put(`http://184.73.143.2/api/users/${userInfo.id}` , JSON.stringify(userInfo) , {headers:{"Content-Type" : "application/json"}})
+        .then((response) => {
+          console.log("succesfully modified !");
+          // WEB SOCKET WILL HANDLE THE FRONT-END CHANGES
+        })
+        .catch((error) => {
           console.log(error);
+          // DISPLAY AN ERROR MESSAGE
         });
       break;
     default:

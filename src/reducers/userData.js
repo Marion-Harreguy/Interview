@@ -1,4 +1,5 @@
 import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY } from '../actions';
+import { UPDATE_USER } from '../actions/socket';
 
 export const initialState = {
   isConnected: true,
@@ -170,6 +171,12 @@ const userData = (state = initialState, action = {}) => {
             ...newCategories,
           ],
         },
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        isConnected: true,
+        // ...action.payload,
       };
     default:
       return state;
