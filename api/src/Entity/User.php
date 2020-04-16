@@ -417,12 +417,35 @@ class User implements UserInterface
         // on instancie un tableau de données de la structure
         $dashboard = [];
 
+        // On recupere les catégories liées à l'utilisateur
+        $categoriesList = [];
+
+        // on instancie un tableau de relation interviews / category
+        $relationInterviewCategory = [];
+        // on regroupe les informations utiles 
+        foreach ($this->getCategories() as $categories) {
+            $category = [
+                'id' => $categories->getId(),
+                'name' => $categories->getName(),
+                'color' => $categories->getColor(),
+            ];
+            $categoriesList[] = $category;
+
+            // pour chaque category on récupere l'interview et on stocke les deux ID 
+            foreach ($categories->getInterviews() as $interview) {
+                $relationInterviewCategory[] = [
+                    'category' => $categories->getId(),
+                    'interview' => $interview->getId(),
+                ];
+            }
+        }
+
         //on recupere les interviews 
         $interviewsPublishedListe = [];
         $interviewsWrittingListe = [];
+        $categoryIdList = [];
 
         foreach ($this->getInterviews() as $interview) {
-
 
             if ($interview->getIsPublished() === true) {
 
@@ -430,17 +453,41 @@ class User implements UserInterface
                     'id' => $interview->getId(),
                     'title' => $interview->getTitle(),
                 ];
+
+                // on boucle sur le tableau des relations interview/category
+                for ($index = 0; $index < count($relationInterviewCategory); $index++) {
+
+                    if ($interview->getId() === $relationInterviewCategory[$index]["interview"]) {
+
+                        $categoryId = $relationInterviewCategory[$index]["category"];
+                        $categoryIdList[] = $categoryId;
+                    }
+                }
+                $interviewsPublished["categories"] = $categoryIdList;
+
                 $interviewsPublishedListe[] = $interviewsPublished;
+                $categoryIdList = [];
             } else {
                 $interviewsWritting = [
                     'id' => $interview->getId(),
-                    'title' => $interview->getTitle()
+                    'title' => $interview->getTitle(),
                 ];
+
+                // on boucle sur le tableau des relations interview/category
+                for ($index = 0; $index < count($relationInterviewCategory); $index++) {
+
+                    if ($interview->getId() === $relationInterviewCategory[$index]["interview"]) {
+
+                        $categoryId = $relationInterviewCategory[$index]["category"];
+                        $categoryIdList[] = $categoryId;
+                    }
+                }
+                $interviewsWritting["categories"] = $categoryIdList;
                 $interviewsWrittingListe[]  = $interviewsWritting;
+                $categoryIdList = [];
             }
         }
 
-        //$dashboard["test"] = $categoriesList;
         $dashboard["publishedInterviews"] = $interviewsPublishedListe;
         $dashboard["writtingInterviews"] = $interviewsWrittingListe;
 
@@ -449,25 +496,27 @@ class User implements UserInterface
         foreach ($this->getFavorite() as $favorite) {
             $favorites = [
                 'id' => $favorite->getId(),
-                'title' => $favorite->getTitle()
+                'title' => $favorite->getTitle(),
             ];
+
+            // on boucle sur le tableau des relations interview/category
+            for ($index = 0; $index < count($relationInterviewCategory); $index++) {
+
+                if ($favorite->getId() === $relationInterviewCategory[$index]["interview"]) {
+
+                    $categoryId = $relationInterviewCategory[$index]["category"];
+                    $categoryIdList[] = $categoryId;
+                }
+            }
+            $favorites["categories"] = $categoryIdList;
             $favoritesListe[] = $favorites;
+
+            $categoryIdList = [];
         }
+
         $dashboard["savedInterviews"] = $favoritesListe;
 
-        // On recupere les catgories liées à l'utilisateur
-        $categoriesList = [];
-        // on regroupe les informations utiles 
-        foreach ($this->getCategories() as $categories) {
-            $category = [
-                'id' => $categories->getId(),
-                'name' => $categories->getName(),
-                'interviews' => $categories->getInterviews()
-            ];
-            $categoriesList[] = $category;
-        }
         $dashboard["categories"] = $categoriesList;
-
 
         return $dashboard;
     }

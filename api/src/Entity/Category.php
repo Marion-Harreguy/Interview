@@ -43,6 +43,11 @@ class Category
      */
     private $interviews;
 
+    /**
+     * @ORM\Column(type="string", length=15)
+     */
+    private $color;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -124,6 +129,18 @@ class Category
         if ($this->interviews->contains($interview)) {
             $this->interviews->removeElement($interview);
         }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
