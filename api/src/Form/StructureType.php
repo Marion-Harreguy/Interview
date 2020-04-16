@@ -11,10 +11,12 @@ class StructureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
         $builder
-            ->add('name')
-            ->add('city')
-            ->add('sector')
+        ->add('name')
+        ->add('city')
+        ->add('sector')
         ;
     }
 
@@ -22,6 +24,7 @@ class StructureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Structure::class,
+            'csrf_protection' => false,
         ]);
     }
 }
