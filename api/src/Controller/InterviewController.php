@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\InterviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/api/interviews", name="interview_")
@@ -12,23 +13,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class InterviewController extends AbstractController
 {
     /**
-     * TODO : définition des routes - annotations 
-     * TODO : écriture du BREAD
-     * TODO : methods des routes
-     * TODO : requirements des routes 
-     */
-
-    /**
      * Liste toutes les interviews
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse()
+    public function browse(InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
-        return $this->json([
-            'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/InterviewController.php',
-        ]);
+        $interviews = $interviewRepository->findAll();
+
+        $data = $serializer->normalize($interviews, null, ['groups' => ['interviews']]);
+
+       return $this->json(
+            $data, 
+            $status = 200, 
+            $headers = ['content-type' => 'application/Json'], 
+            $context = []
+            );
     }
     /**
      * Affiche une interview spécifique 
