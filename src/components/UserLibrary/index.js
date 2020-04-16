@@ -56,6 +56,9 @@ const UserLibrary = ({
 
   let formDisabled = true;
 
+  const sectionsAsTable = Object.entries(dashboard);
+
+  const sectionFrenchTitles = ["Mes entretiens publiés", "Mes entretiens en cours", "Mes entretiens enregistrés", "Mes recherches enregistrées"];
   // Créer une fonction qui inverse formEditable
   const changeFormDisabled = (event) => {
     event.preventDefault();
@@ -63,105 +66,88 @@ const UserLibrary = ({
     console.log(formDisabled);
   };
 
-  return(
-  <aside className="left__menu--top left__menu left__menu--home">
-    <h2 className="home__name">{user.firstname} {user.lastname}</h2>
-    <div className="home__content">
-      <form className="home__form">
-        <button className="home__form__button" type="submit" onClick={(event) => changeFormDisabled(event)}/>
-        <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="biography" value={user.biography} placeholder="Biographie" {...formDisabled ? 'disabled' : null} />
-        <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="status" value={user.status} placeholder="Statut" {...formDisabled ? 'disabled' : null} />
-      </form>
-      <div className="home__library">
-        <h2 className="library__title">Ma bibliothèque</h2>
-        <select className="library__order" name="order" value={library.order} onChange={(event) => changeOrder(event.target.value)}>
-          <option value="alphabet">Alphabétique</option>
-          <option value="chronologique">Chronologique</option>
-        </select>
+  return (
+    <aside className="left__menu--top left__menu left__menu--home">
+      <h2 className="home__name">{user.firstname} {user.lastname}</h2>
+      <div className="home__content">
+        <form className="home__form">
+          <button className="home__form__button" type="submit" onClick={(event) => changeFormDisabled(event)} />
+          <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="biography" value={user.biography} placeholder="Biographie" {...formDisabled ? 'disabled' : null} />
+          <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="status" value={user.status} placeholder="Statut" {...formDisabled ? 'disabled' : null} />
+        </form>
+        <div className="home__library">
+          <h2 className="library__title">Ma bibliothèque</h2>
+          <select className="library__order" name="order" value={library.order} onChange={(event) => changeOrder(event.target.value)}>
+            <option value="alphabet">Alphabétique</option>
+            <option value="chronologique">Chronologique</option>
+          </select>
 
-        <h3 className="library__section" onClick={()=>toggleSection('writtingInterviews')}>Mes entretiens en cours
-          <NavLink exact to="/create">
-            <button className="library__new-interview" type="button" />
-          </NavLink>
-        </h3>
+          {
+            sectionsAsTable.map((section, index) => {
+              const sectionTitle = section[0];
+              const sectionContent = section[1];
 
-        <div className={`section__list section__list--${library.writtingInterviews ? 'open' : 'closed'}`}>
+              if (sectionTitle === 'categories') {
+                // Créer les caté
+                return (
+                  <div className="home__categories">
+                    <h2 className="categories__title">Mes catégories</h2>
+                    <div className="categories__list">
+                      {
+                      sectionContent.map((category) => (
+                        <div className="home__category" key={category.id}>
+                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} />
+                          <label htmlFor={category.id}>{category.name}</label>
+                        </div>
+                      ))
+                      }
 
-          { sortedDashboard.writtingInterviews.map((interview) => (
-            <div className="list__interview" key={interview.id} style={{display: toggleInterview(interview.categories) ? 'block' : 'none'}}>
-              <NavLink exact to={`/update/${interview.id}`}>
-                <h4 className="list__interview__title">{interview.title}</h4>
-                <div className="list__interview__categories">
-                  { interview.categories.map((category) => (
-                    <span className={`list__category list__category--${category}`} key={category.id} />
-                  ))}
+                      <div className="home__category home__category--add">
+                        <input className="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie" />
+                        <button className="category-button category-button--add" type="button" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <div>
+                  <h3 className="library__section" onClick={() => toggleSection(sectionTitle)}>{sectionFrenchTitles[index]}
+                    { sectionTitle === "writtingInterviews" &&
+                      (
+                      <NavLink exact to="/create">
+                        <button className="library__new-interview" type="button" />
+                      </NavLink>
+                      )
+                    }
+                  </h3>
+                  <div className={`section__list section__list--${library[sectionTitle] ? 'open' : 'closed'}`}>
+
+                    { sectionContent.map((interview) => (
+                      <div className="list__interview" key={interview.id} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
+                        <NavLink exact to={`/update/${interview.id}`}>
+                          <h4 className="list__interview__title">{interview.title}</h4>
+                          <div className="list__interview__categories">
+                            { interview.categories.map((category) => (
+                              <span className={`list__category list__category--${category}`} key={category.id} />
+                            ))}
+                          </div>
+                        </NavLink>
+                      </div>
+                    ))}
+
+                  </div>
                 </div>
-              </NavLink>
-            </div>
-          ))}
-
-        </div>
-        </div>
-
-        {/* <h3 className="library__section" onClick={()=>toggleSection('publishedInterviews')}>Mes entretiens publiés</h3>
-
-        <div className={`section__list section__list--${library.publishedInterviews ? 'open' : 'closed'}`}>
-
-          { dashboard.publishedInterviews.map((interview) => (
-            <div className="list__interview" key={interview.id}>
-              <NavLink exact to={`/read/${interview.id}`}>
-                <h4 className="list__interview__title">{interview.title}</h4>
-                <div className="list__interview__categories">
-                  { interview.categories.map((category) => (
-                    <span className={`list__category list__category--${category}`} key={category.id} />
-                  ))}
-                </div>
-              </NavLink>
-            </div>
-          ))}
-        </div>
-
-        <h3 className="library__section" onClick={()=>toggleSection('savedInterviews')}>Mes entretiens enregistrés</h3>
-
-        <div className={`section__list section__list--${library.savedInterviews ? 'open' : 'closed'}`}>
-
-          { dashboard.savedInterviews.map((interview) => (
-            <div className="list__interview" key={interview.id}>
-              <NavLink exact to={`/read/${interview.id}`}>
-                <h4 className="list__interview__title"> {interview.title}</h4>
-                <div className="list__interview__categories">
-                  { interview.categories.map((category) => (
-                    <span className={`list__category list__category--${category}`} key={category.id} />
-                  ))}
-                </div>
-              </NavLink>
-            </div>
-          ))}
-        </div>
-
-        <h3 className="library__section">Mes recherches enregistrées</h3>
-       
-      </div> */}
-
-      <div className="home__categories">
-        <h2 className="categories__title">Mes catégories</h2>
-        <div className="categories__list">
-          { dashboard.categories.map((category) => (
-            <div className="home__category" key={category.id}>
-              <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={(event) => toggleCategory(category.id)} checked={category.displayed}/>
-              <label htmlFor={category.id}>{category.name}</label>
-            </div>
-          ))}
-
-        <div className="home__category home__category--add">
-          <input className="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie"/>
-          <button className="category-button category-button--add" type="button" />
-        </div>
+              );
+            })
+          }
         </div>
       </div>
-    </div>
-  </aside>
-)};
+    </aside>
+
+  );
+};
 
 UserLibrary.propTypes = {
   user: PropTypes.shape({
