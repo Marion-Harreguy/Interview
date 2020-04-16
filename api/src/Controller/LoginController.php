@@ -34,10 +34,7 @@ class LoginController extends AbstractController
         return $this->json(
             $data,
             $status = 200,
-            $headers = [
-                'content-type' => 'application/Json',
-                'Access-Control-Allow-Origin' => 'http://54.164.153.184',
-                ],
+            $headers = ['content-type' => 'application/Json'],
             $context = []
         );
     
@@ -71,7 +68,7 @@ class LoginController extends AbstractController
             $structure = new Structure();
             $formStructure = $this->createForm(StructureType::class, $structure);
             $formStructure->submit($data["structure"]);
-      
+
            if(($formStructure->isSubmitted() && $formStructure->isValid())) {
 
                 $em->persist($structure);
