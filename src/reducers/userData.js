@@ -2,7 +2,7 @@ import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY } from 
 import { UPDATE_USER } from '../actions/socket';
 
 export const initialState = {
-  isConnected: true,
+  isConnected: false,
   dataUser: {
     id: 181,
     firstname: 'Patrick',
