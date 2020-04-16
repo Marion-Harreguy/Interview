@@ -78,7 +78,7 @@ class UserController extends AbstractController
             $formUser->submit($data["user"]);
 
             if(($formUser->isSubmitted() && $formUser->isValid())) {
-              //$user->setPassword($passwordEncoder->encodePassword($user, $data["user"]["password"]));
+         
               
               $user->setUpdatedAt(new \Datetime());
                 
