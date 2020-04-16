@@ -15,7 +15,7 @@ export default (store) => (next) => (action) => {
     case CONNECT_WEBSOCKET:
 
       console.log("Trying to connect websocket : ");
-      socket = window.io('https://184.73.143.2/');
+      socket = window.io('http://184.73.143.2/');
 
       // MAKE SOCKET HERE
       // socket.on(`api/users/${action.payload}`, (updatedUserData) => {
