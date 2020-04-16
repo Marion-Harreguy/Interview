@@ -465,9 +465,10 @@ transform: rotate(-135deg);
   position: absolute;
   width: 18px;
   height: 18px;
-  background-image: url('../../assets/icons/pencil.png');
+  background-image: url('/src/assets/icons/pencil.png');
   background-size: contain;
   background-repeat: no-repeat;
+  background-color: red;
   top: 5px;
   right: 0;
   border-radius: 0;
@@ -513,7 +514,7 @@ transform: rotate(-135deg);
   border-radius: 50%;
   bottom: 10px;
   padding: 0;
-  background-image: url("../../assets/icons/thick-plus.png");
+  background-image: url("/src/assets/icons/thick-plus.png");
   background-size: 7px;
   background-repeat: no-repeat;
   background-position: center;
@@ -525,7 +526,7 @@ transform: rotate(-135deg);
   margin-top: 2px;
   border-radius: 50%;
   padding: 0;
-  background-image: url('../../assets/icons/thick-check.png');
+  background-image: url('/src/assets/icons/thick-check.png');
   background-size: 7px;
   background-position: center;
   border: solid 1px white;
@@ -688,7 +689,7 @@ TEST ICI NE FONCTIONNE PAS
 */
 
 .new-category-name:placeholder-shown ~ .category-button--add { 
-  background-image: url('../../assets/icons/thick-plus.png');
+  background-image: url('/src/assets/icons/thick-plus.png');
 }
 
 .home__content {
@@ -780,7 +781,7 @@ TEST ICI NE FONCTIONNE PAS
 } */
 
 .interview__annotation__close, .interview__annotation__close:focus {
-  background-image: url('../../assets/icons/cross.png');
+  background-image: url('/src/assets/icons/cross.png');
   width: 12px;
   height: 12px;
   position: absolute;
@@ -801,15 +802,15 @@ TEST ICI NE FONCTIONNE PAS
 }
 
 .tools__save {
-  background-image: url('../../assets/icons/bookmark.png');
+  background-image: url('/src/assets/icons/bookmark.png');
 }
 
 .tools__close {
-  background-image: url('../../assets/icons/cross.png');
+  background-image: url('/src/assets/icons/cross.png');
 }
 
 .tools__download {
-  background-image: url('../../assets/icons/download.png');
+  background-image: url('/src/assets/icons/download.png');
   margin-top: -1px;
 }
 
@@ -881,18 +882,18 @@ TEST ICI NE FONCTIONNE PAS
 }
 
 .tools__close {
-  background-image: url("../../assets/icons/cross.png");
+  background-image: url("/src/assets/icons/cross.png");
   width: 16px !important;
   height: 16px !important;
   margin-left: 2px;
 }
 
 .tools__publish {
-  background-image: url("../../assets/icons/export.png");
+  background-image: url("/src/assets/icons/export.png");
 }
 
 .tools__delete {
-  background-image: url("../../assets/icons/trash.png");
+  background-image: url("/src/assets/icons/trash.png");
 }
 
 .write__form {
@@ -953,7 +954,7 @@ TEST ICI NE FONCTIONNE PAS
   margin-top: -2px;
   border-radius: 50%;
   padding: 0;
-  background-image: url('../../assets/icons/thick-check.png');
+  background-image: url('/src/assets/icons/thick-check.png');
   background-size: 7px;
   background-position: center;
   background-repeat: no-repeat;
@@ -1216,7 +1217,7 @@ header {
 .research__tools__save--button, .research__tools__save--button:focus {
   width: 20px;
   height: 20px;
-  background-image: url('../../assets/icons/bookmark.png');
+  background-image: url('/src/assets/icons/bookmark.png');
   background-size: contain;
   border: none;
   margin-left: 8px;
@@ -1251,17 +1252,17 @@ header {
 }
 
 .research__tools__mode--list {
-  background-image: url('../../assets/icons/list.png');
+  background-image: url('/src/assets/icons/list.png');
   background-size: 14px;
 }
 
 .research__tools__mode--timeline {
-  background-image: url('../../assets/icons/clock.png');
+  background-image: url('/src/assets/icons/clock.png');
   background-size: contain;
 }
 
 .research__tools__mode--map {
-  background-image: url('../../assets/icons/planet.png');
+  background-image: url('/src/assets/icons/planet.png');
   background-size: contain;
 }
 

@@ -34,6 +34,18 @@ export const initialState = {
       },
       {
         id: 63,
+        title: 'Mirrupti cum ratione animi maxime enim.',
+        categories: [487, 488],
+        publish: true,
+      },
+      {
+        id: 69,
+        title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
+        categories: [477],
+        publish: true,
+      },
+      {
+        id: 80,
         title: 'Corrupti cum ratione animi maxime enim.',
         categories: [487, 488],
         publish: true,
@@ -41,16 +53,28 @@ export const initialState = {
     ],
     writtingInterviews: [
       {
-        id: 62,
-        title: 'Et quasi incidunt rerum ex accusamus.',
-        categories: [482],
-        publish: false,
+        id: 61,
+        title: 'Nesciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
+        categories: [477],
+        publish: true,
       },
       {
-        id: 64,
-        title: 'Consequatur accusantium quia porro minus voluptates dignissimos est.',
-        categories: [482, 487, 488],
-        publish: false,
+        id: 63,
+        title: 'Mirrupti cum ratione animi maxime enim.',
+        categories: [487, 488],
+        publish: true,
+      },
+      {
+        id: 69,
+        title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
+        categories: [477],
+        publish: true,
+      },
+      {
+        id: 80,
+        title: 'Corrupti cum ratione animi maxime enim.',
+        categories: [487, 488],
+        publish: true,
       },
     ],
     savedInterviews: [
@@ -93,7 +117,7 @@ export const initialState = {
     ],
   },
   library: {
-    order: "alphabet",
+    order: "chronologique",
     publishedInterviews: false,
     savedInterviews: false,
     writtingInterviews: false,
@@ -106,8 +130,8 @@ const userData = (state = initialState, action = {}) => {
     case MODIFY_USER_INFO:
       return {
         ...state,
-        userData: {
-          ...state.userData,
+        dataUser: {
+          ...state.dataUser,
           [action.payload.name]: action.payload.value,
         },
       };

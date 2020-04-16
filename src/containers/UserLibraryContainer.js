@@ -11,8 +11,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  modifyUserInfo: () => {
-    dispatch(modifyUserInfo());
+  modifyUserInfo: (inputChanged) => {
+    dispatch(modifyUserInfo(inputChanged));
   },
   changeOrder: (newOrder) => {
     dispatch(changeOrder(newOrder));

@@ -13,39 +13,70 @@ const UserLibrary = ({
   toggleSection,
   toggleCategory }) => {
 
-  const toggleArticle = (interviewCategoryList) => {
+  const toggleInterview = (interviewCategoryList) => {
     let interviewShown = false;
-    interviewCategoryList.forEach(interviewCategory => {
+    interviewCategoryList.forEach((interviewCategory) => {
       if (dashboard.categories.find((dataCategory) => dataCategory.id === interviewCategory).displayed) interviewShown = true;
     });
     return interviewShown;
   };
 
+  function compare(a, b) {
+    // Use toUpperCase() to ignore character casing
+    const titleA = a.title.toUpperCase();
+    const titleB = b.title.toUpperCase();
+    let comparison = 0;
+    if (titleA > titleB) {
+      comparison = 1;
+    } else if (titleA < titleB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   // Function to sort with select
-  const sortInterviews = () => {
-    console.log("Library needs to be sorted by : "+library.order);
+  const sortDashboard = () => {
+    if (library.order === 'alphabet') {
+      let alphaDashboard = { ...dashboard };
+      return {
+        publishedInterviews: [...alphaDashboard.publishedInterviews.sort(compare)],
+        writtingInterviews: [...alphaDashboard.writtingInterviews.sort(compare)],
+        savedInterviews: [...alphaDashboard.savedInterviews.sort(compare)],
+        categories: [...alphaDashboard.categories],
+      };
+    }
+    return { ...dashboard };
   };
 
+  let sortedDashboard = { ...sortDashboard() };
+
   useEffect(() => {
-    sortInterviews();
-  },[library.order]);
+    sortedDashboard = { ...sortDashboard() };
+  }, [library.order]);
+
+  let formDisabled = true;
+
+  // Créer une fonction qui inverse formEditable
+  const changeFormDisabled = (event) => {
+    event.preventDefault();
+    formDisabled = !formDisabled;
+    console.log(formDisabled);
+  };
 
   return(
   <aside className="left__menu--top left__menu left__menu--home">
     <h2 className="home__name">{user.firstname} {user.lastname}</h2>
     <div className="home__content">
       <form className="home__form">
-        <button className="home__form__button" type="submit" />
-        <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="city" value={structure[0].city} placeholder="Ville" />
-        <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="structure" value={structure.name} placeholder="Structure" />
-        <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="status" value={user.status} placeholder="Statut" /> 
+        <button className="home__form__button" type="submit" onClick={(event) => changeFormDisabled(event)}/>
+        <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="biography" value={user.biography} placeholder="Biographie" {...formDisabled ? 'disabled' : null} />
+        <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="status" value={user.status} placeholder="Statut" {...formDisabled ? 'disabled' : null} />
       </form>
       <div className="home__library">
         <h2 className="library__title">Ma bibliothèque</h2>
         <select className="library__order" name="order" value={library.order} onChange={(event) => changeOrder(event.target.value)}>
           <option value="alphabet">Alphabétique</option>
           <option value="chronologique">Chronologique</option>
-          <option value="tag">Tag</option>
         </select>
 
         <h3 className="library__section" onClick={()=>toggleSection('writtingInterviews')}>Mes entretiens en cours
@@ -56,8 +87,8 @@ const UserLibrary = ({
 
         <div className={`section__list section__list--${library.writtingInterviews ? 'open' : 'closed'}`}>
 
-          { dashboard.writtingInterviews.map((interview) => (
-            <div className="list__interview" key={interview.id} style={{display: toggleArticle(interview.categories) ? 'block' : 'none'}}>
+          { sortedDashboard.writtingInterviews.map((interview) => (
+            <div className="list__interview" key={interview.id} style={{display: toggleInterview(interview.categories) ? 'block' : 'none'}}>
               <NavLink exact to={`/update/${interview.id}`}>
                 <h4 className="list__interview__title">{interview.title}</h4>
                 <div className="list__interview__categories">
