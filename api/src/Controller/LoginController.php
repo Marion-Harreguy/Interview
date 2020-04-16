@@ -25,6 +25,8 @@ class LoginController extends AbstractController
      */
     public function login(Request $request, SerializerInterface $serializer )
     {
+         // On vérifie si l'on a une requête XMLHttpRequest
+        if($request->isXmlHttpRequest()) {
         $user = $this->getUser();
 
         $data = $serializer->normalize($user, null, ['groups' => ['user']]);
@@ -35,6 +37,13 @@ class LoginController extends AbstractController
             $headers = ['content-type' => 'application/Json'],
             $context = []
         );
+    }
+    return $this->json(
+        ['Bad request'],
+        $status = 400,
+        $headers = ['content-type' => 'application/Json'],
+        $context = []
+    );
         // return $this->json([
         //     'token' => $user->getApiToken(),
         //     'username' => $user->getUsername(),
