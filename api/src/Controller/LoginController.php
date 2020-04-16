@@ -57,8 +57,7 @@ class LoginController extends AbstractController
               
             $user->setPassword($passwordEncoder->encodePassword($user, $data["user"]["password"]));
             $user->setRoles(['ROLE_USER']);
-            $user->setApiToken(uniqid());
-
+            $user->setApiToken(md5(uniqid(rand(), true)));
 
         if(!empty($data["structure"])) {
     
@@ -81,6 +80,8 @@ class LoginController extends AbstractController
         }
 
         $errorsEmail = $formUser["email"]->getErrors();
+        /*$errorsMessage = $errorsEmail->getMessageParameters();
+        dd($errorsMessage);*/
         
         // for ($errorIndex=0; $errorIndex < $errorsEmail->count() ; $errorIndex++) { 
         //     $message = $errorsEmail->getMessage();
@@ -88,7 +89,7 @@ class LoginController extends AbstractController
         // $message = $this->getMessage($errorsEmail);
         //dd($errorsEmail->count(), $message);
             
-        // Todo : trouvez comment récucperer le message d'erreurs
+        // Todo : trouvez comment récuperer le message d'erreurs
 
         if($errorsEmail->count() > 0){
             return $this->json(['Email taken'], $status = 400, $headers = ['content-type' => 'application/Json'], $context = []);

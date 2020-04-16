@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Structure;
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\UserEditType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+
 
 /**
  * @Route("/api/users", name="user_")
@@ -41,119 +43,69 @@ class UserController extends AbstractController
        
     }
 
-    /**
-     * Crée un nouvel utilisateur
-     * 
-     * @Route("/", name="add", methods={"POST"})
-     */
-    public function add(Request $request)
-    {
-        // On vérifie si l'on a une requête XMLHttpRequest
-        // if($request->isXmlHttpRequest()) {
-        // On décode les données envoyées
-        $data = json_decode($request->getContent());
-    
-        // On instancie un nouvel utilisateur
-        $user = new User();
-
-        // On hydrate notre objet User
-        $user->setFirstname($data->user->firstname);
-        $user->setLastname($data->user->lastname);
-        $user->setEmail($data->user->email);
-        $user->setPassword($data->user->password);
-        $user->setBiography($data->user->biography);
-
-        //=============================//
-        //Ajouter les données de base 
-        //=============================//
-        $user->setRoles(['ROLE_USER']);
-        $user->setApiToken(uniqid());
-       
-        // On le sauvegarde en base de données
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($user);
-        // $em->flush();
-
-        //=============================//
-        // Récupération des données relatives de l'utilisateur
-        // Marion : 13/04/2020
-        //=============================//
-        $structure = new Structure();
-        $structure->setName($data->structure->name);
-        $structure->setCity($data->structure->city);
-        $structure->setSector($data->structure->sector);
-
-        // On le sauvegarde en base de données
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-
-        
-        return $this->json([
-            'message' => 'Add User'
-            ], 
-            $status = 201, // Response::HTTP_CREATED, 
-            $headers = ['content-type' => 'application/Json'], 
-            $context = []);
-    }
+    //=============================//
+    // Déplacer sur le LoginControlleur
+    // sous la méthode Register
+    //=============================//
+    // /**
+    //  * Crée un nouvel utilisateur
+    //  * 
+    //  * @Route("/", name="add", methods={"POST"})
+    //  */
+    // public function add(Request $request)
+    // {
+    // }
 
     /**
-     * Modifie un nouvel utilisateur
+     * Modifie un utilisateur
      * 
      * @Route("/{id}", name="edit", requirements={"id": "\d+"}, methods={"PUT", "PATCH"})
      */
-    public function edit(User $user, Structure $structure, Request $request)
+    public function edit(User $user, Request $request, EntityManagerInterface $em)
     {
+        // Todo : Check apiToken / Email
+
         // On vérifie si l'on a une requête XMLHttpRequest
         // if($request->isXmlHttpRequest()) {
         // On décode les données envoyées
-        $data = json_decode($request->getContent());
+        $data = json_decode($request->getContent(), true);
 
-        $code = 200;
-        
-        // Si l'utilisateur n'est pas trouvé
-        if(!$user) {
-            // On instancie le nouvel utilisateur
-            $user = new User();
+        // Tester le Token du demandeur et le Token du recut 
+        if( $request->headers->get('X-AUTH-TOKEN') === $user->getApiToken()){
+
+            // on execute les modifs 
+            $formUser = $this->createForm(UserEditType::class, $user);
+            $formUser->submit($data["user"]);
+
+            if(($formUser->isSubmitted() && $formUser->isValid())) {
+         
+              
+              $user->setUpdatedAt(new \Datetime());
+                
+                if(!empty($data["structure"])) {
             
-            $code = 201;
+                    $structure = new Structure();
+                    $formStructure = $this->createForm(StructureType::class, $structure);
+                    $formStructure->submit($data["structure"]);
+                
+                    if(($formStructure->isSubmitted() && $formStructure->isValid())) {
+                        $em->persist($structure);
+                        $user->addStructure($structure);
+                    }
+                }
+
+                $em->persist($user);
+                $em->flush();
+            }
+
+            return $this->json(['C\'est bien toi'],$status = 200, $headers = ['content-type' => 'application/Json'],$context = []);
+        } else {
+            return $this->json(
+                ['File ranger ta chambre'], 
+                $status = 403, 
+                $headers = ['content-type' => 'application/Json'], 
+                $context = []
+                );
         }
-
-        // Si la structure n'est pas trouvée
-        if(!$structure) {
-            // On instancie la nouvelle structure
-            $structure = new Structure();
-            
-            $code = 201;
-        }
-
-        // On hydrate l'objet User
-        $user->setFirstname($data->user->firstname);
-        $user->setLastname($data->user->lastname);
-        $user->setEmail($data->user->email);
-        $user->setBiography($data->user->biography);
-
-        // On hydrate l'objet Structure
-        $structure->setName($data->structure->name);
-        $structure->setCity($data->structure->city);
-        $structure->setSector($data->structure->sector);
-
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($user);
-
-        // if($form->isSubmitted() && $form->isValid()) 
-        //    $user->setUpdatedAt(new \DateTime());
-
-        // On le sauvegarde en base de données
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user, $structure);
-        // $em->flush();
-        
-        return new Response('ok', Response::HTTP_OK);
-
-        // return $this->redirectToRoute('');
-        // }
-        
-        // return new Response('Not ok', Response::HTTP_NOT_FOUND);
     }
 }
