@@ -55,3 +55,4 @@ App\Entity\Category:
         name: '<word()>'
         user: '@user*'
         interviews: '<numberBetween(1,2)>x @interview_<numberBetween(1,5)>'
+        color : '<hexcolor()>'
