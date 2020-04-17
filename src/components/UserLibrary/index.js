@@ -2,16 +2,25 @@ import React, { useEffect } from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import $ from 'jquery';
 
 const UserLibrary = ({
   user,
   structure,
   dashboard,
   modifyUserInfo,
+  modifyUserInfoAPI,
   library,
   changeOrder,
   toggleSection,
-  toggleCategory }) => {
+  toggleCategory,
+  addCategoryChange,
+  addCategorySubmit,
+  newCategoryName,
+  changeFormDisabled,
+  formDisabled,
+  
+ }) => {
 
   // Function to determine weather an interview is shown or not
   // Based on its category list, and which categories the user checked
@@ -41,58 +50,55 @@ const UserLibrary = ({
   // Default table is in chronological order
   // If alphabetical order, uses Compare function
   // PROBLEM
-  const sortDashboard = () => {
+  const sortDashboard = (dashboardOriginal) => {
+    console.log(dashboardOriginal);
     if (library.order === 'alphabet') {
-      console.log("alphabet : "+dashboard);
-      const alphaDashboard = { ...dashboard };
+      const alphaDashboard = { ...dashboardOriginal };
       return {
-        publishedInterviews: [...alphaDashboard.publishedInterviews.sort(compare)],
-        writtingInterviews: [...alphaDashboard.writtingInterviews.sort(compare)],
-        savedInterviews: [...alphaDashboard.savedInterviews.sort(compare)],
-        categories: [...alphaDashboard.categories],
+        publishedInterviews: alphaDashboard.publishedInterviews.sort(compare),
+        writtingInterviews: alphaDashboard.writtingInterviews.sort(compare),
+        savedInterviews: alphaDashboard.savedInterviews.sort(compare),
+        categories: alphaDashboard.categories,
       };
     }
-
-    else {
-      console.log("chrono : "+dashboard);
-      return { ...dashboard };
-    }
+    return { ...dashboardOriginal };
   };
 
   // Initiate sortedDashboard (used for the mapping)
-  let sortedDashboard = { ...sortDashboard() };
-
-  // Each time "library.order" prop is changed (with select — by user)
-  // sortedDashboard is generated again —> mapping changes
-  useEffect(() => {
-    sortedDashboard = { ...sortDashboard() };
-  }, [library.order]);
-
-  // User information form is disabled by default
-  let formDisabled = true;
+  const sortedDashboard = sortDashboard(dashboard);
 
   // const that changes an object into a table, so we can map on it
   // { A: contentA, B: contentB } => [ [ A, contentA ], [ B, contentB ] ]
-  const sectionsAsTable = Object.entries(dashboard);
+  const sectionsAsTable = Object.entries(sortedDashboard);
 
   // French title corresponding to the sections
   const sectionFrenchTitles = ["Mes entretiens publiés", "Mes entretiens en cours", "Mes entretiens enregistrés", "Mes recherches enregistrées"];
 
-  // Function to switch weather userForm is editable or not
-  const changeFormDisabled = (event) => {
-    event.preventDefault();
-    formDisabled = !formDisabled;
-    console.log(formDisabled);
-  };
+  const smoothTransition = (sectionIsOpen, sectionTitle) => {
+    let correspondingList = document.querySelector('.'+sectionTitle+'-container .section__list');
+
+    if (sectionIsOpen) {
+      // Transition to close the section
+      $(correspondingList).animate({ height: '0px' }, 100, 'swing');
+    }
+    else {
+      // Transition to close the section
+      $(correspondingList).css('height', 'auto');
+      const sectionAutoHeight = correspondingList.clientHeight +'px';
+      $(correspondingList).css('height', 0);
+      $(correspondingList).animate({ height: sectionAutoHeight }, 100, 'swing');
+    }
+  }
+
 
   return (
     <aside className="left__menu--top left__menu left__menu--home">
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
       <div className="home__content">
         <form className="home__form">
-          <button className="home__form__button" type="submit" onClick={(event) => changeFormDisabled(event)} />
-          <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="biography" value={user.biography} placeholder="Biographie" {...formDisabled ? 'disabled' : null} />
-          <input className="home__form__input" onChange={(evt) => modifyUserInfo(evt.target)} type="text" name="status" value={user.status} placeholder="Statut" {...formDisabled ? 'disabled' : null} />
+          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(), changeFormDisabled(event), modifyUserInfoAPI()}} />
+          <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)}type="text" name="biography" value={user.biography} placeholder="Biographie" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
+          <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
         </form>
         <div className="home__library">
           <h2 className="library__title">Ma bibliothèque</h2>
@@ -117,15 +123,15 @@ const UserLibrary = ({
                       // Creating each category
                       sectionContent.map((category) => (
                         <div className="home__category" key={category.id}>
-                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} name={`category${category.id}`} />
+                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} name={`category-${category.id}`} />
                           <label htmlFor={category.id}>{category.name}</label>
                         </div>
                       ))
                       }
 
                       <div className="home__category home__category--add">
-                        <input className="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category"/>
-                        <button className="category-button category-button--add" type="button" />
+                        <input className="new-category-name" onChange={(e) => addCategoryChange(e.target.value)} type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category" value={newCategoryName}/>
+                        <button className="category-button category-button--add" onClick={(e) => {addCategorySubmit(e.target), modifyUserInfoAPI()}} type="button" />
                       </div>
                     </div>
                   </div>
@@ -134,8 +140,8 @@ const UserLibrary = ({
 
               // Creating library reading section
               return (
-                <div>
-                  <h3 className="library__section" onClick={() => toggleSection(sectionTitle)}>{sectionFrenchTitles[index]}
+                <div className={`${sectionTitle}-container`}>
+                  <h3 className="library__section" onClick={() => {toggleSection(sectionTitle), smoothTransition(library[sectionTitle], sectionTitle)}}>{sectionFrenchTitles[index]}
                     { sectionTitle === "writtingInterviews" &&
                       (
                       <NavLink exact to="/create">
@@ -243,7 +249,10 @@ UserLibrary.propTypes = {
 
   toggleSection: PropTypes.func.isRequired,
   toggleCategory: PropTypes.func.isRequired,
-
+  addCategoryChange: PropTypes.func.isRequired,
+  addCategorySubmit: PropTypes.func.isRequired,
+  modifyUserInfoAPI: PropTypes.func.isRequired,
+  newCategoryName: PropTypes.string.isRequired,
 };
 
 export default UserLibrary;

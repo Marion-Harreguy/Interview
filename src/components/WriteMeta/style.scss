@@ -1,0 +1,30 @@
+// WRITE META
+.write__category label, .new-category-name, .new-category-name:focus {
+    vertical-align: top;
+    position: absolute;
+    left: 25px;
+    top: -5.5px;
+    font-size: 1.2em;
+  }
+  
+  .new-category-name, .new-category-name:focus {
+    margin-top: 0;
+    width: 20vw;
+  }
+  
+  .interview__meta {
+    overflow: scroll;
+    height: 100%;
+  } 
+  
+  .category-button--add {
+    height:15px;
+    width:15px;
+    margin-top: -2px;
+    border-radius: 50%;
+    padding: 0;
+    background-image: url('/src/assets/icons/thick-check.png');
+    background-size: 7px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }

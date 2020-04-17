@@ -22,18 +22,7 @@ import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContai
 // Temporary : all style put in one file
 import './style.scss';
 
-const App = () => {
-  // let isConnected = store.getState().userData.isConnected;
-  let isConnected = true;
-
-  // useEffect(() => {
-  //   console.log("isConnected changed !");
-  //   isConnected = store.getState().userData.isConnected;
-  // }, [store.getState()]);
-
-  // const renderConnection = () => {
-  //   return store.getState().userData.isConnected;
-  // };
+const App = ({ isConnected }) => {
 
   return (
     <div className="app">

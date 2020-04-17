@@ -56,6 +56,12 @@ module.exports = {
         options: {
           outputPath: 'fonts/',
         },
+
+        // // Images
+        // {
+        //   test: /\.(png|jpg|gif)$/,
+        //   loader: 'url-loader'
+        // },
       },
     ],
   },

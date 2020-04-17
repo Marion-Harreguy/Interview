@@ -11,6 +11,10 @@ module.exports = merge(common, {
   module: {
     rules: [
       // Styles
+      // {
+      //   test: /\.(png|jpg|gif)$/,
+      //   loader: 'url-loader'
+      // },
       {
         test: /\.(s?css)$/,
         use: [

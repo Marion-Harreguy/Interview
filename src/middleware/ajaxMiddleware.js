@@ -4,7 +4,7 @@ import {
   NEW_USER_SUBMIT,
   FORGOTTEN_PASSWORD_SUBMIT,
   LOGIN_SUBMIT,
-  MODIFY_USER_INFO,
+  MODIFY_USER_INFO_API,
 } from '../actions';
 
 import {
@@ -71,24 +71,27 @@ export default (store) => (next) => (action) => {
         })
         .catch((error) => {
           // Tell the user what's wrong
+          store.dispatch(connectWebsocket({}));
           // console.log(error);
         });
       break;
 
-    case MODIFY_USER_INFO:
+    case MODIFY_USER_INFO_API:
       // Request to send the changes
-      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json' } })
-      // REQUEST WITH HEADER
-      // axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':true } })
-        .then((response) => {
-          console.log("succesfully modified !");
-          // WEB SOCKET WILL HANDLE THE FRONT-END CHANGES
-        })
-        .catch((error) => {
-          console.log(error);
-          // DISPLAY AN ERROR MESSAGE
-        });
+      // axios.put(`http://184.73.143.2/api/users/${userInfo.id}
+      // axios.put('http://184.73.143.2/api/users/1551', JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json', 'X-Auth-Token': 'd982301f2da8736827fc4b191ff1ebb2' } })
+      // // REQUEST WITH HEADER
+      // // axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':true } })
+      //   .then((response) => {
+      //     console.log("succesfully modified !");
+      //     // WEB SOCKET WILL HANDLE THE FRONT-END CHANGES
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     // DISPLAY AN ERROR MESSAGE
+      //   });
       break;
+
     default:
       next(action);
   }

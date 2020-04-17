@@ -1,8 +1,8 @@
-import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY } from '../actions';
+import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED } from '../actions';
 import { UPDATE_USER } from '../actions/socket';
 
 export const initialState = {
-  isConnected: false,
+  isConnected: true,
   dataUser: {
     id: 181,
     firstname: 'Patrick',
@@ -122,11 +122,47 @@ export const initialState = {
     publishedInterviews: false,
     savedInterviews: false,
     writtingInterviews: false,
+    formDisabled: true,
     // savedResearch: false,
+  },
+
+  newCategory: {
+    id: 488,
+    name: '',
+    displayed: true,
   },
 };
 
+const categoryColors = [
+  "#eeeeee",
+  "#121212",
+  "#939393",
+  "#179468",
+  "#083204",
+  "#058403",
+  "#850438",
+  "#508435",
+  "#850438",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+  "#eeeeee",
+]
+
 const userData = (state = initialState, action = {}) => {
+
   switch (action.type) {
     case MODIFY_USER_INFO:
       return {
@@ -182,6 +218,42 @@ const userData = (state = initialState, action = {}) => {
         isConnected: true,
         ...action.payload,
       };
+    case ADD_CATEGORY_SUBMIT:
+      if (state.newCategory.name) {
+        return {
+          ...state,
+          dashboard: {
+            ...state.dashboard,
+            categories: [
+              ...state.dashboard.categories,
+              {
+                ...state.newCategory,
+              },
+            ],
+          },
+          newCategory: {
+            ...state.newCategory,
+            name: '',
+            color: categoryColors[state.dashboard.categories.length],
+          },
+        };
+    };
+    case ADD_CATEGORY_CHANGE:
+      return {
+        ...state,
+        newCategory: {
+          ...state.newCategory,
+          name: action.payload,
+        },
+      };
+      case CHANGE_FORM_DISABLED:
+        return {
+          ...state,
+          library: {
+            ...state.library,
+            formDisabled: !state.library.formDisabled,
+          },
+        };
     default:
       return state;
   }

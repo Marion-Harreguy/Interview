@@ -1,12 +1,12 @@
 ESPACE PERSO :
-— CSS : Répartir dans les composant déjà faits     Gael
-— Transition smooth à l'ouverture des catégories   Gael -> Ça ça va être chaud je pense parce que tu peux pas faire de transition CSS vers une height auto (et donc sans valeur). Il va falloir trouver une alternative
-— CSS : Retrouver les chemins des icones    Gael (du coup je te mets dessus)
-— CSS : Modifier les détails qui vont pas    Laura
 — Ordre chronologique / Alphabétique   Laura
 
-— Gérer input nouvelle catégorie        Gael
-— Disabled pour les input !             Gael 
-— Commenter le code      Laura OK
-— Faire passer isConnected à true à la connexion    Laura OK
-— Gérer le switch à la connexion !   Laura
+— Disabled pour les input !    Gael 
+
+
+— Transition ouverture sections Espace Perso
+— CSS : Retrouver les chemins des icones  
+— Couleurs catégories (ajouter les couleurs)
+— Erreur avec les names
+— Ajouter le fait qu'on reste connecter au rechargement de la page
+— Passer catégories du user en props
