@@ -14,9 +14,9 @@ class StructureType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-        ->add('name')
-        ->add('city')
-        ->add('sector')
+        ->add('name', null, ['required' => false])
+        ->add('city', null, ['required' => false])
+        ->add('sector', null, ['required' => false])
         ;
     }
 

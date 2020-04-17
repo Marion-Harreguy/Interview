@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Structure;
 use App\Form\StructureType;
+use App\Repository\StructureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
     /**
@@ -19,14 +21,20 @@ class StructureController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse()
+    public function browse(StructureRepository $structureRepository, SerializerInterface $serializer)
     {
-        return $this->json([
-            'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/StructureController.php',
-        ]);
+        $structures = $structureRepository->findAll();
+        $data = $serializer->normalize($structures);
+
+        return $this->json(
+            $data,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
     }
-        /**
+    
+    /**
      * Affiche une structure spécifique 
      * 
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id":"\d+"})
