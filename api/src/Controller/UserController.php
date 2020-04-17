@@ -33,14 +33,14 @@ class UserController extends AbstractController
         // dd($user);
         // On utilise le Serializer pour normaliser notre objet User
         $data = $serializer->normalize($user, null, ['groups' => ['user']]);
-        
-        return $this->json(
-            $data, 
-            $status = 200, 
-            $headers = ['content-type' => 'application/Json'], 
-            $context = []
-            );
-       
+
+        $response = new Response($data);
+
+        // On ajoute l'entête HTTP
+        $response->headers->set('Content-Type', 'application/json');
+
+        // On envoie la réponse
+        return $response;
     }
 
     //=============================//
@@ -71,24 +71,24 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         // Tester le Token du demandeur et le Token du recut 
-        if( $request->headers->get('X-AUTH-TOKEN') === $user->getApiToken()){
+        if ($request->headers->get('X-AUTH-TOKEN') === $user->getApiToken()) {
 
             // on execute les modifs 
             $formUser = $this->createForm(UserEditType::class, $user);
             $formUser->submit($data["user"]);
 
-            if(($formUser->isSubmitted() && $formUser->isValid())) {
-         
-              
-              $user->setUpdatedAt(new \Datetime());
-                
-                if(!empty($data["structure"])) {
-            
+            if (($formUser->isSubmitted() && $formUser->isValid())) {
+
+
+                $user->setUpdatedAt(new \Datetime());
+
+                if (!empty($data["structure"])) {
+
                     $structure = new Structure();
                     $formStructure = $this->createForm(StructureType::class, $structure);
                     $formStructure->submit($data["structure"]);
-                
-                    if(($formStructure->isSubmitted() && $formStructure->isValid())) {
+
+                    if (($formStructure->isSubmitted() && $formStructure->isValid())) {
                         $em->persist($structure);
                         $user->addStructure($structure);
                     }
@@ -98,14 +98,14 @@ class UserController extends AbstractController
                 $em->flush();
             }
 
-            return $this->json(['C\'est bien toi'],$status = 200, $headers = ['content-type' => 'application/Json'],$context = []);
+            return $this->json(['C\'est bien toi'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
         } else {
             return $this->json(
-                ['File ranger ta chambre'], 
-                $status = 403, 
-                $headers = ['content-type' => 'application/Json'], 
+                ['File ranger ta chambre'],
+                $status = 403,
+                $headers = ['content-type' => 'application/Json'],
                 $context = []
-                );
+            );
         }
     }
 }
