@@ -22,11 +22,11 @@ class InterviewRepository extends ServiceEntityRepository
     /**
       * @return Interview[] Returns an array of Interview objects
     */
-    public function findByExampleField($value)
+    public function findAllPublished()
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('i.isPublished = :val')
+            ->setParameter('val', true)
             ->orderBy('i.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
@@ -34,15 +34,16 @@ class InterviewRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
-    public function findOneBySomeField($value): ?Interview
+    public function findCompleteInterview($id)
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('i')
+  
+            ->Where('i.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+    
 }

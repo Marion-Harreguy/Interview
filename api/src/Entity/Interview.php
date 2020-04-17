@@ -317,4 +317,118 @@ class Interview
 
         return $this;
     }
+
+    /**
+     * Get data list of Interviews (Browse)
+     * @Groups("browseInterviews")
+     */
+    public function getInterviews()
+    {
+        $interviews = [];
+
+        // récupere uniquement les published = true => Repository
+        $interview = [
+            "id" => $this->getId(),
+            "title"  => $this->getTitle(),
+            "localisation" => $this->getLocalisation(),
+            "language" => $this->getLanguage(),
+            "openLicence" => $this->getOpenLicence(),
+
+            "author" => $this->getUser()->getCompleteName(),
+            "interviewed" => $this->getInterviewed(),
+            "tags" => $this->getTags(),
+        ];
+
+        $interviewedList = [];
+
+        foreach ($this->getInterviewed() as $interviewed) {
+
+            $dataInterviewed = [
+                "id" => $interviewed->getId(),
+                "name" => $interviewed->getCompleteName(),
+                "city" => $interviewed->getCity(),
+            ];
+
+            foreach ($interviewed->getStructure() as $structure) {
+                $structure = [
+                    "name" => $structure->getName(),
+                    "city" => $structure->getCity(),
+                ];
+                $dataInterviewed["structures"] = $structure;
+            }
+
+            $interviewedList[] = $dataInterviewed;
+
+        }
+
+        $interview["interviewed"] = $interviewedList;
+
+        $tagsList = [];
+
+        foreach ($this->getTags() as $tags) {
+            
+            $tags = [
+                "name" => $tags->getName(),
+            ];
+
+            $tagsList[] = $tags;
+        }
+        
+        $interview["tags"] = $tagsList;
+        
+        $interviews[] = $interview;
+        return $interview;
+    }
+
+    /**
+     * @Groups("interview")
+     */
+    public function getCompleteInterview()
+    {
+        $completeInterview = [];
+
+        $completeInterview["interview"] = $this->getInterviews();
+
+        $questionList = [];
+        $answerList = [];
+
+        foreach ($this->getQuestions() as $questionObject) {
+            
+            $question = [
+                "id" => $questionObject->getId(),
+                "content" => $questionObject->getContent(),
+                "answers" => $questionObject->getAnswers()
+            ];
+
+       
+            foreach ($questionObject->getAnswers() as $answerObject) {
+                $answer = [
+                    "id" => $answerObject->getId(),
+                    "content" => $answerObject->getContent(),
+                    "interviewed" => $answerObject->getInterviewed()->getInitials()
+                ];
+                $answerList[] = $answer;
+            }
+            $question["answers"] = $answerList;
+
+            $questionList[] = $question;
+        }
+        $completeInterview["questions"] = $questionList;
+
+
+        //     "question" : [
+        //         'id'
+        //         'content'
+        //         'answers' : [
+        //             'id'
+        //             'content'
+        //             'interviewed' : // getInitials ({A.O})
+        //         ]
+        //     ]
+        // ];
+
+        return $completeInterview;
+    }
+
+
 }

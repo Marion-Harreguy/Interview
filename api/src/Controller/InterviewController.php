@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Interview;
+use App\Repository\InterviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/api/interviews", name="interview_")
@@ -12,35 +14,42 @@ use Symfony\Component\Routing\Annotation\Route;
 class InterviewController extends AbstractController
 {
     /**
-     * TODO : définition des routes - annotations 
-     * TODO : écriture du BREAD
-     * TODO : methods des routes
-     * TODO : requirements des routes 
-     */
-
-    /**
      * Liste toutes les interviews
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse()
+    public function browse(InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
-        return $this->json([
-            'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/InterviewController.php',
-        ]);
+        $interviews = $interviewRepository->findAllPublished();
+
+        $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
+
+        return $this->json(
+            $data,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
     }
     /**
      * Affiche une interview spécifique 
      * 
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id":"\d+"})
      */
-    public function read($id)
+    public function read($id, InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
-        return $this->json([
-            'message' => 'Welcome on the Read method',
-            'id' => $id,
-        ]);
+
+        $interview = $interviewRepository->findCompleteInterview($id);
+        
+        $data = $serializer->normalize($interview, null, ['groups' => ['interview']]);
+
+
+        return $this->json(
+            $data,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
     }
     /**
      * Modifie / met à jour une interview
