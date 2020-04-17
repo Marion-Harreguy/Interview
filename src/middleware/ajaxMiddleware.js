@@ -16,6 +16,8 @@ import {
 
 export default (store) => (next) => (action) => {
 
+  axios.defaults.withCredentials = true;
+
   const newUser = {
     // Ajax will send all the user & structure info to the API (but not the "form" key)
     user: { ...store.getState().newUser.user },
@@ -32,7 +34,7 @@ export default (store) => (next) => (action) => {
       // MAYBE : Put a loading state when waiting for request response :
       // store.dispatch(toggleLoading());
 
-      axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':false } })
+      axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
 
           // Get user informations (id)
@@ -61,7 +63,7 @@ export default (store) => (next) => (action) => {
     case LOGIN_SUBMIT:
       // User trying to connect
       console.log(userConnect);
-      axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials':false } })
+      axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json'}})
         .then((response) => {
           store.dispatch(connectWebsocket(response.data));
         })
@@ -72,7 +74,7 @@ export default (store) => (next) => (action) => {
       break;
 
     case MODIFY_USER_INFO:
-      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':false } })
+      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
           console.log("succesfully modified !");
           // WEB SOCKET WILL HANDLE THE FRONT-END CHANGES
