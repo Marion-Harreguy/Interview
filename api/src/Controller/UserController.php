@@ -39,6 +39,7 @@ class UserController extends AbstractController
         // On ajoute l'entête HTTP
         $response->headers->set('Content-Type', 'application/json');
 
+
         // On envoie la réponse
         return $response;
     }
