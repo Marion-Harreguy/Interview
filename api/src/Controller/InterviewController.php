@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Interview;
 use App\Repository\InterviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,24 +20,28 @@ class InterviewController extends AbstractController
      */
     public function browse(InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
-        $interviews = $interviewRepository->findAll();
+        $interviews = $interviewRepository->findAllPublished();
 
-        $data = $serializer->normalize($interviews, null, ['groups' => ['interviews']]);
+        $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
 
-       return $this->json(
-            $data, 
-            $status = 200, 
-            $headers = ['content-type' => 'application/Json'], 
+        return $this->json(
+            $data,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
             $context = []
-            );
+        );
     }
     /**
      * Affiche une interview spécifique 
      * 
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id":"\d+"})
      */
-    public function read($id)
+    public function read(Interview $interview)
     {
+        $interview;
+
+        dd($interview);
+        
         return $this->json([
             'message' => 'Welcome on the Read method',
             'id' => $id,
@@ -79,3 +84,5 @@ class InterviewController extends AbstractController
         ]);
     }
 }
+
+       

@@ -212,4 +212,9 @@ class Interviewed
 
         return $this;
     }
+
+    public function getCompleteName()
+    {
+        return $this->getFirstname() . ' ' . $this->getLastname();
+    }
 }
