@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import store from 'src/store';
 
@@ -23,7 +23,11 @@ import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContai
 import './style.scss';
 
 const App = () => {
-  const isConnected = store.getState().userData.isConnected;
+  let isConnected = store.getState().userData.isConnected;
+
+  useEffect(() => {
+    isConnected = store.getState().userData.isConnected;
+  }, [store.getState().userData]);
 
   return (
     <div className="app">

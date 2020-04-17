@@ -7,7 +7,8 @@ export const connectWebsocket = (payload) => ({
   payload,
 });
 
+// REMETTRE PAYLOAD
 export const updateUser = (payload) => ({
   type: UPDATE_USER,
-  payload,
+  payload
 });

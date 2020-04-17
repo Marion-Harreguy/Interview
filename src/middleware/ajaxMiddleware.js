@@ -34,7 +34,7 @@ export default (store) => (next) => (action) => {
       // MAYBE : Put a loading state when waiting for request response :
       // store.dispatch(toggleLoading());
 
-      axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':true } })
+      axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
 
           // Get user informations (id)
@@ -66,6 +66,7 @@ export default (store) => (next) => (action) => {
       axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
           // Create the websocket, with a url based on the user's token
+          console.log("Succesfully connected !"); 
           store.dispatch(connectWebsocket(response.data));
         })
         .catch((error) => {
@@ -76,7 +77,9 @@ export default (store) => (next) => (action) => {
 
     case MODIFY_USER_INFO:
       // Request to send the changes
-      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':true } })
+      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json' } })
+      // REQUEST WITH HEADER
+      // axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':true } })
         .then((response) => {
           console.log("succesfully modified !");
           // WEB SOCKET WILL HANDLE THE FRONT-END CHANGES

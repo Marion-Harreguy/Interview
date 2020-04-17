@@ -16,7 +16,7 @@ export const initialState = {
       id: 68,
       name: 'Peltier  dMillet SARL',
       city: 'Lejeune',
-      sector: 'Le pouvoir de concrétiser vos projets à l\'état pur'
+      sector: 'Le pouvoir de concrétiser vos projets à l\'état pur',
     },
     {
       id: 70,
@@ -24,8 +24,8 @@ export const initialState = {
       city: 'SchmittBourg',
       sector: 'La liberté d\'avancer sans soucis',
     },
-  ],
-  dashboard: {
+     ],
+     dashboard: {
     publishedInterviews: [
       {
         id: 61,
@@ -176,11 +176,11 @@ const userData = (state = initialState, action = {}) => {
       };
     case UPDATE_USER:
       // User updating, each time the API user data changes
-      console.log("should connect");
+      console.log("updating user");
       return {
         ...state,
         isConnected: true,
-        // ...action.payload,
+        ...action.payload,
       };
     default:
       return state;

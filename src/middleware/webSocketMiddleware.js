@@ -9,7 +9,7 @@ export default (store) => (next) => (action) => {
 
       console.log("Trying to connect websocket : ");
       // + put user token at the end
-      socket = window.io('http://184.73.143.2/');
+      // socket = window.io('http://184.73.143.2/');
 
       // MAKE SOCKET HERE
       // socket.on(`api/users/${action.payload}`, (updatedUserData) => {
@@ -19,7 +19,8 @@ export default (store) => (next) => (action) => {
 
       // AS SOON AS THE API IS SENDING USER INFO BACK
       // store.dispatch(updateUser(payload));
-      store.dispatch(updateUser(action.payload));
+      // store.dispatch(updateUser(action.payload));
+      store.dispatch(updateUser());
 
       break;
     default:
