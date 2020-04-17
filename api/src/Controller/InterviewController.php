@@ -36,16 +36,20 @@ class InterviewController extends AbstractController
      * 
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id":"\d+"})
      */
-    public function read(Interview $interview)
+    public function read($id, InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
-        $interview;
 
-        dd($interview);
+        $interview = $interviewRepository->findCompleteInterview($id);
         
-        return $this->json([
-            'message' => 'Welcome on the Read method',
-            'id' => $id,
-        ]);
+        $data = $serializer->normalize($interview, null, ['groups' => ['interview']]);
+
+
+        return $this->json(
+            $data,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
     }
     /**
      * Modifie / met à jour une interview
@@ -84,5 +88,3 @@ class InterviewController extends AbstractController
         ]);
     }
 }
-
-       

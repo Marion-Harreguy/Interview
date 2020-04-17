@@ -217,4 +217,30 @@ class Interviewed
     {
         return $this->getFirstname() . ' ' . $this->getLastname();
     }
+
+    public function getInitials()
+    {
+        // récupere le nom complet
+       
+        // explode en un tableau 
+        
+         $words = explode(" ", $this->getCompleteName());
+               
+         $initials = "";
+
+         foreach ($words as $w) {
+           $initials .= $w[0];
+         }
+             
+
+        return $initials;
+         // boucle 
+        //$completeName = $this->getCompleteName(explode(" ", $string));
+        
+        // 
+        //     foreach($completeName as $init) {
+        //         $initials .= $init{0};
+        //     }
+        //return strtoupper($initials);
+    }
 }
