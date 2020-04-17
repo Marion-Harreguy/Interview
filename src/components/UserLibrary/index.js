@@ -13,6 +13,9 @@ const UserLibrary = ({
   toggleSection,
   toggleCategory }) => {
 
+  // Function to determine weather an interview is shown or not
+  // Based on its category list, and which categories the user checked
+  // Param = category list of the interview / Type = [table]
   const toggleInterview = (interviewCategoryList) => {
     let interviewShown = false;
     interviewCategoryList.forEach((interviewCategory) => {
@@ -21,8 +24,8 @@ const UserLibrary = ({
     return interviewShown;
   };
 
+  // Function to put two elements in alphabetic order
   function compare(a, b) {
-    // Use toUpperCase() to ignore character casing
     const titleA = a.title.toUpperCase();
     const titleB = b.title.toUpperCase();
     let comparison = 0;
@@ -34,7 +37,10 @@ const UserLibrary = ({
     return comparison;
   }
 
-  // Function to sort with select
+  // Function to sort with select :
+  // Default table is in chronological order
+  // If alphabetical order, uses Compare function
+  // PROBLEM
   const sortDashboard = () => {
     if (library.order === 'alphabet') {
       let alphaDashboard = { ...dashboard };
@@ -48,18 +54,26 @@ const UserLibrary = ({
     return { ...dashboard };
   };
 
+  // Initiate sortedDashboard (used for the mapping)
   let sortedDashboard = { ...sortDashboard() };
 
+  // Each time "library.order" prop is changed (with select — by user)
+  // sortedDashboard is generated again —> mapping changes
   useEffect(() => {
     sortedDashboard = { ...sortDashboard() };
   }, [library.order]);
 
+  // User information form is disabled by default
   let formDisabled = true;
 
+  // const that changes an object into a table, so we can map on it
+  // { A: contentA, B: contentB } => [ [ A, contentA ], [ B, contentB ] ]
   const sectionsAsTable = Object.entries(dashboard);
 
+  // French title corresponding to the sections
   const sectionFrenchTitles = ["Mes entretiens publiés", "Mes entretiens en cours", "Mes entretiens enregistrés", "Mes recherches enregistrées"];
-  // Créer une fonction qui inverse formEditable
+
+  // Function to switch weather userForm is editable or not
   const changeFormDisabled = (event) => {
     event.preventDefault();
     formDisabled = !formDisabled;
@@ -83,17 +97,19 @@ const UserLibrary = ({
           </select>
 
           {
+            // MAPPING ON DASHBOARD (which has been turned from an object to a table)
             sectionsAsTable.map((section, index) => {
               const sectionTitle = section[0];
               const sectionContent = section[1];
 
               if (sectionTitle === 'categories') {
-                // Créer les caté
+                // Creating the categories (one time)
                 return (
                   <div className="home__categories">
                     <h2 className="categories__title">Mes catégories</h2>
                     <div className="categories__list">
                       {
+                      // Creating each category
                       sectionContent.map((category) => (
                         <div className="home__category" key={category.id}>
                           <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} />
@@ -111,6 +127,7 @@ const UserLibrary = ({
                 );
               }
 
+              // Creating library reading section
               return (
                 <div>
                   <h3 className="library__section" onClick={() => toggleSection(sectionTitle)}>{sectionFrenchTitles[index]}
@@ -125,10 +142,12 @@ const UserLibrary = ({
                   <div className={`section__list section__list--${library[sectionTitle] ? 'open' : 'closed'}`}>
 
                     { sectionContent.map((interview) => (
+                      // Creating each interview
                       <div className="list__interview" key={interview.id} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
                         <NavLink exact to={`/update/${interview.id}`}>
                           <h4 className="list__interview__title">{interview.title}</h4>
                           <div className="list__interview__categories">
+                            {/* Creating each category dot for each article */}
                             { interview.categories.map((category) => (
                               <span className={`list__category list__category--${category}`} key={category.id} />
                             ))}

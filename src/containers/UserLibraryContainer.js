@@ -11,15 +11,19 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  // inputChanged = input that triggered the event
   modifyUserInfo: (inputChanged) => {
     dispatch(modifyUserInfo(inputChanged));
   },
+  // newOrder = order asked by user
   changeOrder: (newOrder) => {
     dispatch(changeOrder(newOrder));
   },
+  // section = section that needs to be open/closed
   toggleSection: (section) => {
     dispatch(toggleSection(section));
   },
+  // category = category that needs to be shown/hiden
   toggleCategory: (category) => {
     dispatch(toggleCategory(category));
   },

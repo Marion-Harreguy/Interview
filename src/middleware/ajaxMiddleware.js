@@ -5,9 +5,6 @@ import {
   FORGOTTEN_PASSWORD_SUBMIT,
   LOGIN_SUBMIT,
   MODIFY_USER_INFO,
-  // Put the function we want to trigger after request
-  // newUserError,
-  // newUserSuccess,
 } from '../actions';
 
 import {
@@ -16,16 +13,19 @@ import {
 
 export default (store) => (next) => (action) => {
 
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
 
+  // FOR NEW_USER_SUBMIT
   const newUser = {
     // Ajax will send all the user & structure info to the API (but not the "form" key)
     user: { ...store.getState().newUser.user },
     structure: { ...store.getState().newUser.structure },
   };
 
-  const userConnect = { Origin: { ...store.getState().login } };
+  // FOR LOGIN_SUBMIT
+  const userConnect = { credentials: { ...store.getState().login } };
 
+  // FOR MODIFY_USER_INFO
   const userInfo = { ...store.getState().userData.dataUser};
 
   switch (action.type) {
@@ -63,8 +63,9 @@ export default (store) => (next) => (action) => {
     case LOGIN_SUBMIT:
       // User trying to connect
       console.log(userConnect);
-      axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials':true } })
+      axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
+          // Create the websocket, with a url based on the user's token
           store.dispatch(connectWebsocket(response.data));
         })
         .catch((error) => {
@@ -74,6 +75,7 @@ export default (store) => (next) => (action) => {
       break;
 
     case MODIFY_USER_INFO:
+      // Request to send the changes
       axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':true } })
         .then((response) => {
           console.log("succesfully modified !");

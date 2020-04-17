@@ -153,6 +153,8 @@ const userData = (state = initialState, action = {}) => {
         },
       };
     case TOGGLE_CATEGORY:
+      // Mapping to find the category that has been modified
+      // And reverse its "displayed" value
       let newCategories = state.dashboard.categories.map((category) => {
         if(category.id === action.payload){
           return {
@@ -173,6 +175,8 @@ const userData = (state = initialState, action = {}) => {
         },
       };
     case UPDATE_USER:
+      // User updating, each time the API user data changes
+      console.log("should connect");
       return {
         ...state,
         isConnected: true,

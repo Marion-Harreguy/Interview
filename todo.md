@@ -7,5 +7,5 @@ ESPACE PERSO :
 
 — Gérer input nouvelle catégorie        Gael
 — Disabled pour les input !             Gael 
-— Commenter le code      Laura
+— Commenter le code      Laura OK
 — Faire passer isConnected à true à la connexion    Laura

@@ -9,7 +9,7 @@ export const CHANGE_ORDER = 'CHANGE_ORDER';
 export const TOGGLE_SECTION = 'TOGGLE_SECTION';
 export const TOGGLE_CATEGORY = 'TOGGLE_CATEGORY';
 
-
+// NEW USER COMPONENT 
 export const newUserInputChange = (payload) => ({
   type: NEW_USER_INPUT_CHANGE,
   payload,
@@ -19,6 +19,7 @@ export const newUserSubmit = () => ({
   type: NEW_USER_SUBMIT,
 });
 
+// FORGOTTEN COMPONENT
 export const forgottenPasswordInputChange = (payload) => ({
   type: FORGOTTEN_PASSWORD_INPUT_CHANGE,
   payload,
@@ -28,6 +29,7 @@ export const forgottenPasswordSubmit = () => ({
   type: FORGOTTEN_PASSWORD_SUBMIT,
 });
 
+// LOGIN COMPONENT
 export const loginInputChange = (payload) => ({
   type: LOGIN_INPUT_CHANGE,
   payload,
@@ -37,6 +39,7 @@ export const loginSubmit = () => ({
   type: LOGIN_SUBMIT,
 });
 
+// USER LIBRARY COMPONENT
 export const modifyUserInfo = (payload) => ({
   type: MODIFY_USER_INFO,
   payload,
