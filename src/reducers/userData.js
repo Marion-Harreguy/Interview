@@ -24,8 +24,8 @@ export const initialState = {
       city: 'SchmittBourg',
       sector: 'La liberté d\'avancer sans soucis',
     },
-     ],
-     dashboard: {
+  ],
+  dashboard: {
     publishedInterviews: [
       {
         id: 61,

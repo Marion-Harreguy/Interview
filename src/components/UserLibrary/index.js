@@ -43,7 +43,8 @@ const UserLibrary = ({
   // PROBLEM
   const sortDashboard = () => {
     if (library.order === 'alphabet') {
-      let alphaDashboard = { ...dashboard };
+      console.log("alphabet : "+dashboard);
+      const alphaDashboard = { ...dashboard };
       return {
         publishedInterviews: [...alphaDashboard.publishedInterviews.sort(compare)],
         writtingInterviews: [...alphaDashboard.writtingInterviews.sort(compare)],
@@ -51,7 +52,11 @@ const UserLibrary = ({
         categories: [...alphaDashboard.categories],
       };
     }
-    return { ...dashboard };
+
+    else {
+      console.log("chrono : "+dashboard);
+      return { ...dashboard };
+    }
   };
 
   // Initiate sortedDashboard (used for the mapping)
@@ -112,14 +117,14 @@ const UserLibrary = ({
                       // Creating each category
                       sectionContent.map((category) => (
                         <div className="home__category" key={category.id}>
-                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} />
+                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} name={`category${category.id}`} />
                           <label htmlFor={category.id}>{category.name}</label>
                         </div>
                       ))
                       }
 
                       <div className="home__category home__category--add">
-                        <input className="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie" />
+                        <input className="new-category-name" type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category"/>
                         <button className="category-button category-button--add" type="button" />
                       </div>
                     </div>

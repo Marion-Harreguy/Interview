@@ -23,11 +23,17 @@ import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContai
 import './style.scss';
 
 const App = () => {
-  let isConnected = store.getState().userData.isConnected;
+  // let isConnected = store.getState().userData.isConnected;
+  let isConnected = true;
 
-  useEffect(() => {
-    isConnected = store.getState().userData.isConnected;
-  }, [store.getState().userData]);
+  // useEffect(() => {
+  //   console.log("isConnected changed !");
+  //   isConnected = store.getState().userData.isConnected;
+  // }, [store.getState()]);
+
+  // const renderConnection = () => {
+  //   return store.getState().userData.isConnected;
+  // };
 
   return (
     <div className="app">

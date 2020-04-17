@@ -8,4 +8,5 @@ ESPACE PERSO :
 — Gérer input nouvelle catégorie        Gael
 — Disabled pour les input !             Gael 
 — Commenter le code      Laura OK
-— Faire passer isConnected à true à la connexion    Laura
+— Faire passer isConnected à true à la connexion    Laura OK
+— Gérer le switch à la connexion !   Laura
