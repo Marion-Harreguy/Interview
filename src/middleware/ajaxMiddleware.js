@@ -22,7 +22,7 @@ export default (store) => (next) => (action) => {
     structure: { ...store.getState().newUser.structure },
   };
 
-  const userConnect = { credentials: { ...store.getState().login } };
+  const userConnect = { Origin: { ...store.getState().login } };
 
   const userInfo = { ...store.getState().userData.dataUser};
 
@@ -32,7 +32,7 @@ export default (store) => (next) => (action) => {
       // MAYBE : Put a loading state when waiting for request response :
       // store.dispatch(toggleLoading());
 
-      axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Credentials': true } })
+      axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } })
         .then((response) => {
 
           // Get user informations (id)
@@ -61,7 +61,7 @@ export default (store) => (next) => (action) => {
     case LOGIN_SUBMIT:
       // User trying to connect
       console.log(userConnect);
-      axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Credentials': true } })
+      axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*' } })
         .then((response) => {
           store.dispatch(connectWebsocket(response.data));
         })
@@ -72,7 +72,7 @@ export default (store) => (next) => (action) => {
       break;
 
     case MODIFY_USER_INFO:
-      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Credentials': true } })
+      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*' } })
         .then((response) => {
           console.log("succesfully modified !");
           // WEB SOCKET WILL HANDLE THE FRONT-END CHANGES
