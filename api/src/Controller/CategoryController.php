@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/api/users/{user_id}/categories", name="category_")
@@ -26,12 +27,14 @@ class CategoryController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(CategoryRepository $categoryRepository)
-    {
+    public function browse(CategoryRepository $categoryRepository, UserRepository $userRepository, SerializerInterface $serializer)
+    {      
         return $this->json([
             'message' => 'Welcome on the Browse method',
             'path' => 'src/Controller/InterviewController.php',
+
         ]);
+        
     }
 
     /**

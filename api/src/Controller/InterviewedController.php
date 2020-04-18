@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\InterviewedRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
     /**
@@ -14,14 +16,16 @@ class InterviewedController extends AbstractController
     /**
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse()
+    public function browse(InterviewedRepository $interviewedRepository, SerializerInterface $serializer)
     {
-        return $this->json([
-            'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/InterviewController.php',
-        ]);
+        $interviewed = $interviewedRepository->findInterviewed();
+
+        $data = $serializer->normalize($interviewed, null, ['groups' => ['browseInterviewed']]);
+
+        return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
     }
-        /**
+    
+    /**
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function read()
