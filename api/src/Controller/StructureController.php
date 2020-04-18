@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Structure;
 use App\Form\StructureType;
+use App\Repository\StructureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
     /**
@@ -20,12 +22,13 @@ class StructureController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse()
+    public function browse(StructureRepository $structureRepository, SerializerInterface $serializer)
     {
-        return $this->json([
-            'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/StructureController.php',
-        ]);
+        $structures = $structureRepository->findAll();
+
+        $data = $serializer->normalize($structures, null, ['groups' => 'structure']);
+
+        return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
     }
 
     /**
@@ -33,12 +36,13 @@ class StructureController extends AbstractController
      * 
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id":"\d+"})
      */
-    public function read($id)
+    public function read($id, StructureRepository $structureRepository, SerializerInterface $serializer)
     {
-        return $this->json([
-            'message' => 'Welcome on the Read method',
-            'id' => $id,
-        ]);
+        $structure = $structureRepository->find($id);
+
+        $data = $serializer->normalize($structure, null, ['groups' => 'structure']);
+
+        return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
     }
 
     /**
@@ -89,6 +93,5 @@ class StructureController extends AbstractController
 
             return $this->json(['Oh, Houston, we have a problem.'], $status = 403, $headers = ['content-type' => 'application/Json'], $context = []);
         }
-
     }
 }
