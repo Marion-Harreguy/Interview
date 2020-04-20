@@ -330,15 +330,22 @@ class Interview
         $interview = [
             "id" => $this->getId(),
             "title"  => $this->getTitle(),
-            "localisation" => $this->getLocalisation(),
+            "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
 
-            "author" => $this->getUser()->getCompleteName(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
         ];
+        
+        $author = [];
 
+        $author["name"] = $this->getUser()->getCompleteName();
+        $author["status"] = $this->getUser()->getStatus();
+
+        $interview["author"] = $author;
+
+           
         $interviewedList = [];
 
         foreach ($this->getInterviewed() as $interviewed) {
@@ -346,13 +353,12 @@ class Interview
             $dataInterviewed = [
                 "id" => $interviewed->getId(),
                 "name" => $interviewed->getCompleteName(),
-                "city" => $interviewed->getCity(),
             ];
 
             foreach ($interviewed->getStructure() as $structure) {
                 $structure = [
                     "name" => $structure->getName(),
-                    "city" => $structure->getCity(),
+                    "location" => $structure->getCity(),
                 ];
                 $dataInterviewed["structures"] = $structure;
             }
@@ -387,7 +393,7 @@ class Interview
     {
         $completeInterview = [];
 
-        $completeInterview["interview"] = $this->getInterviews();
+        $completeInterview["meta"] = $this->getInterviews();
 
         $questionList = [];
         $answerList = [];
@@ -414,18 +420,6 @@ class Interview
             $questionList[] = $question;
         }
         $completeInterview["questions"] = $questionList;
-
-
-        //     "question" : [
-        //         'id'
-        //         'content'
-        //         'answers' : [
-        //             'id'
-        //             'content'
-        //             'interviewed' : // getInitials ({A.O})
-        //         ]
-        //     ]
-        // ];
 
         return $completeInterview;
     }
