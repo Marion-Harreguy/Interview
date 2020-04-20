@@ -245,12 +245,10 @@ class Interviewed
     }
 
     /**
-     * Groups("browseInterviewed")
+     * @Groups("browseInterviewed")
      */
     public function getInterviewed()
     {
-        // $interviewed = [];
-
         $dataInterviewed = [
             "id" => $this->getId(),
             "firstname" => $this->getFirstname(),
@@ -258,38 +256,38 @@ class Interviewed
             "email" => $this->getEmail(),
             "job" => $this->getJob(),
             "city" => $this->getCity(),
-            "interviews" => $this->getInterviews(),
-            "structure" => $this->getStructure(),
         ];
 
         $interviews = [];
 
-        foreach ($this->getInterviews() as $interviews) {
+        foreach ($this->getInterviews() as $interview) {
             $dataInterviews = [
-                "id" => $interviews->getId(),
-                "title"  => $this->getTitle(),
-                "openLicence" => $this->getOpenLicence(),
-                "author" => $this->getUser()->getCompleteName(),
+                "id" => $interview->getId(),
+                "title"  => $interview->getTitle(),
+                "openLicence" => $interview->getOpenLicence(),
+                "author" => $interview->getUser()->getCompleteName(),
             ];
+
+            $interviews[] = $dataInterviews;
         }
 
-        $interviews = $dataInterviews;
+        $dataInterviewed["interviews"] = $interviews;
 
         $structures = [];
 
-        foreach ($this->getStructure() as $structures) {
+        foreach ($this->getStructure() as $structure) {
             $dataStructures = [
                 "id" => $structure->getId(),
                 "name" => $structure->getName(),
                 "city" => $structure->getCity(),
                 "sector" => $structure->getSector(),
             ];
+            
+            $structures[] = $dataStructures;
         }
 
-        $structures[] = $dataStructures;
+        $dataInterviewed["structures"] = $structures;
 
-        // $interviewed[] = $dataInterviewed;
-
-        return $interviewed;
+        return $dataInterviewed;
     }
 }
