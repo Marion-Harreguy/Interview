@@ -413,7 +413,7 @@ class Interview
             $answerList = [];
             $questionList[] = $question;
         }
-        $completeInterview["questions"] = $questionList;
+        $completeInterview["content"] = $questionList;
 
         return $completeInterview;
     }
