@@ -24,9 +24,6 @@ WRITE :
 — Publier : Gérer les input mandatory (qui empechent la publication)
 — Gérer initiales de l'enquêté (et si plusieurs enquêtés??)
 
-NOW :
-— Change les catégories de l'article en cours > Now
-
 RECHERCHE
 — Menu déroulant pour classer les résultats
 

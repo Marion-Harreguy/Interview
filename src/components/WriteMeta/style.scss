@@ -28,3 +28,22 @@
     background-position: center;
     background-repeat: no-repeat;
   }
+
+  .write__delete-menu {
+    display: none;
+    position: absolute;
+    border: solid 1px white;
+    width: 90%;
+    padding: 20px;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 15px;
+    text-align: right;
+  }
+
+  .write__delete-menu p {
+    text-align:center;
+  }
+
+  .write__delete-menu button {
+    margin: 15px 10px 0px 0px;
+  }

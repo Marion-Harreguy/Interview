@@ -56,6 +56,12 @@ const WriteMeta = ({
         <button className="tools__delete" type="button" onClick={openDeleteMenu}></button>
       </div>
 
+      <div className="write__delete-menu">
+        <p>Êtes-vous sûr.e de vouloir supprimer cet entretien ?</p>
+        <button className="write__delete-menu--no" onClick={closeDeleteMenu}>Annuler</button>
+        <button className="write__delete-menu--yes" onClick={() =>{closeDeleteMenu(), deleteInterview();}}>Supprimer</button>
+      </div>
+
       <div className="interview__meta">
         <form className="write__form">
           <input className="write__form__input write__form__input--title" type="text" name="title" placeholder="Titre" value={interviewMeta.title} onChange={(event) => changeMeta(event.target)} />
@@ -119,12 +125,6 @@ const WriteMeta = ({
             }
           </div>
         </div>
-      </div>
-
-      <div className="write__delete-menu">
-        <p>Êtes-vous sûr.e de vouloir supprimer cet entretien ?</p>
-        <button className="write__delete-menu--no" onClick={closeDeleteMenu}>Annuler</button>
-        <button className="write__delete-menu--yes" onClick={() =>{closeDeleteMenu(), deleteInterview();}}>Supprimer</button>
       </div>
     </aside>
   );
