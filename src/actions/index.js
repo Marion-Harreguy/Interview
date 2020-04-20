@@ -29,6 +29,7 @@ export const ADD_INTERVIEWED = 'ADD_INTERVIEWED';
 export const CHANGE_INTERVIEWED = 'CHANGE_INTERVIEWED';
 export const CHANGE_INTERVIEWED_STRUCTURE = 'CHANGE_INTERVIEWED_STRUCTURE';
 export const CHANGE_AUTHOR = 'CHANGE_AUTHOR';
+export const CHANGE_AUTHOR_STRUCTURE = 'CHANGE_AUTHOR_STRUCTURE';
 
 // NEW USER COMPONENT 
 export const newUserInputChange = (payload) => ({
@@ -177,5 +178,10 @@ export const changeInterviewStructure = (payload) => ({
 
 export const changeAuthor = (payload) => ({
   type: CHANGE_AUTHOR,
-  payload
-})
+  payload,
+});
+
+export const changeAuthorStructure = (payload) => ({
+  type: CHANGE_AUTHOR_STRUCTURE,
+  payload,
+});

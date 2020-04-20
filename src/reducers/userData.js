@@ -1,4 +1,4 @@
-import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_NEW_QUESTION, ADD_WRITTING_INTERVIEW } from '../actions';
+import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES } from '../actions';
 import { UPDATE_USER } from '../actions/socket';
 
 export const initialState = {
@@ -288,7 +288,26 @@ const userData = (state = initialState, action = {}) => {
               }
             ]
           }
+        };
+    case CHANGE_INTERVIEW_CATEGORIES:
+      let newWrittingInterviews = state.dashboard.writtingInterviews.map((interview) => {
+        if(interview.id === action.payload.interviewId) {
+          return {
+            ...interview,
+            categories: [...action.payload.categories],
+          }
         }
+        return interview;
+      });
+    return {
+      ...state,
+      dashboard: {
+        ...state.dashboard,
+        writtingInterviews : [
+          ...newWrittingInterviews,
+        ],
+      },
+    }
     default:
       return state;
   }

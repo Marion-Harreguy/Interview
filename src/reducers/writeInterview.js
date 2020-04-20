@@ -1,8 +1,8 @@
-import { ADD_NEW_QUESTION, ADD_NEW_ANSWER, UPDATE_QUESTION, UPDATE_ANSWER, UPDATE_CONTEXT, ADD_INTERVIEWED, CHANGE_META, CHANGE_INTERVIEWED, CHANGE_INTERVIEWED_STRUCTURE, CHANGE_AUTHOR } from '../actions';
+import { ADD_NEW_QUESTION, ADD_NEW_ANSWER, UPDATE_QUESTION, UPDATE_ANSWER, UPDATE_CONTEXT, ADD_INTERVIEWED, CHANGE_META, CHANGE_INTERVIEWED, CHANGE_INTERVIEWED_STRUCTURE, CHANGE_AUTHOR, CHANGE_AUTHOR_STRUCTURE } from '../actions';
 
 export const initialState = {
   meta: {
-    id: 1111,
+    id: 69,
     title: '',
     localisation: '',
     language: '',
@@ -10,7 +10,7 @@ export const initialState = {
     city: '',
     openLicence: false,
     author: {
-      name: 'Laura Piccolo',
+      name: 'Patrick Lebon',
       status: '',
       structure: {
         name: '',
@@ -33,16 +33,6 @@ export const initialState = {
   },
   context: '',
   content: [
-    {
-      id: 144,
-      question: '',
-      answers: [
-        {
-          content: '',
-          interviewed: '',
-        },
-      ],
-    },
   ],
 };
 
@@ -139,11 +129,16 @@ const readInterview = (state = initialState, action = {}) => {
         },
       };
     case CHANGE_META:
+      let newOpenLicence = state.meta.openLicence;
+      if (action.payload.name === 'openLicence') {
+        newOpenLicence = !newOpenLicence;
+      }
       return {
         ...state,
         meta: {
           ...state.meta,
           [action.payload.name]: action.payload.value,
+          openLicence: newOpenLicence,
         },
       };
     case CHANGE_INTERVIEWED:
@@ -196,7 +191,21 @@ const readInterview = (state = initialState, action = {}) => {
             ...state.meta,
             author: {
               ...state.meta.author,
-              name: action.payload,
+              [action.payload.name]: [action.payload.value],
+            },
+          },
+        };
+        case CHANGE_AUTHOR_STRUCTURE:
+        return {
+          ...state,
+          meta: {
+            ...state.meta,
+            author: {
+              ...state.meta.author,
+              structure: {
+                ...state.meta.author.structure,
+                [action.payload.name]: [action.payload.value],
+              }
             }
           }
         }

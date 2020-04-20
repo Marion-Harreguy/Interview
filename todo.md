@@ -21,10 +21,11 @@ WRITE :
 — Automatiquement : son propre nom dans author
 ++ Supprimer un élément (Q ou R) ?
 — CSS
-— Changer libre de droit > Now
-— Gérer l'auteur : si ce n'est pas mon propre nom, on ouvre le reste > Now
-— Change les catégories de l'article en cours > Now
 — Publier : Gérer les input mandatory (qui empechent la publication)
+— Gérer initiales de l'enquêté (et si plusieurs enquêtés??)
+
+NOW :
+— Change les catégories de l'article en cours > Now
 
 RECHERCHE
 — Menu déroulant pour classer les résultats

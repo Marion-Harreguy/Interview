@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import WriteMeta from '../components/WriteMeta';
-import { deleteInterview, publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor } from '../actions';
+import { deleteInterview, publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   interviewMeta: state.writeInterview.meta,
   userCategories: state.userData.dashboard.categories,
+  userName: state.userData.dataUser.firstname+' '+state.userData.dataUser.lastname,
 
   // TODO : AJAX REQUEST
   // interview: findInterviewBySlug(ownProps.interviewId),
@@ -35,8 +36,11 @@ const mapDispatchToProps = (dispatch) => ({
   changeInterviewedStructure: (payload) => {
     dispatch(changeInterviewStructure(payload));
   },
-  changeAuthor: (author) => {
-    dispatch(changeAuthor(author));
+  changeAuthor: (payload) => {
+    dispatch(changeAuthor(payload));
+  },
+  changeAuthorStructure: (payload) => {
+    dispatch(changeAuthorStructure(payload));
   },
 });
 
