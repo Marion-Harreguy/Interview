@@ -330,7 +330,7 @@ class Interview
         $interview = [
             "id" => $this->getId(),
             "title"  => $this->getTitle(),
-            "localisation" => $this->getLocalisation(),
+            "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
 
@@ -346,13 +346,12 @@ class Interview
             $dataInterviewed = [
                 "id" => $interviewed->getId(),
                 "name" => $interviewed->getCompleteName(),
-                "city" => $interviewed->getCity(),
             ];
 
             foreach ($interviewed->getStructure() as $structure) {
                 $structure = [
                     "name" => $structure->getName(),
-                    "city" => $structure->getCity(),
+                    "location" => $structure->getCity(),
                 ];
                 $dataInterviewed["structures"] = $structure;
             }
@@ -387,7 +386,7 @@ class Interview
     {
         $completeInterview = [];
 
-        $completeInterview["interview"] = $this->getInterviews();
+        $completeInterview["meta"] = $this->getInterviews();
 
         $questionList = [];
         $answerList = [];
@@ -414,18 +413,6 @@ class Interview
             $questionList[] = $question;
         }
         $completeInterview["questions"] = $questionList;
-
-
-        //     "question" : [
-        //         'id'
-        //         'content'
-        //         'answers' : [
-        //             'id'
-        //             'content'
-        //             'interviewed' : // getInitials ({A.O})
-        //         ]
-        //     ]
-        // ];
 
         return $completeInterview;
     }
