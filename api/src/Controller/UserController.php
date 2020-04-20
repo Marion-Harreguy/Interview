@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Structure;
 use App\Entity\User;
+use App\Entity\Structure;
 use App\Form\UserEditType;
+use App\Form\StructureType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 /**
@@ -34,14 +35,7 @@ class UserController extends AbstractController
         // On utilise le Serializer pour normaliser notre objet User
         $data = $serializer->normalize($user, null, ['groups' => ['user']]);
 
-        $response = new Response($data);
-
-        // On ajoute l'entête HTTP
-        $response->headers->set('Content-Type', 'application/json');
-
-
-        // On envoie la réponse
-        return $response;
+        return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
     }
 
     //=============================//
@@ -98,6 +92,7 @@ class UserController extends AbstractController
                 $em->persist($user);
                 $em->flush();
             }
+         
 
             return $this->json(['C\'est bien toi'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
         } else {
