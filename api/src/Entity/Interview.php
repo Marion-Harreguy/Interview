@@ -340,6 +340,7 @@ class Interview
         
         $author = [];
 
+        $author["id"] = $this->getUser()->getId();
         $author["name"] = $this->getUser()->getCompleteName();
         $author["status"] = $this->getUser()->getStatus();
 
