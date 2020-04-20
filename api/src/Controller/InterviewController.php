@@ -66,12 +66,17 @@ class InterviewController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit()
+    public function edit(Request $request)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/InterviewController.php',
-        ]);
+        $data = json_decode($request->getContent(), true);
+        dd($data);
+        // mettre a jour les meta
+        $form = $this->createForm(InterviewType::class, $data["interview"]);
+        $form->submit($data["interview"]);
+
+        
+        // mettre a jour les questions / reponse 
+        // ajouter les nouvelles questions / réponse 
     }
     /**
      * Créer une nouvelle interview
@@ -158,10 +163,12 @@ class InterviewController extends AbstractController
         // dd($data, $interview, $user);
 
 
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/InterviewController.php',
-        ]);
+        return $this->json(
+            ['message' => 'Interview Added'],
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
     }
     /**
      * Supprime une interview
