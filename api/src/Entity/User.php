@@ -98,6 +98,11 @@ class User implements UserInterface
      */
     private $apiToken;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -315,6 +320,42 @@ class User implements UserInterface
 
         return $this;
     }
+    /**
+     * Get the value of apiToken
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+    /**
+     * Set the value of apiToken
+     *
+     * @return  self
+     */
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    public function getCompleteName()
+    {
+        return $this->getFirstname() . ' ' . $this->getLastname();
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
 
     /**
      * A visual identifier that represents this user.
@@ -375,6 +416,7 @@ class User implements UserInterface
             'lastname' => $this->getLastname(),
             'email' => $this->getEmail(),
             'biograhy' => $this->getBiography(),
+            'status' => $this->getStatus(),
             'tokenApi' => $this->getApiToken(),
         ];
 
@@ -519,30 +561,5 @@ class User implements UserInterface
         $dashboard["categories"] = $categoriesList;
 
         return $dashboard;
-    }
-
-    /**
-     * Get the value of apiToken
-     */
-    public function getApiToken()
-    {
-        return $this->apiToken;
-    }
-
-    /**
-     * Set the value of apiToken
-     *
-     * @return  self
-     */
-    public function setApiToken($apiToken)
-    {
-        $this->apiToken = $apiToken;
-
-        return $this;
-    }
-
-    public function getCompleteName()
-    {
-        return $this->getFirstname() . ' ' . $this->getLastname();
     }
 }
