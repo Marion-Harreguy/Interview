@@ -334,11 +334,18 @@ class Interview
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
 
-            "author" => $this->getUser()->getCompleteName(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
         ];
+        
+        $author = [];
 
+        $author["name"] = $this->getUser()->getCompleteName();
+        $author["status"] = $this->getUser()->getStatus();
+
+        $interview["author"] = $author;
+
+           
         $interviewedList = [];
 
         foreach ($this->getInterviewed() as $interviewed) {
