@@ -21,6 +21,7 @@ class CategoryController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
+
     public function browse()
     {   
         return $this->json([
@@ -28,6 +29,7 @@ class CategoryController extends AbstractController
             'path' => 'src/Controller/CategoryController.php',
 
         ]);
+
     }
 
     /**
