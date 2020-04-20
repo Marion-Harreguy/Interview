@@ -98,6 +98,11 @@ class User implements UserInterface
      */
     private $apiToken;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -544,5 +549,17 @@ class User implements UserInterface
     public function getCompleteName()
     {
         return $this->getFirstname() . ' ' . $this->getLastname();
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }
