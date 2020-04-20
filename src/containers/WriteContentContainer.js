@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import WriteContent from '../components/WriteContent';
-import { findInterviewBySlug, addNewQuestion, addNewAnswer, updateAnswer, updateQuestion } from '../actions';
+import { findInterviewBySlug, addNewQuestion, addNewAnswer, updateAnswer, updateQuestion, updateContext } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   writeInterview: state.writeInterview,
@@ -26,6 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
   updateQuestion: (payload) => {
     dispatch(updateQuestion(payload));
+  },
+  updateContext: (payload) => {
+    dispatch(updateContext(payload));
   },
 });
 

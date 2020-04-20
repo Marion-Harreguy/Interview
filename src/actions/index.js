@@ -19,6 +19,16 @@ export const ADD_NEW_QUESTION = 'ADD_NEW_QUESTION';
 export const ADD_NEW_ANSWER = 'ADD_NEW_ANSWER';
 export const UPDATE_QUESTION = 'UPDATE_QUESTION';
 export const UPDATE_ANSWER = 'UPDATE_ANSWER';
+export const UPDATE_CONTEXT = 'UPDATE_CONTEXT';
+export const DELETE_INTERVIEW = 'DELETE_INTERVIEW';
+export const PUBLISH_INTERVIEW = 'PUBLISH_INTERVIEW';
+export const CHANGE_META = 'CHANGE_META';
+export const CHANGE_INTERVIEW_CATEGORIES = 'CHANGE_INTERVIEW_CATEGORIES';
+export const ADD_WRITTING_INTERVIEW = 'ADD_WRITTING_INTERVIEW';
+export const ADD_INTERVIEWED = 'ADD_INTERVIEWED';
+export const CHANGE_INTERVIEWED = 'CHANGE_INTERVIEWED';
+export const CHANGE_INTERVIEWED_STRUCTURE = 'CHANGE_INTERVIEWED_STRUCTURE';
+export const CHANGE_AUTHOR = 'CHANGE_AUTHOR';
 
 // NEW USER COMPONENT 
 export const newUserInputChange = (payload) => ({
@@ -118,3 +128,54 @@ export const updateQuestion = (payload) => ({
   type: UPDATE_QUESTION,
   payload,
 });
+
+export const updateContext = (payload) => ({
+  type: UPDATE_CONTEXT,
+  payload,
+});
+
+// WRITE META
+
+export const deleteInterview = (payload) => ({
+  type: DELETE_INTERVIEW,
+  payload,
+});
+
+export const publishInterview = (payload) => ({
+  type: PUBLISH_INTERVIEW,
+  payload,
+});
+
+export const changeMeta = (payload) => ({
+  type: CHANGE_META,
+  payload,
+});
+
+export const addWrittingInterview = (payload) => ({
+  type: ADD_WRITTING_INTERVIEW,
+  payload,
+});
+
+export const changeInterviewCategories = (payload) => ({
+  type: CHANGE_INTERVIEW_CATEGORIES,
+  payload,
+});
+
+export const addInterviewed = () => ({
+  type: ADD_INTERVIEWED,
+});
+
+export const changeInterviewed = (payload) => ({
+  type: CHANGE_INTERVIEWED,
+  payload,
+});
+
+export const changeInterviewStructure = (payload) => ({
+  type: CHANGE_INTERVIEWED_STRUCTURE,
+  payload,
+});
+
+export const changeAuthor = (payload) => ({
+  type: CHANGE_AUTHOR,
+  payload
+})

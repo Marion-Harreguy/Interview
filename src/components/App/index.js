@@ -11,7 +11,7 @@ import ReadContentContainer from '../../containers/ReadContentContainer';
 import SearchForm from '../SearchForm';
 import SearchResults from '../SearchResults';
 import WriteContentContainer from '../../containers/WriteContentContainer';
-import WriteMeta from '../WriteMeta';
+import WriteMetaContainer from '../../containers/WriteMetaContainer';
 import Introduction from '../Introduction';
 import Footer from '../Footer';
 import PageNotFound from '../NotFound';
@@ -81,13 +81,13 @@ const App = ({ isConnected, userCategories }) => {
                 return <Redirect to="/" />;
               }}
             />
-            <Route path="/create" component={WriteMeta} />
+            <Route path="/create" component={WriteMetaContainer} />
             <Route
               path="/update/:slug"
               render={(object) => {
                 const { slug } = object.match.params;
                 // REQUETE AXIOS ??
-                if (isConnected) return <WriteMeta interviewId={slug} />;
+                if (isConnected) return <WriteMetaContainer interviewId={slug} />;
                 return <Redirect to="/" />;
               }}
             />
