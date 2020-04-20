@@ -2,17 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Answer;
 use App\Entity\Tag;
+use App\Entity\Answer;
+use App\Entity\Question;
 use App\Entity\Interview;
 use App\Entity\Interviewed;
-use App\Entity\Question;
 use App\Form\InterviewType;
 use App\Form\InterviewedType;
+use App\Form\InterviewEditType;
+use App\Repository\AnswerRepository;
 use App\Repository\TagRepository;
 use App\Repository\InterviewRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InterviewedRepository;
+use App\Repository\QuestionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -66,20 +69,117 @@ class InterviewController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit(Request $request)
+    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository)
     {
         $data = json_decode($request->getContent(), true);
+
+        // verfier l'user token et l'author 
+
+        // recupere les objet  des tags et de l'interviewé
+        //dd($data);
+
+
+        // faut valider les données dans le form 
+        $form = $this->createForm(InterviewEditType::class, $interview);
+        $form->submit($data["interview"]["meta"]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // on peut verifier les tags (ajout / modificatin/ suppression)
+            for ($i = 0; $i < count($data["interview"]["tags"]); $i++) {
+                $tagName =  $data["interview"]["tags"][$i]["name"];
+                $tag = $tagRepository->findOneBy(["name" => $tagName]);
+                if ($tag) {
+                    $tag->addInterview($interview);
+                } else {
+                    $tag = new Tag();
+                    $tag->setName($tagName);
+                    $tag->addInterview($interview);
+                }
+                $em->persist($tag);
+            }
+            // on verifie l'interviewé on lui set l'interview
+            foreach($interview->getInterviewed() as $interviewed){
+                $interviewed->addInterview($interview);
+            }
+            
+            // enfin on pour verifier les questions / réponses
+
+           // dd($data["content"]);
+            foreach ($data["content"] as $questionReponse) {
+              
+                if(isset($questionReponse["id"])){
+                    $questionId = $questionReponse["id"];
+                }else {
+                    $questionId = null;
+                }
+             
+                //dd($questionId);
+
+                if (!$questionId){
+                    $question = new Question();
+                    $question->setContent($questionReponse["content"]);
+
+                    if(isset($questionReponse["answers"]["id"])){
+                        $answerId = $questionReponse["answers"]["id"];
+                    }else {
+                        $answerId = null;
+                    }
+
+                    if(!$answerId){
+                        $answer = new Answer();
+                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer->setQuestion($question);
+                        $answer->setInterviewed($interviewed);
+                    }else {
+                        $answer = $answerRepository->find($questionReponse["answers"]["id"]);
+
+                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer->setUpdatedAt(new \Datetime);
+                    }
+                    $question->setInterview($interview);
+                }else {
+                    $question = $questionRepository->find($questionId);
+
+                    $question->setContent($questionReponse["content"]);
+                    
+                    if(!$answerId){
+                        $answer = new Answer();
+                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer->setQuestion($question);
+                        $answer->setInterviewed($interviewed);
+                       
+                    }else {
+                        $answer = $answerRepository->find($questionReponse["answers"]["id"]);
+
+                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer->setUpdatedAt(new \Datetime);
+                    }
+                   
+
+                    $question->setInterview($interview);
+               
+                }
+                $em->persist($answer);
+                $em->persist($question);
+                
+                
+            }
+
+            $interview->setUpdatedAt(new \Datetime);
+
+            $em->persist($interview);
+        }
        
-        dd($data);
 
-        // mettre a jour les meta
-        $form = $this->createForm(InterviewType::class);
-        $form->submit($data["interview"]);
+  $em->flush();
 
-        dd($form);
-        
-        // mettre a jour les questions / reponse 
-        // ajouter les nouvelles questions / réponse 
+            return $this->json(
+            ['message' => 'bingo '],
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
     }
     /**
      * Créer une nouvelle interview
@@ -142,24 +242,24 @@ class InterviewController extends AbstractController
         //dd($data["content"]);
 
         // on vas parcourrir le tableau de contenu 
-        for ($indexContent=0; $indexContent < count($data["content"]); $indexContent++) { 
+        for ($indexContent = 0; $indexContent < count($data["content"]); $indexContent++) {
             //dd($data["content"][$indexContent]);
             $content = $data["content"][$indexContent];
             // pour chaque tableau ainsi obtenu 
             // on vas créer une question (au besoin verifie si elle existe)
-                $question = new Question();
-                $answer = new Answer();
-                $question->setContent($content["question"]);
-                $question->addAnswer($answer);
-                $question->setInterview($interview);
-                // on vas enfin associé les question a l'interview
-                // puis on vas créer une réponse, et y associé :
-                    // l'interviewed
-                    // la question 
-                $answer->setContent($content["answers"]);
-                $answer->setInterviewed($interviewed);
+            $question = new Question();
+            $answer = new Answer();
+            $question->setContent($content["question"]);
+            $question->addAnswer($answer);
+            $question->setInterview($interview);
+            // on vas enfin associé les question a l'interview
+            // puis on vas créer une réponse, et y associé :
+            // l'interviewed
+            // la question 
+            $answer->setContent($content["answers"]);
+            $answer->setInterviewed($interviewed);
 
-                $em->persist($question, $answer);
+            $em->persist($question, $answer);
         }
         $em->flush();
 
