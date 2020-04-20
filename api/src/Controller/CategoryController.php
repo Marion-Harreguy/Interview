@@ -3,15 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
-use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/api/users/{user_id}/categories", name="category_")
+ * @Route("/api/users/{users_id}/categories", name="category_")
  */
 class CategoryController extends AbstractController
 {
@@ -27,14 +28,19 @@ class CategoryController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(CategoryRepository $categoryRepository, UserRepository $userRepository, SerializerInterface $serializer)
-    {      
+    public function browse(Request $request)
+    {   
+        // récupérer le user
+        $userId = intval($request->attributes->get('users_id'));
+        // récupérer son id
+        $id = $this->getUser()->getId();
+        dd($request, $userId, $id);
+
         return $this->json([
             'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/InterviewController.php',
+            'path' => 'src/Controller/CategoryController.php',
 
         ]);
-        
     }
 
     /**
@@ -44,22 +50,31 @@ class CategoryController extends AbstractController
      */
     public function edit(Category $category, Request $request)
     {
-        $form = $this->createForm(CategoryType::class, $user);
+        // récupérer le user
+        $userId = intval($request->attributes->get('users_id'));
+        // récupérer son id
+        $id = $this->getUser()->getId();
 
-        $form->handleRequest($request);
+        // si l'id est le même alors, on peut ajouter une catégorie
+        if ($id === $userId) {
 
-        if($form->isSubmitted() && $form->isValid()) {
-            // $user->setUpdatedAt(new \DateTime());
+            $form = $this->createForm(CategoryType::class, $category);
 
-            $this->getDoctrine()->getManager()->flush();
+            $form->handleRequest($request);
 
-            // return $this->redirectToRoute('');
+            if($form->isSubmitted() && $form->isValid()) {
+                // $user->setUpdatedAt(new \DateTime());
+
+                $this->getDoctrine()->getManager()->flush();
+
+                // return $this->redirectToRoute('');
+            }
+
+            return $this->json([
+                'message' => 'Welcome to your new controller!',
+                'path' => 'src/Controller/CategoryController.php',
+            ]);
         }
-
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UserController.php',
-        ]);
     }
 
     /**
@@ -67,26 +82,38 @@ class CategoryController extends AbstractController
      * 
      * @Route("/", name="add", methods={"POST"})
      */
-    public function add(Request $request)
+    public function add(Request $request, EntityManagerInterface $em)
     {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $user);
+        // récupérer le user
+        $userId = intval($request->attributes->get('users_id'));
+        // récupérer son id
+        $id = $this->getUser()->getId();
 
-        $form->handleRequest($request);
+        // si l'id est le même alors, on peut ajouter une catégorie
+        if ($id === $userId) {
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $data = json_decode($request->getContent(), true);
+          
+            $category = new Category();
+            $form = $this->createForm(CategoryType::class, $category);
+            
+            $form->submit($data["categories"]);
+           
+            if($form->isSubmitted() && $form->isValid()) {
 
-            $em->persist($user);
-            $em->flush();
+                $em->persist($category);
 
-            // return $this->redirectToRoute('');
+                // mettre à jour l'id du User
+                $category->setUser($this->getUser());
+
+                $category->setUpdatedAt(new \Datetime());
+
+                $em->flush();
+            }
+
+        return $this->json(['Category added'], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
+        
         }
-
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UserController.php',
-        ]);
     }
 
     /**
