@@ -32,7 +32,7 @@ class Answer
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers", cascade={"persist"})
      */
     private $question;
 
