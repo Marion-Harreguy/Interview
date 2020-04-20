@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InterviewedRepository")
@@ -15,31 +16,37 @@ class Interviewed
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("browseInterviewed")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=55)
+     * @Groups("browseInterviewed")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=55)
+     * @Groups("browseInterviewed")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Groups("browseInterviewed")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("browseInterviewed")
      */
     private $job;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups("browseInterviewed")
      */
     private $city;
 
@@ -55,11 +62,13 @@ class Interviewed
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Interview", mappedBy="interviewed")
+     * @Groups("browseInterviewed")
      */
     private $interviews;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Structure", inversedBy="intervieweds")
+     * @Groups("browseInterviewed")
      */
     private $structure;
 
@@ -218,11 +227,11 @@ class Interviewed
         return $this->getFirstname() . ' ' . $this->getLastname();
     }
 
+    /**
+     * Fonction permettant de récupérer les initiales d'un interviewé
+     */
     public function getInitials()
     {
-        // récupere le nom complet
-       
-        // explode en un tableau 
         
          $words = explode(" ", $this->getCompleteName());
                
@@ -231,16 +240,56 @@ class Interviewed
          foreach ($words as $w) {
            $initials .= $w[0];
          }
-             
 
         return $initials;
-         // boucle 
-        //$completeName = $this->getCompleteName(explode(" ", $string));
-        
-        // 
-        //     foreach($completeName as $init) {
-        //         $initials .= $init{0};
-        //     }
-        //return strtoupper($initials);
+    }
+
+    /**
+     * Groups("browseInterviewed")
+     */
+    public function getInterviewed()
+    {
+        // $interviewed = [];
+
+        $dataInterviewed = [
+            "id" => $this->getId(),
+            "firstname" => $this->getFirstname(),
+            "lastname" => $this->getLastname(),
+            "email" => $this->getEmail(),
+            "job" => $this->getJob(),
+            "city" => $this->getCity(),
+            "interviews" => $this->getInterviews(),
+            "structure" => $this->getStructure(),
+        ];
+
+        $interviews = [];
+
+        foreach ($this->getInterviews() as $interviews) {
+            $dataInterviews = [
+                "id" => $interviews->getId(),
+                "title"  => $this->getTitle(),
+                "openLicence" => $this->getOpenLicence(),
+                "author" => $this->getUser()->getCompleteName(),
+            ];
+        }
+
+        $interviews = $dataInterviews;
+
+        $structures = [];
+
+        foreach ($this->getStructure() as $structures) {
+            $dataStructures = [
+                "id" => $structure->getId(),
+                "name" => $structure->getName(),
+                "city" => $structure->getCity(),
+                "sector" => $structure->getSector(),
+            ];
+        }
+
+        $structures[] = $dataStructures;
+
+        // $interviewed[] = $dataInterviewed;
+
+        return $interviewed;
     }
 }
