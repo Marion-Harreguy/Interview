@@ -69,11 +69,14 @@ class InterviewController extends AbstractController
     public function edit(Request $request)
     {
         $data = json_decode($request->getContent(), true);
+       
         dd($data);
+
         // mettre a jour les meta
-        $form = $this->createForm(InterviewType::class, $data["interview"]);
+        $form = $this->createForm(InterviewType::class);
         $form->submit($data["interview"]);
 
+        dd($form);
         
         // mettre a jour les questions / reponse 
         // ajouter les nouvelles questions / réponse 

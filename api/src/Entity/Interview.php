@@ -330,10 +330,10 @@ class Interview
         $interview = [
             "id" => $this->getId(),
             "title"  => $this->getTitle(),
+            "context" => $this->getContext(),
             "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
-
             "author" => $this->getUser()->getCompleteName(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
