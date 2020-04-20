@@ -67,11 +67,11 @@ export default (store) => (next) => (action) => {
         .then((response) => {
           // Create the websocket, with a url based on the user's token
           console.log("Succesfully connected !"); 
-          store.dispatch(connectWebsocket(response.data));
+          // store.dispatch(connectWebsocket(response.data));
         })
         .catch((error) => {
           // Tell the user what's wrong
-          store.dispatch(connectWebsocket({}));
+          // store.dispatch(connectWebsocket({}));
           // console.log(error);
         });
       break;

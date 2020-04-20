@@ -6,8 +6,8 @@ import HeaderContainer from '../../containers/HeaderContainer';
 import UserLibraryContainer from '../../containers/UserLibraryContainer';
 import UserLibraryRight from '../UserLibraryRight';
 import LegalMentions from '../LegalMentions';
-import ReadMeta from '../ReadMeta';
-import ReadContent from '../ReadContent';
+import ReadMetaContainer from '../../containers/ReadMetaContainer';
+import ReadContentContainer from '../../containers/ReadContentContainer';
 import SearchForm from '../SearchForm';
 import SearchResults from '../SearchResults';
 import WriteContent from '../WriteContent';
@@ -22,14 +22,14 @@ import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContai
 // Temporary : all style put in one file
 import './style.scss';
 
-const App = ({ isConnected }) => {
+const App = ({ isConnected, userCategories }) => {
 
   return (
     <div className="app">
 
       {/* Make category styles from userCategories */}
       {
-      store.getState().userData.dashboard.categories.map((category) => (
+      userCategories.map((category) => (
         // eslint-disable-next-line react/no-danger
         <style key={category.id} dangerouslySetInnerHTML={{__html: `
         .list__category--${category.id}, input[type="checkbox"].category-span--${category.id} + label::before, input[type="checkbox"].category-button--${category.id} + label::before { background-color: ${category.color}; }
@@ -77,7 +77,7 @@ const App = ({ isConnected }) => {
               render={(object) => {
                 const { slug } = object.match.params;
                 // REQUETE AXIOS ??
-                if (isConnected) return <ReadMeta articleId={slug} />;
+                if (isConnected) return <ReadMetaContainer articleId={slug} />;
                 return <Redirect to="/" />;
               }}
             />
@@ -155,7 +155,7 @@ const App = ({ isConnected }) => {
               render={(object) => {
                 const { slug } = object.match.params;
                 // REQUETE AXIOS ??
-                if (isConnected) return <ReadContent articleId={slug} />;
+                if (isConnected) return <ReadContentContainer articleId={slug} />;
                 return <Redirect to="/" />;
               }}
             />

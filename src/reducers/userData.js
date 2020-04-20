@@ -1,4 +1,4 @@
-import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED } from '../actions';
+import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW } from '../actions';
 import { UPDATE_USER } from '../actions/socket';
 
 export const initialState = {
@@ -127,39 +127,27 @@ export const initialState = {
   },
 
   newCategory: {
-    id: 488,
+    id: 499,
     name: '',
     displayed: true,
   },
 };
 
 const categoryColors = [
-  "#eeeeee",
-  "#121212",
-  "#939393",
-  "#179468",
-  "#083204",
-  "#058403",
-  "#850438",
-  "#508435",
-  "#850438",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-  "#eeeeee",
-]
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+  'yellow',
+];
 
 const userData = (state = initialState, action = {}) => {
 
@@ -237,7 +225,8 @@ const userData = (state = initialState, action = {}) => {
             color: categoryColors[state.dashboard.categories.length],
           },
         };
-    };
+      }
+      break;
     case ADD_CATEGORY_CHANGE:
       return {
         ...state,
@@ -246,14 +235,45 @@ const userData = (state = initialState, action = {}) => {
           name: action.payload,
         },
       };
-      case CHANGE_FORM_DISABLED:
-        return {
-          ...state,
-          library: {
-            ...state.library,
-            formDisabled: !state.library.formDisabled,
-          },
-        };
+    case CHANGE_FORM_DISABLED:
+      return {
+        ...state,
+        library: {
+          ...state.library,
+          formDisabled: !state.library.formDisabled,
+        },
+      };
+    case SAVE_INTERVIEW:
+      let alreadySaved = false;
+      console.log(state.dashboard.savedInterviews);
+      let newSavedInterview = state.dashboard.savedInterviews.map((interview, index) => {
+        if(interview.id !== action.payload.id) return interview;
+        else {
+          alreadySaved = index;
+        }
+      });
+      if (!alreadySaved) {
+        newSavedInterview.push({
+          id: action.payload.id,
+          name: action.payload.name,
+          categories: [...action.payload.categories],
+        });
+      }
+      else {
+        console.log("deleting interview : "+alreadySaved);
+        newSavedInterview.splice(alreadySaved, 1);
+        // delete newSavedInterview[alreadySaved];
+      }
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          savedInterviews: [
+            ...newSavedInterview,
+          ],
+        },
+      };
+
     default:
       return state;
   }

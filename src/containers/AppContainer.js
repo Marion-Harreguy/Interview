@@ -3,6 +3,7 @@ import App from '../components/App';
 
 const mapStateToProps = (state) => ({
   isConnected: state.userData.isConnected,
+  userCategories: state.userData.dashboard.categories,
 });
 
 const mapDispatchToProps = () => ({});

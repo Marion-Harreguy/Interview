@@ -12,6 +12,7 @@ export const ADD_CATEGORY_CHANGE = 'ADD_CATEGORY_CHANGE';
 export const ADD_CATEGORY_SUBMIT = 'ADD_CATEGORY_SUBMIT';
 export const MODIFY_USER_INFO_API = 'MODIFY_USER_INFO_API';
 export const CHANGE_FORM_DISABLED = 'CHANGE_FORM_DISABLED';
+export const SAVE_INTERVIEW = 'SAVE_INTERVIEW';
 
 // NEW USER COMPONENT 
 export const newUserInputChange = (payload) => ({
@@ -80,4 +81,10 @@ export const addCategorySubmit = () => ({
 
 export const changeFormDisabled = () => ({
   type: CHANGE_FORM_DISABLED,
-})
+});
+
+// READ META
+export const saveInterview = (payload) => ({
+  type: SAVE_INTERVIEW,
+  payload,
+});

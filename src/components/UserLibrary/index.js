@@ -50,10 +50,14 @@ const UserLibrary = ({
   // Default table is in chronological order
   // If alphabetical order, uses Compare function
   // PROBLEM
-  const sortDashboard = (dashboardOriginal) => {
-    console.log(dashboardOriginal);
+  const sortDashboard = () => {
     if (library.order === 'alphabet') {
-      const alphaDashboard = { ...dashboardOriginal };
+      const alphaDashboard = {
+        publishedInterviews: [...dashboard.publishedInterviews],
+        writtingInterviews: [...dashboard.writtingInterviews],
+        savedInterviews: [...dashboard.savedInterviews],
+        categories: [...dashboard.categories],
+      };
       return {
         publishedInterviews: alphaDashboard.publishedInterviews.sort(compare),
         writtingInterviews: alphaDashboard.writtingInterviews.sort(compare),
@@ -61,11 +65,11 @@ const UserLibrary = ({
         categories: alphaDashboard.categories,
       };
     }
-    return { ...dashboardOriginal };
+    return { ...dashboard };
   };
 
   // Initiate sortedDashboard (used for the mapping)
-  const sortedDashboard = sortDashboard(dashboard);
+  const sortedDashboard = sortDashboard();
 
   // const that changes an object into a table, so we can map on it
   // { A: contentA, B: contentB } => [ [ A, contentA ], [ B, contentB ] ]
@@ -88,8 +92,7 @@ const UserLibrary = ({
       $(correspondingList).css('height', 0);
       $(correspondingList).animate({ height: sectionAutoHeight }, 100, 'swing');
     }
-  }
-
+  };
 
   return (
     <aside className="left__menu--top left__menu left__menu--home">
