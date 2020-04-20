@@ -1,4 +1,4 @@
-import { } from '../actions';
+import { LOAD_READ_INTERVIEW } from '../actions';
 
 export const initialState = {
   meta: {
@@ -740,6 +740,10 @@ export const initialState = {
 
 const readInterview = (state = initialState, action = {}) => {
   switch (action.type) {
+    case LOAD_READ_INTERVIEW:
+      return {
+        ...action.payload,
+      };
     default:
       return state;
   }

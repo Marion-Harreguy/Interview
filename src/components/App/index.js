@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, useParams } from 'react-router-dom';
 import store from 'src/store';
 
 import HeaderContainer from '../../containers/HeaderContainer';
@@ -77,7 +77,7 @@ const App = ({ isConnected, userCategories }) => {
               render={(object) => {
                 const { slug } = object.match.params;
                 // REQUETE AXIOS ??
-                if (isConnected) return <ReadMetaContainer articleId={slug} />;
+                if (isConnected) return <ReadMetaContainer interviewId={slug} />;
                 return <Redirect to="/" />;
               }}
             />
@@ -87,7 +87,7 @@ const App = ({ isConnected, userCategories }) => {
               render={(object) => {
                 const { slug } = object.match.params;
                 // REQUETE AXIOS ??
-                if (isConnected) return <WriteMeta articleId={slug} />;
+                if (isConnected) return <WriteMeta interviewId={slug} />;
                 return <Redirect to="/" />;
               }}
             />
@@ -154,8 +154,7 @@ const App = ({ isConnected, userCategories }) => {
               path="/read/:slug"
               render={(object) => {
                 const { slug } = object.match.params;
-                // REQUETE AXIOS ??
-                if (isConnected) return <ReadContentContainer articleId={slug} />;
+                if (isConnected) return <ReadContentContainer />;
                 return <Redirect to="/" />;
               }}
             />
@@ -164,8 +163,7 @@ const App = ({ isConnected, userCategories }) => {
               path="/update/:slug"
               render={(object) => {
                 const { slug } = object.match.params;
-                // REQUETE AXIOS ??
-                if (isConnected) return <WriteContent articleId={slug} />;
+                if (isConnected) return <WriteContent />;
                 return <Redirect to="/" />;
               }}
             />

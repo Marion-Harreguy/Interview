@@ -13,6 +13,8 @@ export const ADD_CATEGORY_SUBMIT = 'ADD_CATEGORY_SUBMIT';
 export const MODIFY_USER_INFO_API = 'MODIFY_USER_INFO_API';
 export const CHANGE_FORM_DISABLED = 'CHANGE_FORM_DISABLED';
 export const SAVE_INTERVIEW = 'SAVE_INTERVIEW';
+export const FIND_INTERVIEW_BY_SLUG = 'FIND_INTERVIEW_BY_SLUG';
+export const LOAD_READ_INTERVIEW = 'LOAD_READ_INTERVIEW';
 
 // NEW USER COMPONENT 
 export const newUserInputChange = (payload) => ({
@@ -86,5 +88,10 @@ export const changeFormDisabled = () => ({
 // READ META
 export const saveInterview = (payload) => ({
   type: SAVE_INTERVIEW,
+  payload,
+});
+
+export const findInterviewBySlug = (payload) => ({
+  type: FIND_INTERVIEW_BY_SLUG,
   payload,
 });

@@ -5,6 +5,8 @@ import {
   FORGOTTEN_PASSWORD_SUBMIT,
   LOGIN_SUBMIT,
   MODIFY_USER_INFO_API,
+  FIND_INTERVIEW_BY_SLUG,
+  loadReadInterview
 } from '../actions';
 
 import {
@@ -91,6 +93,16 @@ export default (store) => (next) => (action) => {
       //     // DISPLAY AN ERROR MESSAGE
       //   });
       break;
+
+    case FIND_INTERVIEW_BY_SLUG:
+      console.log(action.payload);
+      axios.post(`http://184.73.143.2/api/interview/${action.payload}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json', 'X-Auth-Token': store.getState().userData.dataUser.token } })
+      .then((response) => {
+        store.dispatch(loadReadInterview(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     default:
       next(action);

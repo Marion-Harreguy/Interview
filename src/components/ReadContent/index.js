@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.scss';
 
-const ReadContent = ({ interviewContext, interviewContent, author }) => {
+const ReadContent = ({ interview }) => {
+
+  const interviewContext = interview.context;
+  const interviewContent = interview.content;
+  const author = interview.meta.author.name;
 
   // Get only initiales of author
   let authorInitiales = author.match(/\b\w/g) || [];
   authorInitiales = ((authorInitiales.shift() || '') + (authorInitiales.pop() || '')).toUpperCase();
 
-  console.log(interviewContent);
+  // useEffect(() => findInterviewById(slug));
 
   return(
     <div className="interview__content">
