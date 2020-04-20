@@ -27,14 +27,33 @@ class CategoryController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(CategoryRepository $categoryRepository, UserRepository $userRepository, SerializerInterface $serializer)
+    public function browse(Request $request)
     {      
-        return $this->json([
-            'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/InterviewController.php',
 
-        ]);
+        // recupe l'user
+        // verifier que  {user_id} = getUser
+        $userId = intval($request->attributes->get('user_id'));
+        $id = $this->getUser()->getId();
+
+       // dd($userId, $id);
+
+        if ($id === $userId){
+      
+            // verifier l'existence ou non de la category
+            // valider les données 
+            // l'ajouter
+            // le flusher
+            
+            return $this->json([
+                'message' => 'coucou'
+            ]);
+
+        }
         
+        return $this->json([
+            'message' => 'pas coucou'
+        ]);
+
     }
 
     /**

@@ -330,10 +330,10 @@ class Interview
         $interview = [
             "id" => $this->getId(),
             "title"  => $this->getTitle(),
+            "context" => $this->getContext(),
             "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
-
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
         ];
@@ -417,9 +417,10 @@ class Interview
             }
             $question["answers"] = $answerList;
 
+            $answerList = [];
             $questionList[] = $question;
         }
-        $completeInterview["questions"] = $questionList;
+        $completeInterview["content"] = $questionList;
 
         return $completeInterview;
     }
