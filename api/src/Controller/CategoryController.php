@@ -17,25 +17,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 class CategoryController extends AbstractController
 {
     /**
-     * TODO : définition des routes - annotations 
-     * TODO : écriture du BREAD
-     * TODO : methods des routes
-     * TODO : requirements des routes 
-     */
-
-    /**
      * Liste toutes les categories d'un utilisateur
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(Request $request)
+    public function browse()
     {   
-        // récupérer le user
-        $userId = intval($request->attributes->get('users_id'));
-        // récupérer son id
-        $id = $this->getUser()->getId();
-        dd($request, $userId, $id);
-
         return $this->json([
             'message' => 'Welcome on the Browse method',
             'path' => 'src/Controller/CategoryController.php',
@@ -77,7 +64,7 @@ class CategoryController extends AbstractController
             
             }
     
-        return $this->json(['Category updated.'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
+        return $this->json(['Category updated'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
         
         }
     }
