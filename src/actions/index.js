@@ -15,6 +15,10 @@ export const CHANGE_FORM_DISABLED = 'CHANGE_FORM_DISABLED';
 export const SAVE_INTERVIEW = 'SAVE_INTERVIEW';
 export const FIND_INTERVIEW_BY_SLUG = 'FIND_INTERVIEW_BY_SLUG';
 export const LOAD_READ_INTERVIEW = 'LOAD_READ_INTERVIEW';
+export const ADD_NEW_QUESTION = 'ADD_NEW_QUESTION';
+export const ADD_NEW_ANSWER = 'ADD_NEW_ANSWER';
+export const UPDATE_QUESTION = 'UPDATE_QUESTION';
+export const UPDATE_ANSWER = 'UPDATE_ANSWER';
 
 // NEW USER COMPONENT 
 export const newUserInputChange = (payload) => ({
@@ -93,5 +97,24 @@ export const saveInterview = (payload) => ({
 
 export const findInterviewBySlug = (payload) => ({
   type: FIND_INTERVIEW_BY_SLUG,
+  payload,
+});
+
+// WRITE
+export const addNewAnswer = () => ({
+  type: ADD_NEW_ANSWER,
+});
+
+export const addNewQuestion = () => ({
+  type: ADD_NEW_QUESTION,
+});
+
+export const updateAnswer = (payload) => ({
+  type: UPDATE_ANSWER,
+  payload,
+});
+
+export const updateQuestion = (payload) => ({
+  type: UPDATE_QUESTION,
   payload,
 });

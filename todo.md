@@ -12,4 +12,6 @@ READ :
 — Faire le profil fermé et ouvert
 
 WRITE :
-— 
+— Envoyer la requête au démarrage de la page
+— Au changement des inputs, les modifier dans le state
+— Ajouter des blocs

@@ -4,6 +4,7 @@ import forgottenPassword from './forgottenPassword';
 import login from './login';
 import userData from './userData';
 import readInterview from './readInterview';
+import writeInterview from './writeInterview';
 
 export default combineReducers({
   newUser,
@@ -11,4 +12,5 @@ export default combineReducers({
   login,
   userData,
   readInterview,
+  writeInterview,
 });

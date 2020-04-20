@@ -10,7 +10,7 @@ import ReadMetaContainer from '../../containers/ReadMetaContainer';
 import ReadContentContainer from '../../containers/ReadContentContainer';
 import SearchForm from '../SearchForm';
 import SearchResults from '../SearchResults';
-import WriteContent from '../WriteContent';
+import WriteContentContainer from '../../containers/WriteContentContainer';
 import WriteMeta from '../WriteMeta';
 import Introduction from '../Introduction';
 import Footer from '../Footer';
@@ -158,12 +158,12 @@ const App = ({ isConnected, userCategories }) => {
                 return <Redirect to="/" />;
               }}
             />
-            <Route path="/create" component={WriteContent} />
+            <Route path="/create" component={WriteContentContainer} />
             <Route
               path="/update/:slug"
               render={(object) => {
                 const { slug } = object.match.params;
-                if (isConnected) return <WriteContent />;
+                if (isConnected) return <WriteContentContainer />;
                 return <Redirect to="/" />;
               }}
             />
