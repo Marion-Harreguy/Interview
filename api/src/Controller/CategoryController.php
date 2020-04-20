@@ -48,32 +48,37 @@ class CategoryController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit(Category $category, Request $request)
+    public function edit(Category $category, Request $request, EntityManagerInterface $em)
     {
-        // récupérer le user
+        // On récupére le user (via la requête)
         $userId = intval($request->attributes->get('users_id'));
-        // récupérer son id
+        // On écupére l'id du User
         $id = $this->getUser()->getId();
 
-        // si l'id est le même alors, on peut ajouter une catégorie
+        // si l'id est le même, alors on peut modifier une catégorie
         if ($id === $userId) {
+
+            $data = json_decode($request->getContent(), true);
 
             $form = $this->createForm(CategoryType::class, $category);
 
-            $form->handleRequest($request);
+            $form->submit($data["categories"]);
 
             if($form->isSubmitted() && $form->isValid()) {
-                // $user->setUpdatedAt(new \DateTime());
+        
+                $em->persist($category);
 
-                $this->getDoctrine()->getManager()->flush();
+                // mettre à jour l'id du User
+                $category->setUser($this->getUser());
 
-                // return $this->redirectToRoute('');
+                $category->setUpdatedAt(new \Datetime());
+
+                $em->flush($category);
+            
             }
-
-            return $this->json([
-                'message' => 'Welcome to your new controller!',
-                'path' => 'src/Controller/CategoryController.php',
-            ]);
+    
+        return $this->json(['Category updated.'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
+        
         }
     }
 
@@ -84,12 +89,9 @@ class CategoryController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        // récupérer le user
         $userId = intval($request->attributes->get('users_id'));
-        // récupérer son id
         $id = $this->getUser()->getId();
 
-        // si l'id est le même alors, on peut ajouter une catégorie
         if ($id === $userId) {
 
             $data = json_decode($request->getContent(), true);
@@ -103,7 +105,6 @@ class CategoryController extends AbstractController
 
                 $em->persist($category);
 
-                // mettre à jour l'id du User
                 $category->setUser($this->getUser());
 
                 $category->setUpdatedAt(new \Datetime());
