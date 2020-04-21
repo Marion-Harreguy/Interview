@@ -318,6 +318,23 @@ class Interview
         return $this;
     }
 
+    public function theLastestDate()
+    {
+        // tester si un UpdatedAt existe 
+        if($this->getUpdatedAt() === null){
+            // sinon use CreatedAt
+            $date = $this->getCreatedAt();
+
+        }else {
+
+            $date = $this->getUpdatedAt();
+        }
+
+
+        $finalDate = date_format($date, "d-m-Y");
+
+        return $finalDate;     
+    }
     /**
      * Get data list of Interviews (Browse)
      * @Groups("browseInterviews")
@@ -334,6 +351,7 @@ class Interview
             "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
+            "date" => $this->theLastestDate(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
         ];

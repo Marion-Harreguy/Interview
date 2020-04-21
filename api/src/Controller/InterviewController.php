@@ -351,7 +351,9 @@ class InterviewController extends AbstractController
             //=============================//
             //   Gestion des structures    //
             //=============================//
+           
             foreach ($interviewedUnSaved["structure"] as $dataStructure) {
+              
                 $structure = $structureRepository->findOneBy(["name" => $dataStructure["name"]]);
 
                 if ($structure) {
