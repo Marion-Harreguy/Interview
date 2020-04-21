@@ -354,12 +354,16 @@ class Interview
             $dataInterviewed = [
                 "id" => $interviewed->getId(),
                 "name" => $interviewed->getCompleteName(),
+                "email" => $interviewed->getEmail(),
+                "job" => $interviewed->getJob(),
             ];
 
             foreach ($interviewed->getStructure() as $structure) {
                 $structure = [
+                    "id" => $structure->getId(),
                     "name" => $structure->getName(),
                     "location" => $structure->getCity(),
+                    "sector" => $structure->getSector(),
                 ];
                 $dataInterviewed["structures"] = $structure;
             }
@@ -367,7 +371,7 @@ class Interview
             $interviewedList[] = $dataInterviewed;
 
         }
-
+       
         $interview["interviewed"] = $interviewedList;
 
         $tagsList = [];
@@ -386,6 +390,7 @@ class Interview
         $interviews[] = $interview;
         return $interview;
     }
+
 
     /**
      * @Groups("interview")
