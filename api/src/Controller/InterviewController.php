@@ -7,15 +7,18 @@ use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Interview;
 use App\Entity\Interviewed;
+use App\Entity\Structure;
 use App\Form\InterviewType;
 use App\Form\InterviewedType;
 use App\Form\InterviewEditType;
+use App\Form\StructureType;
 use App\Repository\AnswerRepository;
 use App\Repository\TagRepository;
 use App\Repository\InterviewRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InterviewedRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\StructureRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -69,7 +72,7 @@ class InterviewController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository)
+    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -98,83 +101,143 @@ class InterviewController extends AbstractController
                 }
                 $em->persist($tag);
             }
-            // on verifie l'interviewé on lui set l'interview
-            foreach($interview->getInterviewed() as $interviewed){
-                $interviewed->addInterview($interview);
-            }
-            
-            // enfin on pour verifier les questions / réponses
 
-           // dd($data["content"]);
+            // verifier l'interviewé
+
+            //=============================//
+            //  Gestion de l'interviewé    //
+            //=============================//
+            /*
+            - Boucler sur le tableau $data["interview"]["interviewed"]
+                - Si l'index ["id"] existe 
+                    --> Récuperer l'objet Interviewed et le mettre à jour
+                - Si il n'existe pas 
+                    --> Créer l'objet Interviewed
+                
+                - Boucler sur le tableau $data["interview"]["interviewed"]["structure"]
+                    - Si l'index ["id"] existe
+                        --> Recuperer l'objet Structure et le mettre à jour
+                    - Si il n'existe pas
+                        --> Créer l'objet Structure et lui assigner l'interviewé
+            */
+            
+            foreach ($data["interview"]["interviewed"] as $dataInterviewed) {
+
+                if (isset($dataInterviewed["id"])) {
+                    $id = $dataInterviewed["id"];
+                    $interviewed = $interviewedRepository->find($id);
+                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                    $formIntervierwed->submit($dataInterviewed);
+                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                        $interviewed->addInterview($interview);
+                        $interviewed->setUpdatedAt(new \DateTime());
+                    }
+                } else {
+                    $interviewed = new Interviewed();
+                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                    $formIntervierwed->submit($dataInterviewed);
+                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                        $interviewed->addInterview($interview);
+                    }
+                }
+                $em->persist($interviewed);
+
+                // verifier els structure
+
+                foreach ($dataInterviewed["structure"] as $dataStructure) {
+                    if (isset($dataStructure["id"])) {
+                        $id = $dataStructure["id"];
+                        $structure = $structureRepository->find($id);
+                    } else {
+                        $structure = new Structure();
+                        $formStructure = $this->createForm(StructureType::class, $structure);
+                        $formStructure->submit($dataStructure);
+                        if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+                            $structure->addInterviewed($interviewed);
+                            $interviewed->setUpdatedAt(new \DateTime());
+                        }
+                    }
+
+                    $em->persist($structure);
+                }
+
+            }
+
+
+            // enfin on pour verifier les questions / réponses
+            // dd($data["content"]);
             foreach ($data["content"] as $questionReponse) {
-              
-                if(isset($questionReponse["id"])){
+
+                if (isset($questionReponse["id"])) {
                     $questionId = $questionReponse["id"];
-                }else {
+                } else {
                     $questionId = null;
                 }
-             
+
                 //dd($questionId);
 
-                if (!$questionId){
+                if (!$questionId) {
                     $question = new Question();
                     $question->setContent($questionReponse["content"]);
 
-                    if(isset($questionReponse["answers"]["id"])){
+                    if (isset($questionReponse["answers"]["id"])) {
                         $answerId = $questionReponse["answers"]["id"];
-                    }else {
+                    } else {
                         $answerId = null;
                     }
 
-                    if(!$answerId){
+                    if (!$answerId) {
                         $answer = new Answer();
                         $answer->setContent($questionReponse["answers"]["content"]);
                         $answer->setQuestion($question);
                         $answer->setInterviewed($interviewed);
-                    }else {
+                    } else {
                         $answer = $answerRepository->find($questionReponse["answers"]["id"]);
 
                         $answer->setContent($questionReponse["answers"]["content"]);
                         $answer->setUpdatedAt(new \Datetime);
                     }
                     $question->setInterview($interview);
-                }else {
+                } else {
                     $question = $questionRepository->find($questionId);
 
                     $question->setContent($questionReponse["content"]);
-                    
-                    if(!$answerId){
+
+                    if (isset($questionReponse["answers"]["id"])) {
+                        $answerId = $questionReponse["answers"]["id"];
+                    } else {
+                        $answerId = null;
+                    }
+
+                    if (!$answerId) {
+
                         $answer = new Answer();
                         $answer->setContent($questionReponse["answers"]["content"]);
                         $answer->setQuestion($question);
                         $answer->setInterviewed($interviewed);
-                       
-                    }else {
+                    } else {
                         $answer = $answerRepository->find($questionReponse["answers"]["id"]);
 
                         $answer->setContent($questionReponse["answers"]["content"]);
                         $answer->setUpdatedAt(new \Datetime);
                     }
-                   
+
 
                     $question->setInterview($interview);
-               
                 }
                 $em->persist($answer);
                 $em->persist($question);
-                
-                
             }
 
             $interview->setUpdatedAt(new \Datetime);
 
             $em->persist($interview);
         }
-       
 
-  $em->flush();
 
-            return $this->json(
+        $em->flush();
+
+        return $this->json(
             ['message' => 'bingo '],
             $status = 200,
             $headers = ['content-type' => 'application/Json'],
