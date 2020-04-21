@@ -318,6 +318,23 @@ class Interview
         return $this;
     }
 
+    public function theLastestDate()
+    {
+        // tester si un UpdatedAt existe 
+        if($this->getUpdatedAt() === null){
+            // sinon use CreatedAt
+            $date = $this->getCreatedAt();
+
+        }else {
+
+            $date = $this->getUpdatedAt();
+        }
+
+
+        $finalDate = date_format($date, "d-m-Y");
+
+        return $finalDate;     
+    }
     /**
      * Get data list of Interviews (Browse)
      * @Groups("browseInterviews")
@@ -330,15 +347,25 @@ class Interview
         $interview = [
             "id" => $this->getId(),
             "title"  => $this->getTitle(),
-            "localisation" => $this->getLocalisation(),
+            "context" => $this->getContext(),
+            "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
-
-            "author" => $this->getUser()->getCompleteName(),
+            "date" => $this->theLastestDate(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
         ];
+        
+        $author = [];
 
+        $author["id"] = $this->getUser()->getId();
+        $author["name"] = $this->getUser()->getCompleteName();
+        $author["email"] = $this->getUser()->getEmail();
+        $author["status"] = $this->getUser()->getStatus();
+
+        $interview["author"] = $author;
+
+           
         $interviewedList = [];
 
         foreach ($this->getInterviewed() as $interviewed) {
@@ -346,13 +373,16 @@ class Interview
             $dataInterviewed = [
                 "id" => $interviewed->getId(),
                 "name" => $interviewed->getCompleteName(),
-                "city" => $interviewed->getCity(),
+                "email" => $interviewed->getEmail(),
+                "job" => $interviewed->getJob(),
             ];
 
             foreach ($interviewed->getStructure() as $structure) {
                 $structure = [
+                    "id" => $structure->getId(),
                     "name" => $structure->getName(),
-                    "city" => $structure->getCity(),
+                    "location" => $structure->getCity(),
+                    "sector" => $structure->getSector(),
                 ];
                 $dataInterviewed["structures"] = $structure;
             }
@@ -360,18 +390,19 @@ class Interview
             $interviewedList[] = $dataInterviewed;
 
         }
-
+       
         $interview["interviewed"] = $interviewedList;
 
         $tagsList = [];
 
         foreach ($this->getTags() as $tags) {
             
-            $tags = [
-                "name" => $tags->getName(),
-            ];
+            //$tags = [
+            //    "name" => $tags->getName(),
+            //];
+            //$tagsList[] = $tags;
+            $tagsList[] = $tags->getName();
 
-            $tagsList[] = $tags;
         }
         
         $interview["tags"] = $tagsList;
@@ -380,6 +411,7 @@ class Interview
         return $interview;
     }
 
+
     /**
      * @Groups("interview")
      */
@@ -387,7 +419,7 @@ class Interview
     {
         $completeInterview = [];
 
-        $completeInterview["interview"] = $this->getInterviews();
+        $completeInterview["meta"] = $this->getInterviews();
 
         $questionList = [];
         $answerList = [];
@@ -397,7 +429,6 @@ class Interview
             $question = [
                 "id" => $questionObject->getId(),
                 "content" => $questionObject->getContent(),
-                "answers" => $questionObject->getAnswers()
             ];
 
        
@@ -409,23 +440,12 @@ class Interview
                 ];
                 $answerList[] = $answer;
             }
-            $question["answers"] = $answerList;
+            $question["answer"] = $answerList;
 
+            $answerList = [];
             $questionList[] = $question;
         }
         $completeInterview["questions"] = $questionList;
-
-
-        //     "question" : [
-        //         'id'
-        //         'content'
-        //         'answers' : [
-        //             'id'
-        //             'content'
-        //             'interviewed' : // getInitials ({A.O})
-        //         ]
-        //     ]
-        // ];
 
         return $completeInterview;
     }

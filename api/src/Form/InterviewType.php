@@ -2,34 +2,40 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
+use App\Entity\Interview;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-class CategoryType extends AbstractType
+class InterviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
+            ->add('title', null, [
                 'constraints' => [new NotBlank, new NotNull()]
             ])
-            ->add('color', ColorType::class)
-            // ->add('createdAt')
-            // ->add('updatedAt')
+            ->add('context', null, [
+                'constraints' => [new NotBlank, new NotNull()]
+            ])
+            ->add('localisation')
+            ->add('language', null, [
+                'constraints' => [new NotBlank, new NotNull()]
+            ])
+            ->add('openLicence')
+            ->add('isPublished')
+            // ->add('tags')
             // ->add('user')
-            // ->add('interviews')
+            // ->add('interviewed')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
+            'data_class' => Interview::class,
             'csrf_protection' => false,
         ]);
     }
