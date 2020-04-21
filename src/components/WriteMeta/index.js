@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
 
 const WriteMeta = ({
@@ -15,6 +16,7 @@ const WriteMeta = ({
   changeAuthor,
   changeAuthorStructure,
   userName,
+  interviewId,
   }) => {
 
   useEffect(() => { 
@@ -128,6 +130,27 @@ const WriteMeta = ({
       </div>
     </aside>
   );
+};
+
+WriteMeta.propTypes = {
+  userName: PropTypes.string.isRequired,
+  interviewId: PropTypes.string.isRequired,
+  addInterviewed: PropTypes.func.isRequired,
+  addWrittingInterview: PropTypes.func.isRequired,
+  changeAuthor: PropTypes.func.isRequired,
+  changeAuthorStructure: PropTypes.func.isRequired,
+  changeInterviewed: PropTypes.func.isRequired,
+  changeInterviewedStructure: PropTypes.func.isRequired,
+  changeInterviewCategories: PropTypes.func.isRequired,
+  deleteInterview: PropTypes.func.isRequired,
+  publishInterview: PropTypes.func.isRequired,
+  changeMeta: PropTypes.func.isRequired,
+  interviewMeta: PropTypes.shape({
+
+  }).isRequired,
+  userCategories: PropTypes.shape({
+
+  }).isRequired,
 };
 
 export default WriteMeta;

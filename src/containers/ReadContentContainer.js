@@ -4,6 +4,7 @@ import { findInterviewBySlug } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   interview: state.readInterview,
+  interviewId: ownProps.interviewId,
 
   // interviewContent: state.readInterview.content,
   // interviewContext: state.readInterview.context,

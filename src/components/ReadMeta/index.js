@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.scss';
 import $ from 'jquery';
 
-const ReadMeta = ({ interviewMeta, saveInterview, userCategories }) => {
+const ReadMeta = ({ interviewMeta, saveInterview, userCategories, interviewId, findInterview }) => {
+
+  useEffect(() => findInterview({ interviewId, reducer: 'read' }));
 
   const downloadInterview = () => {
     // Here Baptist will get the data and make his code

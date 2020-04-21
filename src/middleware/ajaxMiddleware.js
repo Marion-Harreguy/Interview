@@ -4,18 +4,18 @@ import {
   NEW_USER_SUBMIT,
   FORGOTTEN_PASSWORD_SUBMIT,
   LOGIN_SUBMIT,
-  MODIFY_USER_INFO_API,
-  FIND_INTERVIEW_BY_SLUG,
-  loadReadInterview
+  UPDATE_USER_PUT
+  UPDATE_USER_GET
+  ARTICLE_GET
+  WRITE_ARTICLE_PUT
+  WRITE_ARTICLE_DELETE
+  loadReadInterview,
+  loadWriteInterview,
+  updateUserState,
+  newUserSuccess,
 } from '../actions';
 
-import {
-  connectWebsocket,
-} from '../actions/socket';
-
 export default (store) => (next) => (action) => {
-
-  // axios.defaults.withCredentials = true;
 
   // FOR NEW_USER_SUBMIT
   const newUser = {
@@ -27,84 +27,119 @@ export default (store) => (next) => (action) => {
   // FOR LOGIN_SUBMIT
   const userConnect = { credentials: { ...store.getState().login } };
 
-  // FOR MODIFY_USER_INFO
-  const userInfo = { ...store.getState().userData.dataUser};
+  // FOR UPDATE_USER_PUT
+  const userInfo = { ...store.getState().userData };
+
+  // FOR WRITE_ARTICLE_PUT
+  const interviewInfo = { ...store.getState().writeArticle };
 
   switch (action.type) {
-    case NEW_USER_SUBMIT:
 
-      // MAYBE : Put a loading state when waiting for request response :
-      // store.dispatch(toggleLoading());
+    // [Ajax : UPDATE_USER_PUT]
+    // [Ajax : UPDATE_USER_GET]
+    // [Ajax : NEW_USER_SUBMIT]
+    // [Ajax : LOGIN_SUBMIT]
+
+    // [Ajax : UPDATE_USER_CATEGORIES] ? ou direct [Ajax : UPDATE_USER_PUT] ?
+
+    // [Ajax : ARTICLE_GET] (read or write as param)
+    // [Ajax : WRITE_ARTICLE_PUT]
+    // [Ajax : WRITE_ARTICLE_DELETE]
+
+    case NEW_USER_SUBMIT:
 
       axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
-
-          // Get user informations (id)
-          console.log('New user succesfully created!');
-          const newUserData = JSON.parse(response);
-
-          // Change state from this user informations
-          // store.dispatch(newUserSuccess(newUserData));
+          // Send new user ID to the state
+          store.dispatch(newUserSuccess(response.data));
         })
         .catch((error) => {
           console.log(error);
-          // Possible errors that we could get from api: connecting error, email already exists
-
-          // Make an error function
-          // Store.dispatch(newUserError(error));
         });
       break;
 
     case FORGOTTEN_PASSWORD_SUBMIT:
-      // If the user forgets his password
-
-      const phrase = store.getState().forgottenPassword.email;
-      console.log("L'utilisateur "+phrase+" a oublié son mot de passe");
+      // TODO : Make ajax request
+      const email = store.getState().forgottenPassword.email;
+      console.log("L'utilisateur "+email+" a oublié son mot de passe");
       break;
 
     case LOGIN_SUBMIT:
-      // User trying to connect
-      console.log(userConnect);
       axios.post('http://184.73.143.2/login', JSON.stringify(userConnect), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
-          // Create the websocket, with a url based on the user's token
-          console.log("Succesfully connected !"); 
-          // store.dispatch(connectWebsocket(response.data));
+          store.dispatch(updateUserState(response.data));
         })
         .catch((error) => {
-          // Tell the user what's wrong
-          // store.dispatch(connectWebsocket({}));
-          // console.log(error);
+          console.log(error);
         });
       break;
 
-    case MODIFY_USER_INFO_API:
-      // Request to send the changes
-      // axios.put(`http://184.73.143.2/api/users/${userInfo.id}
-      // axios.put('http://184.73.143.2/api/users/1551', JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json', 'X-Auth-Token': 'd982301f2da8736827fc4b191ff1ebb2' } })
-      // // REQUEST WITH HEADER
-      // // axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials':true } })
-      //   .then((response) => {
-      //     console.log("succesfully modified !");
-      //     // WEB SOCKET WILL HANDLE THE FRONT-END CHANGES
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     // DISPLAY AN ERROR MESSAGE
-      //   });
+    case UPDATE_USER_PUT:
+      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json' } })
+        .then((response) => {
+          // No response.data
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       break;
 
-    case FIND_INTERVIEW_BY_SLUG:
-      console.log(action.payload);
-      axios.post(`http://184.73.143.2/api/interview/${action.payload}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json', 'X-Auth-Token': store.getState().userData.dataUser.token } })
-      .then((response) => {
-        store.dispatch(loadReadInterview(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    case UPDATE_USER_GET:
+      axios.get(`http://184.73.143.2/api/users/${userInfo.id}`)
+        .then((response) => {
+          store.dispatch(updateUserState(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+
+    case GET_ARTICLE:
+      axios.get(`http://184.73.143.2/api/interview/${action.payload.interviewId}`)
+        .then((response) => {
+          if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
+          if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+
+    case WRITE_ARTICLE_PUT:
+      axios.put(`http://184.73.143.2/api/interview/${action.payload.interviewId}`, JSON.stringify(interviewInfo), { headers: { 'Content-Type': 'application/json' } })
+        .then((response) => {
+          // No response.data
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+
+    case WRITE_ARTICLE_DELETE:
+      axios.delete(`http://184.73.143.2/api/interview/${action.payload.interviewId}`)
+        .then((response) => {
+          // No response.data
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
 
     default:
       next(action);
   }
 };
+
+
+// case exemple:
+//       axios({ // exemple de requete avec les credentials, voir la doc: https://codewithhugo.com/pass-cookies-axios-fetch-requests/
+//         url: 'http://localhost:3001/logout',
+//         method: 'post',
+//         withCredentials: true,
+//       })
+//         .then((res) => {
+//           store.dispatch(logoutSuccess());
+//         })
+//         .catch((err) => {
+//           console.error(err);
+//         });

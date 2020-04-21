@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => ({
   interviewMeta: state.writeInterview.meta,
   userCategories: state.userData.dashboard.categories,
   userName: state.userData.dataUser.firstname+' '+state.userData.dataUser.lastname,
+  interviewId: ownProps.interviewId,
 
   // TODO : AJAX REQUEST
   // interview: findInterviewBySlug(ownProps.interviewId),

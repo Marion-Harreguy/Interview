@@ -4,6 +4,7 @@ import { findInterviewBySlug, addNewQuestion, addNewAnswer, updateAnswer, update
 
 const mapStateToProps = (state, ownProps) => ({
   writeInterview: state.writeInterview,
+  interviewId: ownProps.interviewId,
 
   // interviewContent: state.readInterview.content,
   // interviewContext: state.readInterview.context,

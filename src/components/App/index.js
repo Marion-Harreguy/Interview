@@ -73,21 +73,19 @@ const App = ({ isConnected, userCategories }) => {
             <Route path="/logout" component={Logout} /> 
             Toggle ? */}
             <Route
-              path="/read/:slug"
+              path="/read/:interviewId"
               render={(object) => {
-                const { slug } = object.match.params;
-                // REQUETE AXIOS ??
-                if (isConnected) return <ReadMetaContainer interviewId={slug} />;
+                const { interviewId } = object.match.params;
+                if (isConnected) return <ReadMetaContainer interviewId={interviewId} />;
                 return <Redirect to="/" />;
               }}
             />
             <Route path="/create" component={WriteMetaContainer} />
             <Route
-              path="/update/:slug"
+              path="/update/:interviewId"
               render={(object) => {
-                const { slug } = object.match.params;
-                // REQUETE AXIOS ??
-                if (isConnected) return <WriteMetaContainer interviewId={slug} />;
+                const { interviewId } = object.match.params;
+                if (isConnected) return <WriteMetaContainer interviewId={interviewId} />;
                 return <Redirect to="/" />;
               }}
             />
@@ -115,7 +113,6 @@ const App = ({ isConnected, userCategories }) => {
             <Route
               path="/register"
               render={() => {
-                // REQUETE AXIOS ??
                 if (!isConnected) return <Introduction />;
                 return <Redirect to="/" />;
               }}
@@ -123,7 +120,6 @@ const App = ({ isConnected, userCategories }) => {
             <Route
               path="/forgotten"
               render={() => {
-                // REQUETE AXIOS ??
                 if (!isConnected) return <Introduction />;
                 return <Redirect to="/" />;
               }}
@@ -131,7 +127,6 @@ const App = ({ isConnected, userCategories }) => {
             <Route
               path="/register"
               render={() => {
-                // REQUETE AXIOS ??
                 if (!isConnected) return <Introduction />;
                 return <Redirect to="/" />;
               }}
@@ -140,7 +135,6 @@ const App = ({ isConnected, userCategories }) => {
             <Route
               path="/search"
               render={() => {
-                // REQUETE AXIOS ??
                 if (isConnected) return <SearchResults />;
                 return <Redirect to="/" />;
               }}
@@ -151,19 +145,19 @@ const App = ({ isConnected, userCategories }) => {
             <Route path="/logout" component={Logout} /> 
             Toggle ? */}
             <Route
-              path="/read/:slug"
+              path="/read/interviewId"
               render={(object) => {
-                const { slug } = object.match.params;
-                if (isConnected) return <ReadContentContainer />;
+                const { interviewId } = object.match.params;
+                if (isConnected) return <ReadContentContainer interviewId={interviewId} />;
                 return <Redirect to="/" />;
               }}
             />
             <Route path="/create" component={WriteContentContainer} />
             <Route
-              path="/update/:slug"
+              path="/update/:interviewId"
               render={(object) => {
-                const { slug } = object.match.params;
-                if (isConnected) return <WriteContentContainer />;
+                const { interviewId } = object.match.params;
+                if (isConnected) return <WriteContentContainer interviewId={interviewId} />;
                 return <Redirect to="/" />;
               }}
             />

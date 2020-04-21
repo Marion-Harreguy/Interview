@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
 
-const WriteContent = ({ addNewQuestion, addNewAnswer, writeInterview, updateQuestion, updateAnswer, updateContext }) => {
+const WriteContent = ({ addNewQuestion, addNewAnswer, writeInterview, updateQuestion, updateAnswer, updateContext, interviewId }) => {
   // TODO : get user initiales
   const authorInitiales = 'LP';
-
   return(
   <div>
     <div className="interview__add">
@@ -38,6 +38,18 @@ const WriteContent = ({ addNewQuestion, addNewAnswer, writeInterview, updateQues
       }
     </div>
   </div>
-)};
+  ) };
+
+WriteContent.propTypes = {
+  addNewQuestion: PropTypes.func.isRequired,
+  addNewAnswer: PropTypes.func.isRequired,
+  updateAnswer: PropTypes.func.isRequired,
+  updateContext: PropTypes.func.isRequired,
+  updateQuestion: PropTypes.func.isRequired,
+  interviewId: PropTypes.string.isRequired,
+  writeInterview: PropTypes.shape({
+
+  }).isRequired,
+};
 
 export default WriteContent;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './style.scss';
 
-const ReadContent = ({ interview }) => {
+const ReadContent = ({ interview, interviewId }) => {
 
   const interviewContext = interview.context;
   const interviewContent = interview.content;
