@@ -33,17 +33,5 @@ class InterviewRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    public function findCompleteInterview($id)
-    {
-        return $this->createQueryBuilder('i')
-            ->select('i')
-  
-            ->Where('i.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
     
 }
