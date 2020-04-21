@@ -19,14 +19,14 @@ class InterviewedRepository extends ServiceEntityRepository
         parent::__construct($registry, Interviewed::class);
     }
 
-    public function findInterviewed()
+    /*public function findInterviewed()
     {
         return $this->createQueryBuilder('i')
             ->select('i')
             ->getQuery()
             ->getResult()
         ;
-    }
+    }*/
 
     // /**
     //  * @return Interviewed[] Returns an array of Interviewed objects
