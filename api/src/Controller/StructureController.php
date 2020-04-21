@@ -58,7 +58,7 @@ class StructureController extends AbstractController
         $form->submit($data["structure"]);
 
         if($form->isSubmitted() && $form->isValid()) {
-
+            $structure->setUpdatedAt(new \DateTime());
             $em->persist($structure);
             $em->flush($structure);
 
