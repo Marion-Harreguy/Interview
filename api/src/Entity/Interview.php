@@ -342,6 +342,7 @@ class Interview
 
         $author["id"] = $this->getUser()->getId();
         $author["name"] = $this->getUser()->getCompleteName();
+        $author["email"] = $this->getUser()->getEmail();
         $author["status"] = $this->getUser()->getStatus();
 
         $interview["author"] = $author;
@@ -378,11 +379,12 @@ class Interview
 
         foreach ($this->getTags() as $tags) {
             
-            $tags = [
-                "name" => $tags->getName(),
-            ];
+            //$tags = [
+            //    "name" => $tags->getName(),
+            //];
+            //$tagsList[] = $tags;
+            $tagsList[] = $tags->getName();
 
-            $tagsList[] = $tags;
         }
         
         $interview["tags"] = $tagsList;
@@ -409,7 +411,6 @@ class Interview
             $question = [
                 "id" => $questionObject->getId(),
                 "content" => $questionObject->getContent(),
-                "answers" => $questionObject->getAnswers()
             ];
 
        
@@ -421,12 +422,12 @@ class Interview
                 ];
                 $answerList[] = $answer;
             }
-            $question["answers"] = $answerList;
+            $question["answer"] = $answerList;
 
             $answerList = [];
             $questionList[] = $question;
         }
-        $completeInterview["content"] = $questionList;
+        $completeInterview["questions"] = $questionList;
 
         return $completeInterview;
     }
