@@ -115,7 +115,7 @@ class CategoryController extends AbstractController
                 $em->flush();
             }
 
-        return $this->json(['Category added'], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
+            return $this->json(['Category added'], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
         
         }
     }
@@ -128,10 +128,9 @@ class CategoryController extends AbstractController
     public function delete(Category $category)
     {
         $em = $this->getDoctrine()->getManager();
-
         $em->remove($category);
         $em->flush();
-
-        return $this->redirectToRoute('');
+        return $this->json(['Category deleted'], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
+    
     }
 }
