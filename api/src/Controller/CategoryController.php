@@ -110,8 +110,6 @@ class CategoryController extends AbstractController
 
                 $category->setUser($this->getUser());
 
-                $category->setUpdatedAt(new \Datetime());
-
                 $em->flush();
             }
 
