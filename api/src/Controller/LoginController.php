@@ -49,7 +49,7 @@ class LoginController extends AbstractController
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -79,27 +79,18 @@ class LoginController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json(['User added'], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
+        $data = $serializer->normalize($user, null, ['groups' => ['user']]);
+        return $this->json($data, $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
 
         }
 
         $errorsEmail = $formUser["email"]->getErrors();
-        /*$errorsMessage = $errorsEmail->getMessageParameters();
-        dd($errorsMessage);*/
-        
-        // for ($errorIndex=0; $errorIndex < $errorsEmail->count() ; $errorIndex++) { 
-        //     $message = $errorsEmail->getMessage();
-        // }
-        // $message = $this->getMessage($errorsEmail);
-        //dd($errorsEmail->count(), $message);
-            
-        // Todo : trouvez comment récuperer le message d'erreurs
 
         if($errorsEmail->count() > 0){
-            return $this->json(['Email taken'], $status = 400, $headers = ['content-type' => 'application/Json'], $context = []);
+            return $this->json(['Email taken'], $status = 403, $headers = ['content-type' => 'application/Json'], $context = []);
         }
 
-        return $this->json(['Not ok'], $status = 500, $headers = ['content-type' => 'application/Json'], $context = []);
+        return $this->json(['error message' => 'serveur down - contact Admin'], $status = 500, $headers = ['content-type' => 'application/Json'], $context = []);
     }
 
 }
