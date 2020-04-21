@@ -50,12 +50,22 @@ class InterviewedController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit()
+    public function edit(Interviewed $interviewed, Request $request, EntityManagerInterface $em)
     {
-        return $this->json([
-            'message' => 'Welcome on the Browse method',
-            'path' => 'src/Controller/InterviewController.php',
-        ]);
+        $data = json_decode($request->getContent(), true);
+
+        $form = $this->createForm(InterviewedType::class, $interviewed);
+        $form->submit($data["interviewed"]);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $interviewed->setUpdatedAt(new \Datetime());
+
+            $em->persist($interviewed);
+            $em->flush($interviewed);
+
+            return $this->json(['Interviewed updated'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
+        }
+        return $this->json(['Oh, Houston, we have a problem.'], $status = 400, $headers = ['content-type' => 'application/Json'], $context = []);
     }
 
     /**
