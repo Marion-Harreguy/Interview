@@ -268,7 +268,7 @@ class InterviewController extends AbstractController
 
         return $this->json(
             ['message' => 'Interview Added'],
-            $status = 200,
+            $status = 201,
             $headers = ['content-type' => 'application/Json'],
             $context = []
         );
