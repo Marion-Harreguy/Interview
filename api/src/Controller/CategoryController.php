@@ -33,6 +33,20 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Affiche une catégorie spécifique 
+     * 
+     * @Route("/{id}", name="read", methods={"GET"}, requirements={"id":"\d+"})
+     */
+    public function read()
+    {
+        return $this->json([
+            'message' => 'Welcome on the Browse method',
+            'path' => 'src/Controller/CategoryController.php',
+
+        ]);
+    }
+
+    /**
      * Modifie / met à jour une catégorie d'un utilisateur
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
