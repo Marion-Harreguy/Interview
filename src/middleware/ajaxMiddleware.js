@@ -4,11 +4,11 @@ import {
   NEW_USER_SUBMIT,
   FORGOTTEN_PASSWORD_SUBMIT,
   LOGIN_SUBMIT,
-  UPDATE_USER_PUT
-  UPDATE_USER_GET
-  ARTICLE_GET
-  WRITE_ARTICLE_PUT
-  WRITE_ARTICLE_DELETE
+  UPDATE_USER_PUT,
+  UPDATE_USER_GET,
+  INTERVIEW_GET,
+  WRITE_INTERVIEW_PUT,
+  WRITE_INTERVIEW_DELETE,
   loadReadInterview,
   loadWriteInterview,
   updateUserState,
@@ -16,6 +16,8 @@ import {
 } from '../actions';
 
 export default (store) => (next) => (action) => {
+  // TOKEN will be used for request headers
+  const token = { ...store.getState().userData.dataUser.token };
 
   // FOR NEW_USER_SUBMIT
   const newUser = {
@@ -28,26 +30,22 @@ export default (store) => (next) => (action) => {
   const userConnect = { credentials: { ...store.getState().login } };
 
   // FOR UPDATE_USER_PUT
-  const userInfo = { ...store.getState().userData };
+  const userInfo = {
+    ...store.getState().userData.dataUser,
+    ...store.getState().userData.dataStructure,
+    ...store.getState().userData.dashboard,
+  };
 
-  // FOR WRITE_ARTICLE_PUT
+  const userId = { ...store.getState().userData.dataUser.id };
+
+  // FOR FORGOTTEN PASSWORD
+  const email = { ...store.getState().forgottenPassword.email };
+
+  // FOR WRITE_INTERVIEW_PUT
   const interviewInfo = { ...store.getState().writeArticle };
 
   switch (action.type) {
-
-    // [Ajax : UPDATE_USER_PUT]
-    // [Ajax : UPDATE_USER_GET]
-    // [Ajax : NEW_USER_SUBMIT]
-    // [Ajax : LOGIN_SUBMIT]
-
-    // [Ajax : UPDATE_USER_CATEGORIES] ? ou direct [Ajax : UPDATE_USER_PUT] ?
-
-    // [Ajax : ARTICLE_GET] (read or write as param)
-    // [Ajax : WRITE_ARTICLE_PUT]
-    // [Ajax : WRITE_ARTICLE_DELETE]
-
     case NEW_USER_SUBMIT:
-
       axios.post('http://184.73.143.2/register', JSON.stringify(newUser), { headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
           // Send new user ID to the state
@@ -60,7 +58,6 @@ export default (store) => (next) => (action) => {
 
     case FORGOTTEN_PASSWORD_SUBMIT:
       // TODO : Make ajax request
-      const email = store.getState().forgottenPassword.email;
       console.log("L'utilisateur "+email+" a oublié son mot de passe");
       break;
 
@@ -75,8 +72,8 @@ export default (store) => (next) => (action) => {
       break;
 
     case UPDATE_USER_PUT:
-      axios.put(`http://184.73.143.2/api/users/${userInfo.id}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json' } })
-        .then((response) => {
+      axios.put(`http://184.73.143.2/api/users/${userId}`, JSON.stringify(userInfo), { headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
           // No response.data
         })
         .catch((error) => {
@@ -85,7 +82,7 @@ export default (store) => (next) => (action) => {
       break;
 
     case UPDATE_USER_GET:
-      axios.get(`http://184.73.143.2/api/users/${userInfo.id}`)
+      axios.get(`http://184.73.143.2/api/users/${userId}`)
         .then((response) => {
           store.dispatch(updateUserState(response.data));
         })
@@ -94,7 +91,7 @@ export default (store) => (next) => (action) => {
         });
       break;
 
-    case GET_ARTICLE:
+    case INTERVIEW_GET:
       axios.get(`http://184.73.143.2/api/interview/${action.payload.interviewId}`)
         .then((response) => {
           if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
@@ -105,9 +102,9 @@ export default (store) => (next) => (action) => {
         });
       break;
 
-    case WRITE_ARTICLE_PUT:
-      axios.put(`http://184.73.143.2/api/interview/${action.payload.interviewId}`, JSON.stringify(interviewInfo), { headers: { 'Content-Type': 'application/json' } })
-        .then((response) => {
+    case WRITE_INTERVIEW_PUT:
+      axios.put(`http://184.73.143.2/api/interview/${action.payload}`, JSON.stringify(interviewInfo), { headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
           // No response.data
         })
         .catch((error) => {
@@ -115,9 +112,9 @@ export default (store) => (next) => (action) => {
         });
       break;
 
-    case WRITE_ARTICLE_DELETE:
-      axios.delete(`http://184.73.143.2/api/interview/${action.payload.interviewId}`)
-        .then((response) => {
+    case WRITE_INTERVIEW_DELETE:
+      axios.delete(`http://184.73.143.2/api/interview/${action.payload}`)
+        .then(() => {
           // No response.data
         })
         .catch((error) => {
@@ -131,8 +128,8 @@ export default (store) => (next) => (action) => {
 };
 
 
-// case exemple:
-//       axios({ // exemple de requete avec les credentials, voir la doc: https://codewithhugo.com/pass-cookies-axios-fetch-requests/
+// EXAMPLE OF CREDENTIALS
+// axios({ // exemple de requete avec les credentials, voir la doc: https://codewithhugo.com/pass-cookies-axios-fetch-requests/
 //         url: 'http://localhost:3001/logout',
 //         method: 'post',
 //         withCredentials: true,

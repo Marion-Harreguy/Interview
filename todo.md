@@ -1,49 +1,49 @@
 LOGIN :
-<!-- with credentials --> credentials = à mettre en place au login 
+— Mettre les credentials [Gael]
 
 ESPACE PERSO :
-— Transition ouverture sections
-— CSS : Retrouver les chemins des icones  
-— Couleurs catégories (ajouter les couleurs)
-— Erreur avec les names
-— Ajouter le fait qu'on reste connecté au rechargement de la page
-— Passer catégories du user en props
-— Faire la requête à la connexion de l'utilisateur
+— Transition ouverture sections [S4]
+— CSS : Retrouver les chemins des icones [Gael]
+— Couleurs catégories (ajouter les couleurs) [S4]
+— Erreur avec les names [S3]
 
 READ :
-— Faire la requete pour obtenir l'objet
-— Survol des initiales, noms qui se mettent en gras à gauche
-— Faire le profil fermé et ouvert
-— Avoir les pastilles de catégories si l'entretien est enregistré
-— Ajouter un bouton "citer" je capte pas le bouton citer? c'est pour une v2?
-— Bouton "contacter" avec formulaire si pas libre de droit
-— Ajouter les tags
+— Survol des initiales, noms qui se mettent en gras à gauche [S4]
+— Avoir les pastilles de catégories si l'entretien est enregistré [S3]
+— Ajouter un bouton "citer" [S3]
+— Ajouter les tags [S3]
+— Cacher bouton télécharger si pas libre de droit [S3]
+— Webtoprint [Baptiste]
 
 WRITE :
-— Envoyer la requête au démarrage de la page 
-— Enregistrer (en même temps que les requêtes ?)
-— Automatiquement : son propre nom dans author
-++ Supprimer un élément (Q ou R) ?
-— CSS
-— Publier : Gérer les input mandatory (qui empechent la publication)
-— Gérer initiales de l'enquêté (et si plusieurs enquêtés??)
-++ Mettre deux input ?
+— Automatiquement : son propre nom dans author [S3]
+— Publier : Gérer les input mandatory (qui empechent la publication) [S4]
+— Gérer initiales de l'enquêté (et si plusieurs enquêtés : menu déroulant ?) [S3]
+— Faire la fonction delete interview dans le reducer [S3]
+++ Mettre deux input pour nom et prénom ? [S4]
+++ Supprimer un élément (Q ou R) ? [S4]
 
-RECHERCHE
+RECHERCHE [S4]
 — Menu déroulant pour classer les résultats
-+++ Plusieurs param
-+++ Sémantique 
 
-EN +
-- Ajouter les tutos quand pas d'entretien selectionné ou pas de contenu (write, search)
-- Faire une 404 stylée
-— Gérer les erreurs ajax en front
+AUTRE
+— Ajouter les tutos quand pas d'entretien selectionné ou pas de contenu (write, search) [S4]
+— Faire une 404 cool [S4]
+— Gérer les erreurs ajax en front [Gael]
+— Faire les proptypes [Gael]
+— Mettre des keys sur tous les maps [Gael]
+— Mettre tous les CSS dans les bons composants [Gael]
 
-— Faire les proptypes
-— Mettre des keys sur tous les maps
-— Commenter
-— Nettoyer le code
+MIDDLEWARE
+— Faire passer le token dans les headers [S3]
 
-+ Supprimer une caté pour les v2?
-+ Supprimer un user ?
-+ Modifier le nom ou l'email d'un user ??
+V2 [S5]
+— Supprimer une catégorie
+— Supprimer un user 
+— Modifier le nom ou l'email d'un user
+— Plusieurs paramêtres dans le moteur de recherche
+— Recherche sémantique ? ("", &, /)
+— Bouton "contacter" avec formulaire si pas libre de droit
+
+PB : À la mise à jour du user on perd l'info de savoir si les catégories sont display ou pas: à gérer autrement
+/!\ Mettre le display à true sur toutes les interviews après updateUserGet [S3]

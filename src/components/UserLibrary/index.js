@@ -6,10 +6,7 @@ import $ from 'jquery';
 
 const UserLibrary = ({
   user,
-  structure,
   dashboard,
-  modifyUserInfo,
-  modifyUserInfoAPI,
   library,
   changeOrder,
   toggleSection,
@@ -17,10 +14,17 @@ const UserLibrary = ({
   addCategoryChange,
   addCategorySubmit,
   newCategoryName,
+  modifyUserInfo,
   changeFormDisabled,
   formDisabled,
-  
- }) => {
+  updateUserPut,
+  updateUserGet,
+}) => {
+
+  // Get all user info from API onload
+  useEffect(() => {
+    updateUserGet();
+  });
 
   // Function to determine weather an interview is shown or not
   // Based on its category list, and which categories the user checked
@@ -49,7 +53,6 @@ const UserLibrary = ({
   // Function to sort with select :
   // Default table is in chronological order
   // If alphabetical order, uses Compare function
-  // PROBLEM
   const sortDashboard = () => {
     if (library.order === 'alphabet') {
       const alphaDashboard = {
@@ -76,10 +79,15 @@ const UserLibrary = ({
   const sectionsAsTable = Object.entries(sortedDashboard);
 
   // French title corresponding to the sections
-  const sectionFrenchTitles = ["Mes entretiens publiés", "Mes entretiens en cours", "Mes entretiens enregistrés", "Mes recherches enregistrées"];
+  const sectionFrenchTitles = [
+    'Mes entretiens publiés',
+    'Mes entretiens en cours',
+    'Mes entretiens enregistrés',
+    'Mes recherches enregistrées',
+  ];
 
   const smoothTransition = (sectionIsOpen, sectionTitle) => {
-    let correspondingList = document.querySelector('.'+sectionTitle+'-container .section__list');
+    const correspondingList = document.querySelector(`.${sectionTitle}-container .section__list`);
 
     if (sectionIsOpen) {
       // Transition to close the section
@@ -88,7 +96,7 @@ const UserLibrary = ({
     else {
       // Transition to close the section
       $(correspondingList).css('height', 'auto');
-      const sectionAutoHeight = correspondingList.clientHeight +'px';
+      const sectionAutoHeight = `${correspondingList.clientHeight}px`;
       $(correspondingList).css('height', 0);
       $(correspondingList).animate({ height: sectionAutoHeight }, 100, 'swing');
     }
@@ -99,8 +107,7 @@ const UserLibrary = ({
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
       <div className="home__content">
         <form className="home__form">
-          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(), changeFormDisabled(event), modifyUserInfoAPI()}} />
-          <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)}type="text" name="biography" value={user.biography} placeholder="Biographie" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
+          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(); changeFormDisabled(event); updateUserPut(); updateUserGet();}} label="Changer mes infos" />
           <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
         </form>
         <div className="home__library">
@@ -134,7 +141,7 @@ const UserLibrary = ({
 
                       <div className="home__category home__category--add">
                         <input className="new-category-name" onChange={(e) => addCategoryChange(e.target.value)} type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category" value={newCategoryName}/>
-                        <button className="category-button category-button--add" onClick={(e) => {addCategorySubmit(e.target), modifyUserInfoAPI()}} type="button" />
+                        <button className="category-button category-button--add" onClick={(e) => { addCategorySubmit(e.target); updateUserPut(); updateUserGet(); }} type="button" label="Ajouter une catégorie" />
                       </div>
                     </div>
                   </div>
@@ -144,14 +151,13 @@ const UserLibrary = ({
               // Creating library reading section
               return (
                 <div className={`${sectionTitle}-container`}>
-                  <h3 className="library__section" onClick={() => {toggleSection(sectionTitle), smoothTransition(library[sectionTitle], sectionTitle)}}>{sectionFrenchTitles[index]}
-                    { sectionTitle === "writtingInterviews" &&
-                      (
+                  <h3 className="library__section" onClick={() => { toggleSection(sectionTitle); smoothTransition(library[sectionTitle], sectionTitle); }}>{sectionFrenchTitles[index]}
+                    { sectionTitle === 'writtingInterviews'
+                      && (
                       <NavLink exact to="/create">
-                        <button className="library__new-interview" type="button" />
+                        <button className="library__new-interview" type="button" label="Créer un nouvel entretien" />
                       </NavLink>
-                      )
-                    }
+                      )}
                   </h3>
                   <div className={`section__list section__list--${library[sectionTitle] ? 'open' : 'closed'}`}>
 
@@ -188,25 +194,14 @@ UserLibrary.propTypes = {
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    biography: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
-
-  structure: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      city: PropTypes.string.isRequired,
-      sector: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
 
   dashboard: PropTypes.shape({
     publishedInterviews: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        publish: PropTypes.bool.isRequired,
         categories: PropTypes.arrayOf(
           PropTypes.number.isRequired,
         ).isRequired,
@@ -216,7 +211,6 @@ UserLibrary.propTypes = {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        publish: PropTypes.bool.isRequired,
         categories: PropTypes.arrayOf(
           PropTypes.number.isRequired,
         ).isRequired,
@@ -241,7 +235,6 @@ UserLibrary.propTypes = {
     ).isRequired,
   }).isRequired,
 
-  modifyUserInfo: PropTypes.func.isRequired,
   changeOrder: PropTypes.func.isRequired,
   library: PropTypes.shape({
     order: PropTypes.string.isRequired,
@@ -254,8 +247,10 @@ UserLibrary.propTypes = {
   toggleCategory: PropTypes.func.isRequired,
   addCategoryChange: PropTypes.func.isRequired,
   addCategorySubmit: PropTypes.func.isRequired,
-  modifyUserInfoAPI: PropTypes.func.isRequired,
   newCategoryName: PropTypes.string.isRequired,
 };
+
+// TODO : Add to proptypes
+// changeFormDisabled, formDisabled, updateUserPut, updateUserGet, modifyUserInfo,
 
 export default UserLibrary;

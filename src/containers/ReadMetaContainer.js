@@ -1,22 +1,23 @@
 import { connect } from 'react-redux';
 
 import ReadMeta from 'src/components/ReadMeta';
-import { saveInterview, findInterview } from '../actions';
+import { saveInterview, updateUserGet, updateUserPut } from '../actions';
 
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   interviewMeta: state.readInterview.meta,
   userCategories: state.userData.dashboard.categories,
-  interviewId: ownProps.interviewId,
-  // interviewMeta: state.readInterview.meta,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveInterview: (info) => {
     dispatch(saveInterview(info));
   },
-  findInterview: (id) => {
-    dispatch(findInterview(id));
+  updateUserGet: () => {
+    dispatch(updateUserGet());
+  },
+  updateUserPut: () => {
+    dispatch(updateUserPut());
   },
 });
 

@@ -29,8 +29,8 @@ Ajouter une catégorie : put + /api/users/{id}/categories/ (envoyer seulement la
 
 READ
 Au load de la page : get + /api/interviews/{id}
-> Response.data = objet readArticle (> state)
-[Ajax : READ_ARTICLE]
+> Response.data = objet readInterview (> state)
+[Ajax : READ_INTERVIEW]
 ** Checker si l'id est présent dans le savedInterviews
 
 Au clic sur enregistrer l’entretien : put + /api/users/{id} (envoyer seulement le dashboard ou tout le user ?)
@@ -43,18 +43,18 @@ Au clic sur enregistrer l’entretien : put + /api/users/{id} (envoyer seulement
 WRITE
 Au load de la page : DEUX OPTIONS :
 — Si interviewId est defined (route /write/{interviewId}) : get + /api/interviews/{id}
-[Ajax : WRITE_ARTICLE_GET]
+[Ajax : WRITE_INTERVIEW_GET]
 > Response.data = l'objet writeArticle (state)
 - Si interviewId est undefined (route /create en front) : post + /api/interviews/ (pour créer un nouvel entretien)
-[Ajax : WRITE_ARTICLE_CREATE]
+[Ajax : WRITE_INTERVIEW_CREATE]
 > Response.data = id du nouvel article
 ** On passe sur la route write/{idrécupéré}
 
 Changement des méta (on non-focus) : put + /api/interviews/{id} (poster seulement les méta ou tout l'interview ?)
-[Ajax : WRITE_ARTICLE_PUT]
+[Ajax : WRITE_INTERVIEW_PUT]
 > No response.data
 * Recharger l'interview ?
-[Ajax : WRITE_ARTICLE_GET]
+[Ajax : WRITE_INTERVIEW_GET]
 
 Changement des catégories (de l'interview) : put + /api/users/{id} (renvoyer seulement le dashboard ou tout le user?)
 [Ajax : UPDATE_USER_PUT]
@@ -64,24 +64,24 @@ Changement des catégories (de l'interview) : put + /api/users/{id} (renvoyer se
 
 Publication : put + /api/interviews/{id} (poster tout ou juste published : true)
 post + route (pour ajouter aux interview publiées du user)
-[Ajax : WRITE_ARTICLE_PUT]
+[Ajax : WRITE_INTERVIEW_PUT]
 > No response.data
 * Recharger le userData
 [Ajax : UPDATE_USER_GET]
 * Recharger l'interview
-[Ajax : WRITE_ARTICLE_GET]
+[Ajax : WRITE_INTERVIEW_GET]
 
 Supprimer : delete + /api/interviews/{id} (pour supprimer l'interview — mais comment gérer la suppression dans le dashboard ? autre requête ?)
 > No response.data
-[Ajax : WRITE_ARTICLE_DELETE]
+[Ajax : WRITE_INTERVIEW_DELETE]
 [Ajax : UPDATE_USER_PUT]
 /!\ Retourner sur espace perso
 
 Changement du contenu (on non-focus) : put + /api/interviews/{id} (poster seulement la nouvelle question / réponse ou tout le contenu de l'interview — sans meta ?)
-[Ajax : WRITE_ARTICLE_PUT]
+[Ajax : WRITE_INTERVIEW_PUT]
 > No response.data
 * Recharger l'interview
-[Ajax : WRITE_ARTICLE_GET]
+[Ajax : WRITE_INTERVIEW_GET]
 
 Search :
 + tard
@@ -97,8 +97,8 @@ LISTE DES ACTIONS AJAX :
 
 [Ajax : UPDATE_USER_CATEGORIES] ? ou direct [Ajax : UPDATE_USER_PUT] ?
 
-[Ajax : READ_ARTICLE]
+[Ajax : READ_INTERVIEW]
 
-[Ajax : WRITE_ARTICLE_GET]
-[Ajax : WRITE_ARTICLE_PUT]
-[Ajax : WRITE_ARTICLE_DELETE]
+[Ajax : WRITE_INTERVIEW_GET]
+[Ajax : WRITE_INTERVIEW_PUT]
+[Ajax : WRITE_INTERVIEW_DELETE]
