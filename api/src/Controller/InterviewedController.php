@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 
-    /**
-     * @Route("/api/interviewed", name="interviewed_")
-     */
+/**
+* @Route("/api/interviewed", name="interviewed_")
+*/
 class InterviewedController extends AbstractController
 {
     /**
@@ -18,9 +18,9 @@ class InterviewedController extends AbstractController
      */
     public function browse(InterviewedRepository $interviewedRepository, SerializerInterface $serializer)
     {
-        $interviewed = $interviewedRepository->findInterviewed();
+        $interviewed = $interviewedRepository->findAll();
 
-        $data = $serializer->normalize($interviewed, null, ['groups' => ['browseInterviewed']]);
+        $data = $serializer->normalize($interviewed, null, ['groups' => ['interviewed']]);
 
         return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
     }

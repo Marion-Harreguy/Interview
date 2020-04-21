@@ -16,37 +16,37 @@ class Interviewed
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("browseInterviewed")
+     * @Groups("interviewed")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=55)
-     * @Groups("browseInterviewed")
+     * @Groups("interviewed")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=55)
-     * @Groups("browseInterviewed")
+     * @Groups("interviewed")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=200)
-     * @Groups("browseInterviewed")
+     * @Groups("interviewed")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("browseInterviewed")
+     * @Groups("interviewed")
      */
     private $job;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups("browseInterviewed")
+     * @Groups("interviewed")
      */
     private $city;
 
@@ -62,13 +62,11 @@ class Interviewed
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Interview", mappedBy="interviewed")
-     * @Groups("browseInterviewed")
      */
     private $interviews;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Structure", inversedBy="intervieweds")
-     * @Groups("browseInterviewed")
      */
     private $structure;
 
@@ -247,7 +245,7 @@ class Interviewed
     /**
      * @Groups("browseInterviewed")
      */
-    public function getInterviewed()
+    /*public function getInterviewed()
     {
         $dataInterviewed = [
             "id" => $this->getId(),
@@ -289,5 +287,5 @@ class Interviewed
         $dataInterviewed["structures"] = $structures;
 
         return $dataInterviewed;
-    }
+    }*/
 }
