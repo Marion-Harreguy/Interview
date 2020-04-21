@@ -35,7 +35,8 @@ class UserType extends AbstractType
             //'first_options'  => array('label' => 'Password field is required'),
             //'second_options' => array('label' => 'Confirm Password'),
             //'mapped'=> false,
-        ->add('biography', null, ['required' => false]);
+        ->add('biography', null, ['required' => false])
+        ->add('status', null, ['constraints' => new NotBlank()]);
         // ->add('createdAt')
         // ->add('updatedAt')
         // ->add('favorite')

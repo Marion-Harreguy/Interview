@@ -330,15 +330,23 @@ class Interview
         $interview = [
             "id" => $this->getId(),
             "title"  => $this->getTitle(),
-            "localisation" => $this->getLocalisation(),
+            "context" => $this->getContext(),
+            "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
-
-            "author" => $this->getUser()->getCompleteName(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
         ];
+        
+        $author = [];
 
+        $author["id"] = $this->getUser()->getId();
+        $author["name"] = $this->getUser()->getCompleteName();
+        $author["status"] = $this->getUser()->getStatus();
+
+        $interview["author"] = $author;
+
+           
         $interviewedList = [];
 
         foreach ($this->getInterviewed() as $interviewed) {
@@ -346,13 +354,16 @@ class Interview
             $dataInterviewed = [
                 "id" => $interviewed->getId(),
                 "name" => $interviewed->getCompleteName(),
-                "city" => $interviewed->getCity(),
+                "email" => $interviewed->getEmail(),
+                "job" => $interviewed->getJob(),
             ];
 
             foreach ($interviewed->getStructure() as $structure) {
                 $structure = [
+                    "id" => $structure->getId(),
                     "name" => $structure->getName(),
-                    "city" => $structure->getCity(),
+                    "location" => $structure->getCity(),
+                    "sector" => $structure->getSector(),
                 ];
                 $dataInterviewed["structures"] = $structure;
             }
@@ -360,7 +371,7 @@ class Interview
             $interviewedList[] = $dataInterviewed;
 
         }
-
+       
         $interview["interviewed"] = $interviewedList;
 
         $tagsList = [];
@@ -380,6 +391,7 @@ class Interview
         return $interview;
     }
 
+
     /**
      * @Groups("interview")
      */
@@ -387,7 +399,7 @@ class Interview
     {
         $completeInterview = [];
 
-        $completeInterview["interview"] = $this->getInterviews();
+        $completeInterview["meta"] = $this->getInterviews();
 
         $questionList = [];
         $answerList = [];
@@ -411,21 +423,10 @@ class Interview
             }
             $question["answers"] = $answerList;
 
+            $answerList = [];
             $questionList[] = $question;
         }
-        $completeInterview["questions"] = $questionList;
-
-
-        //     "question" : [
-        //         'id'
-        //         'content'
-        //         'answers' : [
-        //             'id'
-        //             'content'
-        //             'interviewed' : // getInitials ({A.O})
-        //         ]
-        //     ]
-        // ];
+        $completeInterview["content"] = $questionList;
 
         return $completeInterview;
     }

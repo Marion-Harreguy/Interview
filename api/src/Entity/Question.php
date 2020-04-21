@@ -34,7 +34,7 @@ class Question
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question", cascade={"persist"}, orphanRemoval=true)
      */
     private $answers;
 
