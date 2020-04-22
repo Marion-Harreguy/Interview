@@ -1,0 +1,45 @@
+.interview__content {
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+.interview__content::-webkit-scrollbar {
+  display: block;
+}
+
+
+.interview__content p, .interview__context {
+  margin-left: 25px;
+  display: inline-block;
+  width: calc(100% - 50px);
+}
+
+.interview__context {
+  margin-left: 45px;
+  margin-bottom: 10px;
+}
+
+.interview__content span {
+  width: 15px;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 12px;
+}
+
+.interview__context, .question__content, .answer__content {
+  border-bottom: solid 1px grey;
+  padding: 12px 0px;
+}
+
+.question__content, .interview__add__button--question {
+  font-family: 'Source-SemiBold';
+}
+
+.answer__content, .interview__add__button--answer {
+  font-family: 'Source-Light';
+}
+
+.interview__context, .interview__add__button--context {
+  font-family: 'Source-LightItalic';
+}
