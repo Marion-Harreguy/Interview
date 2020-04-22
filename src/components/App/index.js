@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import HeaderContainer from '../../containers/HeaderContainer';
@@ -13,7 +13,7 @@ import SearchResults from '../SearchResults';
 import WriteContentContainer from '../../containers/WriteContentContainer';
 import WriteMetaContainer from '../../containers/WriteMetaContainer';
 import Introduction from '../Introduction';
-import Footer from '../Footer';
+import FooterContainer from '../../containers/FooterContainer';
 import PageNotFound from '../NotFound';
 import NewUser from '../NewUser';
 import LoginContainer from '../../containers/LoginContainer';
@@ -22,7 +22,18 @@ import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContai
 // Temporary : all style put in one file
 import './style.scss';
 
-const App = ({ isConnected, userCategories }) => (
+const App = ({ isConnected, userCategories, automaticLog }) => {
+
+  console.log(isConnected);
+
+  useEffect(() => {
+    const localStorageLog = localStorage.getItem('userLogs');
+    if (localStorageLog) {
+      automaticLog(JSON.parse(localStorageLog));
+    }
+  }, [isConnected]);
+
+  return (
   <div className="app">
 
     { // Make category styles from userCategories
@@ -79,6 +90,7 @@ const App = ({ isConnected, userCategories }) => (
           <Route
             path="/read/:interviewId"
             render={() => {
+              console.log(isConnected);
               if (isConnected) return <ReadMetaContainer />;
               return <Redirect to="/" />;
             }}
@@ -97,7 +109,7 @@ const App = ({ isConnected, userCategories }) => (
           }}
           />
         </Switch>
-        <Footer />
+        <FooterContainer />
       </div>
 
       <div className="right col-12 col-md-7 col-lg-8 col-xl-8">
@@ -150,7 +162,7 @@ const App = ({ isConnected, userCategories }) => (
           <Route path="/logout" component={Logout} /> 
           Toggle ? */}
           <Route
-            path="/read/interviewId"
+            path="/read/:interviewId"
             render={(object) => {
               const { interviewId } = object.match.params;
               if (isConnected) return <ReadContentContainer interviewId={interviewId} />;
@@ -171,7 +183,7 @@ const App = ({ isConnected, userCategories }) => (
       </div>
     </main>
   </div>
-);
+)};
 
 // TODO : PropTypes Validation
 // isConnected, userCategories

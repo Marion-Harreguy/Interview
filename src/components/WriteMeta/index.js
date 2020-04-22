@@ -56,12 +56,17 @@ const WriteMeta = ({
   };
 
   const createOrPut = () => {
+    console.log("create or put ?");
     if (interviewMeta.id === 0 && interviewMeta.title.length > 3) {
+      console.log("create");
       writeInterviewCreate();
     }
     else if (interviewMeta.id !== 0) {
+      console.log(interviewMeta);
+      console.log("put");
       writeInterviewPut(interviewId);
     }
+    console.log("none");
   };
 
   return (

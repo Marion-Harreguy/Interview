@@ -17,7 +17,7 @@ import {
 
 export const initialState = {
   meta: {
-    id: 69,
+    id: 0,
     title: '',
     location: '',
     language: '',

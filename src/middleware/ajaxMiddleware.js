@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode'; 
 
 import {
   NEW_USER_SUBMIT,
@@ -15,27 +16,38 @@ import {
   updateUserState,
   newUserSuccess,
   createCategoryDisplay,
+  automaticLog,
+  updateUserGet,
 } from '../actions';
 
 export default (store) => (next) => (action) => {
   // TOKEN will be used for request headers
-  const token = { ...store.getState().userData.dataUser.token };
+  const token = () => { return store.getState().userData.dataUser.token; };
 
   // FOR NEW_USER_SUBMIT
   const newUser = {
-    // Ajax will send all the user & structure info to the API (but not the "form" key)
+    // Ajax will send all the user & structure info to the Api (but not the "form" key)
     user: { ...store.getState().newUser.user },
     structure: { ...store.getState().newUser.structure },
   };
 
   // FOR LOGIN_SUBMIT
-  const userConnect = { credentials: { ...store.getState().login } };
+  const userConnect = { 
+    username: store.getState().login.login,
+    password: store.getState().login.password,
+  };
 
   // FOR UPDATE_USER_PUT
+  // const userInfo = {
+  //   ...store.getState().userData.dataUser,
+  //   ...store.getState().userData.dataStructure,
+  //   ...store.getState().userData.dashboard,
+  // };
+
   const userInfo = {
-    ...store.getState().userData.dataUser,
-    ...store.getState().userData.dataStructure,
-    ...store.getState().userData.dashboard,
+    user: { ...store.getState().userData.dataUser},
+    structure: {...store.getState().userData.dataStructure},
+    // ...store.getState().userData.dashboard,
   };
 
   const userId = store.getState().userData.dataUser.id;
@@ -51,7 +63,6 @@ export default (store) => (next) => (action) => {
       axios({
         url: 'http://184.73.143.2/register',
         method: 'post',
-        withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -59,7 +70,17 @@ export default (store) => (next) => (action) => {
       })
         .then((response) => {
           // Send new user ID to the state
-          store.dispatch(newUserSuccess(response.data));
+          // store.dispatch(newUserSuccess(response.data));
+          const decodedToken = jwtDecode(response.data.token);
+
+          const userLogs = {
+            id: decodedToken.id,
+            token: response.data.token,
+          };
+          localStorage.setItem('userLogs', JSON.stringify(userLogs));
+          localStorage.setItem('isConnected', true);
+
+          store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
           console.log(error);
@@ -72,17 +93,27 @@ export default (store) => (next) => (action) => {
       break;
 
     case LOGIN_SUBMIT:
+      console.log(userConnect);
       axios({
-        url: 'http://184.73.143.2/login',
+        url: 'http://184.73.143.2/api/login_check',
         method: 'post',
-        withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
         },
         data: JSON.stringify(userConnect),
       })
         .then((response) => {
-          store.dispatch(updateUserState(response.data));
+          const decodedToken = jwtDecode(response.data.token);
+
+          console.log(response.data.token);
+          const userLogs = {
+            id: decodedToken.id,
+            token: response.data.token,
+          };
+          localStorage.setItem('userLogs', JSON.stringify(userLogs));
+          localStorage.setItem('isConnected', true);
+
+          store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
           console.log(error);
@@ -94,13 +125,12 @@ export default (store) => (next) => (action) => {
         url: `http://184.73.143.2/api/users/${userId}`,
         method: 'put',
         headers: {
-          'Content-Type': 'application/json',
-          'X-AUTH-TOKEN': token,
+          Authorization: `Bearer ${token()}`,
         },
         data: JSON.stringify(userInfo),
       })
         .then(() => {
-          // No response.data
+          setTimeout(() => store.dispatch(updateUserGet()), 500);
         })
         .catch((error) => {
           console.log(error);
@@ -112,11 +142,11 @@ export default (store) => (next) => (action) => {
         url: `http://184.73.143.2/api/users/${userId}`,
         method: 'get',
         headers: {
-          'Content-Type': 'application/json',
-          'X-AUTH-TOKEN': token,
+          Authorization: `Bearer ${token()}`,
         },
       })
         .then((response) => {
+          console.log("Request worked!");
           store.dispatch(updateUserState(response.data));
           if (store.getState().userData.library.categoryDisplay.length === 0) {
             store.dispatch(createCategoryDisplay());
@@ -132,8 +162,7 @@ export default (store) => (next) => (action) => {
         url: `http://184.73.143.2/api/interviews/${action.payload.interviewId}`,
         method: 'get',
         headers: {
-          'Content-Type': 'application/json',
-          'X-AUTH-TOKEN': token,
+          Authorization: `Bearer ${token()}`,
         },
       })
         .then((response) => {
@@ -150,8 +179,7 @@ export default (store) => (next) => (action) => {
         url: `http://184.73.143.2/api/interviews/${action.payload}`,
         method: 'put',
         headers: {
-          'Content-Type': 'application/json',
-          'X-AUTH-TOKEN': token,
+          Authorization: `Bearer ${token()}`,
         },
         data: JSON.stringify(interviewInfo),
       })
@@ -168,8 +196,7 @@ export default (store) => (next) => (action) => {
         url: `http://184.73.143.2/api/interviews/${action.payload}`,
         method: 'delete',
         headers: {
-          'Content-Type': 'application/json',
-          'X-AUTH-TOKEN': token,
+          Authorization: `Bearer ${token()}`,
         },
       })
         .then((response) => {
@@ -185,8 +212,7 @@ export default (store) => (next) => (action) => {
         url: 'http://184.73.143.2/api/interviews/',
         method: 'post',
         headers: {
-          'Content-Type': 'application/json',
-          'X-AUTH-TOKEN': token,
+          Authorization: `Bearer ${token()}`,
         },
       })
         .then((response) => {

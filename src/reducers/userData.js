@@ -1,16 +1,16 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG } from '../actions';
 
 export const initialState = {
-  isConnected: false,
+  isConnected: true,
   dataUser: {
-    id: 181,
+    id: 2,
     firstname: 'Patrick',
     lastname: 'Lebon',
     email: 'vrocher@tiscali.fr',
     status: 'Prof',
-    token: 'azertjklmazejk',
+    token: '79a34bb07879a543c3612c6109a4d23a',
   },
   dataStructure: {
     id: 68,
@@ -298,6 +298,21 @@ const userData = (state = initialState, action = {}) => {
           ...state.library,
           categoryDisplay: [...categoryDisplay],
         },
+      };
+    case AUTOMATIC_LOG:
+      return {
+        ...state,
+        isConnected: true,
+        dataUser: {
+          ...state.dataUser,
+          ...action.payload,
+        },
+      };
+    case LOG_OUT:
+      localStorage.clear();
+      return {
+        ...state,
+        isConnected: false,
       };
     default:
       return state;

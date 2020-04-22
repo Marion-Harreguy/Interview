@@ -1,3 +1,9 @@
+// APP
+export const AUTOMATIC_LOG = 'AUTOMATIC_LOG';
+
+// FOOTER
+export const LOG_OUT = 'LOG_OUT';
+
 // NEW USER
 export const NEW_USER_INPUT_CHANGE = 'NEW_USER_INPUT_CHANGE';
 export const NEW_USER_SUBMIT = 'NEW_USER_SUBMIT';
@@ -56,6 +62,17 @@ export const LOAD_READ_INTERVIEW = 'LOAD_READ_INTERVIEW';
 export const LOAD_WRITE_INTERVIEW = 'LOAD_WRITE_INTERVIEW';
 export const UPDATE_USER_STATE = 'UPDATE_USER_STATE';
 export const CREATE_CATEGORY_DISPLAY = 'CREATE_CATEGORY_DISPLAY';
+
+// APP
+export const automaticLog = (payload) => ({
+  type: AUTOMATIC_LOG,
+  payload,
+});
+
+// FOOTER
+export const logOut = () => ({
+  type: LOG_OUT,
+});
 
 // NEW USER
 export const newUserInputChange = (payload) => ({
@@ -260,3 +277,4 @@ export const updateUserState = (payload) => ({
 export const createCategoryDisplay = () => ({
   type: CREATE_CATEGORY_DISPLAY,
 });
+

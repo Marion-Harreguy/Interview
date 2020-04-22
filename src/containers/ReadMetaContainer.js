@@ -13,9 +13,6 @@ const mapDispatchToProps = (dispatch) => ({
   saveInterview: (info) => {
     dispatch(saveInterview(info));
   },
-  updateUserGet: () => {
-    dispatch(updateUserGet());
-  },
   updateUserPut: () => {
     dispatch(updateUserPut());
   },

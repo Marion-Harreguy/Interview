@@ -1,6 +1,3 @@
-LOGIN :
-— Mettre les credentials [Gael] OK ?
-
 ESPACE PERSO :
 — CSS : Retrouver les chemins des icones [Gael]
 — Couleurs catégories (ajouter les couleurs) [S4]
@@ -16,7 +13,6 @@ READ :
 
 WRITE :
 — Publier : Gérer les input mandatory (qui empechent la publication) [S4]
-— Create : Gérer les input mandatory (qui empêchent la création) [S3] [Mercredi]
 — Gérer initiales de l'enquêté (et si plusieurs enquêtés : menu déroulant ?) [S3] [Mercredi]
 — Faire la fonction delete interview dans le reducer [S3] [Mercredi]
 — Mettre en place API pour le lieu [S4]
@@ -33,7 +29,6 @@ AUTRE
 — Faire les proptypes [Gael]
 — Mettre des keys sur tous les maps [Gael]
 — Mettre tous les CSS dans les bons composants [Gael]
-— Refaire le système de display pour les catégories
 
 V2 [S5]
 — Supprimer une catégorie
@@ -42,3 +37,4 @@ V2 [S5]
 — Plusieurs paramêtres dans le moteur de recherche
 — Recherche sémantique ? ("", &, /)
 — Bouton "contacter" avec formulaire si pas libre de droit
+— Refaire le système de display pour les catégories

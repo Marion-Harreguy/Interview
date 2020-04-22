@@ -7,7 +7,6 @@ const ReadMeta = ({
   interviewMeta,
   saveInterview,
   userCategories,
-  updateUserGet,
   updateUserPut,
 }) => {
   // Generate & download a PDF
@@ -75,7 +74,7 @@ const ReadMeta = ({
           <button className="tools__close" type="button" label="Fermer" />
         </a>
         <button className="tools__save" type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />
-        <button className="tools__download" type="button" onClick={downloadInterview()} label="Télécharger le PDF" />
+        <button className="tools__download" type="button" onClick={() => downloadInterview()} label="Télécharger le PDF" />
       </div>
 
       <div className="interview__meta">
@@ -124,15 +123,12 @@ const ReadMeta = ({
 // TODO : Proptypes Validation
 // interviewMeta, saveInterview, userCategories, updateUserGet,updateUserPut
 ReadMeta.propTypes = {
-  updateUserGet: PropTypes.func.isRequired,
   updateUserPut: PropTypes.func.isRequired,
   saveInterview: PropTypes.func.isRequired,
   interviewMeta: PropTypes.shape({
 
   }).isRequired,
-  userCategories: PropTypes.shape({
-
-  }).isRequired,
+  userCategories: PropTypes.array.isRequired,
 };
 
 export default ReadMeta;

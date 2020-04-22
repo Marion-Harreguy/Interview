@@ -25,7 +25,7 @@ const WriteContent = ({
     }
     else {
       fillAuthor({
-        name: `${dataUser.firstName} ${dataUser.lastName}`,
+        name: `${dataUser.firstname} ${dataUser.lastname}`,
         status: dataUser.status,
         email: dataUser.email,
         structure: {
@@ -34,7 +34,7 @@ const WriteContent = ({
         },
       });
     }
-  });
+  },[interviewId]);
 
   // TODO : get user (or author) initiales
   // + get interviewed initiales (make select if several ?)

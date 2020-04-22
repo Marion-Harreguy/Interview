@@ -24,7 +24,7 @@ const UserLibrary = ({
   // Get all user info from API onload
   useEffect(() => {
     updateUserGet();
-  });
+  }, [user.id]);
 
   // Function to determine weather an interview is shown or not
   // Based on its category list, and which categories the user checked
@@ -127,13 +127,13 @@ const UserLibrary = ({
               if (sectionTitle === 'categories') {
                 // Creating the categories (one time)
                 return (
-                  <div key={section.id} className="home__categories">
+                  <div key={`sec-${section.id}`} className="home__categories">
                     <h2 className="categories__title">Mes catégories</h2>
                     <div className="categories__list">
                       {
                       // Creating each category
                       sectionContent.map((category, index) => (
-                        <div className="home__category" key={category.id}>
+                        <div className="home__category" key={`cat-${category.id}`}>
                           <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={library.categoryDisplay[index]} name={`category-${category.id}`} />
                           <label htmlFor={category.id}>{category.name}</label>
                         </div>
@@ -142,7 +142,12 @@ const UserLibrary = ({
 
                       <div className="home__category home__category--add">
                         <input className="new-category-name" onChange={(e) => addCategoryChange(e.target.value)} type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category" value={newCategoryName}/>
-                        <button className="category-button category-button--add" onClick={(e) => { addCategorySubmit(e.target); updateUserPut();}} type="button" label="Ajouter une catégorie" />
+                        <button
+                          className="category-button category-button--add" 
+                          onClick={(e) => { 
+                            addCategorySubmit(e.target); 
+                            setTimeout(() => { updateUserPut() },1000);
+                          }} type="button" label="Ajouter une catégorie" />
                       </div>
                     </div>
                   </div>
@@ -164,13 +169,13 @@ const UserLibrary = ({
 
                     { sectionContent.map((interview) => (
                       // Creating each interview
-                      <div className="list__interview" key={interview.id} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
+                      <div className="list__interview" key={`int-${interview.id}`} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
                         <NavLink exact to={`/update/${interview.id}`}>
                           <h4 className="list__interview__title">{interview.title}</h4>
                           <div className="list__interview__categories">
                             {/* Creating each category dot for each article */}
                             { interview.categories.map((category) => (
-                              <span className={`list__category list__category--${category}`} key={category.id} />
+                              <span className={`list__category list__category--${category}`} key={`catt-${category.id}`} />
                             ))}
                           </div>
                         </NavLink>
@@ -231,7 +236,6 @@ UserLibrary.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,
-        displayed: PropTypes.bool.isRequired,
       }).isRequired,
     ).isRequired,
   }).isRequired,

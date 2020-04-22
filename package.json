@@ -63,6 +63,8 @@
   "dependencies": {
     "axios": "^0.19.2",
     "jquery": "^3.5.0",
+    "jsrsasign": "^8.0.15",
+    "jwt-decode": "^2.2.0",
     "prop-types": "*",
     "react": "*",
     "react-dom": "*",
