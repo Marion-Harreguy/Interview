@@ -27,7 +27,7 @@ class Interview
     private $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $context;
 
@@ -37,7 +37,7 @@ class Interview
     private $localisation;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $language;
 
@@ -86,6 +86,11 @@ class Interview
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="favorite")
      */
     private $favorite;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $date;
 
     public function __construct()
     {
@@ -320,21 +325,17 @@ class Interview
 
     public function theLastestDate()
     {
-        // tester si un UpdatedAt existe 
-        if($this->getUpdatedAt() === null){
-            // sinon use CreatedAt
-            $date = $this->getCreatedAt();
+        $date = $this->getDate();
 
-        }else {
-
-            $date = $this->getUpdatedAt();
+        if ($date === null){
+            $date = new \DateTime();
+            $date->setDate(2001, 1, 1);
         }
-
-
-        $finalDate = date_format($date, "d-m-Y");
-
-        return $finalDate;     
+        
+        
+        return  date_format($date, "d-m-Y");
     }
+    
     /**
      * Get data list of Interviews (Browse)
      * @Groups("browseInterviews")
@@ -355,7 +356,7 @@ class Interview
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
         ];
-        
+
         $author = [];
 
         $author["id"] = $this->getUser()->getId();
@@ -365,7 +366,7 @@ class Interview
 
         $interview["author"] = $author;
 
-           
+
         $interviewedList = [];
 
         foreach ($this->getInterviewed() as $interviewed) {
@@ -384,29 +385,27 @@ class Interview
                     "location" => $structure->getCity(),
                     "sector" => $structure->getSector(),
                 ];
-                $dataInterviewed["structures"] = $structure;
+                $dataInterviewed["structure"] = $structure;
             }
 
             $interviewedList[] = $dataInterviewed;
-
         }
-       
+
         $interview["interviewed"] = $interviewedList;
 
         $tagsList = [];
 
         foreach ($this->getTags() as $tags) {
-            
+
             //$tags = [
             //    "name" => $tags->getName(),
             //];
             //$tagsList[] = $tags;
             $tagsList[] = $tags->getName();
-
         }
-        
+
         $interview["tags"] = $tagsList;
-        
+
         $interviews[] = $interview;
         return $interview;
     }
@@ -425,13 +424,13 @@ class Interview
         $answerList = [];
 
         foreach ($this->getQuestions() as $questionObject) {
-            
+
             $question = [
                 "id" => $questionObject->getId(),
                 "content" => $questionObject->getContent(),
             ];
 
-       
+
             foreach ($questionObject->getAnswers() as $answerObject) {
                 $answer = [
                     "id" => $answerObject->getId(),
@@ -450,5 +449,15 @@ class Interview
         return $completeInterview;
     }
 
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
 
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
 }

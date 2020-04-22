@@ -79,7 +79,7 @@ class User implements UserInterface
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Interview", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Interview", mappedBy="user", cascade={"persist"})
      */
     private $interviews;
 
@@ -430,23 +430,21 @@ class User implements UserInterface
     public function getDataStructure()
     {
         // on instancie un tableau de données de la structure
-        $dataStructure = [];
-
-        $structureList = [];
+        //$structureList = [];
         // on regroupe les informations utiles 
         foreach ($this->getStructures() as $structure) {
 
-            $structure = [
+            $dataStructure = [
                 'id' => $structure->getId(),
                 'name' => $structure->getName(),
                 'city' => $structure->getCity(),
                 'sector' => $structure->getSector()
             ];
-            $structureList[] = $structure;
+           
         }
 
         // on injecte la liste des structures aux données de l'auteur 
-        $dataStructure[] = $structureList;
+        // $dataStructure[] = $structureList;
 
         return $dataStructure;
     }
