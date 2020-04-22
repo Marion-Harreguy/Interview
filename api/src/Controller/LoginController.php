@@ -23,12 +23,11 @@ class LoginController extends AbstractController
     /**
      * @Route("/login", name="login", methods={"POST"})
      */
-    public function login(Request $request, SerializerInterface $serializer )
+    public function login(Request $request, SerializerInterface $serializer, UserRepository $userRepository )
     {
-         // On vérifie si l'on a une requête XMLHttpRequest
-      
-        $user = $this->getUser();
-
+       $data = json_decode($request->getContent(), true);
+       
+        $user = $userRepository->findOneBy(["email" => $data["username"] ]);
         $data = $serializer->normalize($user, null, ['groups' => ['user']]);
 
         return $this->json(
