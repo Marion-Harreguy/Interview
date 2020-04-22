@@ -79,7 +79,7 @@ class User implements UserInterface
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Interview", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Interview", mappedBy="user", cascade={"persist"})
      */
     private $interviews;
 
