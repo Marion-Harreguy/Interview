@@ -15,7 +15,6 @@ READ :
 — Webtoprint [Baptiste]
 
 WRITE :
-— Automatiquement : son propre nom dans author [S3] [Mercredi]
 — Publier : Gérer les input mandatory (qui empechent la publication) [S4]
 — Create : Gérer les input mandatory (qui empêchent la création) [S3] [Mercredi]
 — Gérer initiales de l'enquêté (et si plusieurs enquêtés : menu déroulant ?) [S3] [Mercredi]
@@ -35,9 +34,6 @@ AUTRE
 — Mettre des keys sur tous les maps [Gael]
 — Mettre tous les CSS dans les bons composants [Gael]
 — Refaire le système de display pour les catégories
-
-MIDDLEWARE
-— Faire passer le token dans les headers [S3] [Mercredi]
 
 V2 [S5]
 — Supprimer une catégorie
