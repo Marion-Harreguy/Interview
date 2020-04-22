@@ -97,7 +97,7 @@ class InterviewController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository)
+    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository, SerializerInterface $serializer)
     {
         // on decode les données envoyées
         $data = json_decode($request->getContent(), true);
@@ -106,6 +106,7 @@ class InterviewController extends AbstractController
         $form = $this->createForm(InterviewEditType::class, $interview);
         $form->submit($data["interview"]["meta"]);
 
+     
         if ($form->isSubmitted() && $form->isValid()) {
 
             //=============================//
@@ -117,18 +118,26 @@ class InterviewController extends AbstractController
                     --> Si on le retrouve : on lui ajoute l'interview
                     --> Sinon on le créer et on lui ajoute l'interview
             */
-            for ($i = 0; $i < count($data["interview"]["tags"]); $i++) {
-                $tagName =  $data["interview"]["tags"][$i]["name"];
-                $tag = $tagRepository->findOneBy(["name" => $tagName]);
-                if ($tag) {
-                    $tag->addInterview($interview);
-                } else {
-                    $tag = new Tag();
-                    $tag->setName($tagName);
-                    $tag->addInterview($interview);
-                }
-                $em->persist($tag);
-            }
+            
+            
+            
+             for ($i = 0; $i < count($data["interview"]["tags"]); $i++) {
+
+                 $tagName =  $data["interview"]["tags"][$i];
+                 $tag = $tagRepository->findOneBy(["name" => $tagName]);
+
+                 if ($tag) {
+                     $tag->addInterview($interview);
+                 } else {
+                     $tag = new Tag();
+                     $tag->setName($tagName);
+                     $tag->addInterview($interview);
+                 }
+
+
+                 $em->persist($tag);
+             }
+            
 
             //=============================//
             //  Gestion de l'interviewé    //
@@ -171,14 +180,15 @@ class InterviewController extends AbstractController
                     - Si il n'existe pas
                         --> Créer l'objet Structure et lui assigner l'interviewé
                 */
-                foreach ($dataInterviewed["structure"] as $dataStructure) {
-                    if (isset($dataStructure["id"])) {
-                        $id = $dataStructure["id"];
+
+                   if (isset($dataInterviewed["structure"]["id"])) {
+                        $id = $dataInterviewed["structure"]["id"];
+
                         $structure = $structureRepository->find($id);
                     } else {
                         $structure = new Structure();
                         $formStructure = $this->createForm(StructureType::class, $structure);
-                        $formStructure->submit($dataStructure);
+                        $formStructure->submit($dataInterviewed["structure"]);
                         if ($formStructure->isSubmitted() && $formStructure->isValid()) {
                             $structure->addInterviewed($interviewed);
                             $interviewed->setUpdatedAt(new \DateTime());
@@ -186,7 +196,7 @@ class InterviewController extends AbstractController
                     }
 
                     $em->persist($structure);
-                }
+                
             }
 
 
@@ -207,33 +217,34 @@ class InterviewController extends AbstractController
                           - Créer l'objet Answer
                           - Lui assginer la question et l'interviewé
             */
-            foreach ($data["content"] as $questionReponse) {
-
+            foreach ($data["questions"] as $questionReponse) {
+               
                 if (isset($questionReponse["id"])) {
                     $questionId = $questionReponse["id"];
                 } else {
                     $questionId = null;
                 }
-
+                
                 if (!$questionId) {
-
+                    
                     $question = new Question();
                     $question->setContent($questionReponse["content"]);
-
-                    if (isset($questionReponse["answers"]["id"])) {
-                        $answerId = $questionReponse["answers"]["id"];
+                    
+                    if (isset($questionReponse["answer"]["id"])) {
+                        $answerId = $questionReponse["answer"]["id"];
                     } else {
                         $answerId = null;
                     }
-
+                    
+                   
                     if (!$answerId) {
                         $answer = new Answer();
-                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer->setContent($questionReponse["answer"]["content"]);
                         $answer->setQuestion($question);
                         $answer->setInterviewed($interviewed);
                     } else {
-                        $answer = $answerRepository->find($questionReponse["answers"]["id"]);
-                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer = $answerRepository->find($questionReponse["answer"]["id"]);
+                        $answer->setContent($questionReponse["answer"]["content"]);
                         $answer->setUpdatedAt(new \Datetime);
                     }
 
@@ -243,8 +254,8 @@ class InterviewController extends AbstractController
                     $question = $questionRepository->find($questionId);
                     $question->setContent($questionReponse["content"]);
 
-                    if (isset($questionReponse["answers"]["id"])) {
-                        $answerId = $questionReponse["answers"]["id"];
+                    if (isset($questionReponse["answer"]["id"])) {
+                        $answerId = $questionReponse["answer"]["id"];
                     } else {
                         $answerId = null;
                     }
@@ -252,13 +263,13 @@ class InterviewController extends AbstractController
                     if (!$answerId) {
 
                         $answer = new Answer();
-                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer->setContent($questionReponse["answer"]["content"]);
                         $answer->setQuestion($question);
                         $answer->setInterviewed($interviewed);
                     } else {
 
-                        $answer = $answerRepository->find($questionReponse["answers"]["id"]);
-                        $answer->setContent($questionReponse["answers"]["content"]);
+                        $answer = $answerRepository->find($questionReponse["answer"]["id"]);
+                        $answer->setContent($questionReponse["answer"]["content"]);
                         $answer->setUpdatedAt(new \Datetime);
                     }
 
@@ -277,8 +288,9 @@ class InterviewController extends AbstractController
 
         $em->flush();
 
+        $data = $serializer->normalize($interview, null, ['groups' => ['interview']]);
         return $this->json(
-            ['message' => 'Interview updated'],
+            $data,
             $status = 200,
             $headers = ['content-type' => 'application/Json'],
             $context = []
@@ -289,7 +301,7 @@ class InterviewController extends AbstractController
      * 
      * @Route("/", name="add", methods={"POST"})
      */
-    public function add(Request $request, EntityManagerInterface $em, TagRepository $tagRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository)
+    public function add(Request $request, EntityManagerInterface $em, TagRepository $tagRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository, SerializerInterface $serializer)
     {
         // on decode les données reçut
         $data = json_decode($request->getContent(), true);
@@ -351,9 +363,9 @@ class InterviewController extends AbstractController
             //=============================//
             //   Gestion des structures    //
             //=============================//
-           
+
             foreach ($interviewedUnSaved["structure"] as $dataStructure) {
-              
+
                 $structure = $structureRepository->findOneBy(["name" => $dataStructure["name"]]);
 
                 if ($structure) {
@@ -389,7 +401,7 @@ class InterviewController extends AbstractController
         // Gestion des Questions & Réponses //
         //==================================//
         for ($indexContent = 0; $indexContent < count($data["content"]); $indexContent++) {
-          
+
             $content = $data["content"][$indexContent];
 
             $question = new Question();
@@ -407,8 +419,9 @@ class InterviewController extends AbstractController
 
         $em->flush();
 
+        $data = $serializer->normalize($interview, null, ['groups' => ['interview']]);
         return $this->json(
-            ['message' => 'Interview Added'],
+            $data,
             $status = 201,
             $headers = ['content-type' => 'application/Json'],
             $context = []
@@ -425,18 +438,16 @@ class InterviewController extends AbstractController
         Si un interview a le meme token que l'user conencter (c'est donc son interview )
         */
 
-        if($interview->getUser() === $this->getUser())
-        {
+        if ($interview->getUser() === $this->getUser()) {
             $em->remove($interview);
             $em->flush();
-            
+
             return $this->json(
                 ['message' => 'Interview deleted'],
                 $status = 200,
                 $headers = ['content-type' => 'application/Json'],
                 $context = []
             );
-          
         }
 
         return $this->json(
@@ -445,7 +456,5 @@ class InterviewController extends AbstractController
             $headers = ['content-type' => 'application/Json'],
             $context = []
         );
-
-        
     }
 }
