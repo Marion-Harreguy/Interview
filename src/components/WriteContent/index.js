@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import './style.scss';
 
 const WriteContent = ({ addNewQuestion, addNewAnswer, writeInterview, updateQuestion, updateAnswer, updateContext }) => {
