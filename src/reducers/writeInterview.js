@@ -12,6 +12,7 @@ import {
   CHANGE_AUTHOR,
   CHANGE_AUTHOR_STRUCTURE,
   LOAD_WRITE_INTERVIEW,
+  FILL_AUTHOR,
 } from '../actions';
 
 export const initialState = {
@@ -226,6 +227,17 @@ const readInterview = (state = initialState, action = {}) => {
       return {
         ...state,
         ...action.payload,
+      };
+
+    case FILL_AUTHOR:
+      return {
+        ...initialState,
+        meta: {
+          ...initialState.meta,
+          author: {
+            ...action.payload,
+          },
+        },
       };
     default:
       return state;

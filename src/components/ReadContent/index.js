@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
 
 const ReadContent = ({ interview, interviewId, interviewGet }) => {
@@ -48,5 +49,12 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
 
 // TODO : Proptypes Validation
 // interview, interviewId, interviewGet
+ReadContent.propTypes = {
+  interviewId: PropTypes.string.isRequired,
+  interviewGet: PropTypes.func.isRequired,
+  interview: PropTypes.shape({
+
+  }).isRequired,
+};
 
 export default ReadContent;

@@ -32,7 +32,8 @@ const UserLibrary = ({
   const toggleInterview = (interviewCategoryList) => {
     let interviewShown = false;
     interviewCategoryList.forEach((interviewCategory) => {
-      if (dashboard.categories.find((dataCategory) => dataCategory.id === interviewCategory).displayed) interviewShown = true;
+      const categoryIndex = dashboard.categories.findIndex((dataCategory) => dataCategory.id === interviewCategory);
+      if (library.categoryDisplay[categoryIndex]) interviewShown = true;
     });
     return interviewShown;
   };
@@ -91,14 +92,14 @@ const UserLibrary = ({
 
     if (sectionIsOpen) {
       // Transition to close the section
-      $(correspondingList).animate({ height: '0px' }, 100, 'swing');
+      $(correspondingList).animate({ height: '0px' }, 500, 'swing');
     }
     else {
       // Transition to close the section
       $(correspondingList).css('height', 'auto');
       const sectionAutoHeight = `${correspondingList.clientHeight}px`;
       $(correspondingList).css('height', 0);
-      $(correspondingList).animate({ height: sectionAutoHeight }, 100, 'swing');
+      $(correspondingList).animate({ height: sectionAutoHeight }, 500, 'swing');
     }
   };
 
@@ -107,7 +108,7 @@ const UserLibrary = ({
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
       <div className="home__content">
         <form className="home__form">
-          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(); changeFormDisabled(event); updateUserPut(); updateUserGet();}} label="Changer mes infos" />
+          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(); changeFormDisabled(event); updateUserPut();}} label="Changer mes infos" />
           <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
         </form>
         <div className="home__library">
@@ -126,7 +127,7 @@ const UserLibrary = ({
               if (sectionTitle === 'categories') {
                 // Creating the categories (one time)
                 return (
-                  <div className="home__categories">
+                  <div key={section.id} className="home__categories">
                     <h2 className="categories__title">Mes catégories</h2>
                     <div className="categories__list">
                       {
@@ -141,7 +142,7 @@ const UserLibrary = ({
 
                       <div className="home__category home__category--add">
                         <input className="new-category-name" onChange={(e) => addCategoryChange(e.target.value)} type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category" value={newCategoryName}/>
-                        <button className="category-button category-button--add" onClick={(e) => { addCategorySubmit(e.target); updateUserPut(); updateUserGet(); }} type="button" label="Ajouter une catégorie" />
+                        <button className="category-button category-button--add" onClick={(e) => { addCategorySubmit(e.target); updateUserPut();}} type="button" label="Ajouter une catégorie" />
                       </div>
                     </div>
                   </div>

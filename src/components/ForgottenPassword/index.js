@@ -30,6 +30,6 @@ ForgottenPassword.propTypes = {
   email: PropTypes.string.isRequired,
   forgottenPasswordInputChange: PropTypes.func.isRequired,
   forgottenPasswordSubmit: PropTypes.func.isRequired,
-}
+};
 
 export default ForgottenPassword;

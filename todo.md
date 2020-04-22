@@ -1,25 +1,26 @@
 LOGIN :
-— Mettre les credentials [Gael]
+— Mettre les credentials [Gael] OK ?
 
 ESPACE PERSO :
-— Transition ouverture sections [S4]
 — CSS : Retrouver les chemins des icones [Gael]
 — Couleurs catégories (ajouter les couleurs) [S4]
 — Erreur avec les names [S3]
 
 READ :
 — Survol des initiales, noms qui se mettent en gras à gauche [S4]
-— Avoir les pastilles de catégories si l'entretien est enregistré [S3]
-— Ajouter un bouton "citer" [S3]
-— Ajouter les tags [S3]
-— Cacher bouton télécharger si pas libre de droit [S3]
+— Avoir les pastilles de catégories si l'entretien est enregistré [S3] [Jeudi]
+— Ajouter un bouton "citer" [S3] [Jeudi]
+— Ajouter les tags [S3] [Jeudi]
+— Cacher bouton télécharger si pas libre de droit [S3] [Jeudi]
 — Webtoprint [Baptiste]
 
 WRITE :
-— Automatiquement : son propre nom dans author [S3]
+— Automatiquement : son propre nom dans author [S3] [Mercredi]
 — Publier : Gérer les input mandatory (qui empechent la publication) [S4]
-— Gérer initiales de l'enquêté (et si plusieurs enquêtés : menu déroulant ?) [S3]
-— Faire la fonction delete interview dans le reducer [S3]
+— Create : Gérer les input mandatory (qui empêchent la création) [S3] [Mercredi]
+— Gérer initiales de l'enquêté (et si plusieurs enquêtés : menu déroulant ?) [S3] [Mercredi]
+— Faire la fonction delete interview dans le reducer [S3] [Mercredi]
+— Mettre en place API pour le lieu [S4]
 ++ Mettre deux input pour nom et prénom ? [S4]
 ++ Supprimer un élément (Q ou R) ? [S4]
 
@@ -33,9 +34,10 @@ AUTRE
 — Faire les proptypes [Gael]
 — Mettre des keys sur tous les maps [Gael]
 — Mettre tous les CSS dans les bons composants [Gael]
+— Refaire le système de display pour les catégories
 
 MIDDLEWARE
-— Faire passer le token dans les headers [S3]
+— Faire passer le token dans les headers [S3] [Mercredi]
 
 V2 [S5]
 — Supprimer une catégorie
@@ -44,6 +46,3 @@ V2 [S5]
 — Plusieurs paramêtres dans le moteur de recherche
 — Recherche sémantique ? ("", &, /)
 — Bouton "contacter" avec formulaire si pas libre de droit
-
-PB : À la mise à jour du user on perd l'info de savoir si les catégories sont display ou pas: à gérer autrement
-/!\ Mettre le display à true sur toutes les interviews après updateUserGet [S3]

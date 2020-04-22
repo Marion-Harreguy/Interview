@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import WriteMeta from '../components/WriteMeta';
-import { publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure, updateUserGet, updateUserPut, writeInterviewDelete, writeInterviewPut, interviewGet } from '../actions';
+import { publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure, updateUserGet, updateUserPut, writeInterviewDelete, writeInterviewPut, interviewGet, writeInterviewCreate } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   interviewMeta: state.writeInterview.meta,
@@ -51,6 +51,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   interviewGet: (idAndReducer) => {
     dispatch(interviewGet(idAndReducer));
+  },
+  writeInterviewCreate: () => {
+    dispatch(writeInterviewCreate());
   },
 });
 
