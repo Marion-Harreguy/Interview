@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => ({
   writeInterview: state.writeInterview,
   interviewId: ownProps.interviewId,
   dataUser: state.userData.dataUser,
+  dataStructure: state.userData.dataStructure,
 });
 
 const mapDispatchToProps = (dispatch) => ({

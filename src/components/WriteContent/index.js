@@ -11,10 +11,10 @@ const WriteContent = ({
   updateContext,
   interviewId,
   writeInterviewPut,
-  // writeInterviewCreate,
   interviewGet,
   fillAuthor,
   dataUser,
+  dataStructure,
 }) => {
 
   // If the interview is new, create a new one in API
@@ -24,7 +24,15 @@ const WriteContent = ({
       interviewGet({ interviewId, reducer: 'write' });
     }
     else {
-      fillAuthor(dataUser);
+      fillAuthor({
+        name: `${dataUser.firstName} ${dataUser.lastName}`,
+        status: dataUser.status,
+        email: dataUser.email,
+        structure: {
+          name: dataStructure.name,
+          city: dataStructure.city,
+        },
+      });
     }
   });
 

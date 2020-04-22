@@ -132,9 +132,9 @@ const UserLibrary = ({
                     <div className="categories__list">
                       {
                       // Creating each category
-                      sectionContent.map((category) => (
+                      sectionContent.map((category, index) => (
                         <div className="home__category" key={category.id}>
-                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} name={`category-${category.id}`} />
+                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={library.categoryDisplay[index]} name={`category-${category.id}`} />
                           <label htmlFor={category.id}>{category.name}</label>
                         </div>
                       ))

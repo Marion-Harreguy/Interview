@@ -38,7 +38,7 @@ export default (store) => (next) => (action) => {
     ...store.getState().userData.dashboard,
   };
 
-  const userId = { ...store.getState().userData.dataUser.id };
+  const userId = store.getState().userData.dataUser.id;
 
   // FOR FORGOTTEN PASSWORD
   const email = { ...store.getState().forgottenPassword.email };
