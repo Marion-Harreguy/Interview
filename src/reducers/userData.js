@@ -3,7 +3,7 @@
 import { CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY } from '../actions';
 
 export const initialState = {
-  isConnected: true,
+  isConnected: false,
   dataUser: {
     id: 181,
     firstname: 'Patrick',
