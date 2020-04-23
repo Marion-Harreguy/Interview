@@ -3,8 +3,7 @@ import './style.scss';
 
 const SearchResults = () => (
   <div>
-    <h1>Search</h1>
+    <h1>SearchResults</h1>
   </div>
 );
-
 export default SearchResults;

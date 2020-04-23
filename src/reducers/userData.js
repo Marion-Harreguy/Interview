@@ -1,9 +1,13 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK } from '../actions';
 
 export const initialState = {
-  isConnected: true,
+  connection: {
+    id: 0,
+    token: 0,
+    isConnected: false,
+  },
   dataUser: {
     id: 2,
     firstname: 'Patrick',
@@ -277,19 +281,16 @@ const userData = (state = initialState, action = {}) => {
       return {
         ...state,
         ...action.payload,
-        isConnected: true,
       };
     case NEW_USER_SUCCESS:
       return {
-        ...state,
-        dataUser: {
-          ...state.dataUser,
-          id: action.payload.id,
-          token: action.payload.token,
+        ...initialState,
+        connection: {
+          ...action.payload,
         },
       };
     case CREATE_CATEGORY_DISPLAY:
-      const categoryDisplay = state.dashboard.categories.map((category) => {
+      const categoryDisplay = state.dashboard.categories.map(() => {
         return true;
       });
       return {
@@ -299,12 +300,10 @@ const userData = (state = initialState, action = {}) => {
           categoryDisplay: [...categoryDisplay],
         },
       };
-    case AUTOMATIC_LOG:
+    case AUTOMATIC_LOG_OK:
       return {
         ...state,
-        isConnected: true,
-        dataUser: {
-          ...state.dataUser,
+        connection: {
           ...action.payload,
         },
       };
@@ -312,7 +311,11 @@ const userData = (state = initialState, action = {}) => {
       localStorage.clear();
       return {
         ...state,
-        isConnected: false,
+        connection: {
+          id: 0,
+          token: 0,
+          isConnected: false,
+        },
       };
     default:
       return state;

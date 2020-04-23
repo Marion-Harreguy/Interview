@@ -1,5 +1,6 @@
 // APP
 export const AUTOMATIC_LOG = 'AUTOMATIC_LOG';
+export const AUTOMATIC_LOG_OK = 'AUTOMATIC_LOG_OK';
 
 // FOOTER
 export const LOG_OUT = 'LOG_OUT';
@@ -66,6 +67,11 @@ export const CREATE_CATEGORY_DISPLAY = 'CREATE_CATEGORY_DISPLAY';
 // APP
 export const automaticLog = (payload) => ({
   type: AUTOMATIC_LOG,
+  payload,
+});
+
+export const automaticLogOk = (payload) => ({
+  type: AUTOMATIC_LOG_OK,
   payload,
 });
 

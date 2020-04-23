@@ -1,5 +1,5 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode'; 
+import jwtDecode from 'jwt-decode';
 
 import {
   NEW_USER_SUBMIT,
@@ -11,6 +11,8 @@ import {
   WRITE_INTERVIEW_PUT,
   WRITE_INTERVIEW_DELETE,
   WRITE_INTERVIEW_CREATE,
+  AUTOMATIC_LOG,
+  automaticLogOk,
   loadReadInterview,
   loadWriteInterview,
   updateUserState,
@@ -18,11 +20,12 @@ import {
   createCategoryDisplay,
   automaticLog,
   updateUserGet,
+  logOut,
 } from '../actions';
 
 export default (store) => (next) => (action) => {
   // TOKEN will be used for request headers
-  const token = () => { return store.getState().userData.dataUser.token; };
+  const token = () => localStorage.getItem('userLogs').token;
 
   // FOR NEW_USER_SUBMIT
   const newUser = {
@@ -45,8 +48,8 @@ export default (store) => (next) => (action) => {
   // };
 
   const userInfo = {
-    user: { ...store.getState().userData.dataUser},
-    structure: {...store.getState().userData.dataStructure},
+    user: { ...store.getState().userData.dataUser },
+    structure: { ...store.getState().userData.dataStructure },
     // ...store.getState().userData.dashboard,
   };
 
@@ -59,6 +62,24 @@ export default (store) => (next) => (action) => {
   const interviewInfo = { ...store.getState().writeArticle };
 
   switch (action.type) {
+    case AUTOMATIC_LOG:
+      axios({
+        url: `http://184.73.143.2/user/${action.payload.id}`,
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+        .then(() => {
+          // user is connected and his localstorage token works
+          store.dispatch(automaticLogOk(action.payload));
+        })
+        .catch((error) => {
+          console.log(error);
+          // store.dispatch(logOut());
+        });
+      break;
+
     case NEW_USER_SUBMIT:
       axios({
         url: 'http://184.73.143.2/register',
@@ -76,9 +97,9 @@ export default (store) => (next) => (action) => {
           const userLogs = {
             id: decodedToken.id,
             token: response.data.token,
+            isConnected: true,
           };
           localStorage.setItem('userLogs', JSON.stringify(userLogs));
-          localStorage.setItem('isConnected', true);
 
           store.dispatch(automaticLog(userLogs));
         })
@@ -109,11 +130,11 @@ export default (store) => (next) => (action) => {
           const userLogs = {
             id: decodedToken.id,
             token: response.data.token,
+            isConnected: true,
           };
           localStorage.setItem('userLogs', JSON.stringify(userLogs));
-          localStorage.setItem('isConnected', true);
 
-          store.dispatch(automaticLog(userLogs));
+          // store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
           console.log(error);
@@ -129,8 +150,8 @@ export default (store) => (next) => (action) => {
         },
         data: JSON.stringify(userInfo),
       })
-        .then(() => {
-          setTimeout(() => store.dispatch(updateUserGet()), 500);
+        .then((response) => {
+          store.dispatch(updateUserState(response.data));
         })
         .catch((error) => {
           console.log(error);
