@@ -94,11 +94,6 @@ class User implements UserInterface
     private $structures;
 
     /**
-     * @ORM\Column(type="string", unique=true, nullable=true)
-     */
-    private $apiToken;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $status;
@@ -320,25 +315,7 @@ class User implements UserInterface
 
         return $this;
     }
-    /**
-     * Get the value of apiToken
-     */
-    public function getApiToken()
-    {
-        return $this->apiToken;
-    }
-    /**
-     * Set the value of apiToken
-     *
-     * @return  self
-     */
-    public function setApiToken($apiToken)
-    {
-        $this->apiToken = $apiToken;
-
-        return $this;
-    }
-
+ 
     public function getCompleteName()
     {
         return $this->getFirstname() . ' ' . $this->getLastname();
