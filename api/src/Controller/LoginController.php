@@ -3,18 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use App\Entity\Structure;
 use App\Form\StructureType;
-use App\Form\UserType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class LoginController extends AbstractController
@@ -48,7 +47,7 @@ class LoginController extends AbstractController
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer)
+    public function register(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -78,9 +77,8 @@ class LoginController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        $data = $serializer->normalize($user, null, ['groups' => ['user']]);
-        return $this->json($data, $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
-
+   
+        return $this->json([], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
         }
 
         $errorsEmail = $formUser["email"]->getErrors();

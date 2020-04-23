@@ -384,7 +384,7 @@ class User implements UserInterface
      * Données principales de l'objet User
      * @Groups("user")
      */
-    public function getDataUser()
+    public function getUser()
     {
         // on regroupe les metadonnées du user dans un tableau 
         $dataUser = [
@@ -403,7 +403,7 @@ class User implements UserInterface
      * Données sur la structure
      * @Groups("user")
      */
-    public function getDataStructure()
+    public function getStructure()
     {
         // on instancie un tableau de données de la structure
         //$structureList = [];

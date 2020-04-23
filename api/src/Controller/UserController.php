@@ -13,9 +13,7 @@ use App\Repository\StructureRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -33,7 +31,7 @@ class UserController extends AbstractController
      */
     public function read($id, UserRepository $userRepository, SerializerInterface $serializer)
     {
-        $user = $userRepository->findCompleteUser($id);
+        $user = $userRepository->find($id);
         $data = $serializer->normalize($user, null, ['groups' => ['user']]);
         return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
     }
@@ -53,7 +51,7 @@ class UserController extends AbstractController
 
             // on execute les modifs 
             $formUser = $this->createForm(UserEditType::class, $user);
-            $formUser->submit($data["dataUser"]);
+            $formUser->submit($data["user"]);
             //dd($formUser);
             if (($formUser->isSubmitted() && $formUser->isValid())) {
 
@@ -65,20 +63,21 @@ class UserController extends AbstractController
             //=============================//
             //   Gestion de la structure   //
             //=============================//   
-            if (isset($data["dataStructure"]["id"])) {
-                $structure = $structureRepository->find($data["dataStructure"]["id"]);
+            if (isset($data["structure"]["id"])) {
+                $structure = $structureRepository->find($data["structure"]["id"]);
 
                 $formStructure = $this->createForm(StructureType::class, $structure);
-                $formStructure->submit($data["dataStructure"]);
+                $formStructure->submit($data["structure"]);
 
                 if ($formStructure->isSubmitted() && $formStructure->isValid()) {
                     $structure->addUser($user);
                     $structure->setUpdatedAt(new \DateTime());
                 }
             } else {
+            
                 $structure = new Structure();
                 $formStructure = $this->createForm(StructureType::class, $structure);
-                $formStructure->submit($data["dataStructure"]);
+                $formStructure->submit($data["structure"]);
                 if ($formStructure->isSubmitted() && $formStructure->isValid()) {
                     $structure->addUser($user);
                     $user->setUpdatedAt(new \DateTime());
@@ -97,7 +96,7 @@ class UserController extends AbstractController
 
             foreach ($categoriesList as $categoryUnsaved) {
                 
-                if(isset($categoryUnsaved["id"])){
+                if($categoryUnsaved["id"] != 0){
                     
                     $category = $categoryRepository->find($categoryUnsaved["id"]);
 
@@ -110,14 +109,23 @@ class UserController extends AbstractController
                     
                     
                 }else {
+                    $newCategory = [];
+                    
+                    $newCategory["name"] = $categoryUnsaved["name"];
+                    $newCategory["color"] = $categoryUnsaved["color"];
+                              
+                   
+                    
                     $category = new Category();
                     $formCategory = $this->createForm(CategoryType::class, $category);
-                    $formCategory->submit($categoryUnsaved);
+                    $formCategory->submit($newCategory);
                     if($formCategory->isSubmitted() && $formCategory->isValid()){
                         $user->addCategory($category);
                         $user->setUpdatedAt(new \DateTime());
                         $em->persist($category);
                     }
+
+                    
                 }
             }
             
