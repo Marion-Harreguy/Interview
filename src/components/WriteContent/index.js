@@ -48,7 +48,7 @@ const WriteContent = ({
       </div>
 
       <div className="interview__content interview__content--write">
-        <input type="text" className="interview__context" value={writeInterview.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateContext(event.target.value)} />
+        <input type="text" className="interview__context" value={writeInterview.meta.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateContext(event.target.value)} />
         {
 
           writeInterview.content.map((set, indexQuestion) => (

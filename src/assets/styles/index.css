@@ -1293,14 +1293,15 @@ header {
 
 /* TEMPORAIRE */
 
-.research__results--list {
-  display:none;
+.research__results {
+  height: 90vh;
 }
+/*
 .research__results--list::-webkit-scrollbar {
   display: block !important;
 }
 
 .research__results--map {
   display:none;
-}
+} */
 

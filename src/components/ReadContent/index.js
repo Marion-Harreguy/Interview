@@ -11,7 +11,7 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
   // Get the different parts of the interview
   const interviewContext = interview.meta.context;
   const interviewContent = interview.content;
-  const author = interview.meta.author.name;
+  const author = interview.meta.author.firstname+' '+interview.meta.author.lastname;
 
   // Get only initiales of author
   let authorInitiales = author.match(/\b\w/g) || [];
@@ -33,7 +33,7 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
             </p>
           </div>
           { // Mapping on each answer for each question
-          set.answers.map((answer) => (
+          set.answer.map((answer) => (
             <div className="interview__answer">
               <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span>
               <p className="answer__content">{answer.content}</p>

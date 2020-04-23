@@ -4,7 +4,7 @@ import { searchInputChange, searchSubmit } from '../actions';
 
 
 const mapStateToProps = (state) => ({
-  searchValues: state.search,
+  searchValues: state.search.form,
 });
 
 const mapDispatchToProps = (dispatch) => ({

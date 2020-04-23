@@ -10,96 +10,25 @@ export const initialState = {
   },
   dataUser: {
     id: 0,
-    firstname: 'Patrick',
-    lastname: 'Lebon',
-    email: 'vrocher@tiscali.fr',
-    status: 'Prof',
-    token: '79a34bb07879a543c3612c6109a4d23a',
+    firstname: '',
+    lastname: '',
+    email: '',
+    status: '',
   },
   dataStructure: {
-    id: 68,
-    name: 'Peltier  dMillet SARL',
-    city: 'Lejeune',
-    sector: 'Le pouvoir de concrétiser vos projets à l\'état pur',
+    id: 0,
+    name: '',
+    city: '',
+    sector: '',
   },
   dashboard: {
     publishedInterviews: [
-      {
-        id: 61,
-        title: 'Nesciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 63,
-        title: 'Mirrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
-      {
-        id: 69,
-        title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 80,
-        title: 'Corrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
     ],
     writtingInterviews: [
-      {
-        id: 61,
-        title: 'Nesciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 63,
-        title: 'Mirrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
-      {
-        id: 69,
-        title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 80,
-        title: 'Corrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
     ],
     savedInterviews: [
-      {
-        id: 63,
-        title: 'Corrupti cum ratione animi maxime enim.',
-        categories: [477, 488],
-      },
-      {
-        id: 64,
-        title: 'Consequatur accusantium quia porro minus voluptates dignissimos est.',
-        categories: [488],
-      },
     ],
     categories: [
-      {
-        id: 477,
-        name: 'accusantium',
-        color: '#177456',
-      },
-      {
-        id: 482,
-        name: 'sapiente',
-        color: '#123926',
-      },
-      {
-        id: 487,
-        name: 'et',
-        color: '#100456',
-      },
-      {
-        id: 488,
-        name: 'quas',
-        color: '#100006',
-      },
     ],
   },
   library: {

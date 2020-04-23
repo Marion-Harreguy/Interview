@@ -1,12 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.scss';
+import 'jquery-ui-dist/jquery-ui';
+import $ from 'jquery';
 
-const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => (
-  <div className="left col-12 col-md-5 col-lg-4 col-xl-4">
+const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
+
+  useEffect(() => {
+    $('.timeline__cursor').draggable({ axis: 'x' });
+  }, [searchInputChange]);
+
+  let yearBegin = searchValues.yearBegin;
+  let yearEnd = searchValues.yearEnd;
+
+  const calculateYearBegin = (left) => {
+    const newLeft = parseInt(left)+12;
+    const totalWidth = document.querySelector('.timeline__line').clientWidth;
+    const pxForOneYear = totalWidth/(2020 - 1990);
+    yearBegin = parseInt(newLeft/pxForOneYear + 1990);
+    if (yearBegin >= yearEnd) {
+      console.log('overlapsing !');
+      yearBegin = yearEnd - 1;
+      document.querySelector('.timeline__cursor--beginning').style.left = (yearBegin - 1990)*pxForOneYear + "px";
+    }
+    searchInputChange({name:'yearBegin', value: yearBegin});
+  };
+
+  const calculateYearEnd = (left) => {
+    const newLeft = parseInt(left)+12;
+    const totalWidth = document.querySelector('.timeline__line').clientWidth;
+    const pxForOneYear = totalWidth/(2020 - 1990);
+    yearEnd = parseInt(newLeft/pxForOneYear + 1990);
+    if (yearEnd <= yearBegin) {
+      console.log('overlapsing !');
+      yearEnd = yearBegin + 1;
+      document.querySelector('.timeline__cursor--end').style.left = (yearEnd - 1990)*pxForOneYear + "px";
+    }
+    searchInputChange({name:'yearEnd', value: yearEnd});
+  };
+
+  return (
     <aside className="left__menu left__menu left__menu--search">
       <div className="interview__meta">
         <h2>Recherche </h2>
-        <form className="search__form">
+        <form className="search__form" onSubmit={(event) => { event.preventDefault(); searchSubmit()}}>
           <div className="search__form--overflow">
             <input className="search__form__input search__form__input--title" type="text" name="title" placeholder="Titre" onChange={(event) => searchInputChange(event.target)} value={searchValues.title}/>
             <input className="search__form__input" type="text" name="city" placeholder="Lieu" onChange={(event) => searchInputChange(event.target)} value={searchValues.city}/>
@@ -15,29 +51,29 @@ const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => (
             <input className="search__form__input" type="text" name="interviewed" placeholder="Enquêté" onChange={(event) => searchInputChange(event.target)} value={searchValues.interviewed}/>
             <input className="search__form__input" type="text" name="interviewed-structure" placeholder="Structure(s)" onChange={(event) => searchInputChange(event.target)} value={searchValues.structure}/>
             <input className="search__form__input" type="text" name="tags" placeholder="Tags"  onChange={(event) => searchInputChange(event.target)} value={searchValues.tags}/>
+
             <div className="search__form__date">
               <h4>Dates</h4>
               <div className="date__timeline">
                 <div className="timeline__line" />
-                <div className="timeline__cursor timeline__cursor--beginning">
+                <div className="timeline__cursor timeline__cursor--beginning" onMouseMove={(event) => calculateYearBegin(event.currentTarget.style.left)} >
                   <div className="timeline__cursor__dot" />
-                  <div className="timeline__cursor__date">1968</div>
+                  <div className="timeline__cursor__date">{searchValues.yearBegin}</div>
                 </div>
-                <div className="timeline__cursor timeline__cursor--end">
+                <div className="timeline__cursor timeline__cursor--end" onMouseMove={(event) => calculateYearEnd(event.currentTarget.style.left)}>
                   <div className="timeline__cursor__dot" />
-                  <div className="timeline__cursor__date">2010</div>
+                  <div className="timeline__cursor__date">{searchValues.yearEnd}</div>
                 </div>
               </div>
             </div>
 
-            <input className="search__form__button--royalty" type="checkbox" name="openSource" id="royalty-free" onChange={(event) => searchInputChange({ name: 'openSource', value: event.target.checked})} checked={searchValues.openSource}/>
-            <label className="search__form__input search__form__input--royalty" for="openSource">Libres de droit</label>
+            <input className="search__form__button--royalty" type="checkbox" name="openSource" id="openSource" onChange={(event) => searchInputChange({ name: 'openSource', value: event.target.checked})} checked={searchValues.openSource}/>
+            <label className="search__form__input search__form__input--royalty" htmlFor="openSource">Libres de droit</label>
           </div>
-          <button className="search__form__button--submit" type="submit" onSubmit={() => searchSubmit()}>Rechercher</button>
+          <button className="search__form__button--submit" type="submit">Rechercher</button>
         </form>
       </div>
     </aside>
-  </div>
-);
+)};
 
 export default SearchForm;

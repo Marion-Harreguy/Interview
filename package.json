@@ -48,6 +48,7 @@
     "mini-css-extract-plugin": "*",
     "mocha": "*",
     "optimize-css-assets-webpack-plugin": "*",
+    "parcel": "1.11.0",
     "postcss-loader": "*",
     "postcss-preset-env": "*",
     "resolve-url-loader": "*",
@@ -63,8 +64,10 @@
   "dependencies": {
     "axios": "^0.19.2",
     "jquery": "^3.5.0",
+    "jquery-ui-dist": "^1.12.1",
     "jsrsasign": "^8.0.15",
     "jwt-decode": "^2.2.0",
+    "ol": "6.3.1",
     "prop-types": "*",
     "react": "*",
     "react-dom": "*",

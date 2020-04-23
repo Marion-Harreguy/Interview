@@ -1,17 +1,174 @@
-import { SEARCH_INPUT_CHANGE } from '../actions';
+import { SEARCH_INPUT_CHANGE, CHANGE_MODE, UPLOAD_RESULTS } from '../actions';
 
 export const initialState = {
-  title: '',
-  date: '',
-  city: '',
-  language: '',
-  name: '',
-  interviewed: {
+  form: {
+    title: '',
+    date: '',
+    city: '',
+    language: '',
     name: '',
-    structure: '',
+    interviewed: '',
+    tags: '',
+    openSource: false,
+    yearBegin: 1990,
+    yearEnd: 2020,
   },
-  tags: '',
-  openSource: false,
+  mode: 'map',
+  results: [
+    {
+      id: 13,
+      title: 'Bonjour',
+      location: 'Paris',
+      coordinates: {
+        x: -262,
+        y: -24,
+      },
+      language: 'Français',
+      date: '2012',
+      openLicence: true,
+      author: {
+        id: 14,
+        firstname: 'Laura',
+        lastname: 'Piccolo',
+        status: 'fezegrez',
+        email: 'grezgrezgrezg',
+        structure: {
+          name: 'grezgrez',
+          city: 'grezgregre',
+        },
+      },
+      interviewed: [
+        {
+          id: 46,
+          firstname: 'gfdsgfds',
+          lastname: 'gfdgfdgsfd',
+          email: 'gfdsgfdsgfd',
+          status: 'gfdgfdgfd',
+          structure: {
+            name: 'gfdsgfdgfds',
+            city: 'gfdsgfdgfd',
+          },
+        },
+      ],
+      tags: ['yes','yas','verv'],
+      context: 'qdsfghjk',
+    },
+
+    {
+      id: 143,
+      title: 'Bogesrgezrg',
+      location: 'Paris',
+      coordinates: {
+        x: 122,
+        y: -234,
+      },
+      language: 'Français',
+      date: '2006',
+      openLicence: true,
+      author: {
+        id: 124,
+        firstname: 'Laura',
+        lastname: 'Piccolo',
+        status: 'fezegrez',
+        email: 'grezgrezgrezg',
+        structure: {
+          name: 'grezgrez',
+          city: 'grezgregre',
+        },
+      },
+      interviewed: [
+        {
+          id: 46,
+          firstname: 'gfdsgfds',
+          lastname: 'gfdgfdgsfd',
+          email: 'gfdsgfdsgfd',
+          status: 'gfdgfdgfd',
+          structure: {
+            name: 'gfdsgfdgfds',
+            city: 'gfdsgfdgfd',
+          },
+        },
+      ],
+      tags: ['yes','yas','verv'],
+      context: 'qdsfghjk',
+    },
+    // {
+    //   id: 1443,
+    //   title: 'Bothrtrehrthtreezrg',
+    //   location: 'Paris',
+    //   language: 'Français',
+    //   coordinates: {
+    //     x: 82,
+    //     y: 14,
+    //   },
+    //   date: '2006',
+    //   openLicence: true,
+    //   author: {
+    //     id: 124,
+    //     firstname: 'Laura',
+    //     lastname: 'Piccolo',
+    //     status: 'fezegrez',
+    //     email: 'grezgrezgrezg',
+    //     structure: {
+    //       name: 'grezgrez',
+    //       city: 'grezgregre',
+    //     },
+    //   },
+    //   interviewed: [
+    //     {
+    //       id: 46,
+    //       firstname: 'gfdsgfds',
+    //       lastname: 'gfdgfdgsfd',
+    //       email: 'gfdsgfdsgfd',
+    //       status: 'gfdgfdgfd',
+    //       structure: {
+    //         name: 'gfdsgfdgfds',
+    //         city: 'gfdsgfdgfd',
+    //       },
+    //     },
+    //   ],
+    //   tags: ['yes','yas','verv'],
+    //   context: 'qdsfghjk',
+    // },
+    // {
+    //   id: 143,
+    //   title: 'Bogvsdvdsoqvnd',
+    //   location: 'Paris',
+    //   coordinates: {
+    //     x: 322,
+    //     y: 94,
+    //   },
+    //   language: 'Français',
+    //   date: '1992',
+    //   openLicence: true,
+    //   author: {
+    //     id: 124,
+    //     firstname: 'Laura',
+    //     lastname: 'Piccolo',
+    //     status: 'fezegrez',
+    //     email: 'grezgrezgrezg',
+    //     structure: {
+    //       name: 'grezgrez',
+    //       city: 'grezgregre',
+    //     },
+    //   },
+    //   interviewed: [
+    //     {
+    //       id: 46,
+    //       firstname: 'gfdsgfds',
+    //       lastname: 'gfdgfdgsfd',
+    //       email: 'gfdsgfdsgfd',
+    //       status: 'gfdgfdgfd',
+    //       structure: {
+    //         name: 'gfdsgfdgfds',
+    //         city: 'gfdsgfdgfd',
+    //       },
+    //     },
+    //   ],
+    //   tags: ['yes','yas','verv'],
+    //   context: 'qdsfghjk',
+    // },
+  ],
 };
 
 const search = (state = initialState, action = {}) => {
@@ -19,7 +176,22 @@ const search = (state = initialState, action = {}) => {
     case SEARCH_INPUT_CHANGE:
       return {
         ...state,
-        [action.payload.name]: action.payload.value,
+        form: {
+          ...state.form,
+          [action.payload.name]: action.payload.value,
+        },
+      };
+    case CHANGE_MODE:
+      return {
+        ...state,
+        mode: action.payload,
+      };
+    case UPLOAD_RESULTS:
+      return {
+        ...state,
+        results: {
+          ...action.payload,
+        },
       };
     default:
       return state;

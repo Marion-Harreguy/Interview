@@ -22,19 +22,17 @@ import SearchResultsContainer from '../../containers/SearchResultsContainer';
 // Temporary : all style put in one file
 import './style.scss';
 
-const App = ({ isConnected, userCategories, automaticLog }) => {
-
-  console.log(isConnected);
+const App = ({ isConnected, userCategories, automaticLog, updateUserGet }) => {
 
   useEffect(() => {
     const localStorageLog = localStorage.getItem('userLogs');
     if (localStorageLog) {
       automaticLog(JSON.parse(localStorageLog));
+      updateUserGet();
     }
   }, [isConnected]);
 
   const isThereLocalStorage = () => {
-    console.log('Local storage is questionned');
     if (localStorage.getItem('userLogs')) return true;
     return false;
   };
@@ -86,7 +84,7 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
             {isThereLocalStorage() ? <Redirect to="/" /> : <ForgottenPasswordContainer />}
           </Route>
           <Route path="/search">
-            {isThereLocalStorage() ? <Redirect to="/" /> : <SearchFormContainer />}
+            {isThereLocalStorage() ? <SearchFormContainer /> : <Redirect to="/" /> }
           </Route>
           {/* How to do GET search route ? */}
           {/* <Route path="/legal-mention" component={LegalMentions} /> */}
@@ -95,17 +93,18 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
           Toggle ? */}
           <Route
             path="/read/:interviewId"
-            render={() => {
-              console.log(isThereLocalStorage());
-              if (isThereLocalStorage()) return <ReadMetaContainer />;
+            render={(object) => {
+              const { interviewId } = object.match.params;
+              if (isThereLocalStorage()) return <ReadMetaContainer interviewId={interviewId}/>;
               return <Redirect to="/" />;
             }}
           />
           <Route path="/create" component={WriteMetaContainer} />
           <Route
             path="/update/:interviewId"
-            render={() => {
-              if (isThereLocalStorage()) return <WriteMetaContainer />;
+            render={(object) => {
+              const { interviewId } = object.match.params;
+              if (isThereLocalStorage()) return <WriteMetaContainer interviewId={interviewId} />;
               return <Redirect to="/" />;
             }}
           />

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import App from '../components/App';
-import { automaticLog } from '../actions';
+import { automaticLog, updateUserGet } from '../actions';
 
 const mapStateToProps = (state) => ({
   // isConnected: localStorage.getItem('userLogs').isConnected,
@@ -11,6 +11,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   automaticLog: (idToken) => {
     dispatch(automaticLog(idToken));
+  },
+  updateUserGet: () => {
+    dispatch(updateUserGet());
   },
 });
 
