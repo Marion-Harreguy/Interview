@@ -64,6 +64,10 @@ export const LOAD_WRITE_INTERVIEW = 'LOAD_WRITE_INTERVIEW';
 export const UPDATE_USER_STATE = 'UPDATE_USER_STATE';
 export const CREATE_CATEGORY_DISPLAY = 'CREATE_CATEGORY_DISPLAY';
 
+// SEARCH
+export const SEARCH_INPUT_CHANGE = 'SEARCH_INPUT_CHANGE';
+export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
+
 // APP
 export const automaticLog = (payload) => ({
   type: AUTOMATIC_LOG,
@@ -284,3 +288,12 @@ export const createCategoryDisplay = () => ({
   type: CREATE_CATEGORY_DISPLAY,
 });
 
+// SEARCH
+export const searchInputChange = (payload) => ({
+  type: SEARCH_INPUT_CHANGE,
+  payload,
+});
+
+export const searchSubmit = () => ({
+  type: SEARCH_SUBMIT,
+});

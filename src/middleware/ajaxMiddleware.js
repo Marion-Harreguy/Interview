@@ -21,11 +21,12 @@ import {
   automaticLog,
   updateUserGet,
   logOut,
+  loginSubmit,
 } from '../actions';
 
 export default (store) => (next) => (action) => {
   // TOKEN will be used for request headers
-  const token = () => localStorage.getItem('userLogs').token;
+  const token = () => { if (localStorage.getItem('userLogs')) return JSON.parse(localStorage.getItem('userLogs')).token; };
 
   // FOR NEW_USER_SUBMIT
   const newUser = {
@@ -35,7 +36,7 @@ export default (store) => (next) => (action) => {
   };
 
   // FOR LOGIN_SUBMIT
-  const userConnect = { 
+  let userConnect = { 
     username: store.getState().login.login,
     password: store.getState().login.password,
   };
@@ -50,10 +51,13 @@ export default (store) => (next) => (action) => {
   const userInfo = {
     user: { ...store.getState().userData.dataUser },
     structure: { ...store.getState().userData.dataStructure },
-    // ...store.getState().userData.dashboard,
+    dashboard: { ...store.getState().userData.dashboard },
   };
 
-  const userId = store.getState().userData.dataUser.id;
+  const userId = () => { 
+    const id = JSON.parse(localStorage.getItem('userLogs')).id;
+    return id;
+  };
 
   // FOR FORGOTTEN PASSWORD
   const email = { ...store.getState().forgottenPassword.email };
@@ -64,7 +68,7 @@ export default (store) => (next) => (action) => {
   switch (action.type) {
     case AUTOMATIC_LOG:
       axios({
-        url: `http://184.73.143.2/user/${action.payload.id}`,
+        url: `http://184.73.143.2/api/users/${action.payload.id}`,
         method: 'get',
         headers: {
           Authorization: `Bearer ${token()}`,
@@ -76,11 +80,12 @@ export default (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.log(error);
-          // store.dispatch(logOut());
+          store.dispatch(logOut());
         });
       break;
 
     case NEW_USER_SUBMIT:
+      console.log(newUser);
       axios({
         url: 'http://184.73.143.2/register',
         method: 'post',
@@ -89,19 +94,13 @@ export default (store) => (next) => (action) => {
         },
         data: JSON.stringify(newUser),
       })
-        .then((response) => {
-          // Send new user ID to the state
-          // store.dispatch(newUserSuccess(response.data));
-          const decodedToken = jwtDecode(response.data.token);
-
-          const userLogs = {
-            id: decodedToken.id,
-            token: response.data.token,
-            isConnected: true,
+        .then(() => {
+          console.log('user was submitted');
+          userConnect = {
+            username: store.getState().newUser.user.email,
+            password: store.getState().newUser.user.password,
           };
-          localStorage.setItem('userLogs', JSON.stringify(userLogs));
-
-          store.dispatch(automaticLog(userLogs));
+          store.dispatch(loginSubmit());
         })
         .catch((error) => {
           console.log(error);
@@ -133,8 +132,7 @@ export default (store) => (next) => (action) => {
             isConnected: true,
           };
           localStorage.setItem('userLogs', JSON.stringify(userLogs));
-
-          // store.dispatch(automaticLog(userLogs));
+          store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
           console.log(error);
@@ -142,8 +140,9 @@ export default (store) => (next) => (action) => {
       break;
 
     case UPDATE_USER_PUT:
+      console.log(userInfo);
       axios({
-        url: `http://184.73.143.2/api/users/${userId}`,
+        url: `http://184.73.143.2/api/users/${userId()}`,
         method: 'put',
         headers: {
           Authorization: `Bearer ${token()}`,
@@ -160,14 +159,16 @@ export default (store) => (next) => (action) => {
 
     case UPDATE_USER_GET:
       axios({
-        url: `http://184.73.143.2/api/users/${userId}`,
+        url: `http://184.73.143.2/api/users/${userId()}`,
         method: 'get',
         headers: {
           Authorization: `Bearer ${token()}`,
         },
       })
         .then((response) => {
+          console.log(userId());
           console.log("Request worked!");
+          console.log(response.data);
           store.dispatch(updateUserState(response.data));
           if (store.getState().userData.library.categoryDisplay.length === 0) {
             store.dispatch(createCategoryDisplay());

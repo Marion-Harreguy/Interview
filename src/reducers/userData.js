@@ -9,7 +9,7 @@ export const initialState = {
     isConnected: false,
   },
   dataUser: {
-    id: 2,
+    id: 0,
     firstname: 'Patrick',
     lastname: 'Lebon',
     email: 'vrocher@tiscali.fr',
@@ -115,16 +115,15 @@ export const initialState = {
   newCategory: {
     id: 0,
     name: '',
-    displayed: true,
   },
 };
 
 const categoryColors = [
   'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
+  'red',
+  'green',
+  'black',
+  'orange',
   'yellow',
   'yellow',
   'yellow',
@@ -183,13 +182,13 @@ const userData = (state = initialState, action = {}) => {
               ...state.dashboard.categories,
               {
                 ...state.newCategory,
+                color: categoryColors[state.dashboard.categories.length],
               },
             ],
           },
           newCategory: {
             ...state.newCategory,
             name: '',
-            color: categoryColors[state.dashboard.categories.length],
           },
           library: {
             ...state.library,
@@ -308,6 +307,7 @@ const userData = (state = initialState, action = {}) => {
         },
       };
     case LOG_OUT:
+      console.log("loging out");
       localStorage.clear();
       return {
         ...state,

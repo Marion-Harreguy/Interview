@@ -38,7 +38,7 @@ const NewUserForm = ({
       <input className="login__form__input" data-type="structure" onChange={(evt) => { newUserInputChange(evt.target); }} value={structure} type="text" name="name" placeholder="Structure(s)" />
       <input className="login__form__input" data-type="structure" onChange={(evt) => { newUserInputChange(evt.target); }} value={city} type="text" name="city" placeholder="Ville de la structure" />
       <input className="login__form__input" data-type="structure" onChange={(evt) => { newUserInputChange(evt.target); }} value={sector} type="text" name="sector" placeholder="Secteur de la structure" />
-      <input className="login__form__input" data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={status} type="text" name="status" placeholder="Biographie" />
+      <input className="login__form__input" data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={status} type="text" name="status" placeholder="Statut" />
 
       <input className={`login__form__input mandatory ${(password.length > 0 && password.length < 3) && 'invalid'}`} data-type="user" onChange={(evt) => { newUserInputChange(evt.target); }} value={password} type="password" name="password" placeholder="Mot de passe *" />
       <input className={`login__form__input mandatory ${(passwordConfirmation.length > 0 && password !== passwordConfirmation) && 'invalid'}`} onChange={(evt) => { newUserInputChange(evt.target); }} value={passwordConfirmation} type="password" data-type="front" name="passwordConfirmation" placeholder="Confirmation du mot de passe *" />
