@@ -39,7 +39,7 @@ class UserController extends AbstractController
      * 
      * @Route("/{id}", name="edit", requirements={"id": "\d+"}, methods={"PUT", "PATCH"})
      */
-    public function edit(User $user, Request $request, EntityManagerInterface $em)
+    public function edit(User $user, Request $request, EntityManagerInterface $em, SerializerInterface $serializer)
     {
         // On décode les données envoyées
         $data = json_decode($request->getContent(), true);
@@ -58,7 +58,8 @@ class UserController extends AbstractController
             
             $em->flush();
 
-            return $this->json(['User updated'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
+            $data = $serializer->normalize($user, null, ['groups' => ['user']]);
+            return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
         } else {
             return $this->json(
                 ['message'=>'Not Authorized'],
