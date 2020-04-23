@@ -55,6 +55,7 @@ class InterviewController extends AbstractController
     public function read(Interview $interview, InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
 
+        
         //======================================//
         // Gestion de l'affichage des interview //
         //======================================//
@@ -82,8 +83,8 @@ class InterviewController extends AbstractController
                 );
             }
         }
-
-        $data = $serializer->normalize($interview, null, ['groups' => ['interview']]);
+        
+        $data = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
 
         return $this->json(
             $data,
@@ -102,11 +103,26 @@ class InterviewController extends AbstractController
         // on decode les données envoyées
         $data = json_decode($request->getContent(), true);
 
+
+        $dataInterview = [];
+
+        $dataInterview["title"] = $data["meta"]["title"];
+        $dataInterview["context"] = $data["meta"]["context"];
+        $dataInterview["localisation"] = $data["meta"]["localisation"];
+        $dataInterview["language"] = $data["meta"]["language"];
+        $dataInterview["openLicence"] = $data["meta"]["openLicence"];
+        $dataInterview["isPublished"] = $data["meta"]["isPublished"];
+
+
+        $tags = $data["meta"]["tags"];
+
+
+        $interviewed =  $data["meta"]["interviewed"];
         // on valide les données ainsi reçut
         $form = $this->createForm(InterviewEditType::class, $interview);
-        $form->submit($data["interview"]["meta"]);
+        $form->submit($dataInterview);
 
-     
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             //=============================//
@@ -118,26 +134,26 @@ class InterviewController extends AbstractController
                     --> Si on le retrouve : on lui ajoute l'interview
                     --> Sinon on le créer et on lui ajoute l'interview
             */
-            
-            
-            
-             for ($i = 0; $i < count($data["interview"]["tags"]); $i++) {
-
-                 $tagName =  $data["interview"]["tags"][$i];
-                 $tag = $tagRepository->findOneBy(["name" => $tagName]);
-
-                 if ($tag) {
-                     $tag->addInterview($interview);
-                 } else {
-                     $tag = new Tag();
-                     $tag->setName($tagName);
-                     $tag->addInterview($interview);
-                 }
 
 
-                 $em->persist($tag);
-             }
-            
+
+            for ($i = 0; $i < count($tags); $i++) {
+
+                $tagName = $tags[$i];
+                $tag = $tagRepository->findOneBy(["name" => $tagName]);
+
+                if ($tag) {
+                    $tag->addInterview($interview);
+                } else {
+                    $tag = new Tag();
+                    $tag->setName($tagName);
+                    $tag->addInterview($interview);
+                }
+
+
+                $em->persist($tag);
+            }
+
 
             //=============================//
             //  Gestion de l'interviewé    //
@@ -149,26 +165,34 @@ class InterviewController extends AbstractController
                 - Si il n'existe pas 
                     --> Créer l'objet Interviewed
             */
-            foreach ($data["interview"]["interviewed"] as $dataInterviewed) {
 
-                if (isset($dataInterviewed["id"])) {
-                    $id = $dataInterviewed["id"];
-                    $interviewed = $interviewedRepository->find($id);
-                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
-                    $formIntervierwed->submit($dataInterviewed);
-                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-                        $interviewed->addInterview($interview);
-                        $interviewed->setUpdatedAt(new \DateTime());
-                    }
+
+            foreach ($interviewed as $dataInterviewed) {
+
+                if ($dataInterviewed["email"] === "anonyme@inter.view") {
+                    $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
+                    $interviewed->addInterview($interview);
                 } else {
-                    $interviewed = new Interviewed();
-                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
-                    $formIntervierwed->submit($dataInterviewed);
-                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-                        $interviewed->addInterview($interview);
+
+                    if (isset($dataInterviewed["id"])) {
+                        $id = $dataInterviewed["id"];
+                        $interviewed = $interviewedRepository->find($id);
+                        $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                        $formIntervierwed->submit($dataInterviewed);
+                        if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                            $interviewed->addInterview($interview);
+                            $interviewed->setUpdatedAt(new \DateTime());
+                        }
+                    } else {
+                        $interviewed = new Interviewed();
+                        $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                        $formIntervierwed->submit($dataInterviewed);
+                        if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                            $interviewed->addInterview($interview);
+                        }
                     }
+                    $em->persist($interviewed);
                 }
-                $em->persist($interviewed);
 
                 //=============================//
                 //   Gestion des structures    //
@@ -181,22 +205,21 @@ class InterviewController extends AbstractController
                         --> Créer l'objet Structure et lui assigner l'interviewé
                 */
 
-                   if (isset($dataInterviewed["structure"]["id"])) {
-                        $id = $dataInterviewed["structure"]["id"];
+                if (isset($dataInterviewed["structure"]["id"])) {
+                    $id = $dataInterviewed["structure"]["id"];
 
-                        $structure = $structureRepository->find($id);
-                    } else {
-                        $structure = new Structure();
-                        $formStructure = $this->createForm(StructureType::class, $structure);
-                        $formStructure->submit($dataInterviewed["structure"]);
-                        if ($formStructure->isSubmitted() && $formStructure->isValid()) {
-                            $structure->addInterviewed($interviewed);
-                            $interviewed->setUpdatedAt(new \DateTime());
-                        }
+                    $structure = $structureRepository->find($id);
+                } else {
+                    $structure = new Structure();
+                    $formStructure = $this->createForm(StructureType::class, $structure);
+                    $formStructure->submit($dataInterviewed["structure"]);
+                    if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+                        $structure->addInterviewed($interviewed);
+                        $interviewed->setUpdatedAt(new \DateTime());
                     }
+                }
 
-                    $em->persist($structure);
-                
+                $em->persist($structure);
             }
 
 
@@ -217,62 +240,67 @@ class InterviewController extends AbstractController
                           - Créer l'objet Answer
                           - Lui assginer la question et l'interviewé
             */
-            foreach ($data["questions"] as $questionReponse) {
-               
+            foreach ($data["content"] as $questionReponse) {
+
+
                 if (isset($questionReponse["id"])) {
                     $questionId = $questionReponse["id"];
                 } else {
                     $questionId = null;
                 }
-                
+
                 if (!$questionId) {
-                    
+
                     $question = new Question();
-                    $question->setContent($questionReponse["content"]);
-                    
-                    if (isset($questionReponse["answer"]["id"])) {
-                        $answerId = $questionReponse["answer"]["id"];
-                    } else {
-                        $answerId = null;
-                    }
-                    
-                   
-                    if (!$answerId) {
-                        $answer = new Answer();
-                        $answer->setContent($questionReponse["answer"]["content"]);
-                        $answer->setQuestion($question);
-                        $answer->setInterviewed($interviewed);
-                    } else {
-                        $answer = $answerRepository->find($questionReponse["answer"]["id"]);
-                        $answer->setContent($questionReponse["answer"]["content"]);
-                        $answer->setUpdatedAt(new \Datetime);
+                    $question->setContent($questionReponse["question"]);
+
+                    for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                        if (isset($questionReponse["answer"][$i]["id"])) {
+                            $answerId = $questionReponse["answer"][$i]["id"];
+                        } else {
+                            $answerId = null;
+                        }
+
+                        if (!$answerId) {
+                            $answer = new Answer();
+                            $answer->setContent($questionReponse["answer"][$i]["content"]);
+                            $answer->setQuestion($question);
+                            $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
+                            $answer->setInterviewed($interviewed);
+                        } else {
+                            $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
+                            $answer->setContent($questionReponse["answer"][$i]["content"]);
+                            $answer->setUpdatedAt(new \Datetime);
+                        }
                     }
 
                     $question->setInterview($interview);
                 } else {
 
                     $question = $questionRepository->find($questionId);
-                    $question->setContent($questionReponse["content"]);
+                    $question->setContent($questionReponse["question"]);
 
-                    if (isset($questionReponse["answer"]["id"])) {
-                        $answerId = $questionReponse["answer"]["id"];
-                    } else {
-                        $answerId = null;
+                    for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                        if (isset($questionReponse["answer"][$i]["id"])) {
+                            $answerId = $questionReponse["answer"][$i]["id"];
+                        } else {
+                            $answerId = null;
+                        }
+
+                        if (!$answerId) {
+
+                            $answer = new Answer();
+                            $answer->setContent($questionReponse["answer"][$i]["content"]);
+                            $answer->setQuestion($question);
+                            $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
+                            $answer->setInterviewed($interviewed);
+                        } else {
+
+                            $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
+                            $answer->setContent($questionReponse["answer"][$i]["content"]);
+                            $answer->setUpdatedAt(new \Datetime);
+                        }
                     }
-
-                    if (!$answerId) {
-
-                        $answer = new Answer();
-                        $answer->setContent($questionReponse["answer"]["content"]);
-                        $answer->setQuestion($question);
-                        $answer->setInterviewed($interviewed);
-                    } else {
-
-                        $answer = $answerRepository->find($questionReponse["answer"]["id"]);
-                        $answer->setContent($questionReponse["answer"]["content"]);
-                        $answer->setUpdatedAt(new \Datetime);
-                    }
-
                     $question->setInterview($interview);
                 }
 
@@ -286,9 +314,12 @@ class InterviewController extends AbstractController
         }
 
 
+       
         $em->flush();
 
-        $data = $serializer->normalize($interview, null, ['groups' => ['interview']]);
+
+
+        $data = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
         return $this->json(
             $data,
             $status = 200,
@@ -307,10 +338,27 @@ class InterviewController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $user = $this->getUser();
 
+
+        $dataInterview = [];
+
+        $dataInterview["title"] = $data["meta"]["title"];
+        $dataInterview["context"] = $data["meta"]["context"];
+        $dataInterview["localisation"] = $data["meta"]["localisation"];
+        $dataInterview["language"] = $data["meta"]["language"];
+        $dataInterview["openLicence"] = $data["meta"]["openLicence"];
+        $dataInterview["isPublished"] = $data["meta"]["isPublished"];
+
+
+        $tags = $data["meta"]["tags"];
+
+
+        $interviewed =  $data["meta"]["interviewed"];
+
+
         // On valide les données 
         $interview = new Interview();
         $form = $this->createForm(InterviewType::class, $interview);
-        $form->submit($data["interview"]);
+        $form->submit($dataInterview);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -320,7 +368,7 @@ class InterviewController extends AbstractController
         //=============================//
         //      Gestion des tags       //
         //=============================//
-        foreach ($data["tags"] as $tagUnSaved) {
+        foreach ($tags as $tagUnSaved) {
 
             $tag = $tagRepository->findOneBy(["name" => $tagUnSaved["name"]]);
 
@@ -340,7 +388,7 @@ class InterviewController extends AbstractController
         //=============================//
         //  Gestion de l'interviewé    //
         //=============================//
-        foreach ($data["interviewed"] as $interviewedUnSaved) {
+        foreach ($interviewed as $interviewedUnSaved) {
 
             $interviewed = $interviewedRepository->findOneBy(["email" => $interviewedUnSaved["email"]]);
 
@@ -394,7 +442,9 @@ class InterviewController extends AbstractController
             }
         }
 
+
         $user->addInterview($interview);
+
         $em->persist($user);
 
         //==================================//
@@ -419,9 +469,9 @@ class InterviewController extends AbstractController
 
         $em->flush();
 
-        $data = $serializer->normalize($interview, null, ['groups' => ['interview']]);
+
         return $this->json(
-            $data,
+            ['id' => $interview->getId()],
             $status = 201,
             $headers = ['content-type' => 'application/Json'],
             $context = []

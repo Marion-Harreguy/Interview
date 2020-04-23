@@ -42,6 +42,11 @@ class Answer
      */
     private $interviewed;
 
+    /**
+     * @ORM\Column(type="string", length=5, nullable=true)
+     */
+    private $initials;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -108,6 +113,18 @@ class Answer
     public function setInterviewed(?Interviewed $interviewed): self
     {
         $this->interviewed = $interviewed;
+
+        return $this;
+    }
+
+    public function getInitials(): ?string
+    {
+        return $this->initials;
+    }
+
+    public function setInitials(?string $initials): self
+    {
+        $this->initials = $initials;
 
         return $this;
     }
