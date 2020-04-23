@@ -328,8 +328,7 @@ class Interview
         $date = $this->getDate();
 
         if ($date === null){
-            $date = new \DateTime();
-            $date->setDate(2001, 1, 1);
+           return null;
         }
         
         
@@ -360,7 +359,8 @@ class Interview
         $author = [];
 
         $author["id"] = $this->getUser()->getId();
-        $author["name"] = $this->getUser()->getCompleteName();
+        $author["firstname"] = $this->getUser()->getFirstname();
+        $author["lastname"] = $this->getUser()->getLastname();
         $author["email"] = $this->getUser()->getEmail();
         $author["status"] = $this->getUser()->getStatus();
 
@@ -373,7 +373,8 @@ class Interview
 
             $dataInterviewed = [
                 "id" => $interviewed->getId(),
-                "name" => $interviewed->getCompleteName(),
+                "firstname" => $interviewed->getFirstname(),
+                "lastname" => $interviewed->getLastname(),
                 "email" => $interviewed->getEmail(),
                 "job" => $interviewed->getJob(),
             ];
@@ -411,14 +412,12 @@ class Interview
     }
 
 
-    /**
-     * @Groups("interview")
-     */
-    public function getCompleteInterview()
-    {
-        $completeInterview = [];
 
-        $completeInterview["meta"] = $this->getInterviews();
+    public function getInterview()
+    {
+       
+
+        $interview["meta"] = $this->getInterviews();
 
         $questionList = [];
         $answerList = [];
@@ -435,7 +434,7 @@ class Interview
                 $answer = [
                     "id" => $answerObject->getId(),
                     "content" => $answerObject->getContent(),
-                    "interviewed" => $answerObject->getInterviewed()->getInitials()
+                    "interviewed" => $answerObject->getInitials(),
                 ];
                 $answerList[] = $answer;
             }
@@ -444,9 +443,10 @@ class Interview
             $answerList = [];
             $questionList[] = $question;
         }
-        $completeInterview["questions"] = $questionList;
+        $interview["content"] = $questionList;
+        
 
-        return $completeInterview;
+        return  $interview;
     }
 
     public function getDate(): ?\DateTimeInterface
