@@ -15,14 +15,11 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id', null, ['required' => false])
             ->add('name', null, [
                 'constraints' => [new NotBlank, new NotNull()]
             ])
             ->add('color', ColorType::class)
-            // ->add('createdAt')
-            // ->add('updatedAt')
-            // ->add('user')
-            // ->add('interviews')
         ;
     }
 
