@@ -85,7 +85,6 @@
     background-size: contain;
     background-repeat: no-repeat;
     border: none !important;
-    background-color: red;
   }
 
   .read__tools a {
@@ -97,14 +96,12 @@
     background-size: contain;
     background-repeat: no-repeat;
     border: none !important;
-    background-color: red;
     padding: 0;
   }
   
   .left__menu--bottom {
     /* 20+75+15 */
     height:calc(100% - 110px);
-    margin-top: 15px;
     z-index: 1;
   }
   

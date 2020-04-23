@@ -16,7 +16,6 @@
 
 .interview__context {
   margin-left: 45px;
-  margin-bottom: 10px;
 }
 
 .interview__content span {
@@ -30,6 +29,7 @@
 .interview__context, .question__content, .answer__content {
   border-bottom: solid 1px grey;
   padding: 12px 0px;
+  margin-bottom: 0;
 }
 
 .question__content, .interview__add__button--question {

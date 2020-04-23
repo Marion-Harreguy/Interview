@@ -29,7 +29,7 @@
     "clean-webpack-plugin": "*",
     "copy-webpack-plugin": "*",
     "cross-env": "*",
-    "css-loader": "*",
+    "css-loader": "^3.5.2",
     "cssnano": "*",
     "enzyme": "*",
     "enzyme-adapter-react-16": "*",

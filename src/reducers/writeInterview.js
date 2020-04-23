@@ -113,6 +113,7 @@ const readInterview = (state = initialState, action = {}) => {
           set.answers[action.payload.indexAnswer] = action.payload.value;
           return {
             ...set,
+            interviewed: 'AA',
           };
         }
         return set;
