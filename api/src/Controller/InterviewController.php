@@ -34,17 +34,9 @@ class InterviewController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(Request $request, InterviewRepository $interviewRepository, SerializerInterface $serializer)
+    public function browse(InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
-        $language = $request->query->get("language");
-        $localisation = $request->query->get("localisation");
-        $tags = $request->query->get("tags");
-        $licence = $request->query->get("licence");
-
-
-
-        dd($language, $localisation, $tags, $licence);
-
+ 
         $interviews = $interviewRepository->findAllPublished();
 
         $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
