@@ -351,6 +351,7 @@ class Interview
             "location" => $this->getLocalisation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
+            "isPublished" => $this->getIsPublished(),
             "date" => $this->theLastestDate(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
@@ -363,6 +364,9 @@ class Interview
         $author["lastname"] = $this->getUser()->getLastname();
         $author["email"] = $this->getUser()->getEmail();
         $author["status"] = $this->getUser()->getStatus();
+
+
+        $author["structure"] = $this->getUser()->getStructure();
 
         $interview["author"] = $author;
 
