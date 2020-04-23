@@ -1,4 +1,123 @@
 // WRITE META
+.left__menu--write {
+  overflow: scroll;
+}
+
+.interview__add {
+  margin-left: 50px;
+}
+
+.interview__content--write {
+  margin-top: 20px;
+  height: calc(100% - 47px);
+}
+.interview__content--write::-webkit-scrollbar {
+  display: block;
+}
+
+.interview__add__button {
+  padding: 1px 15px 2px 15px;
+  margin-right: 4px;
+}
+
+.write__tools {
+  position: absolute;
+  width: 20px;
+  height: 80px;
+  top: 30px;
+  right: 20px;
+}
+
+
+.write__tools button {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 15px;
+  border-radius: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.tools__close {
+  background-image: url("../../assets/icons/cross.png");
+  width: 16px !important;
+  height: 16px !important;
+  margin-left: 2px;
+}
+
+.tools__publish {
+  background-image: url("../../assets/icons/export.png");
+}
+
+.tools__delete {
+  background-image: url("../../assets/icons/trash.png");
+}
+
+.write__form {
+  width: calc(100% - 30px);
+}
+
+.write__form__input, .write__form__input:focus, .write__form__input:active {
+  margin-top: 8px;
+  font-size: 1.2em;
+  width: 100%;
+  /* border-bottom: 0.2px solid lightgray !important; */
+}
+
+.write__form__input--title, .write__form__input--title:-internal-autofill-selected, .write__form__input--title:focus, .write__form__input--title:active {
+  font-family: 'Source-SemiBold' !important;
+}
+
+
+.write__form__input--royalty {
+  margin-left: 25px;
+  margin-top: -30px !important;
+  padding-top: 0;
+}
+
+
+.write__categories {
+  position: relative;
+  margin-top: 40px;
+  margin-bottom: 15px;
+}
+
+.write__category {
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.write__category label, .new-category-name, .new-category-name:focus {
+  vertical-align: top;
+  position: absolute;
+  left: 25px;
+  top: -5.5px;
+  font-size: 1.2em;
+}
+
+.new-category-name, .new-category-name:focus {
+  margin-top: 0;
+  width: 20vw;
+}
+
+.interview__meta {
+  overflow: scroll;
+  height: 100%;
+} 
+
+.category-button--add {
+  height:15px;
+  width:15px;
+  margin-top: -2px;
+  border-radius: 50%;
+  padding: 0;
+  background-image: url('../../assets/icons/thick-check.png');
+  background-size: 7px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .write__category label, .new-category-name, .new-category-name:focus {
     vertical-align: top;
     position: absolute;

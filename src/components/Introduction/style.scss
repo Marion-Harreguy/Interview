@@ -4,3 +4,25 @@
   margin-top: 0.5rem;
   line-height: 1.5rem;
 }
+
+.right__presentation {
+  padding-top: 15px;
+  font-size: 1.2em;
+  height: 100%;
+  overflow-y: scroll;
+}
+.right__presentation::-webkit-scrollbar {
+  display: block;
+}
+
+.presentation__title {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.presentation__img {
+  width: 35%;
+  display: inline-block;
+  margin: 0 15px 15px 0;
+}

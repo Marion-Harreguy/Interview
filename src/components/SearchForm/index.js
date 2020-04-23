@@ -6,19 +6,19 @@ import $ from 'jquery';
 const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
 
   useEffect(() => {
-    $('.timeline__cursor').draggable({ axis: 'x' });
+    $('.timeline__cursor').draggable({ axis: 'x', containment: 'parent' });
   }, [searchInputChange]);
 
   let yearBegin = searchValues.yearBegin;
   let yearEnd = searchValues.yearEnd;
 
   const calculateYearBegin = (left) => {
+    if (!left) return 1990;
     const newLeft = parseInt(left)+12;
     const totalWidth = document.querySelector('.timeline__line').clientWidth;
     const pxForOneYear = totalWidth/(2020 - 1990);
     yearBegin = parseInt(newLeft/pxForOneYear + 1990);
     if (yearBegin >= yearEnd) {
-      console.log('overlapsing !');
       yearBegin = yearEnd - 1;
       document.querySelector('.timeline__cursor--beginning').style.left = (yearBegin - 1990)*pxForOneYear + "px";
     }
@@ -26,12 +26,12 @@ const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
   };
 
   const calculateYearEnd = (left) => {
+    if (!left) return 2020;
     const newLeft = parseInt(left)+12;
     const totalWidth = document.querySelector('.timeline__line').clientWidth;
     const pxForOneYear = totalWidth/(2020 - 1990);
     yearEnd = parseInt(newLeft/pxForOneYear + 1990);
     if (yearEnd <= yearBegin) {
-      console.log('overlapsing !');
       yearEnd = yearBegin + 1;
       document.querySelector('.timeline__cursor--end').style.left = (yearEnd - 1990)*pxForOneYear + "px";
     }

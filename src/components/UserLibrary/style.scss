@@ -1,0 +1,171 @@
+.home__form {
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.home__library {
+  position: relative;
+}
+
+.home__form__button, .home__form__button:focus {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-image: url('../../assets/icons/pencil.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 5px;
+  right: 0;
+  border-radius: 0;
+  border: 0;
+}
+
+.home__form__input, .home__name {
+  line-height: 1.3em;
+}
+
+.home__form__input {
+  width: 100%;
+  font-size: 1.3em !important;
+  margin-top: 0;
+  border-bottom: none !important;
+}
+
+.home__library h2, .home__library h3, .home__categories h2, .write__categories h2 {
+  font-family: 'Source-SemiBold';
+  font-size: 1.3em;
+  margin-top: 20px;
+}
+
+.home__library h2, .home__categories h2, .write__categories h2 {
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.home__library h3 {
+  border-bottom: solid 1px white;
+  padding-bottom: 7px;
+  width: 100%;
+  position: relative;
+  margin-top: 15px;
+}
+
+.library__new-interview {
+  position: absolute;
+  right: 5px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  bottom: 10px;
+  padding: 0;
+  background-image: url("../../assets/icons/thick-plus.png");
+  background-size: 7px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.section__list {
+  overflow: hidden;
+  height: 0;
+}
+
+/* .home__category--add {
+  height:15px;
+  width:15px;
+  margin-top: 2px;
+  border-radius: 50%;
+  padding: 0;
+  background-image: url('../../assets/icons/thick-check.png');
+  background-size: 7px;
+  background-position: center;
+  border: solid 1px white;
+  background-repeat: no-repeat;
+} */
+
+.home__library h3 button:hover {
+  background-color: rgba(255,255,255,0.3);
+}
+
+.library__order, .library__order:focus {
+  position: absolute;
+  outline: none;
+  top: 0;
+  right: 0;
+  border: solid 1px white;
+  border-radius: 20px !important;
+  background-color: transparent;
+  color: white;
+  text-align: center !important;
+  width: 90px;
+  font-size: 0.9em;
+  margin-top: 3px;
+}
+
+.list__interview {
+  position: relative;
+  border-bottom: solid 0.3px grey;
+  margin-top: 7px;
+}
+
+.list__interview__title {
+  font-size: 1em;
+  width: calc(100% - 25px);
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.list__interview__title:hover{
+  opacity: 1;
+}
+
+.list__interview__categories {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  width: 15px;
+  height: fit-content;
+}
+
+.list__category {
+  position: relative;
+  display: block;
+  width: 7px;
+  height: 7px;
+  margin-top: -3px;
+  border-radius: 50%;
+}
+
+
+.home__categories {
+  position: relative;
+  margin-top: 40px;
+}
+
+.home__category {
+  position: relative;
+}
+
+.home__category label, .new-category-name, .new-category-name:focus {
+  vertical-align: top;
+  position: absolute;
+  left: 25px;
+  top: -5.5px !important;
+  font-size: 1.2em;
+}
+
+/* 
+TODO : Changer la background-image quand le placeholder est vide 
+TEST ICI NE FONCTIONNE PAS
+*/
+
+.new-category-name:placeholder-shown ~ .category-button--add { 
+  background-image: url('../../assets/icons/thick-plus.png');
+}
+
+.home__content {
+  overflow-y: scroll;
+  height: calc(100% - 50px);
+}
+.home__content::-webkit-scrollbar {
+  display: block;
+}

@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import ResultSelected from './ResultSelected';
 
 const ResultsTimeline = ({ resultList }) => {
 
+  const [chosenInterview, setChosenInterview] = useState({});
   const groupByYear = () => {
     let resultByYear = {};
     resultList.map((interview) => {
       if (resultByYear[interview.date]) resultByYear[interview.date].push(interview);
       else resultByYear[interview.date] = [interview];
     });
-    console.log(Object.entries(resultByYear));
     return Object.entries(resultByYear);
   };
 
   let resultByYearTable = groupByYear();
-  useEffect(() => { 
+  useEffect(() => {
     resultByYearTable = groupByYear();
   }, [resultList]);
 
@@ -23,10 +24,8 @@ const ResultsTimeline = ({ resultList }) => {
     return now.getFullYear();
   };
 
-  let chosenInterview;
-
   const displayInterview = (id) => {
-    chosenInterview = resultList.filter((interview) => interview.id === id);
+    setChosenInterview(resultList.find((interview) => interview.id === id));
   };
 
   const calculateLeft = (interviewYear) => {
@@ -49,9 +48,7 @@ const ResultsTimeline = ({ resultList }) => {
 
         {
         resultByYearTable.map((year) => {
-          console.log(year);
           const yearleft = calculateLeft(year[0]);
-          console.log(yearleft);
           return (
             <div className="result-timeline__map__group" style={{ left: yearleft }}>
               <div className="map__group__date">{year[0]}</div>
@@ -68,33 +65,12 @@ const ResultsTimeline = ({ resultList }) => {
       </div>
 
       {
-            chosenInterview && (
-              <div className="result-timeline__interview">
-                <div className="result-interview">
-                  <div className="result-interview__meta-list">
-                    <h5 className="result-interview__meta result-interview__meta--title">{chosenInterview.title}</h5>
-                    <p className="result-interview__meta result-interview__meta--date">{chosenInterview.date}</p>
-                    <p className="result-interview__meta result-interview__meta--place">{chosenInterview.city}</p>
-                    <p className="result-interview__meta result-interview__meta--language">{chosenInterview.language}</p>
-                    <p className="result-interview__meta result-interview__meta--author">{chosenInterview.author.name}</p>
-                    { chosenInterview.interviewed.map((interviewed) => (
-                    <p className="result-interview__meta result-interview__meta--interviewed">{interviewed.name}</p>
-                    ))
-                    }
-                    
-                    <p className="result-interview__meta result-interview__meta--structure">{chosenInterview.interviewed[0].structure.name}</p>
-                  </div>
-                  <div className="result-interview__tag-list">
-                    { chosenInterview.tags.map((tag) => (
-                    <p className="result-interview__tag">{tag}</p>
-                ))}
-                  </div>
-                </div>
-              </div>
+            chosenInterview.hasOwnProperty('id') && (
+              <ResultSelected interview={chosenInterview} />
             )
         }
-        
     </div>
-    );};
+  );
+};
 
 export default ResultsTimeline;

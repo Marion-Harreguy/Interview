@@ -119,6 +119,7 @@ input[type="checkbox"] + label::before {
   margin: 0;
 }
 
+
 /* LEFT */
 
 .left {
@@ -213,3 +214,112 @@ input[type="checkbox"] + label::before {
   src: url('../../assets/fonts/SourceSansPro-Regular.ttf');
 }
 
+
+@media screen and (max-width: 575px) { 
+
+  .nav-item--bar-hidden {
+    display: block;
+  }
+  }
+  
+  @media screen and (max-width: 768px) {
+  
+  body {
+    background-color: #414a52;
+    overflow-y: scroll;
+  }
+  
+  header {
+    position: fixed;
+    z-index: 4;
+  }
+  
+  .left {
+    top: 30px;
+    height: 200vh;
+  }
+  
+  .left__menu {
+    height: 85vh;
+    margin-top: 20px;
+  }
+  
+  .left__menu--top {
+    z-index: 2;
+  }
+  
+  .left__menu--bottom {
+    z-index: 1;
+    background-color: #414a52;
+  }
+  
+  .left__menu--top--closed {
+    border-radius: 0 0 20px 20px;
+    margin-top: 30px;
+    position: fixed;
+    width: calc(100% - 40px);
+    z-index: 3;
+    padding: 20px;
+  }
+  
+  .left__menu--bottom--closed {
+    border-radius: 0 0 20px 20px;
+    margin-top: -15px;
+    background-color: #414a52;
+    z-index: 2;
+    position: fixed;
+    width: calc(100% - 40px);
+    padding: 20px;
+  }
+  
+  /* .left__menu--bottom {
+    margin-top: 15px;
+    z-index: 1;
+  } */
+  
+  .left__menu {
+    overflow-y: scroll;
+  }
+  
+  .right {
+    background-color: transparent;
+    height: 100%;
+    padding-top: 100px;
+    box-sizing: border-box;
+  }
+  
+  .left__menu--bottom {
+    height:calc(90vh - 90px);
+  }
+  
+  .left__footer {
+    display: none;
+  }
+  
+  /* BOUTONS CACHÉS SUR LA VERSION MOBILE */
+  
+  .library__new-interview {
+    display: none;
+  }
+  
+  .research__tools__modes {
+    display: none;
+  }
+  
+  }
+
+.write__form__button:checked + label::before, .search__form__button--royalty:checked + label::before {
+  box-shadow: inset 0px 0px 0px 4px #2b363e;
+  background-color: white;
+}
+
+.write__form__button + label::before, .search__form__button--royalty + label::before{
+  background-color: #2b363e;
+  border: solid 1px white;
+}
+
+.write__form__button + label:focus, .search__form__button--royalty + label:focus{
+  margin-top:0;
+  top:0;
+  padding-top:0;
+}

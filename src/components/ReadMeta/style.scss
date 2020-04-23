@@ -1,117 +1,88 @@
-/* Côté menu */
-
 .interview__data, .interview__subdata {
-    font-size: 1.2em;
-    margin: 5px;
-  }
-  
-  .interview__subdata {
-    padding-left: 15px;
-    display: none;
-  }
-  
-  .interview__data span {
-    margin-right: 3px;
-  }
-  
-  .interview__annotation {
-    width: 100%;
-    height: fit-content;
-    background-color: #414a52;
-    z-index: 2;
-    position: sticky;
-    bottom: 20px;
-    padding: 15px;
-    box-sizing: border-box;
-    border: solid 1px white;
-    font-family: 'Source-LightItalic';
-  }
+  font-size: 1.2em;
+  margin: 5px;
+}
 
-  .interview__meta {
-    height: fit-content;
-  }
+.interview__subdata {
+  padding-left: 15px;
+}
 
-  .interview__data--author, .interview__data--interviewed {
-    cursor: pointer;
-  }
-  
-  /* .interview__annotation p {
-    padding-right: 15px;
-  } */
-  
-  .interview__annotation__close, .interview__annotation__close:focus {
-    background-image: url('/src/assets/icons/cross.png');
-    width: 12px;
-    height: 12px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    border: none;
-    border-radius: 0;
-  }
-  
-  .read__tools {
-    position: absolute;
-    width: 20px;
-    height: 80px;
-    top: 30px;
-    right: 20px;
-  }
-  
-  .read__categories {
-    display: none;
-  }
+.interview__data span {
+  margin-right: 3px;
+}
 
-  .tools__save {
-    background-image: url('/src/assets/icons/bookmark.png');
-  }
-  
-  .tools__close {
-    background-image: url('/src/assets/icons/cross.png');
-  }
-  
-  .tools__download {
-    background-image: url('/src/assets/icons/download.png');
-    margin-top: -1px;
-  }
-  
-  .read__tools button {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 15px;
-    border-radius: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    border: none !important;
-  }
+.interview__annotation {
+  width: 100%;
+  height: fit-content;
+  background-color: #414a52;
+  z-index: 2;
+  position: sticky;
+  bottom: 20px;
+  padding: 15px;
+  box-sizing: border-box;
+  border: solid 1px white;
+  font-family: 'Source-LightItalic';
+}
 
-  .read__tools a {
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    margin-bottom: 15px;
-    border-radius: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    border: none !important;
-    padding: 0;
-  }
-  
-  .left__menu--bottom {
-    /* 20+75+15 */
-    height:calc(100% - 110px);
-    z-index: 1;
-  }
-  
-  .left__menu--top--closed {
-    height: fit-content;
-    margin-bottom: 15px;
-    padding: 20px;
-  }
-  
-  .left__menu--top--closed h2 {
-    margin-bottom: 0;
-  }
+/* .interview__annotation p {
+  padding-right: 15px;
+} */
 
+.interview__annotation__close, .interview__annotation__close:focus {
+  background-image: url('../../assets/icons/cross.png');
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 0;
+}
+
+.read__tools {
+  position: absolute;
+  width: 20px;
+  height: 80px;
+  top: 30px;
+  right: 20px;
+}
+
+.tools__save {
+  background-image: url('../../assets/icons/bookmark.png');
+}
+
+.tools__close {
+  background-image: url('../../assets/icons/cross.png');
+}
+
+.tools__download {
+  background-image: url('../../assets/icons/download.png');
+  margin-top: -1px;
+}
+
+.read__tools button {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 15px;
+  border-radius: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none !important;
+}
+
+.left__menu--bottom {
+  /* 20+75+15 */
+  height:calc(100% - 110px);
+}
+
+.left__menu--top--closed {
+  height: fit-content;
+  margin-bottom: 15px;
+  padding: 20px;
+}
+
+.left__menu--top--closed h2 {
+  margin-bottom: 0;
+}

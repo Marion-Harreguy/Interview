@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import "ol/ol.css";
 import { useGeographic } from "ol/proj";
@@ -10,16 +10,17 @@ import { Vector as VectorLayer, Tile as TileLayer } from "ol/layer";
 // import CanvasVectorTileLayerRenderer from 'ol/renderer/canvas/VectorTileLayer';
 import { Stamen, Vector as VectorSource } from "ol/source";
 import { Style, Circle, Fill } from "ol/style";
+import ResultSelected from './ResultSelected';
 
 
 const ResultsMap = ({resultList}) => {
 
+  const [chosenInterview, setChosenInterview] = useState({});
   let map;
   let featuresList = [];
   let places = [];
 
   const createMap = () => {
-    console.log("creating map");
     map = new Map({
       target: 'map',
       view: new View({
@@ -47,24 +48,15 @@ const ResultsMap = ({resultList}) => {
     });
 
     map.on("moveend", function () {
-      var view = map.getView();
-      var center = view.getCenter();
+      const view = map.getView();
+      const center = view.getCenter();
     });
 
     map.on("click", function (event) {
-      var feature = map.getFeaturesAtPixel(event.pixel)[0];
-  if (feature) {
-    var coordinate = feature.getGeometry().getCoordinates();
-    popup.setPosition(coordinate);
-    $(element).popover({
-      placement: 'top',
-      html: true,
-      content: formatCoordinate(coordinate)
-    });
-    $(element).popover('show');
-  } else {
-    $(element).popover('destroy');
-  }
+      const feature = map.getFeaturesAtPixel(event.pixel)[0];
+      if (feature) {
+        setChosenInterview({...resultList.find((interview) => interview.coordinates.x === feature.getGeometry().getCoordinates()[0] && interview.coordinates.y === feature.getGeometry().getCoordinates()[1])});
+      }
     });
 
   }
@@ -77,25 +69,22 @@ const ResultsMap = ({resultList}) => {
     createMap();
   };
 
-  var info = document.getElementById('info');
-
-  const formatCoordinate = (coordinate) => {
-    return (coordinate[0].toFixed(2) + coordinate[1].toFixed(2));
-  }
-
-  useEffect(()=> { 
+  useEffect(() => {
     places = resultList.map((interview) => (
       [interview.coordinates.x, interview.coordinates.y]
     ));
-    // places = [[-110, 45], [-10, 65], [-170, 125], [80, -45]];
     useGeographic();
     generateDots();
-  },[resultList]);
+  }, [resultList]);
 
   return (
-    <div>
-      <div id="map" className="map" style={{height: '90%'}} />
-      <div id='info' className='info'></div>
+    <div style={{ height: '100%' }}>
+      <div id="map" className="map" style={{ height: '70%' }} />
+      {
+            chosenInterview.hasOwnProperty('id') && (
+              <ResultSelected interview={chosenInterview} />
+            )
+        }
     </div>
   );
 };
