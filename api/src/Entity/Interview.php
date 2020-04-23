@@ -426,7 +426,7 @@ class Interview
 
             $question = [
                 "id" => $questionObject->getId(),
-                "content" => $questionObject->getContent(),
+                "question" => $questionObject->getContent(),
             ];
 
 
