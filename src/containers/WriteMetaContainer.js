@@ -1,20 +1,15 @@
 import { connect } from 'react-redux';
 import WriteMeta from '../components/WriteMeta';
-import { deleteInterview, publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure } from '../actions';
+import { publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure, updateUserGet, updateUserPut, writeInterviewDelete, writeInterviewPut, interviewGet } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   interviewMeta: state.writeInterview.meta,
   userCategories: state.userData.dashboard.categories,
-  userName: state.userData.dataUser.firstname+' '+state.userData.dataUser.lastname,
-
-  // TODO : AJAX REQUEST
-  // interview: findInterviewBySlug(ownProps.interviewId),
+  userName: `${state.userData.dataUser.firstname} ${state.userData.dataUser.lastname}`,
+  interviewId: ownProps.interviewId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteInterview: (id) => {
-    dispatch(deleteInterview(id));
-  },
   publishInterview: (id) => {
     dispatch(publishInterview(id));
   },
@@ -41,6 +36,21 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeAuthorStructure: (payload) => {
     dispatch(changeAuthorStructure(payload));
+  },
+  updateUserGet: () => {
+    dispatch(updateUserGet());
+  },
+  updateUserPut: () => {
+    dispatch(updateUserPut());
+  },
+  writeInterviewPut: (id) => {
+    dispatch(writeInterviewPut(id));
+  },
+  writeInterviewDelete: () => {
+    dispatch(writeInterviewDelete());
+  },
+  interviewGet: (idAndReducer) => {
+    dispatch(interviewGet(idAndReducer));
   },
 });
 

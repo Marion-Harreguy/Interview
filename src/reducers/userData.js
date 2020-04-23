@@ -1,5 +1,7 @@
-import { MODIFY_USER_INFO, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES } from '../actions';
-import { UPDATE_USER } from '../actions/socket';
+/* eslint-disable no-case-declarations */
+/* eslint-disable prefer-const */
+import { CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE,
+  NEW_USER_SUCCESS } from '../actions';
 
 export const initialState = {
   isConnected: true,
@@ -9,47 +11,35 @@ export const initialState = {
     lastname: 'Lebon',
     email: 'vrocher@tiscali.fr',
     status: 'Prof',
-    biography: 'Enim ipsum inventore sed libero et velit qui suscipit. Deserunt laudantium quibusdam enim nostrum soluta qui ipsam non. Velit reiciendis aperiam et fuga.',
+    token: 'azertjklmazejk',
   },
-  dataStructure: [
-    {
+  dataStructure: {
       id: 68,
       name: 'Peltier  dMillet SARL',
       city: 'Lejeune',
       sector: 'Le pouvoir de concrétiser vos projets à l\'état pur',
-    },
-    {
-      id: 70,
-      name: 'Peron',
-      city: 'SchmittBourg',
-      sector: 'La liberté d\'avancer sans soucis',
-    },
-  ],
+  },
   dashboard: {
     publishedInterviews: [
       {
         id: 61,
         title: 'Nesciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
         categories: [477],
-        publish: true,
       },
       {
         id: 63,
         title: 'Mirrupti cum ratione animi maxime enim.',
         categories: [487, 488],
-        publish: true,
       },
       {
         id: 69,
         title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
         categories: [477],
-        publish: true,
       },
       {
         id: 80,
         title: 'Corrupti cum ratione animi maxime enim.',
         categories: [487, 488],
-        publish: true,
       },
     ],
     writtingInterviews: [
@@ -57,25 +47,21 @@ export const initialState = {
         id: 61,
         title: 'Nesciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
         categories: [477],
-        publish: true,
       },
       {
         id: 63,
         title: 'Mirrupti cum ratione animi maxime enim.',
         categories: [487, 488],
-        publish: true,
       },
       {
         id: 69,
         title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
         categories: [477],
-        publish: true,
       },
       {
         id: 80,
         title: 'Corrupti cum ratione animi maxime enim.',
         categories: [487, 488],
-        publish: true,
       },
     ],
     savedInterviews: [
@@ -152,14 +138,6 @@ const categoryColors = [
 const userData = (state = initialState, action = {}) => {
 
   switch (action.type) {
-    case MODIFY_USER_INFO:
-      return {
-        ...state,
-        dataUser: {
-          ...state.dataUser,
-          [action.payload.name]: action.payload.value,
-        },
-      };
     case CHANGE_ORDER:
       return {
         ...state,
@@ -180,11 +158,11 @@ const userData = (state = initialState, action = {}) => {
       // Mapping to find the category that has been modified
       // And reverse its "displayed" value
       let newCategories = state.dashboard.categories.map((category) => {
-        if(category.id === action.payload){
+        if (category.id === action.payload) {
           return {
-          ...category,
-          displayed: !category.displayed,
-          }
+            ...category,
+            displayed: !category.displayed,
+          };
         }
         return category;
       });
@@ -197,14 +175,6 @@ const userData = (state = initialState, action = {}) => {
             ...newCategories,
           ],
         },
-      };
-    case UPDATE_USER:
-      // User updating, each time the API user data changes
-      console.log("updating user");
-      return {
-        ...state,
-        isConnected: true,
-        ...action.payload,
       };
     case ADD_CATEGORY_SUBMIT:
       if (state.newCategory.name) {
@@ -247,10 +217,8 @@ const userData = (state = initialState, action = {}) => {
       let alreadySaved = false;
       console.log(state.dashboard.savedInterviews);
       let newSavedInterview = state.dashboard.savedInterviews.map((interview, index) => {
-        if(interview.id !== action.payload.id) return interview;
-        else {
-          alreadySaved = index;
-        }
+        if (interview.id !== action.payload.id) return interview;
+        else alreadySaved = index;
       });
       if (!alreadySaved) {
         newSavedInterview.push({
@@ -260,9 +228,7 @@ const userData = (state = initialState, action = {}) => {
         });
       }
       else {
-        console.log("deleting interview : "+alreadySaved);
         newSavedInterview.splice(alreadySaved, 1);
-        // delete newSavedInterview[alreadySaved];
       }
       return {
         ...state,
@@ -273,41 +239,56 @@ const userData = (state = initialState, action = {}) => {
           ],
         },
       };
-      case ADD_WRITTING_INTERVIEW:
-        return {
-          ...state,
-          dashboard:{
-            ...state.dashboard,
-            writtingInterviews: [
-              ...state.dashboard.writtingInterviews,
-              {
-                id: 69,
-                title: 'TITRE ICI',
-                categories: [],
-                publish: false,
-              }
-            ]
-          }
-        };
+    case ADD_WRITTING_INTERVIEW:
+      return {
+        ...state,
+        dashboard:{
+          ...state.dashboard,
+          writtingInterviews: [
+            ...state.dashboard.writtingInterviews,
+            {
+              id: 69,
+              title: '',
+              categories: [],
+              publish: false,
+            },
+          ],
+        },
+      };
     case CHANGE_INTERVIEW_CATEGORIES:
       let newWrittingInterviews = state.dashboard.writtingInterviews.map((interview) => {
-        if(interview.id === action.payload.interviewId) {
+        if (interview.id === action.payload.interviewId) {
           return {
             ...interview,
             categories: [...action.payload.categories],
-          }
+          };
         }
         return interview;
       });
-    return {
-      ...state,
-      dashboard: {
-        ...state.dashboard,
-        writtingInterviews : [
-          ...newWrittingInterviews,
-        ],
-      },
-    }
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          writtingInterviews: [
+            ...newWrittingInterviews,
+          ],
+        },
+      };
+    case UPDATE_USER_STATE:
+      return {
+        ...state,
+        ...action.payload,
+        isConnected: true,
+      };
+    case NEW_USER_SUCCESS:
+      return {
+        ...state,
+        dataUser: {
+          ...state.dataUser,
+          id: action.payload.id,
+          token: action.payload.token,
+        },
+      };
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import UserLibrary from 'src/components/UserLibrary';
-import { modifyUserInfo, changeOrder, toggleSection, toggleCategory, addCategoryChange, addCategorySubmit, modifyUserInfoAPI, changeFormDisabled, } from '../actions';
+import { changeOrder, toggleSection, toggleCategory, addCategoryChange, addCategorySubmit, updateUserGet, updateUserPut, changeFormDisabled, modifyUserInfo } from '../actions';
 
 const mapStateToProps = (state) => ({
   user: state.userData.dataUser,
@@ -14,8 +14,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   // inputChanged = input that triggered the event
-  modifyUserInfo: (inputChanged) => {
-    dispatch(modifyUserInfo(inputChanged));
+  updateUserPut: () => {
+    dispatch(updateUserPut());
+  },
+  updateUserGet: () => {
+    dispatch(updateUserGet());
   },
   // newOrder = order asked by user
   changeOrder: (newOrder) => {
@@ -39,12 +42,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(addCategorySubmit());
   },
 
-  modifyUserInfoAPI: () => {
-    dispatch(modifyUserInfoAPI());
-  },
-
   changeFormDisabled: () => {
     dispatch(changeFormDisabled());
+  },
+
+  modifyUserInfo: (input) => {
+    dispatch(modifyUserInfo(input));
   },
 });
 

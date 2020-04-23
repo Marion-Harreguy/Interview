@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
   structure: state.newUser.structure.name,
   city: state.newUser.structure.city,
   sector: state.newUser.structure.sector,
-  biography: state.newUser.user.biography,
+  status: state.newUser.user.status,
   password: state.newUser.user.password,
   passwordConfirmation: state.newUser.front.passwordConfirmation,
 });

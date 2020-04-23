@@ -1,7 +1,7 @@
 import { FORGOTTEN_PASSWORD_INPUT_CHANGE } from '../actions';
 
 export const initialState = {
-  email:'',
+  email: '',
 };
 
 const forgottenPassword = (state = initialState, action = {}) => {

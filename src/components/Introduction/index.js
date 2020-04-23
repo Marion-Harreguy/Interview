@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.scss';
+// TODO : Find right path for images
 import PictureA from './../../assets/images/introduction_A.png';
 import PictureB from './../../assets/images/introduction_B.png';
 import PictureC from './../../assets/images/introduction_C.png';

@@ -1,17 +1,31 @@
-import { ADD_NEW_QUESTION, ADD_NEW_ANSWER, UPDATE_QUESTION, UPDATE_ANSWER, UPDATE_CONTEXT, ADD_INTERVIEWED, CHANGE_META, CHANGE_INTERVIEWED, CHANGE_INTERVIEWED_STRUCTURE, CHANGE_AUTHOR, CHANGE_AUTHOR_STRUCTURE } from '../actions';
+/* eslint-disable no-case-declarations */
+import {
+  ADD_NEW_QUESTION,
+  ADD_NEW_ANSWER,
+  UPDATE_QUESTION,
+  UPDATE_ANSWER,
+  UPDATE_CONTEXT,
+  ADD_INTERVIEWED,
+  CHANGE_META,
+  CHANGE_INTERVIEWED,
+  CHANGE_INTERVIEWED_STRUCTURE,
+  CHANGE_AUTHOR,
+  CHANGE_AUTHOR_STRUCTURE,
+  LOAD_WRITE_INTERVIEW,
+} from '../actions';
 
 export const initialState = {
   meta: {
     id: 69,
     title: '',
-    localisation: '',
+    location: '',
     language: '',
-    year: '',
-    city: '',
+    date: '',
     openLicence: false,
     author: {
       name: 'Patrick Lebon',
       status: '',
+      email: '',
       structure: {
         name: '',
         city: '',
@@ -20,7 +34,6 @@ export const initialState = {
     interviewed: [
       {
         name: 'Anonyme',
-        city: '',
         status: '',
         structure: {
           name: '',
@@ -30,8 +43,8 @@ export const initialState = {
       },
     ],
     tags: [],
+    context: '',
   },
-  context: '',
   content: [
   ],
 };
@@ -51,17 +64,17 @@ const readInterview = (state = initialState, action = {}) => {
       };
     case ADD_NEW_ANSWER:
       const newContentAdd = state.content.map((set, index) => {
-        if(index === state.content.length-1){
+        if (index === state.content.length - 1) {
           return {
             ...set,
             answers: [
               ...set.answers,
               {
-                content:'',
-                interviewed:'',
-              }
-            ]
-          }
+                content: '',
+                interviewed: '',
+              },
+            ],
+          };
         }
         return set;
       });
@@ -73,14 +86,14 @@ const readInterview = (state = initialState, action = {}) => {
       };
     case UPDATE_QUESTION:
       const newContentUpdate = state.content.map((set, index) => {
-        if(index === action.payload.indexQuestion){
+        if (index === action.payload.indexQuestion) {
           return {
             ...set,
-            question: action.payload.value
-            }
-          }
+            question: action.payload.value,
+          };
+        };
         return set;
-        });
+      });
       return {
         ...state,
         content: [
@@ -89,14 +102,14 @@ const readInterview = (state = initialState, action = {}) => {
       };
     case UPDATE_ANSWER:
       const newContentUpdateA = state.content.map((set, index) => {
-        if(index === action.payload.indexQuestion){
+        if (index === action.payload.indexQuestion) {
           set.answers[action.payload.indexAnswer] = action.payload.value;
           return {
             ...set,
-          }
+          };
         }
         return set;
-        });
+      });
       return {
         ...state,
         content: [
@@ -106,7 +119,10 @@ const readInterview = (state = initialState, action = {}) => {
     case UPDATE_CONTEXT:
       return {
         ...state,
-        context: action.payload,
+        meta: {
+          ...state.meta,
+          context: action.payload,
+        },
       };
     case ADD_INTERVIEWED:
       return {
@@ -117,13 +133,12 @@ const readInterview = (state = initialState, action = {}) => {
             ...state.meta.interviewed,
             {
               name: '',
-              city: '',
+              email: '',
               status: '',
               structure: {
                 name: '',
                 city: '',
               },
-              email: '',
             },
           ],
         },
@@ -143,15 +158,14 @@ const readInterview = (state = initialState, action = {}) => {
       };
     case CHANGE_INTERVIEWED:
       const newInterviewed = state.meta.interviewed.map((interviewed, index) => {
-        if(index === action.payload.index) {
+        if (index === action.payload.index) {
           return {
             ...interviewed,
             [action.payload.target.name]: action.payload.target.value,
-          }
+          };
         }
         return interviewed;
       });
-      console.log(newInterviewed);
       return {
         ...state,
         meta: {
@@ -161,54 +175,58 @@ const readInterview = (state = initialState, action = {}) => {
           ],
         },
       };
-      case CHANGE_INTERVIEWED_STRUCTURE:
-        const newInterviewed2 = state.meta.interviewed.map((interviewed, index) => {
-          if(index === action.payload.index) {
-            return {
-              ...interviewed,
-              structure: {
-                ...interviewed.structure,
-                [action.payload.target.name]: action.payload.target.value,
-              }
-            }
-          }
-          return interviewed;
-        });
-        console.log(newInterviewed2);
-        return {
-          ...state,
-          meta: {
-            ...state.meta,
-            interviewed: [
-              ...newInterviewed2,
-            ],
+    case CHANGE_INTERVIEWED_STRUCTURE:
+      const newInterviewed2 = state.meta.interviewed.map((interviewed, index) => {
+        if (index === action.payload.index) {
+          return {
+            ...interviewed,
+            structure: {
+              ...interviewed.structure,
+              [action.payload.target.name]: action.payload.target.value,
+            },
+          };
+        }
+        return interviewed;
+      });
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          interviewed: [
+            ...newInterviewed2,
+          ],
+        },
+      };
+    case CHANGE_AUTHOR:
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          author: {
+            ...state.meta.author,
+            [action.payload.name]: [action.payload.value],
           },
-        };
-      case CHANGE_AUTHOR:
-        return {
-          ...state,
-          meta: {
-            ...state.meta,
-            author: {
-              ...state.meta.author,
+        },
+      };
+    case CHANGE_AUTHOR_STRUCTURE:
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          author: {
+            ...state.meta.author,
+            structure: {
+              ...state.meta.author.structure,
               [action.payload.name]: [action.payload.value],
             },
           },
-        };
-        case CHANGE_AUTHOR_STRUCTURE:
-        return {
-          ...state,
-          meta: {
-            ...state.meta,
-            author: {
-              ...state.meta.author,
-              structure: {
-                ...state.meta.author.structure,
-                [action.payload.name]: [action.payload.value],
-              }
-            }
-          }
-        }
+        },
+      };
+    case LOAD_WRITE_INTERVIEW:
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }
