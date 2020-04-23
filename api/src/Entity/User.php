@@ -415,9 +415,8 @@ class User implements UserInterface
             'firstname' => $this->getFirstname(),
             'lastname' => $this->getLastname(),
             'email' => $this->getEmail(),
-            'biograhy' => $this->getBiography(),
+            'biography' => $this->getBiography(),
             'status' => $this->getStatus(),
-            'tokenApi' => $this->getApiToken(),
         ];
 
         return $dataUser;
