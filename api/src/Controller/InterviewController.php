@@ -34,8 +34,17 @@ class InterviewController extends AbstractController
      * 
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(InterviewRepository $interviewRepository, SerializerInterface $serializer)
+    public function browse(Request $request, InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
+        $language = $request->query->get("language");
+        $localisation = $request->query->get("localisation");
+        $tags = $request->query->get("tags");
+        $licence = $request->query->get("licence");
+
+
+
+        dd($language, $localisation, $tags, $licence);
+
         $interviews = $interviewRepository->findAllPublished();
 
         $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
@@ -55,7 +64,7 @@ class InterviewController extends AbstractController
     public function read(Interview $interview, InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
 
-        
+
         //======================================//
         // Gestion de l'affichage des interview //
         //======================================//
@@ -83,7 +92,7 @@ class InterviewController extends AbstractController
                 );
             }
         }
-        
+
         $data = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
 
         return $this->json(
@@ -205,21 +214,25 @@ class InterviewController extends AbstractController
                         --> Créer l'objet Structure et lui assigner l'interviewé
                 */
 
-                if (isset($dataInterviewed["structure"]["id"])) {
-                    $id = $dataInterviewed["structure"]["id"];
+                for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
 
-                    $structure = $structureRepository->find($id);
-                } else {
-                    $structure = new Structure();
-                    $formStructure = $this->createForm(StructureType::class, $structure);
-                    $formStructure->submit($dataInterviewed["structure"]);
-                    if ($formStructure->isSubmitted() && $formStructure->isValid()) {
-                        $structure->addInterviewed($interviewed);
-                        $interviewed->setUpdatedAt(new \DateTime());
+
+                    if (isset($dataInterviewed["structure"][$i]["id"])) {
+                        $id = $dataInterviewed["structure"][$i]["id"];
+
+                        $structure = $structureRepository->find($id);
+                    } else {
+                        $structure = new Structure();
+                        $formStructure = $this->createForm(StructureType::class, $structure);
+                        $formStructure->submit($dataInterviewed["structure"][$i]);
+                        if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+                            $structure->addInterviewed($interviewed);
+                            $interviewed->setUpdatedAt(new \DateTime());
+                        }
                     }
-                }
 
-                $em->persist($structure);
+                    $em->persist($structure);
+                }
             }
 
 
@@ -314,7 +327,7 @@ class InterviewController extends AbstractController
         }
 
 
-       
+
         $em->flush();
 
 
