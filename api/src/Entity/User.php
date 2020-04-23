@@ -315,7 +315,7 @@ class User implements UserInterface
 
         return $this;
     }
- 
+
     public function getCompleteName()
     {
         return $this->getFirstname() . ' ' . $this->getLastname();
@@ -408,20 +408,25 @@ class User implements UserInterface
         // on instancie un tableau de données de la structure
         //$structureList = [];
         // on regroupe les informations utiles 
-        foreach ($this->getStructures() as $structure) {
 
-            $dataStructure = [
-                'id' => $structure->getId(),
-                'name' => $structure->getName(),
-                'city' => $structure->getCity(),
-                'sector' => $structure->getSector()
-            ];
-           
+        if (count($this->getStructures()) === 0) {
+            $dataStructure = [];
+            
+        } else {
+            foreach ($this->getStructures() as $structure) {
+
+                $dataStructure = [
+                    'id' => $structure->getId(),
+                    'name' => $structure->getName(),
+                    'city' => $structure->getCity(),
+                    'sector' => $structure->getSector()
+                ];
+            }
         }
+
 
         // on injecte la liste des structures aux données de l'auteur 
         // $dataStructure[] = $structureList;
-
         return $dataStructure;
     }
     /**

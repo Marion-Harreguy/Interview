@@ -20,30 +20,30 @@ use Symfony\Component\Serializer\SerializerInterface;
 class LoginController extends AbstractController
 {
 
-    /**
-     * @Route("/login", name="login", methods={"POST"})
-     */
-    public function login(Request $request, SerializerInterface $serializer, UserRepository $userRepository )
-    {
-       $data = json_decode($request->getContent(), true);
+    // /**
+    //  * @Route("/login", name="login", methods={"POST"})
+    //  */
+    // public function login(Request $request, SerializerInterface $serializer, UserRepository $userRepository )
+    // {
+    //    $data = json_decode($request->getContent(), true);
        
-        $user = $userRepository->findOneBy(["email" => $data["username"] ]);
-        $data = $serializer->normalize($user, null, ['groups' => ['user']]);
+    //     $user = $userRepository->findOneBy(["email" => $data["username"] ]);
+    //     $data = $serializer->normalize($user, null, ['groups' => ['user']]);
 
-        return $this->json(
-            $data,
-            $status = 200,
-            $headers = ['content-type' => 'application/Json'],
-            $context = []
-        );
+    //     return $this->json(
+    //         $data,
+    //         $status = 200,
+    //         $headers = ['content-type' => 'application/Json'],
+    //         $context = []
+    //     );
     
 
-        // return $this->json([
-        //     'token' => $user->getApiToken(),
-        //     'username' => $user->getUsername(),
-        //     'roles' => $user->getRoles(),
-        // ]);
-    }
+    //     // return $this->json([
+    //     //     'token' => $user->getApiToken(),
+    //     //     'username' => $user->getUsername(),
+    //     //     'roles' => $user->getRoles(),
+    //     // ]);
+    // }
     
     /**
      * @Route("/register", name="register", methods={"POST"})
@@ -60,16 +60,16 @@ class LoginController extends AbstractController
               
             $user->setPassword($passwordEncoder->encodePassword($user, $data["user"]["password"]));
             $user->setRoles(['ROLE_USER']);
-            $user->setApiToken(md5(uniqid(rand(), true)));
+       
 
-        if(!empty($data["structure"])) {
+        if(!empty($data["structure"]["name"])) {
     
+           
             $structure = new Structure();
             $formStructure = $this->createForm(StructureType::class, $structure);
             $formStructure->submit($data["structure"]);
 
            if(($formStructure->isSubmitted() && $formStructure->isValid())) {
-
                 $em->persist($structure);
                 $user->addStructure($structure);
             }
