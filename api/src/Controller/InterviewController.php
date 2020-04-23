@@ -117,7 +117,7 @@ class InterviewController extends AbstractController
 
         $dataInterview["title"] = $data["meta"]["title"];
         $dataInterview["context"] = $data["meta"]["context"];
-        $dataInterview["localisation"] = $data["meta"]["localisation"];
+        $dataInterview["location"] = $data["meta"]["localisation"];
         $dataInterview["language"] = $data["meta"]["language"];
         $dataInterview["openLicence"] = $data["meta"]["openLicence"];
         $dataInterview["isPublished"] = $data["meta"]["isPublished"];
