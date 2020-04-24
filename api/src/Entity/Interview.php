@@ -421,7 +421,7 @@ class Interview
     {
        
 
-        $interview["meta"] = $this->getInterviews();
+        $interview["meta"] = $this->getMeta();
 
         $questionList = [];
         $answerList = [];
