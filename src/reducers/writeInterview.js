@@ -19,7 +19,8 @@ export const initialState = {
   meta: {
     id: 0,
     title: '',
-    localisation: '',
+    context: '',
+    location: '',
     // coordinates: [],
     language: '',
     date: '',
@@ -50,7 +51,6 @@ export const initialState = {
       },
     ],
     tags: [],
-    context: '',
   },
   content: [
   ],
