@@ -59,7 +59,7 @@ const WriteContent = ({
                   <input type="text" className="question__content" value={set.question} placeholder="Question" onBlur={() => writeInterviewPut(interviewId) } onChange={(event) => updateQuestion({ indexQuestion, value: event.target.value })} />
                 </div>
                 {
-                  set.answers.map((answer, indexAnswer) => (
+                  set.answer.map((answer, indexAnswer) => (
                     // Creating all the answer blocs
                     <div className="interview__answer">
                       {/* <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span> */}

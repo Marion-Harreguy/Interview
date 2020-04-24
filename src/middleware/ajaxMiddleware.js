@@ -252,16 +252,18 @@ export default (store) => (next) => (action) => {
         if (field[1]) urlParam += `${field[0]}=${field[1]}&`;
       });
       axios({
-        url: `http://184.73.143.2/search?${urlParam}`,
+        url: `http://184.73.143.2/api/search/?${urlParam.replace(/.$/,"")}`,
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token()}`,
         },
         data: JSON.stringify(newUser),
       })
         .then((response) => {
           console.log(action.type + ": success !");
-          store.dispatch(uploadResults(response.data));
+          // store.dispatch(uploadResults(response.data));
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(action.type + " failed : "+error);

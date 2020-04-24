@@ -8,8 +8,10 @@ const ResultsTimeline = ({ resultList }) => {
   const groupByYear = () => {
     let resultByYear = {};
     resultList.map((interview) => {
-      if (resultByYear[interview.date]) resultByYear[interview.date].push(interview);
-      else resultByYear[interview.date] = [interview];
+      const yearOnly = interview.date.substring(0, 4);
+      console.log(yearOnly);
+      if (resultByYear[interview.yearOnly]) resultByYear[interview.yearOnly].push(interview);
+      else resultByYear[interview.yearOnly] = [interview];
     });
     return Object.entries(resultByYear);
   };
@@ -29,7 +31,7 @@ const ResultsTimeline = ({ resultList }) => {
   };
 
   const calculateLeft = (interviewYear) => {
-    return (interviewYear-1990)/(currentYear()-1990)*100 + "%";
+    return (interviewYear.substring(0, 4)-1990)/(currentYear()-1990)*100 + "%";
   };
 
   return (
