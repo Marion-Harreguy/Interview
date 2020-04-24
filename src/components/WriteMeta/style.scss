@@ -171,3 +171,9 @@
   margin: 15px 0 30px 0;
   margin-left: calc(100% - 153px);
 }
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}

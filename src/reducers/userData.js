@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW } from '../actions';
 
 export const initialState = {
   connection: {
@@ -8,14 +8,14 @@ export const initialState = {
     token: 0,
     isConnected: false,
   },
-  dataUser: {
+  user: {
     id: 0,
     firstname: '',
     lastname: '',
     email: '',
     status: '',
   },
-  dataStructure: {
+  structure: {
     id: 0,
     name: '',
     city: '',
@@ -233,6 +233,28 @@ const userData = (state = initialState, action = {}) => {
         ...state,
         connection: {
           ...action.payload,
+        },
+      };
+    case DELETE_INTERVIEW:
+      const lastPublishedInterview = state.dashboard.publishedInterviews.map((interview) => {
+        if (interview.id === action.payload) return false;
+        return interview;
+      });
+      const lastWrittingInterviews = state.dashboard.writtingInterviews.map((interview) => {
+        if (interview.id === action.payload) return false;
+        return interview;
+      });
+
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          writtingInterviews: {
+            ...lastWrittingInterviews,
+          },
+          publishedInterviews: {
+            ...lastPublishedInterview,
+          },
         },
       };
     case LOG_OUT:

@@ -4,8 +4,8 @@ import UserLibrary from 'src/components/UserLibrary';
 import { changeOrder, toggleSection, toggleCategory, addCategoryChange, addCategorySubmit, updateUserGet, updateUserPut, changeFormDisabled, modifyUserInfo } from '../actions';
 
 const mapStateToProps = (state) => ({
-  user: state.userData.dataUser,
-  structure: state.userData.dataStructure,
+  user: state.userData.user,
+  structure: state.userData.structure,
   dashboard: state.userData.dashboard,
   library: state.userData.library,
   newCategoryName: state.userData.newCategory.name,

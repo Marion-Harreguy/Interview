@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import WriteContent from '../components/WriteContent';
-import { addNewQuestion, addNewAnswer, updateAnswer, updateQuestion, updateContext, writeInterviewPut, interviewGet, writeInterviewCreate, fillAuthor } from '../actions';
+import { deleteQuestion, deleteAnswer, addNewQuestion, addNewAnswer, updateAnswer, updateQuestion, updateContext, writeInterviewPut, interviewGet, writeInterviewCreate, fillAuthor } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   writeInterview: state.writeInterview,
   interviewId: ownProps.interviewId,
-  dataUser: state.userData.dataUser,
-  dataStructure: state.userData.dataStructure,
+  dataUser: state.userData.user,
+  dataStructure: state.userData.structure,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -15,6 +15,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addNewQuestion: () => {
     dispatch(addNewQuestion());
+  },
+  deleteAnswer: (payload) => {
+    dispatch(deleteAnswer(payload));
+  },
+  deleteQuestion: (payload) => {
+    dispatch(deleteQuestion(payload));
   },
   updateAnswer: (payload) => {
     dispatch(updateAnswer(payload));

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import WriteMeta from '../components/WriteMeta';
-import { publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure, updateUserGet, updateUserPut, writeInterviewDelete, writeInterviewPut, interviewGet, writeInterviewCreate } from '../actions';
+import { publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure, updateUserGet, updateUserPut, writeInterviewDelete, writeInterviewPut, interviewGet, writeInterviewCreate, changeCoordinates } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   interviewMeta: state.writeInterview.meta,
   userCategories: state.userData.dashboard.categories,
-  userName: `${state.userData.dataUser.firstname} ${state.userData.dataUser.lastname}`,
+  userName: `${state.userData.user.firstname} ${state.userData.user.lastname}`,
   interviewId: ownProps.interviewId,
 });
 
@@ -46,14 +46,17 @@ const mapDispatchToProps = (dispatch) => ({
   writeInterviewPut: (id) => {
     dispatch(writeInterviewPut(id));
   },
-  writeInterviewDelete: () => {
-    dispatch(writeInterviewDelete());
+  writeInterviewDelete: (id) => {
+    dispatch(writeInterviewDelete(id));
   },
   interviewGet: (idAndReducer) => {
     dispatch(interviewGet(idAndReducer));
   },
   writeInterviewCreate: () => {
     dispatch(writeInterviewCreate());
+  },
+  changeCoordinates: (coordinates) => {
+    dispatch(changeCoordinates(coordinates));
   },
 });
 

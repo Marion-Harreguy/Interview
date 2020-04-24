@@ -7,10 +7,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AppContainer from 'src/containers/AppContainer';
 // Store
 import store from 'src/store';
+import history from './history';
 
 const rootComponent = (
   <Provider store={store}>
-    <Router>
+    <Router history={history}>
       <AppContainer />
     </Router>
   </Provider>

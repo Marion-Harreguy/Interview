@@ -206,24 +206,40 @@
   margin-bottom: 5px;
 }
 
-.right input, .right input:-internal-autofill-selected, .right input:-webkit-autofill, .right input:-webkit-autofill:focus, .right input:-webkit-autofill:hover, .right input:active, .right input:focus {
+.right textarea, .right textarea:-internal-autofill-selected, .right textarea:-webkit-autofill, .right textarea:-webkit-autofill:focus, .right textarea:-webkit-autofill:hover, .right textarea:active, .right textarea:focus {
   background-color: transparent !important;
   -webkit-box-shadow: 0 0 0 0px #2b363e inset!important;
   color: white !important;
+  border: none;
+  padding-bottom: 10px;
+  border-bottom: solid 1px grey;
+  outline: none;
+  resize:none;
 }
 
-.interview__context, .interview__context:-internal-autofill-selected, .interview__context:-webkit-autofill, .interview__context:-webkit-autofill:focus, .interview__context:-webkit-autofill:hover, .interview__context:active, .interview__context:focus{
+.interview__context {
   font-family: 'Source-LightItalic' !important;
 }
 
-.question__content, .question__content:-internal-autofill-selected, .question__content:-webkit-autofill, .question__content:-webkit-autofill:focus, .question__content:-webkit-autofill:hover, .question__content:active, .question__content:focus {
+.question__content {
   font-family: 'Source-SemiBold' !important;
   margin-left: 25px;
   width: calc(100% - 50px);
 }
 
-.answer__content, .answer__content:-internal-autofill-selected, .answer__content:-webkit-autofill, .answer__content:-webkit-autofill:focus, .answer__content:-webkit-autofill:hover, .answer__content:active, .answer__content:focus {
+.answer__content {
   font-family: 'Source-Light' !important;
   margin-left: 25px;
   width: calc(100% - 50px);
+}
+
+.answer__content--delete, .question__content--delete {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  background-color: red;
+  border: none !important;
+  margin-left: -20px;
+  margin-top: 17px;
+  background-image: url("../../assets/icons/cross.png");
 }

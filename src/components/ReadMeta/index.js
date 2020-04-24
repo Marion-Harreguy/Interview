@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.scss';
 import $ from 'jquery';
@@ -70,9 +71,9 @@ const ReadMeta = ({
   return (
     <aside className="left__menu left__menu--bottom left__menu--read">
       <div className="read__tools">
-        <a href="/">
+        <NavLink exact to="/">
           <button className="tools__close" type="button" label="Fermer" />
-        </a>
+        </NavLink>
         <button className="tools__save" type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />
         <button className="tools__download" type="button" onClick={() => downloadInterview()} label="Télécharger le PDF" />
       </div>

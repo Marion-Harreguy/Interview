@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+// import Geocode from "react-geocode";
 import './style.scss';
 
 const WriteMeta = ({
@@ -22,6 +25,7 @@ const WriteMeta = ({
   writeInterviewDelete,
   getInterview,
   writeInterviewCreate,
+  changeCoordinates,
 }) => {
   
   // If user clicks on delete
@@ -70,10 +74,30 @@ const WriteMeta = ({
     console.log("none");
   };
 
+  // Geocode.setApiKey("AIzaSyBtYuJUSNGudqHGhKyUN-ktG6RHCyjODM4");
+  // Geocode.setLanguage("fr");
+
+  const findLocation = (value) => {    
+    axios({
+      url: `http://open.mapquestapi.com/geocoding/v1/address?key=0yrU5DyX2Ek89MaqwXGWCBUNpcPDJEv9&location=${value}`,
+      method: 'get',
+    })
+      .then((response) => {
+        const x = parseInt(response.data.results[0].locations[0].latLng.lat);
+        const y = parseInt(response.data.results[0].locations[0].latLng.lng);
+        changeCoordinates([x, y]);
+        writeInterviewPut(interviewId);
+      },
+      error => {
+        console.error(error);
+      },
+    );
+  };
+
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">
       <div className="write__tools">
-        <a href="/"><button className="tools__close" type="button" type="button" label="Fermer" /></a>
+        <NavLink exact to="/"><button className="tools__close" type="button" type="button" label="Fermer" /></NavLink>
         <button className="tools__publish" type="button" onClick={() => {publishInterview(); updateUserPut();}} label="Publier" />
         <button className="tools__delete" type="button" onClick={openDeleteMenu} label="Supprimer" />
       </div>
@@ -81,17 +105,18 @@ const WriteMeta = ({
       <div className="write__delete-menu">
         <p>Êtes-vous sûr.e de vouloir supprimer cet entretien ?</p>
         <button className="write__delete-menu--no" onClick={closeDeleteMenu} label="Annuler" type="button">Annuler</button>
-        <button className="write__delete-menu--yes" onClick={() =>{closeDeleteMenu(); deleteInterview(interviewId); writeInterviewDelete(interviewId); updateUserPut();}} label="Supprimer" type="button">Supprimer</button>
+        <button className="write__delete-menu--yes" onClick={() =>{closeDeleteMenu(); writeInterviewDelete(interviewId); updateUserPut();}} label="Supprimer" type="button">Supprimer</button>
       </div>
 
       <div className="interview__meta">
         <form className="write__form">
           <input className="write__form__input write__form__input--title" type="text" name="title" placeholder="Titre" value={interviewMeta.title} onBlur={() => createOrPut()} onChange={(event) => changeMeta(event.target)} />
-          <input className="write__form__input" type="text" name="year" placeholder="Année" value={interviewMeta.year} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
-          <input className="write__form__input" type="text" name="localisation" placeholder="Ville" value={interviewMeta.localisation} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
+          <input className="write__form__input" type="date" name="year" placeholder="Année" date="dd-MM-yyyy" value={interviewMeta.year} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
+          <input className="write__form__input" type="text" name="location" placeholder="Lieu de l'entretien" value={interviewMeta.location} onBlur={(event) => findLocation(event.target.value)} onChange={(event) => changeMeta(event.target)} />
           <input className="write__form__input" type="text" name="language" placeholder="Langue(s)" value={interviewMeta.language} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
-          <input className="write__form__input" type="text" name="firstname" placeholder="Prénom de l'auteur" value={interviewMeta.author.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
-          <input className="write__form__input" type="text" name="lastname" placeholder="Nom de l'auteur" value={interviewMeta.author.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
+          {/* <input className="write__form__input" type="text" name="firstname" placeholder="Prénom de l'auteur" value={interviewMeta.author.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
+          <input className="write__form__input" type="text" name="lastname" placeholder="Nom de l'auteur" value={interviewMeta.author.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} /> */}
+          <input className="write__form__input" type="text" name="firstname" placeholder="Auteur" value={`Auteur : ${interviewMeta.author.firstname} ${interviewMeta.author.lastname}`} disabled/>
 
           { // Open author subdata only if the name is changed from default user name to something else
               interviewMeta.author.name !== userName && (
@@ -106,11 +131,11 @@ const WriteMeta = ({
                 const numero = index + 1;
                 return (
                   <div>
-                    <input className="write__form__input" type="text" name="firstname" placeholder={`Prénom de l'enquêté n°${numero}`} value={interviewed.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                    <input className="write__form__input" type="text" name="firstname" placeholder={`Prénom de l'enquêté n°${numero}`} value={interviewed.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                     { // If the interviewed is different from default value "anonyme", subdata is created
                         interviewed.firstname !== 'Anonyme' && (
                           <div>
-                            <input className="write__form__input" type="text" name="lastname" placeholder={`Nom de l'enquêté n°${numero}`} value={interviewed.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                            <input className="write__form__input" type="text" name="lastname" placeholder={`Nom de l'enquêté n°${numero}`} value={interviewed.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="name" placeholder={`Structure (n°${numero})`} value={interviewed.structure.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="city" placeholder={`Ville (n°${numero})`} value={interviewed.structure.city} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="status" placeholder={`Statut (n°${numero})`} value={interviewed.structure.status} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />

@@ -55,7 +55,7 @@ const ResultsMap = ({resultList}) => {
     map.on("click", function (event) {
       const feature = map.getFeaturesAtPixel(event.pixel)[0];
       if (feature) {
-        setChosenInterview({...resultList.find((interview) => interview.coordinates.x === feature.getGeometry().getCoordinates()[0] && interview.coordinates.y === feature.getGeometry().getCoordinates()[1])});
+        setChosenInterview({...resultList.find((interview) => interview.coordinates[0] === feature.getGeometry().getCoordinates()[0] && interview.coordinates[1] === feature.getGeometry().getCoordinates()[1])});
       }
     });
 
@@ -71,7 +71,7 @@ const ResultsMap = ({resultList}) => {
 
   useEffect(() => {
     places = resultList.map((interview) => (
-      [interview.coordinates.x, interview.coordinates.y]
+      [interview.coordinates[0], interview.coordinates[1]]
     ));
     useGeographic();
     generateDots();

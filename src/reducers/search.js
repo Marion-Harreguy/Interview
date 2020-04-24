@@ -19,10 +19,7 @@ export const initialState = {
       id: 13,
       title: 'Bonjour',
       location: 'Paris',
-      coordinates: {
-        x: -262,
-        y: -24,
-      },
+      coordinates: [254, -14],
       language: 'Français',
       date: '2012',
       openLicence: true,
@@ -35,6 +32,8 @@ export const initialState = {
         structure: {
           name: 'grezgrez',
           city: 'grezgregre',
+          id: 'fezfenzf',
+          sector: 'dfghjk',
         },
       },
       interviewed: [
@@ -43,7 +42,7 @@ export const initialState = {
           firstname: 'gfdsgfds',
           lastname: 'gfdgfdgsfd',
           email: 'gfdsgfdsgfd',
-          status: 'gfdgfdgfd',
+          job: 'gfdgfdgfd',
           structure: {
             name: 'gfdsgfdgfds',
             city: 'gfdsgfdgfd',
@@ -60,10 +59,7 @@ export const initialState = {
       id: 143,
       title: 'Bogesrgezrg',
       location: 'Paris',
-      coordinates: {
-        x: 122,
-        y: -234,
-      },
+      coordinates: [122, -234],
       language: 'Français',
       date: '2006',
       openLicence: true,

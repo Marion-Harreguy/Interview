@@ -35,6 +35,8 @@ export const ADD_NEW_ANSWER = 'ADD_NEW_ANSWER';
 export const UPDATE_QUESTION = 'UPDATE_QUESTION';
 export const UPDATE_ANSWER = 'UPDATE_ANSWER';
 export const UPDATE_CONTEXT = 'UPDATE_CONTEXT';
+export const DELETE_ANSWER = 'DELETE_ANSWER';
+export const DELETE_QUESTION = 'DELETE_QUESTION';
 // WRITE - Left Buttons
 export const DELETE_INTERVIEW = 'DELETE_INTERVIEW';
 export const PUBLISH_INTERVIEW = 'PUBLISH_INTERVIEW';
@@ -48,6 +50,7 @@ export const CHANGE_INTERVIEWED_STRUCTURE = 'CHANGE_INTERVIEWED_STRUCTURE';
 export const CHANGE_AUTHOR = 'CHANGE_AUTHOR';
 export const CHANGE_AUTHOR_STRUCTURE = 'CHANGE_AUTHOR_STRUCTURE';
 export const FILL_AUTHOR = 'FILL_AUTHOR';
+export const CHANGE_COORDINATES = 'CHANGE_COORDINATES';
 
 // AJAX REQUESTS
 export const UPDATE_USER_PUT = 'UPDATE_USER_PUT';
@@ -233,6 +236,21 @@ export const changeAuthorStructure = (payload) => ({
 
 export const fillAuthor = (payload) => ({
   type: FILL_AUTHOR,
+  payload,
+});
+
+export const changeCoordinates = (payload) => ({
+  type: CHANGE_COORDINATES,
+  payload,
+});
+
+export const deleteAnswer = (payload) => ({
+  type: DELETE_ANSWER,
+  payload,
+});
+
+export const deleteQuestion = (payload) => ({
+  type: DELETE_QUESTION,
   payload,
 });
 

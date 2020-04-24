@@ -1,5 +1,8 @@
+import React from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { Redirect } from 'react-router-dom';
+import history from '../history';
 
 import {
   NEW_USER_SUBMIT,
@@ -19,10 +22,12 @@ import {
   updateUserState,
   createCategoryDisplay,
   automaticLog,
+  deleteInterview,
   logOut,
   loginSubmit,
   uploadResults,
 } from '../actions';
+import { render } from 'enzyme';
 
 export default (store) => (next) => (action) => {
   // TOKEN will be used for request headers
@@ -43,8 +48,8 @@ export default (store) => (next) => (action) => {
 
   // FOR UPDATE_USER_PUT
   const userInfo = {
-    user: { ...store.getState().userData.dataUser },
-    structure: { ...store.getState().userData.dataStructure },
+    user: { ...store.getState().userData.user },
+    structure: { ...store.getState().userData.structure },
     dashboard: { ...store.getState().userData.dashboard },
   };
 
@@ -217,9 +222,10 @@ export default (store) => (next) => (action) => {
           Authorization: `Bearer ${token()}`,
         },
       })
-        .then((response) => {
+        .then(() => {
           console.log(action.type + ": success !");
-          window.location = `/update/${response.data.meta.id}`;
+          store.dispatch(deleteInterview(action.payload));
+          history.push('/');
         })
         .catch((error) => {
           console.log(action.type + " failed : "+error);
@@ -239,7 +245,7 @@ export default (store) => (next) => (action) => {
         .then((response) => {
           console.log(action.type + ": success !");
           store.dispatch(loadWriteInterview(response.data));
-          window.location = `/update/${response.data.id}`;
+          history.push(`/update/${response.data.id}`);
         })
         .catch((error) => {
           console.log(action.type + " failed : "+error);
@@ -262,7 +268,7 @@ export default (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log(action.type + ": success !");
-          // store.dispatch(uploadResults(response.data));
+          store.dispatch(uploadResults(response.data));
           console.log(response.data);
         })
         .catch((error) => {

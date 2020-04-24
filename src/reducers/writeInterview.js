@@ -13,17 +13,17 @@ import {
   CHANGE_AUTHOR_STRUCTURE,
   LOAD_WRITE_INTERVIEW,
   FILL_AUTHOR,
+  CHANGE_COORDINATES,
+  DELETE_ANSWER,
+  DELETE_QUESTION,
 } from '../actions';
 
 export const initialState = {
   meta: {
     id: 0,
     title: '',
-    localisation: '',
-    coordinates: {
-      x: 122,
-      y: -45,
-    },
+    location: '',
+    coordinates: [0,0],
     context: '',
     language: '',
     date: '',
@@ -127,6 +127,28 @@ const readInterview = (state = initialState, action = {}) => {
         ...state,
         content: [
           ...newContentUpdateA,
+        ],
+      };
+    case DELETE_QUESTION:
+      const deleteContentUpdate = state.content.filter((set, index) => (index !== action.payload.indexQuestion));
+      return {
+        ...state,
+        content: [
+          ...deleteContentUpdate,
+        ],
+      };
+    case DELETE_ANSWER:
+      const deleteContentUpdateA = state.content.map((set, index) => {
+        if (index === action.payload.indexQuestion) {
+          set.answer = set.answer.filter((answer, indexA) => (indexA !== action.payload.indexAnswer));
+          return set;
+        }
+        return set;
+      });
+      return {
+        ...state,
+        content: [
+          ...deleteContentUpdateA,
         ],
       };
     case UPDATE_CONTEXT:
@@ -249,6 +271,16 @@ const readInterview = (state = initialState, action = {}) => {
           author: {
             ...action.payload,
           },
+        },
+      };
+    case CHANGE_COORDINATES:
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          coordinates: [
+            ...action.payload,
+          ],
         },
       };
     default:
