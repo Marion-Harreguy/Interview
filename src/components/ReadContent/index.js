@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
 
 const ReadContent = ({ interview, interviewId, interviewGet }) => {
-
   // Load the interview from API based on the ID put in the URL
   useEffect(() => {
     interviewGet({ interviewId, reducer: 'read' });
-  });
+  }, [interviewId]);
 
   // Get the different parts of the interview
   const interviewContext = interview.meta.context;

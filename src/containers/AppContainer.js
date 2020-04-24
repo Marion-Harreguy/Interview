@@ -1,12 +1,17 @@
 import { connect } from 'react-redux';
 import App from '../components/App';
+import { automaticLog } from '../actions';
 
 const mapStateToProps = (state) => ({
-  isConnected: state.userData.isConnected,
+  isConnected: localStorage.getItem('isConnected'),
   userCategories: state.userData.dashboard.categories,
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = (dispatch) => ({
+  automaticLog: (idToken) => {
+    dispatch(automaticLog(idToken));
+  },
+});
 
 const AppContainer = connect(
   mapStateToProps,

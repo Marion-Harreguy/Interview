@@ -456,6 +456,11 @@ transform: rotate(-135deg);
   background-position: center;
 }
 
+.section__list {
+  overflow: hidden;
+  height: 0;
+}
+
 /* .home__category--add {
   height:15px;
   width:15px;

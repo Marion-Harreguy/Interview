@@ -24,7 +24,7 @@ const UserLibrary = ({
   // Get all user info from API onload
   useEffect(() => {
     updateUserGet();
-  });
+  }, [user.id]);
 
   // Function to determine weather an interview is shown or not
   // Based on its category list, and which categories the user checked
@@ -32,7 +32,8 @@ const UserLibrary = ({
   const toggleInterview = (interviewCategoryList) => {
     let interviewShown = false;
     interviewCategoryList.forEach((interviewCategory) => {
-      if (dashboard.categories.find((dataCategory) => dataCategory.id === interviewCategory).displayed) interviewShown = true;
+      const categoryIndex = dashboard.categories.findIndex((dataCategory) => dataCategory.id === interviewCategory);
+      if (library.categoryDisplay[categoryIndex]) interviewShown = true;
     });
     return interviewShown;
   };
@@ -91,14 +92,14 @@ const UserLibrary = ({
 
     if (sectionIsOpen) {
       // Transition to close the section
-      $(correspondingList).animate({ height: '0px' }, 100, 'swing');
+      $(correspondingList).animate({ height: '0px' }, 500, 'swing');
     }
     else {
       // Transition to close the section
       $(correspondingList).css('height', 'auto');
       const sectionAutoHeight = `${correspondingList.clientHeight}px`;
       $(correspondingList).css('height', 0);
-      $(correspondingList).animate({ height: sectionAutoHeight }, 100, 'swing');
+      $(correspondingList).animate({ height: sectionAutoHeight }, 500, 'swing');
     }
   };
 
@@ -107,7 +108,7 @@ const UserLibrary = ({
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
       <div className="home__content">
         <form className="home__form">
-          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(); changeFormDisabled(event); updateUserPut(); updateUserGet();}} label="Changer mes infos" />
+          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(); changeFormDisabled(event); updateUserPut();}} label="Changer mes infos" />
           <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
         </form>
         <div className="home__library">
@@ -126,14 +127,14 @@ const UserLibrary = ({
               if (sectionTitle === 'categories') {
                 // Creating the categories (one time)
                 return (
-                  <div className="home__categories">
+                  <div key={`sec-${section.id}`} className="home__categories">
                     <h2 className="categories__title">Mes catégories</h2>
                     <div className="categories__list">
                       {
                       // Creating each category
-                      sectionContent.map((category) => (
-                        <div className="home__category" key={category.id}>
-                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={category.displayed} name={`category-${category.id}`} />
+                      sectionContent.map((category, index) => (
+                        <div className="home__category" key={`cat-${category.id}`}>
+                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={library.categoryDisplay[index]} name={`category-${category.id}`} />
                           <label htmlFor={category.id}>{category.name}</label>
                         </div>
                       ))
@@ -141,7 +142,12 @@ const UserLibrary = ({
 
                       <div className="home__category home__category--add">
                         <input className="new-category-name" onChange={(e) => addCategoryChange(e.target.value)} type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category" value={newCategoryName}/>
-                        <button className="category-button category-button--add" onClick={(e) => { addCategorySubmit(e.target); updateUserPut(); updateUserGet(); }} type="button" label="Ajouter une catégorie" />
+                        <button
+                          className="category-button category-button--add" 
+                          onClick={(e) => { 
+                            addCategorySubmit(e.target); 
+                            setTimeout(() => { updateUserPut() },1000);
+                          }} type="button" label="Ajouter une catégorie" />
                       </div>
                     </div>
                   </div>
@@ -163,13 +169,13 @@ const UserLibrary = ({
 
                     { sectionContent.map((interview) => (
                       // Creating each interview
-                      <div className="list__interview" key={interview.id} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
+                      <div className="list__interview" key={`int-${interview.id}`} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
                         <NavLink exact to={`/update/${interview.id}`}>
                           <h4 className="list__interview__title">{interview.title}</h4>
                           <div className="list__interview__categories">
                             {/* Creating each category dot for each article */}
                             { interview.categories.map((category) => (
-                              <span className={`list__category list__category--${category}`} key={category.id} />
+                              <span className={`list__category list__category--${category}`} key={`catt-${category.id}`} />
                             ))}
                           </div>
                         </NavLink>
@@ -230,7 +236,6 @@ UserLibrary.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,
-        displayed: PropTypes.bool.isRequired,
       }).isRequired,
     ).isRequired,
   }).isRequired,

@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 
 import './style.scss';
 
-const Footer = () => (
+const Footer = ({ logOut }) => (
   // TODO : Handle logout
   <footer className="left__footer">
-    <NavLink exact to="/logout" className="footer__legal">Déconnexion</NavLink>
+    <a className="footer__legal" onClick={() => logOut()}>Déconnexion</a>
     <span>&bull;</span>
     <NavLink exact to="/legal-mentions" className="footer__legal-mentions">Mentions légales</NavLink>
   </footer>

@@ -1,3 +1,9 @@
+// APP
+export const AUTOMATIC_LOG = 'AUTOMATIC_LOG';
+
+// FOOTER
+export const LOG_OUT = 'LOG_OUT';
+
 // NEW USER
 export const NEW_USER_INPUT_CHANGE = 'NEW_USER_INPUT_CHANGE';
 export const NEW_USER_SUBMIT = 'NEW_USER_SUBMIT';
@@ -40,6 +46,7 @@ export const CHANGE_INTERVIEWED = 'CHANGE_INTERVIEWED';
 export const CHANGE_INTERVIEWED_STRUCTURE = 'CHANGE_INTERVIEWED_STRUCTURE';
 export const CHANGE_AUTHOR = 'CHANGE_AUTHOR';
 export const CHANGE_AUTHOR_STRUCTURE = 'CHANGE_AUTHOR_STRUCTURE';
+export const FILL_AUTHOR = 'FILL_AUTHOR';
 
 // AJAX REQUESTS
 export const UPDATE_USER_PUT = 'UPDATE_USER_PUT';
@@ -54,6 +61,18 @@ export const NEW_USER_SUCCESS = 'NEW_USER_SUCCESS';
 export const LOAD_READ_INTERVIEW = 'LOAD_READ_INTERVIEW';
 export const LOAD_WRITE_INTERVIEW = 'LOAD_WRITE_INTERVIEW';
 export const UPDATE_USER_STATE = 'UPDATE_USER_STATE';
+export const CREATE_CATEGORY_DISPLAY = 'CREATE_CATEGORY_DISPLAY';
+
+// APP
+export const automaticLog = (payload) => ({
+  type: AUTOMATIC_LOG,
+  payload,
+});
+
+// FOOTER
+export const logOut = () => ({
+  type: LOG_OUT,
+});
 
 // NEW USER
 export const newUserInputChange = (payload) => ({
@@ -200,6 +219,11 @@ export const changeAuthorStructure = (payload) => ({
   payload,
 });
 
+export const fillAuthor = (payload) => ({
+  type: FILL_AUTHOR,
+  payload,
+});
+
 // MIDDLEWARE
 
 export const updateUserPut = () => ({
@@ -249,3 +273,8 @@ export const updateUserState = (payload) => ({
   type: UPDATE_USER_STATE,
   payload,
 });
+
+export const createCategoryDisplay = () => ({
+  type: CREATE_CATEGORY_DISPLAY,
+});
+

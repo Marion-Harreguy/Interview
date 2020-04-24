@@ -11,8 +11,10 @@ const WriteContent = ({
   updateContext,
   interviewId,
   writeInterviewPut,
-  writeInterviewCreate,
   interviewGet,
+  fillAuthor,
+  dataUser,
+  dataStructure,
 }) => {
 
   // If the interview is new, create a new one in API
@@ -22,10 +24,17 @@ const WriteContent = ({
       interviewGet({ interviewId, reducer: 'write' });
     }
     else {
-      writeInterviewCreate();
-      // TODO : redirect in Middleware
+      fillAuthor({
+        name: `${dataUser.firstname} ${dataUser.lastname}`,
+        status: dataUser.status,
+        email: dataUser.email,
+        structure: {
+          name: dataStructure.name,
+          city: dataStructure.city,
+        },
+      });
     }
-  });
+  },[interviewId]);
 
   // TODO : get user (or author) initiales
   // + get interviewed initiales (make select if several ?)
@@ -39,7 +48,7 @@ const WriteContent = ({
       </div>
 
       <div className="interview__content interview__content--write">
-        <input type="text" className="interview__context" value={writeInterview.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => {writeInterviewPut(interviewId); interviewGet(interviewId)}} onChange={(event) => updateContext(event.target.value)} />
+        <input type="text" className="interview__context" value={writeInterview.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateContext(event.target.value)} />
         {
 
           writeInterview.content.map((set, indexQuestion) => (
@@ -47,14 +56,14 @@ const WriteContent = ({
               <div>
                 <div className="interview__question">
                   <span className="interview__initiales interview__initiales--question">{authorInitiales}</span>
-                  <input type="text" className="question__content" value={set.question} placeholder="Question" onBlur={() => { writeInterviewPut(interviewId); interviewGet(interviewId); }} onChange={(event) => updateQuestion({ indexQuestion, value: event.target.value })} />
+                  <input type="text" className="question__content" value={set.question} placeholder="Question" onBlur={() => writeInterviewPut(interviewId) } onChange={(event) => updateQuestion({ indexQuestion, value: event.target.value })} />
                 </div>
                 {
                   set.answers.map((answer, indexAnswer) => (
                     // Creating all the answer blocs
                     <div className="interview__answer">
                       <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span>
-                      <input type="text" className="answer__content" value={answer.content} placeholder="Réponse" onBlur={() => { writeInterviewPut(interviewId); interviewGet(interviewId); }} onChange={(event) => updateAnswer({ indexQuestion, indexAnswer, value: event.target.value })} />
+                      <input type="text" className="answer__content" value={answer.content} placeholder="Réponse" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateAnswer({ indexQuestion, indexAnswer, value: event.target.value })} />
                     </div>
                   ))
                 }

@@ -1,23 +1,22 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE,
-  NEW_USER_SUCCESS } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG } from '../actions';
 
 export const initialState = {
   isConnected: true,
   dataUser: {
-    id: 181,
+    id: 2,
     firstname: 'Patrick',
     lastname: 'Lebon',
     email: 'vrocher@tiscali.fr',
     status: 'Prof',
-    token: 'azertjklmazejk',
+    token: '79a34bb07879a543c3612c6109a4d23a',
   },
   dataStructure: {
-      id: 68,
-      name: 'Peltier  dMillet SARL',
-      city: 'Lejeune',
-      sector: 'Le pouvoir de concrétiser vos projets à l\'état pur',
+    id: 68,
+    name: 'Peltier  dMillet SARL',
+    city: 'Lejeune',
+    sector: 'Le pouvoir de concrétiser vos projets à l\'état pur',
   },
   dashboard: {
     publishedInterviews: [
@@ -81,25 +80,21 @@ export const initialState = {
         id: 477,
         name: 'accusantium',
         color: '#177456',
-        displayed: true,
       },
       {
         id: 482,
         name: 'sapiente',
         color: '#123926',
-        displayed: true,
       },
       {
         id: 487,
         name: 'et',
         color: '#100456',
-        displayed: true,
       },
       {
         id: 488,
         name: 'quas',
         color: '#100006',
-        displayed: true,
       },
     ],
   },
@@ -109,11 +104,12 @@ export const initialState = {
     savedInterviews: false,
     writtingInterviews: false,
     formDisabled: true,
+    categoryDisplay: [],
     // savedResearch: false,
   },
 
   newCategory: {
-    id: 499,
+    id: 0,
     name: '',
     displayed: true,
   },
@@ -157,21 +153,18 @@ const userData = (state = initialState, action = {}) => {
     case TOGGLE_CATEGORY:
       // Mapping to find the category that has been modified
       // And reverse its "displayed" value
-      let newCategories = state.dashboard.categories.map((category) => {
+      let newCategories = state.dashboard.categories.map((category, index) => {
         if (category.id === action.payload) {
-          return {
-            ...category,
-            displayed: !category.displayed,
-          };
+          return !(state.library.categoryDisplay[index]);
         }
-        return category;
+        return state.library.categoryDisplay[index];
       });
 
       return {
         ...state,
-        dashboard: {
-          ...state.dashboard,
-          categories: [
+        library: {
+          ...state.library,
+          categoryDisplay: [
             ...newCategories,
           ],
         },
@@ -194,6 +187,13 @@ const userData = (state = initialState, action = {}) => {
             name: '',
             color: categoryColors[state.dashboard.categories.length],
           },
+          library: {
+            ...state.library,
+            categoryDisplay: [
+              ...state.library.categoryDisplay,
+              true,
+            ],
+          },
         };
       }
       break;
@@ -215,7 +215,6 @@ const userData = (state = initialState, action = {}) => {
       };
     case SAVE_INTERVIEW:
       let alreadySaved = false;
-      console.log(state.dashboard.savedInterviews);
       let newSavedInterview = state.dashboard.savedInterviews.map((interview, index) => {
         if (interview.id !== action.payload.id) return interview;
         else alreadySaved = index;
@@ -242,7 +241,7 @@ const userData = (state = initialState, action = {}) => {
     case ADD_WRITTING_INTERVIEW:
       return {
         ...state,
-        dashboard:{
+        dashboard: {
           ...state.dashboard,
           writtingInterviews: [
             ...state.dashboard.writtingInterviews,
@@ -288,6 +287,32 @@ const userData = (state = initialState, action = {}) => {
           id: action.payload.id,
           token: action.payload.token,
         },
+      };
+    case CREATE_CATEGORY_DISPLAY:
+      const categoryDisplay = state.dashboard.categories.map((category) => {
+        return true;
+      });
+      return {
+        ...state,
+        library: {
+          ...state.library,
+          categoryDisplay: [...categoryDisplay],
+        },
+      };
+    case AUTOMATIC_LOG:
+      return {
+        ...state,
+        isConnected: true,
+        dataUser: {
+          ...state.dataUser,
+          ...action.payload,
+        },
+      };
+    case LOG_OUT:
+      localStorage.clear();
+      return {
+        ...state,
+        isConnected: false,
       };
     default:
       return state;

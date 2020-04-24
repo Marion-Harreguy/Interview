@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
 import $ from 'jquery';
 
@@ -6,8 +7,7 @@ const ReadMeta = ({
   interviewMeta,
   saveInterview,
   userCategories,
-  updateUserGet,
-  updateUserPut
+  updateUserPut,
 }) => {
   // Generate & download a PDF
   const downloadInterview = () => {
@@ -33,7 +33,7 @@ const ReadMeta = ({
   // if user decides to save it in his library
   const categories = [];
 
-  // Add categories to the table 
+  // Add categories to the table
   // or remove them if already there
   const pushCategory = (categoryId) => {
     let toDelete = false;
@@ -74,7 +74,7 @@ const ReadMeta = ({
           <button className="tools__close" type="button" label="Fermer" />
         </a>
         <button className="tools__save" type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />
-        <button className="tools__download" type="button" onClick={downloadInterview()} label="Télécharger le PDF" />
+        <button className="tools__download" type="button" onClick={() => downloadInterview()} label="Télécharger le PDF" />
       </div>
 
       <div className="interview__meta">
@@ -104,7 +104,7 @@ const ReadMeta = ({
           { // Creating each category
           userCategories.map((category) => (
             <div className="home__category" key={category.id}>
-              <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => { pushCategory(category.id); updateUserPut(); updateUserGet(); }} name={`category-${category.id}`} />
+              <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => { pushCategory(category.id); updateUserPut(); }} name={`category-${category.id}`} />
               <label htmlFor={category.id}>{category.name}</label>
             </div>
           ))
