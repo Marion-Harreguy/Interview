@@ -23,6 +23,7 @@ const WriteMeta = ({
   getInterview,
   writeInterviewCreate,
 }) => {
+  
   // If user clicks on delete
   const openDeleteMenu = () => {
     document.querySelector('.write__delete-menu').style.display = 'block';
@@ -89,13 +90,14 @@ const WriteMeta = ({
           <input className="write__form__input" type="text" name="year" placeholder="Année" value={interviewMeta.year} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
           <input className="write__form__input" type="text" name="localisation" placeholder="Ville" value={interviewMeta.localisation} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
           <input className="write__form__input" type="text" name="language" placeholder="Langue(s)" value={interviewMeta.language} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
-          <input className="write__form__input" type="text" name="name" placeholder="Auteur" value={interviewMeta.author.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
+          <input className="write__form__input" type="text" name="firstname" placeholder="Prénom de l'auteur" value={interviewMeta.author.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
+          <input className="write__form__input" type="text" name="lastname" placeholder="Nom de l'auteur" value={interviewMeta.author.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
 
           { // Open author subdata only if the name is changed from default user name to something else
               interviewMeta.author.name !== userName && (
                 <div>
-                  <input className="write__form__input" type="text" name="name" placeholder="Structure (auteur)" value={interviewMeta.author.structure.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} />
-                  <input className="write__form__input" type="text" name="city" placeholder="Ville (auteur)" value={interviewMeta.author.structure.localisation} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} />
+                  {/* <input className="write__form__input" type="text" name="name" placeholder="Structure (auteur)" value={interviewMeta.structure[0].name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} />
+                  <input className="write__form__input" type="text" name="city" placeholder="Ville (auteur)" value={interviewMeta.structure[0].localisation} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} /> */}
                   <input className="write__form__input" type="text" name="status" placeholder="Statut (auteur)" value={interviewMeta.author.status} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
                 </div>
               ),
@@ -104,10 +106,11 @@ const WriteMeta = ({
                 const numero = index + 1;
                 return (
                   <div>
-                    <input className="write__form__input" type="text" name="name" placeholder={`Enquêté n°${numero}`} value={interviewed.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                    <input className="write__form__input" type="text" name="firstname" placeholder={`Prénom de l'enquêté n°${numero}`} value={interviewed.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                     { // If the interviewed is different from default value "anonyme", subdata is created
-                        interviewed.name !== 'Anonyme' && (
+                        interviewed.firstname !== 'Anonyme' && (
                           <div>
+                            <input className="write__form__input" type="text" name="lastname" placeholder={`Nom de l'enquêté n°${numero}`} value={interviewed.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="name" placeholder={`Structure (n°${numero})`} value={interviewed.structure.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="city" placeholder={`Ville (n°${numero})`} value={interviewed.structure.city} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="status" placeholder={`Statut (n°${numero})`} value={interviewed.structure.status} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />

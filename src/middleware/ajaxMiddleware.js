@@ -1,5 +1,5 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode'; 
+import jwtDecode from 'jwt-decode';
 
 import {
   NEW_USER_SUBMIT,
@@ -11,18 +11,22 @@ import {
   WRITE_INTERVIEW_PUT,
   WRITE_INTERVIEW_DELETE,
   WRITE_INTERVIEW_CREATE,
+  SEARCH_SUBMIT,
+  AUTOMATIC_LOG,
+  automaticLogOk,
   loadReadInterview,
   loadWriteInterview,
   updateUserState,
-  newUserSuccess,
   createCategoryDisplay,
   automaticLog,
-  updateUserGet,
+  logOut,
+  loginSubmit,
+  uploadResults,
 } from '../actions';
 
 export default (store) => (next) => (action) => {
   // TOKEN will be used for request headers
-  const token = () => { return store.getState().userData.dataUser.token; };
+  const token = () => { if (localStorage.getItem('userLogs')) return JSON.parse(localStorage.getItem('userLogs')).token; };
 
   // FOR NEW_USER_SUBMIT
   const newUser = {
@@ -32,34 +36,51 @@ export default (store) => (next) => (action) => {
   };
 
   // FOR LOGIN_SUBMIT
-  const userConnect = { 
+  let userConnect = { 
     username: store.getState().login.login,
     password: store.getState().login.password,
   };
 
   // FOR UPDATE_USER_PUT
-  // const userInfo = {
-  //   ...store.getState().userData.dataUser,
-  //   ...store.getState().userData.dataStructure,
-  //   ...store.getState().userData.dashboard,
-  // };
-
   const userInfo = {
-    user: { ...store.getState().userData.dataUser},
-    structure: {...store.getState().userData.dataStructure},
-    // ...store.getState().userData.dashboard,
+    user: { ...store.getState().userData.dataUser },
+    structure: { ...store.getState().userData.dataStructure },
+    dashboard: { ...store.getState().userData.dashboard },
   };
 
-  const userId = store.getState().userData.dataUser.id;
+  const userId = () => { 
+    const id = JSON.parse(localStorage.getItem('userLogs')).id;
+    return id;
+  };
 
   // FOR FORGOTTEN PASSWORD
   const email = { ...store.getState().forgottenPassword.email };
 
   // FOR WRITE_INTERVIEW_PUT
-  const interviewInfo = { ...store.getState().writeArticle };
-
+  const interviewInfo = () => ({ ...store.getState().writeInterview });
+  
   switch (action.type) {
+    case AUTOMATIC_LOG:
+      axios({
+        url: `http://184.73.143.2/api/users/${action.payload.id}`,
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+        .then(() => {
+          // user is connected and his localstorage token works
+          console.log(action.type + ": success !");
+          store.dispatch(automaticLogOk(action.payload));
+        })
+        .catch((error) => {
+          console.log(action.type + " failed : "+error);
+          store.dispatch(logOut());
+        });
+      break;
+
     case NEW_USER_SUBMIT:
+      console.log(newUser);
       axios({
         url: 'http://184.73.143.2/register',
         method: 'post',
@@ -68,22 +89,16 @@ export default (store) => (next) => (action) => {
         },
         data: JSON.stringify(newUser),
       })
-        .then((response) => {
-          // Send new user ID to the state
-          // store.dispatch(newUserSuccess(response.data));
-          const decodedToken = jwtDecode(response.data.token);
-
-          const userLogs = {
-            id: decodedToken.id,
-            token: response.data.token,
+        .then(() => {
+          console.log(action.type + ": success !");
+          userConnect = {
+            username: store.getState().newUser.user.email,
+            password: store.getState().newUser.user.password,
           };
-          localStorage.setItem('userLogs', JSON.stringify(userLogs));
-          localStorage.setItem('isConnected', true);
-
-          store.dispatch(automaticLog(userLogs));
+          store.dispatch(loginSubmit());
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
 
@@ -105,55 +120,55 @@ export default (store) => (next) => (action) => {
         .then((response) => {
           const decodedToken = jwtDecode(response.data.token);
 
-          console.log(response.data.token);
+          console.log(action.type + ": success !");
           const userLogs = {
             id: decodedToken.id,
             token: response.data.token,
+            isConnected: true,
           };
           localStorage.setItem('userLogs', JSON.stringify(userLogs));
-          localStorage.setItem('isConnected', true);
-
           store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
 
     case UPDATE_USER_PUT:
       axios({
-        url: `http://184.73.143.2/api/users/${userId}`,
+        url: `http://184.73.143.2/api/users/${userId()}`,
         method: 'put',
         headers: {
           Authorization: `Bearer ${token()}`,
         },
         data: JSON.stringify(userInfo),
       })
-        .then(() => {
-          setTimeout(() => store.dispatch(updateUserGet()), 500);
+        .then((response) => {
+          console.log(action.type + ": success !");
+          store.dispatch(updateUserState(response.data));
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
 
     case UPDATE_USER_GET:
       axios({
-        url: `http://184.73.143.2/api/users/${userId}`,
+        url: `http://184.73.143.2/api/users/${userId()}`,
         method: 'get',
         headers: {
           Authorization: `Bearer ${token()}`,
         },
       })
         .then((response) => {
-          console.log("Request worked!");
+          console.log(action.type + ": success !");
           store.dispatch(updateUserState(response.data));
           if (store.getState().userData.library.categoryDisplay.length === 0) {
             store.dispatch(createCategoryDisplay());
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
 
@@ -166,28 +181,31 @@ export default (store) => (next) => (action) => {
         },
       })
         .then((response) => {
+          console.log(action.type + ": success !");
           if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
           if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
 
     case WRITE_INTERVIEW_PUT:
+      console.log(interviewInfo());
       axios({
         url: `http://184.73.143.2/api/interviews/${action.payload}`,
         method: 'put',
         headers: {
           Authorization: `Bearer ${token()}`,
         },
-        data: JSON.stringify(interviewInfo),
+        data: JSON.stringify(interviewInfo()),
       })
         .then((response) => {
+          console.log(action.type + ": success !");
           store.dispatch(loadWriteInterview(response.data));
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
 
@@ -200,30 +218,55 @@ export default (store) => (next) => (action) => {
         },
       })
         .then((response) => {
+          console.log(action.type + ": success !");
           window.location = `/update/${response.data.meta.id}`;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
 
     case WRITE_INTERVIEW_CREATE:
+      console.log(interviewInfo());
       axios({
         url: 'http://184.73.143.2/api/interviews/',
         method: 'post',
         headers: {
           Authorization: `Bearer ${token()}`,
         },
+        data: JSON.stringify(interviewInfo()),
       })
         .then((response) => {
+          console.log(action.type + ": success !");
           store.dispatch(loadWriteInterview(response.data));
-          window.location = `/update/${response.data.meta.id}`;
+          window.location = `/update/${response.data.id}`;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(action.type + " failed : "+error);
         });
       break;
-
+    case SEARCH_SUBMIT:
+      const searchParams = Object.entries(store.getState().search.form);
+      let urlParam = ''
+      searchParams.map((field) =>{
+        if (field[1]) urlParam += `${field[0]}=${field[1]}&`;
+      });
+      axios({
+        url: `http://184.73.143.2/search?${urlParam}`,
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(newUser),
+      })
+        .then((response) => {
+          console.log(action.type + ": success !");
+          store.dispatch(uploadResults(response.data));
+        })
+        .catch((error) => {
+          console.log(action.type + " failed : "+error);
+        });
+      break;
     default:
       next(action);
   }

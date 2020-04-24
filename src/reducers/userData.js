@@ -1,101 +1,34 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK } from '../actions';
 
 export const initialState = {
-  isConnected: true,
+  connection: {
+    id: 0,
+    token: 0,
+    isConnected: false,
+  },
   dataUser: {
-    id: 2,
-    firstname: 'Patrick',
-    lastname: 'Lebon',
-    email: 'vrocher@tiscali.fr',
-    status: 'Prof',
-    token: '79a34bb07879a543c3612c6109a4d23a',
+    id: 0,
+    firstname: '',
+    lastname: '',
+    email: '',
+    status: '',
   },
   dataStructure: {
-    id: 68,
-    name: 'Peltier  dMillet SARL',
-    city: 'Lejeune',
-    sector: 'Le pouvoir de concrétiser vos projets à l\'état pur',
+    id: 0,
+    name: '',
+    city: '',
+    sector: '',
   },
   dashboard: {
     publishedInterviews: [
-      {
-        id: 61,
-        title: 'Nesciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 63,
-        title: 'Mirrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
-      {
-        id: 69,
-        title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 80,
-        title: 'Corrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
     ],
     writtingInterviews: [
-      {
-        id: 61,
-        title: 'Nesciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 63,
-        title: 'Mirrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
-      {
-        id: 69,
-        title: 'Ahciunt voluptas et aut. Reiciendis velit voluptas molestiae eum et eos.',
-        categories: [477],
-      },
-      {
-        id: 80,
-        title: 'Corrupti cum ratione animi maxime enim.',
-        categories: [487, 488],
-      },
     ],
     savedInterviews: [
-      {
-        id: 63,
-        title: 'Corrupti cum ratione animi maxime enim.',
-        categories: [477, 488],
-      },
-      {
-        id: 64,
-        title: 'Consequatur accusantium quia porro minus voluptates dignissimos est.',
-        categories: [488],
-      },
     ],
     categories: [
-      {
-        id: 477,
-        name: 'accusantium',
-        color: '#177456',
-      },
-      {
-        id: 482,
-        name: 'sapiente',
-        color: '#123926',
-      },
-      {
-        id: 487,
-        name: 'et',
-        color: '#100456',
-      },
-      {
-        id: 488,
-        name: 'quas',
-        color: '#100006',
-      },
     ],
   },
   library: {
@@ -111,16 +44,15 @@ export const initialState = {
   newCategory: {
     id: 0,
     name: '',
-    displayed: true,
   },
 };
 
 const categoryColors = [
   'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
+  'red',
+  'green',
+  'black',
+  'orange',
   'yellow',
   'yellow',
   'yellow',
@@ -179,13 +111,13 @@ const userData = (state = initialState, action = {}) => {
               ...state.dashboard.categories,
               {
                 ...state.newCategory,
+                color: categoryColors[state.dashboard.categories.length],
               },
             ],
           },
           newCategory: {
             ...state.newCategory,
             name: '',
-            color: categoryColors[state.dashboard.categories.length],
           },
           library: {
             ...state.library,
@@ -277,19 +209,16 @@ const userData = (state = initialState, action = {}) => {
       return {
         ...state,
         ...action.payload,
-        isConnected: true,
       };
     case NEW_USER_SUCCESS:
       return {
-        ...state,
-        dataUser: {
-          ...state.dataUser,
-          id: action.payload.id,
-          token: action.payload.token,
+        ...initialState,
+        connection: {
+          ...action.payload,
         },
       };
     case CREATE_CATEGORY_DISPLAY:
-      const categoryDisplay = state.dashboard.categories.map((category) => {
+      const categoryDisplay = state.dashboard.categories.map(() => {
         return true;
       });
       return {
@@ -299,20 +228,23 @@ const userData = (state = initialState, action = {}) => {
           categoryDisplay: [...categoryDisplay],
         },
       };
-    case AUTOMATIC_LOG:
+    case AUTOMATIC_LOG_OK:
       return {
         ...state,
-        isConnected: true,
-        dataUser: {
-          ...state.dataUser,
+        connection: {
           ...action.payload,
         },
       };
     case LOG_OUT:
+      console.log("loging out");
       localStorage.clear();
       return {
         ...state,
-        isConnected: false,
+        connection: {
+          id: 0,
+          token: 0,
+          isConnected: false,
+        },
       };
     default:
       return state;

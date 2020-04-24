@@ -8,8 +8,6 @@ import UserLibraryRight from '../UserLibraryRight';
 import LegalMentions from '../LegalMentions';
 import ReadMetaContainer from '../../containers/ReadMetaContainer';
 import ReadContentContainer from '../../containers/ReadContentContainer';
-import SearchForm from '../SearchForm';
-import SearchResults from '../SearchResults';
 import WriteContentContainer from '../../containers/WriteContentContainer';
 import WriteMetaContainer from '../../containers/WriteMetaContainer';
 import Introduction from '../Introduction';
@@ -18,20 +16,26 @@ import PageNotFound from '../NotFound';
 import NewUser from '../NewUser';
 import LoginContainer from '../../containers/LoginContainer';
 import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContainer';
+import SearchFormContainer from '../../containers/SearchFormContainer';
+import SearchResultsContainer from '../../containers/SearchResultsContainer';
 
 // Temporary : all style put in one file
 import './style.scss';
 
-const App = ({ isConnected, userCategories, automaticLog }) => {
-
-  console.log(isConnected);
+const App = ({ isConnected, userCategories, automaticLog, updateUserGet }) => {
 
   useEffect(() => {
     const localStorageLog = localStorage.getItem('userLogs');
     if (localStorageLog) {
       automaticLog(JSON.parse(localStorageLog));
+      updateUserGet();
     }
   }, [isConnected]);
+
+  const isThereLocalStorage = () => {
+    if (localStorage.getItem('userLogs')) return true;
+    return false;
+  };
 
   return (
   <div className="app">
@@ -67,20 +71,20 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
             exact
             path="/"
             render={() => {
-              if (isConnected) {
+              if (isThereLocalStorage()) {
                 return <UserLibraryContainer />;
               }
               return <LoginContainer />;
             }}
           />
           <Route path="/register">
-            {isConnected ? <Redirect to="/" /> : <NewUser />}
+            {isThereLocalStorage() ? <Redirect to="/" /> : <NewUser />}
           </Route>
           <Route path="/forgotten">
-            {isConnected ? <Redirect to="/" /> : <ForgottenPasswordContainer />}
+            {isThereLocalStorage() ? <Redirect to="/" /> : <ForgottenPasswordContainer />}
           </Route>
           <Route path="/search">
-            {isConnected ? <Redirect to="/" /> : <SearchForm />}
+            {isThereLocalStorage() ? <SearchFormContainer /> : <Redirect to="/" /> }
           </Route>
           {/* How to do GET search route ? */}
           {/* <Route path="/legal-mention" component={LegalMentions} /> */}
@@ -89,22 +93,23 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
           Toggle ? */}
           <Route
             path="/read/:interviewId"
-            render={() => {
-              console.log(isConnected);
-              if (isConnected) return <ReadMetaContainer />;
+            render={(object) => {
+              const { interviewId } = object.match.params;
+              if (isThereLocalStorage()) return <ReadMetaContainer interviewId={interviewId}/>;
               return <Redirect to="/" />;
             }}
           />
           <Route path="/create" component={WriteMetaContainer} />
           <Route
             path="/update/:interviewId"
-            render={() => {
-              if (isConnected) return <WriteMetaContainer />;
+            render={(object) => {
+              const { interviewId } = object.match.params;
+              if (isThereLocalStorage()) return <WriteMetaContainer interviewId={interviewId} />;
               return <Redirect to="/" />;
             }}
           />
           <Route render={() => {
-            if (isConnected) return <UserLibraryContainer />;
+            if (isThereLocalStorage()) return <UserLibraryContainer />;
             return <LoginContainer />;
           }}
           />
@@ -120,7 +125,7 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
             exact
             path="/"
             render={() => {
-              if (isConnected) {
+              if (isThereLocalStorage()) {
                 return <UserLibraryRight />;
               }
               return <Introduction />;
@@ -130,21 +135,21 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
           <Route
             path="/register"
             render={() => {
-              if (!isConnected) return <Introduction />;
+              if (!isThereLocalStorage()) return <Introduction />;
               return <Redirect to="/" />;
             }}
           />
           <Route
             path="/forgotten"
             render={() => {
-              if (!isConnected) return <Introduction />;
+              if (!isThereLocalStorage()) return <Introduction />;
               return <Redirect to="/" />;
             }}
           />
           <Route
             path="/register"
             render={() => {
-              if (!isConnected) return <Introduction />;
+              if (!isThereLocalStorage()) return <Introduction />;
               return <Redirect to="/" />;
             }}
           />
@@ -152,7 +157,7 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
           <Route
             path="/search"
             render={() => {
-              if (isConnected) return <SearchResults />;
+              if (isThereLocalStorage()) return <SearchResultsContainer />;
               return <Redirect to="/" />;
             }}
           />
@@ -165,7 +170,7 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
             path="/read/:interviewId"
             render={(object) => {
               const { interviewId } = object.match.params;
-              if (isConnected) return <ReadContentContainer interviewId={interviewId} />;
+              if (isThereLocalStorage()) return <ReadContentContainer interviewId={interviewId} />;
               return <Redirect to="/" />;
             }}
           />
@@ -174,7 +179,7 @@ const App = ({ isConnected, userCategories, automaticLog }) => {
             path="/update/:interviewId"
             render={(object) => {
               const { interviewId } = object.match.params;
-              if (isConnected) return <WriteContentContainer interviewId={interviewId} />;
+              if (isThereLocalStorage()) return <WriteContentContainer interviewId={interviewId} />;
               return <Redirect to="/" />;
             }}
           />

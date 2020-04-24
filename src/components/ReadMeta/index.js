@@ -82,14 +82,14 @@ const ReadMeta = ({
         <p className="interview__data interview__data--date">{interviewMeta.year}</p>
         <p className="interview__data interview__data--city">{interviewMeta.city}</p>
         <p className="interview__data interview__data--language">{interviewMeta.language}</p>
-        <p className="interview__data interview__data--author" onClick={() => openSubdata('author')}><span className="span--author">&#8594;</span> {interviewMeta.author.name} (a)</p>
-        <p className="interview__subdata interview__subdata--author interview__subdata--structure">{interviewMeta.author.structure.name} — {interviewMeta.author.structure.city}</p>
+        <p className="interview__data interview__data--author" onClick={() => openSubdata('author')}><span className="span--author">&#8594;</span>{`${interviewMeta.author.firstname} ${interviewMeta.author.lastname} (a)`}</p>
+        {/* <p className="interview__subdata interview__subdata--author interview__subdata--structure">{interviewMeta.structure.name} — {interviewMeta.structure.location}</p> */}
         <p className="interview__subdata interview__subdata--author interview__subdata--status">{interviewMeta.author.status}</p>
 
         { // Creating subdata for each interviewed person
           interviewMeta.interviewed.map((inquired) => (
             <div>
-              <p className="interview__data interview__data--interviewed" onClick={() => openSubdata(`interviewed--${inquired.id}`)}><span className={`span--interviewed--${inquired.id}`}>&#8594;</span> {inquired.name} (e)</p>
+              <p className="interview__data interview__data--interviewed" onClick={() => openSubdata(`interviewed--${inquired.id}`)}><span className={`span--interviewed--${inquired.id}`}>&#8594;</span> {`${inquired.firstname} ${inquired.lastname} (e)`}</p>
               <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.structure.name} — {inquired.structure.city}</p>
               <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.status}</p>
             </div>

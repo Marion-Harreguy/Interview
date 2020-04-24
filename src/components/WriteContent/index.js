@@ -48,7 +48,7 @@ const WriteContent = ({
       </div>
 
       <div className="interview__content interview__content--write">
-        <input type="text" className="interview__context" value={writeInterview.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateContext(event.target.value)} />
+        <input type="text" className="interview__context" value={writeInterview.meta.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateContext(event.target.value)} />
         {
 
           writeInterview.content.map((set, indexQuestion) => (
@@ -62,7 +62,8 @@ const WriteContent = ({
                   set.answers.map((answer, indexAnswer) => (
                     // Creating all the answer blocs
                     <div className="interview__answer">
-                      <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span>
+                      {/* <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span> */}
+                      <span className="interview__initiales interview__initiales--answer">AA</span>
                       <input type="text" className="answer__content" value={answer.content} placeholder="Réponse" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateAnswer({ indexQuestion, indexAnswer, value: event.target.value })} />
                     </div>
                   ))

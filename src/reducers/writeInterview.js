@@ -19,28 +19,34 @@ export const initialState = {
   meta: {
     id: 0,
     title: '',
-    location: '',
+    localisation: '',
+    // coordinates: [],
     language: '',
     date: '',
     openLicence: false,
+    isPublished: false,
     author: {
-      name: 'Patrick Lebon',
+      id: '12',
+      firstname: '',
+      lastname: '',
       status: '',
       email: '',
-      structure: {
+      structure: [{
         name: '',
         city: '',
-      },
+      }],
     },
     interviewed: [
       {
-        name: 'Anonyme',
-        status: '',
-        structure: {
-          name: '',
-          city: '',
-        },
-        email: '',
+        firstname: 'Anonyme',
+        lastname: 'Anonyme',
+        job: 'undefined',
+        email: 'anonyme@inter.view',
+        structure: [{
+          name: 'undefined',
+          city: 'undefined',
+          sector: 'unddefined',
+        }],
       },
     ],
     tags: [],
@@ -72,7 +78,7 @@ const readInterview = (state = initialState, action = {}) => {
               ...set.answers,
               {
                 content: '',
-                interviewed: '',
+                interviewed: 'AA',
               },
             ],
           };
@@ -107,6 +113,7 @@ const readInterview = (state = initialState, action = {}) => {
           set.answers[action.payload.indexAnswer] = action.payload.value;
           return {
             ...set,
+            interviewed: 'AA',
           };
         }
         return set;

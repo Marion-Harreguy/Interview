@@ -1,88 +1,88 @@
 /* LOGIN */
 
 .login__nav {
-    position: absolute;
-    right: 20px;
-    top: 25px;
-    text-align: right;
-  }
-  
-  .login__nav a {
-    display: block;
-    font-size: 0.9em;
-    line-height: 1.3em;
-    width: 100%;
-    opacity: 0.6;
-  }
-  
-  .login__nav a:hover {
-    opacity: 1;
-  }
-  
-  .login__form {
-    margin-top: 25px;
-    font-size: 1.2rem;
-  }
-  
-  .login__form__input:focus, .login__form__input {
-    width: 100%;
-    margin-top: 15px;
-    border-bottom: 0.5px solid grey !important;
-    background-color: transparent !important;
-  }
-  
-  .login__form__button {
-    width: fit-content;
-    padding: 1px 16px 2px 16px;
-    margin-top: 70vh;
-    margin-left: calc(50% - 40px);
-    left: 0;
-    top: 0;
-    position: absolute;
-  }
-  
-  .login__form__button--create {
-    padding: 1px 14px 3px 14px;
-    margin-left: calc(50% - 50px);
-  }
-  
-  .login__form__button--forgotten {
-    margin-left: calc(50% - 48px);
-  }
-  
-  .right__presentation {
-    padding: 15px 30px;
-    font-size: 1.2em;
-    height: 100%;
-    overflow-y: scroll;
-    line-height: 1.5em;
-  }
-  .right__presentation::-webkit-scrollbar {
-    display: block;
-  }
-  
-  .presentation__title {
-    text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-  }
-  
-  .presentation__img {
-    width: 31%;
-    height: auto;
-    display: inline-block;
-    padding:0;
-    margin: 2% 2% 2% 0px;
-    border: solid 1px white;
-    background-color: white;
-    cursor: pointer;
-  }
-  
-  .presentation__img img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .presentation__img:hover > img{
-    opacity:0.9;
-  }
+  position: absolute;
+  right: 20px;
+  top: 25px;
+  text-align: right;
+}
+
+.login__nav a {
+  display: block;
+  font-size: 0.9em;
+  line-height: 1.3em;
+  width: 100%;
+  opacity: 0.6;
+}
+
+.login__nav a:hover {
+  opacity: 1;
+}
+
+.login__form {
+  margin-top: 25px;
+  font-size: 1.2rem;
+}
+
+.login__form__input:focus, .login__form__input {
+  width: 100%;
+  margin-top: 15px;
+  border-bottom: 0.5px solid grey !important;
+  background-color: transparent !important;
+}
+
+.login__form__button {
+  width: fit-content;
+  padding: 1px 16px 2px 16px;
+  margin-top: 70vh;
+  margin-left: calc(50% - 40px);
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+
+.login__form__button--create {
+  padding: 1px 14px 3px 14px;
+  margin-left: calc(50% - 50px);
+}
+
+.login__form__button--forgotten {
+  margin-left: calc(50% - 48px);
+}
+
+.right__presentation {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  height: 100%;
+  overflow-y: scroll;
+  line-height: 1.5em;
+}
+.right__presentation::-webkit-scrollbar {
+  display: block;
+}
+
+.presentation__title {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.presentation__img {
+  width: 31%;
+  height: auto;
+  display: inline-block;
+  padding:0;
+  margin: 2% 2% 2% 0px;
+  border: solid 1px white;
+  background-color: white;
+  cursor: pointer;
+}
+
+.presentation__img img {
+  width: 100%;
+  height: auto;
+}
+
+.presentation__img:hover > img{
+  opacity:0.9;
+}

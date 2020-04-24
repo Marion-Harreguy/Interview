@@ -1,5 +1,6 @@
 // APP
 export const AUTOMATIC_LOG = 'AUTOMATIC_LOG';
+export const AUTOMATIC_LOG_OK = 'AUTOMATIC_LOG_OK';
 
 // FOOTER
 export const LOG_OUT = 'LOG_OUT';
@@ -62,10 +63,21 @@ export const LOAD_READ_INTERVIEW = 'LOAD_READ_INTERVIEW';
 export const LOAD_WRITE_INTERVIEW = 'LOAD_WRITE_INTERVIEW';
 export const UPDATE_USER_STATE = 'UPDATE_USER_STATE';
 export const CREATE_CATEGORY_DISPLAY = 'CREATE_CATEGORY_DISPLAY';
+export const UPLOAD_RESULTS = 'UPLOAD_RESULTS';
+
+// SEARCH
+export const SEARCH_INPUT_CHANGE = 'SEARCH_INPUT_CHANGE';
+export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
+export const CHANGE_MODE = 'CHANGE_MODE';
 
 // APP
 export const automaticLog = (payload) => ({
   type: AUTOMATIC_LOG,
+  payload,
+});
+
+export const automaticLogOk = (payload) => ({
+  type: AUTOMATIC_LOG_OK,
   payload,
 });
 
@@ -239,8 +251,9 @@ export const interviewGet = (payload) => ({
   payload,
 });
 
-export const writeInterviewPut = () => ({
+export const writeInterviewPut = (payload) => ({
   type: WRITE_INTERVIEW_PUT,
+  payload,
 });
 
 export const writeInterviewDelete = (payload) => ({
@@ -278,3 +291,22 @@ export const createCategoryDisplay = () => ({
   type: CREATE_CATEGORY_DISPLAY,
 });
 
+export const uploadResults = (payload) => ({
+  type: UPLOAD_RESULTS,
+  payload,
+});
+
+// SEARCH
+export const searchInputChange = (payload) => ({
+  type: SEARCH_INPUT_CHANGE,
+  payload,
+});
+
+export const searchSubmit = () => ({
+  type: SEARCH_SUBMIT,
+});
+
+export const changeMode = (payload) => ({
+  type: CHANGE_MODE,
+  payload,
+});

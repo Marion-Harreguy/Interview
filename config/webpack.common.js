@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: [
     // SCSS
-    paths.assets + '/styles/index.css',
+    paths.assets + '/styles/index.scss',
     // JS
     paths.src + '/index.js',
   ],
@@ -56,13 +56,14 @@ module.exports = {
         options: {
           outputPath: 'fonts/',
         },
-
-        // // Images
-        // {
-        //   test: /\.(png|jpg|gif)$/,
-        //   loader: 'url-loader'
-        // },
       },
+      // {
+      //   test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+      //   loader: 'url-loader',
+      //   options: {
+      //     limit: 8192,
+      //   },
+      // },
     ],
   },
 };
