@@ -112,9 +112,9 @@ const search = (state = initialState, action = {}) => {
     case UPLOAD_RESULTS:
       return {
         ...state,
-        results: {
+        results: [
           ...action.payload,
-        },
+        ],
       };
     default:
       return state;

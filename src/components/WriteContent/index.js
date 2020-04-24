@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
+import $ from 'jquery';
 
 const WriteContent = ({
   addNewQuestion,
@@ -38,6 +39,11 @@ const WriteContent = ({
     }
   },[interviewId]);
 
+  const fitSize = (target) => {
+    console.log("fitting Size", $(target).height(),target.scrollHeight); 
+    $(target).height(0).height(target.scrollHeight - 12);
+  };
+
   // TODO : get user (or author) initiales
   // + get interviewed initiales (make select if several ?)
   const authorInitiales = 'LP';
@@ -58,7 +64,7 @@ const WriteContent = ({
               <div>
                 <div className="interview__question">
                   <span className="interview__initiales interview__initiales--question">{authorInitiales}</span>
-                  <textarea type="text" className="question__content" value={set.question} placeholder="Question" onBlur={() => writeInterviewPut(interviewId) } onChange={(event) => updateQuestion({ indexQuestion, value: event.target.value })} /><button type="button" label="Supprimer cette question" className="question__content--delete" onClick={() => {deleteQuestion({ indexQuestion }), writeInterviewPut(interviewId)}} />
+                  <textarea type="text" className="question__content" value={set.question} placeholder="Question" onBlur={() => writeInterviewPut(interviewId) } onChange={(event) => { fitSize(event.target) ,updateQuestion({ indexQuestion, value: event.target.value })}} /><button type="button" label="Supprimer cette question" className="question__content--delete" onClick={() => {deleteQuestion({ indexQuestion }), writeInterviewPut(interviewId)}} />
                 </div>
                 {
                   set.answer.map((answer, indexAnswer) => (
@@ -66,7 +72,7 @@ const WriteContent = ({
                     <div className="interview__answer">
                       {/* <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span> */}
                       <span className="interview__initiales interview__initiales--answer">AA</span>
-                      <textarea type="text" className="answer__content" value={answer.content} placeholder="Réponse" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateAnswer({ indexQuestion, indexAnswer, value: event.target.value })} /><button type="button" label="Supprimer cette question" className="answer__content--delete" onClick={() => { deleteAnswer({ indexQuestion, indexAnswer }), writeInterviewPut(interviewId)}} />
+                      <textarea type="text" className="answer__content" value={answer.content} placeholder="Réponse" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => {fitSize(event.target), updateAnswer({ indexQuestion, indexAnswer, value: event.target.value })}} /><button type="button" label="Supprimer cette question" className="answer__content--delete" onClick={() => { deleteAnswer({ indexQuestion, indexAnswer }), writeInterviewPut(interviewId)}} />
                     </div>
                   ))
                 }
