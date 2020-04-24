@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
 import ResultsList from './ResultsList';
@@ -6,6 +6,9 @@ import ResultsMap from './ResultsMap';
 import ResultsTimeline from './ResultsTimeline';
 
 const SearchResults = ({ results, mode, changeMode }) => {
+
+  let resultsConverted = results.map((result) => ({ ...result.meta }));
+
   return (
   <div style={{height: '100%'}}>
     <div className="research__tools">
@@ -30,13 +33,13 @@ const SearchResults = ({ results, mode, changeMode }) => {
       </div>
     </div>
     {
-      mode === 'map' && (<ResultsMap resultList={results} />)
+      mode === 'map' && (<ResultsMap resultList={resultsConverted} />)
     }
     {
-      mode === 'list' && (<ResultsList resultList={results} />)
+      mode === 'list' && (<ResultsList resultList={resultsConverted} />)
     }
     {
-      mode === 'timeline' && (<ResultsTimeline resultList={results} />)
+      mode === 'timeline' && (<ResultsTimeline resultList={resultsConverted} />)
     }
 
   </div>

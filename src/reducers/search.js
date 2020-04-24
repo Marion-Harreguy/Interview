@@ -14,8 +14,8 @@ export const initialState = {
     yearEnd: 2020,
   },
   mode: 'list',
-  results: [
-    {
+  results: [{
+    meta: {
       id: 13,
       title: 'Bonjour',
       location: 'Paris',
@@ -53,8 +53,10 @@ export const initialState = {
       tags: ['yes','yas','verv'],
       context: 'qdsfghjk',
     },
+  },
 
-    {
+  {
+    meta: {
       id: 143,
       title: 'Bogesrgezrg',
       location: 'Paris',
@@ -92,82 +94,7 @@ export const initialState = {
       tags: ['yes','yas','verv'],
       context: 'qdsfghjk',
     },
-    {
-      id: 1443,
-      title: 'Bothrtrehrthtreezrg',
-      location: 'Paris',
-      language: 'Français',
-      coordinates: {
-        x: 82,
-        y: 14,
-      },
-      date: '2006',
-      openLicence: true,
-      author: {
-        id: 124,
-        firstname: 'Laura',
-        lastname: 'Piccolo',
-        status: 'fezegrez',
-        email: 'grezgrezgrezg',
-        structure: {
-          name: 'grezgrez',
-          city: 'grezgregre',
-        },
-      },
-      interviewed: [
-        {
-          id: 46,
-          firstname: 'gfdsgfds',
-          lastname: 'gfdgfdgsfd',
-          email: 'gfdsgfdsgfd',
-          status: 'gfdgfdgfd',
-          structure: {
-            name: 'gfdsgfdgfds',
-            city: 'gfdsgfdgfd',
-          },
-        },
-      ],
-      tags: ['yes','yas','verv'],
-      context: 'qdsfghjk',
-    },
-    {
-      id: 143,
-      title: 'Bogvsdvdsoqvnd',
-      location: 'Paris',
-      coordinates: {
-        x: 322,
-        y: 94,
-      },
-      language: 'Français',
-      date: '1992',
-      openLicence: true,
-      author: {
-        id: 124,
-        firstname: 'Laura',
-        lastname: 'Piccolo',
-        status: 'fezegrez',
-        email: 'grezgrezgrezg',
-        structure: {
-          name: 'grezgrez',
-          city: 'grezgregre',
-        },
-      },
-      interviewed: [
-        {
-          id: 46,
-          firstname: 'gfdsgfds',
-          lastname: 'gfdgfdgsfd',
-          email: 'gfdsgfdsgfd',
-          status: 'gfdgfdgfd',
-          structure: {
-            name: 'gfdsgfdgfds',
-            city: 'gfdsgfdgfd',
-          },
-        },
-      ],
-      tags: ['yes','yas','verv'],
-      context: 'qdsfghjk',
-    },
+  },
   ],
 };
 

@@ -65,7 +65,7 @@ const readInterview = (state = initialState, action = {}) => {
           ...state.content,
           {
             question: '',
-            answers: [],
+            answer: [],
           },
         ],
       };
@@ -74,8 +74,8 @@ const readInterview = (state = initialState, action = {}) => {
         if (index === state.content.length - 1) {
           return {
             ...set,
-            answers: [
-              ...set.answers,
+            answer: [
+              ...set.answer,
               {
                 content: '',
                 interviewed: 'AA',
@@ -110,10 +110,12 @@ const readInterview = (state = initialState, action = {}) => {
     case UPDATE_ANSWER:
       const newContentUpdateA = state.content.map((set, index) => {
         if (index === action.payload.indexQuestion) {
-          set.answers[action.payload.indexAnswer] = action.payload.value;
+          set.answer[action.payload.indexAnswer] = {
+            content: action.payload.value,
+            interviewed: 'AA',
+          };
           return {
             ...set,
-            interviewed: 'AA',
           };
         }
         return set;
