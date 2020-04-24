@@ -106,6 +106,19 @@ class InterviewController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
 
+        $idAuthorized = $data["meta"]["author"]["id"];
+
+        if ($idAuthorized != $this->getUser()->getId()){
+            return $this->json(
+                ["message" => "notAuthorized"],
+                $status = 403,
+                $headers = ['content-type' => 'application/Json'],
+                $context = []
+            );
+        }
+
+       // dd($this->getUser());
+
         $dataInterview = [];
 
         $dataInterview["title"] = $data["meta"]["title"];
