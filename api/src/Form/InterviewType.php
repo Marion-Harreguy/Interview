@@ -24,7 +24,7 @@ class InterviewType extends AbstractType
             ->add('context', null, [
                 'constraints' => [new NotBlank, new NotNull()]
             ])
-            ->add('localisation')
+            ->add('location')
             ->add('language', null, [
                 'constraints' => [new NotBlank, new NotNull()]
             ])

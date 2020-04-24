@@ -92,6 +92,8 @@ class Interview
      */
     private $date;
 
+    
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -327,14 +329,14 @@ class Interview
     {
         $date = $this->getDate();
 
-        if ($date === null){
-           return null;
+        if ($date === null) {
+            return null;
         }
-        
-        
+
+
         return  $date;
     }
-    
+
     /**
      * Get data list of Interviews (Browse)
      * @Groups("browseInterviews")
@@ -353,8 +355,10 @@ class Interview
             "openLicence" => $this->getOpenLicence(),
             "isPublished" => $this->getIsPublished(),
             "date" => $this->theLastestDate(),
+            // "coordinates" => $this->getCoordinates(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
+         
         ];
 
         $author = [];
@@ -419,7 +423,7 @@ class Interview
 
     public function getInterview()
     {
-       
+
 
         $interview["meta"] = $this->getMeta();
 
@@ -448,7 +452,7 @@ class Interview
             $questionList[] = $question;
         }
         $interview["content"] = $questionList;
-        
+
 
         return  $interview;
     }
@@ -464,4 +468,6 @@ class Interview
 
         return $this;
     }
+
+   
 }
