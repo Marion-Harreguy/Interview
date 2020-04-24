@@ -24,6 +24,7 @@ export const initialState = {
       x: 122,
       y: -45,
     },
+    context: '',
     language: '',
     date: '',
     openLicence: false,
@@ -53,7 +54,6 @@ export const initialState = {
       },
     ],
     tags: [],
-    context: '',
   },
   content: [
   ],

@@ -123,12 +123,15 @@ const ReadMeta = ({
 // TODO : Proptypes Validation
 // interviewMeta, saveInterview, userCategories, updateUserGet,updateUserPut
 ReadMeta.propTypes = {
+  updateUserGet: PropTypes.func.isRequired,
   updateUserPut: PropTypes.func.isRequired,
   saveInterview: PropTypes.func.isRequired,
   interviewMeta: PropTypes.shape({
 
   }).isRequired,
-  userCategories: PropTypes.array.isRequired,
+  userCategories: PropTypes.shape({
+
+  }).isRequired,
 };
 
 export default ReadMeta;
