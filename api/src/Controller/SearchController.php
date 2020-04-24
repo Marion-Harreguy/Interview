@@ -46,11 +46,14 @@ class SearchController extends AbstractController
 
         
 
-        if ($city) {
-            $interviews = $interviewRepository->findBy(["localisation" => $city]);
+        if ($city && $city != null) {
+            $interviews = $interviewRepository->findBy(["location" => $city]);
         } else {
             $interviews = $interviewRepository->findAllPublished();
         }
+
+        
+
 
         $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
 
