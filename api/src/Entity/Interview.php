@@ -88,7 +88,7 @@ class Interview
     private $favorite;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $date;
 
@@ -332,14 +332,14 @@ class Interview
         }
         
         
-        return  date_format($date, "d-m-Y");
+        return  $date;
     }
     
     /**
      * Get data list of Interviews (Browse)
      * @Groups("browseInterviews")
      */
-    public function getInterviews()
+    public function getMeta()
     {
         $interviews = [];
 
@@ -453,12 +453,12 @@ class Interview
         return  $interview;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate($date)
     {
         $this->date = $date;
 

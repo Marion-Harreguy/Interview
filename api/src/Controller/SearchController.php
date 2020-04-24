@@ -52,7 +52,7 @@ class SearchController extends AbstractController
             $interviews = $interviewRepository->findAllPublished();
         }
 
-        
+
 
 
         $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
