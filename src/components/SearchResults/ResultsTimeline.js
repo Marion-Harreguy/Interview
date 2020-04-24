@@ -8,10 +8,10 @@ const ResultsTimeline = ({ resultList }) => {
   const groupByYear = () => {
     let resultByYear = {};
     resultList.map((interview) => {
-      const yearOnly = interview.date.substring(0, 4);
+      const yearOnly = Number(interview.date.substring(0, 4));
       console.log(yearOnly);
-      if (resultByYear[interview.yearOnly]) resultByYear[interview.yearOnly].push(interview);
-      else resultByYear[interview.yearOnly] = [interview];
+      if (resultByYear[yearOnly]) resultByYear[yearOnly].push(interview);
+      else resultByYear[yearOnly] = [interview];
     });
     return Object.entries(resultByYear);
   };
@@ -31,7 +31,7 @@ const ResultsTimeline = ({ resultList }) => {
   };
 
   const calculateLeft = (interviewYear) => {
-    return (interviewYear.substring(0, 4)-1990)/(currentYear()-1990)*100 + "%";
+    return (Number(interviewYear.substring(0, 4))-1990)/(currentYear()-1990)*100 + "%";
   };
 
   return (
@@ -53,7 +53,7 @@ const ResultsTimeline = ({ resultList }) => {
           const yearleft = calculateLeft(year[0]);
           return (
             <div className="result-timeline__map__group" style={{ left: yearleft }}>
-              <div className="map__group__date">{year[0]}</div>
+              <div className="map__group__date">{year[0].substring(0,4)}</div>
               <div className="map__group__cursor" />
               <div className="map__group__dot-list">
                 {

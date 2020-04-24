@@ -20,7 +20,10 @@ export const initialState = {
     id: 0,
     title: '',
     localisation: '',
-    // coordinates: [],
+    coordinates: {
+      x: 122,
+      y: -45,
+    },
     language: '',
     date: '',
     openLicence: false,
