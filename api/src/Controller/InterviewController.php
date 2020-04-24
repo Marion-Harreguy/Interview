@@ -224,7 +224,7 @@ class InterviewController extends AbstractController
                     } else {
                         $structure = new Structure();
                         $formStructure = $this->createForm(StructureType::class, $structure);
-                        $formStructure->submit($dataInterviewed["structure"][$i]);
+                        $formStructure->submit($dataInterviewed["structure"]);
                         if ($formStructure->isSubmitted() && $formStructure->isValid()) {
                             $structure->addInterviewed($interviewed);
                             $interviewed->setUpdatedAt(new \DateTime());
