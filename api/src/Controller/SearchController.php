@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\InterviewRepository;
+use App\Repository\TagRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -31,30 +32,93 @@ class SearchController extends AbstractController
      * 
      * 
      */
-    public function index(Request $request, InterviewRepository $interviewRepository, SerializerInterface $serializer)
+    public function index(Request $request, InterviewRepository $interviewRepository, SerializerInterface $serializer, TagRepository $tagRepository)
     {
-        $title = $request->query->get("title");
-        $date = $request->query->get("date");
-        $city = $request->query->get("city");
-        $language = $request->query->get("language");
+
+       
+
         $name = $request->query->get("name");
         $interviewed = $request->query->get("interviewed");
         $tags = $request->query->get("tags");
         $openSource = $request->query->get("openSource");
-        $yearBegin = $request->query->get("yearBegin");
-        $yearEnd = $request->query->get("yearEnd");
+      
 
-        
 
-        if ($city && $city != null) {
-            $interviews = $interviewRepository->findBy(["location" => $city]);
+        if ($request->query->get("title")) {
+            $title = $request->query->get("title");
+            //$interviews = $interviewRepository->findBy(["title" => $title]);
         } else {
-            $interviews = $interviewRepository->findAllPublished();
+            $title = '';
         }
 
 
 
+        if ($request->query->get("date")) {
+            $date = $request->query->get("date");   //1990 => Casse tout 
+            //{1990}-01-01
+        } else {
+            $date = '';
+        }
 
+
+        if ($request->query->get("city") && $request->query->get("city") != null) {
+            $city = $request->query->get("city"); // test : france => 7 resultats
+            //$interviews = $interviewRepository->findBy(["location" => $city]);
+        } else {
+            $city = '';
+        }
+
+
+
+        if ($request->query->get("language") && $request->query->get("language") != null) {
+            $language = $request->query->get("language"); // test : francais => 10 resultat
+            //$interviews = $interviewRepository->findBy(["language" => $language]);
+        } else {
+            $language = '';
+        }
+
+        // if ($tags && $tags != null) {
+
+        //     $tag = $tagRepository->findOneBy(["name" => $tags]);
+
+        //   $critere["tags"] = $tag->getId();
+        // }
+        // if ($openSource && $openSource != null){
+        //     $critere["openLicence"] = boolval($openSource);
+        // }
+
+      
+       
+       
+        //dd($title, $date, $city, $language);
+
+        // aucun param en get => 19 rel
+        // unqiue param france => 2rel
+        // unqiue param anglais => 6 rel
+        // param lyon /anglais => 2rel 
+        // pram titleprecis lyon/anglais => 1 rel
+
+            $interviews = $interviewRepository->findWithCrit($title, $date, $city, $language);
+            
+            // $date -> year 
+
+      
+        
+//dd($interviews, $title, $date, $city, $language);
+
+
+
+
+
+        //array $criteria, array $orderBy = null, $limit = null, $offset = null)
+        // if ($city && $city != null) {
+        //     $interviews = $interviewRepository->findBy(["location" => $city, "title" => ""], ["date" => "DESC"]);
+        //  }else if ($title && $title != null) {
+        //      $interviews = $interviewRepository->findBy(["title" => $title], ["date" => "DESC"]);
+        //  } else {
+
+        //     
+        //  }
         $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
 
         return $this->json(
