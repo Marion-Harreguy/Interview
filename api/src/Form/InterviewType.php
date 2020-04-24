@@ -30,7 +30,7 @@ class InterviewType extends AbstractType
             ])
             ->add('openLicence')
             ->add('isPublished')
-        //     ->add('date')
+        //    ->add('date')
         //     ->add('tags')
         //     ->add('author', EntityType::class, [
         //    'class' => User::class,

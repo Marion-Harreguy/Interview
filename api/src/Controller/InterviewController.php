@@ -114,18 +114,32 @@ class InterviewController extends AbstractController
         $dataInterview["language"] = $data["meta"]["language"];
         $dataInterview["openLicence"] = $data["meta"]["openLicence"];
         $dataInterview["isPublished"] = $data["meta"]["isPublished"];
-
+        $dataInterview["date"] = $data["meta"]["date"];
+        //$dataInterview["coordinates"] = $data["meta"]["coordinates"];
 
         $tags = $data["meta"]["tags"];
-
 
         $interviewed =  $data["meta"]["interviewed"];
         // on valide les données ainsi reçut
         $form = $this->createForm(InterviewEditType::class, $interview);
-        $form->submit($dataInterview);
-
- 
+        $form->submit($dataInterview); 
+        
+     
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $coordinates = [];
+            for ($i=0; $i < count($data["meta"]["coordinates"]) ; $i++) { 
+
+                $coordinates[] = intval($data["meta"]["coordinates"][$i]);
+            }
+
+            if(count($coordinates) == 2){
+                $interview->setCoordinates($coordinates);
+            }else {
+                $interview->setCoordinates([0,0]);
+            }
+
+
 
             //=============================//
             //      Gestion des tags       //
@@ -136,9 +150,6 @@ class InterviewController extends AbstractController
                     --> Si on le retrouve : on lui ajoute l'interview
                     --> Sinon on le créer et on lui ajoute l'interview
             */
-
-
-
             for ($i = 0; $i < count($tags); $i++) {
 
                 $tagName = $tags[$i];

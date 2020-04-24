@@ -92,6 +92,11 @@ class Interview
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $coordinates = [];
+
     
 
     public function __construct()
@@ -355,7 +360,7 @@ class Interview
             "openLicence" => $this->getOpenLicence(),
             "isPublished" => $this->getIsPublished(),
             "date" => $this->theLastestDate(),
-            // "coordinates" => $this->getCoordinates(),
+            "coordinates" => $this->getCoordinates(),
             "interviewed" => $this->getInterviewed(),
             "tags" => $this->getTags(),
          
@@ -465,6 +470,18 @@ class Interview
     public function setDate($date)
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getCoordinates(): ?array
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(?array $coordinates): self
+    {
+        $this->coordinates = $coordinates;
 
         return $this;
     }

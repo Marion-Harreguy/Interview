@@ -19,10 +19,11 @@ class InterviewEditType extends AbstractType
             ->add('title')
             ->add('context')
             ->add('location')
-            ->add('date')
             ->add('language')
             ->add('openLicence')
             ->add('isPublished')
+            ->add('date')
+            //->add('coordinates')
             ;
     }
 
