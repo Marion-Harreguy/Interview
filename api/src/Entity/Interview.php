@@ -34,7 +34,7 @@ class Interview
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $localisation;
+    private $location;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
@@ -130,14 +130,14 @@ class Interview
         return $this;
     }
 
-    public function getLocalisation(): ?string
+    public function getlocation(): ?string
     {
-        return $this->localisation;
+        return $this->location;
     }
 
-    public function setLocalisation(?string $localisation): self
+    public function setlocation(?string $location): self
     {
-        $this->localisation = $localisation;
+        $this->location = $location;
 
         return $this;
     }
@@ -348,7 +348,7 @@ class Interview
             "id" => $this->getId(),
             "title"  => $this->getTitle(),
             "context" => $this->getContext(),
-            "location" => $this->getLocalisation(),
+            "location" => $this->getlocation(),
             "language" => $this->getLanguage(),
             "openLicence" => $this->getOpenLicence(),
             "isPublished" => $this->getIsPublished(),
@@ -387,7 +387,7 @@ class Interview
                 $structure = [
                     "id" => $structure->getId(),
                     "name" => $structure->getName(),
-                    "location" => $structure->getCity(),
+                    "city" => $structure->getCity(),
                     "sector" => $structure->getSector(),
                 ];
                 $dataInterviewed["structure"] = $structure;

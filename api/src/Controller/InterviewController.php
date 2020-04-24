@@ -131,7 +131,7 @@ class InterviewController extends AbstractController
         $form = $this->createForm(InterviewEditType::class, $interview);
         $form->submit($dataInterview);
 
-
+ 
         if ($form->isSubmitted() && $form->isValid()) {
 
             //=============================//
@@ -267,6 +267,7 @@ class InterviewController extends AbstractController
                     $question = new Question();
                     $question->setContent($questionReponse["question"]);
 
+                    if(isset($questionReponse["answer"])){
                     for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
                         if (isset($questionReponse["answer"][$i]["id"])) {
                             $answerId = $questionReponse["answer"][$i]["id"];
@@ -286,13 +287,16 @@ class InterviewController extends AbstractController
                             $answer->setUpdatedAt(new \Datetime);
                         }
                     }
+                    $em->persist($answer);
+                }
 
                     $question->setInterview($interview);
                 } else {
 
                     $question = $questionRepository->find($questionId);
                     $question->setContent($questionReponse["question"]);
-
+                    if(isset($questionReponse["answer"])){
+                     
                     for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
                         if (isset($questionReponse["answer"][$i]["id"])) {
                             $answerId = $questionReponse["answer"][$i]["id"];
@@ -314,10 +318,12 @@ class InterviewController extends AbstractController
                             $answer->setUpdatedAt(new \Datetime);
                         }
                     }
+                    $em->persist($answer);
+                }
                     $question->setInterview($interview);
                 }
 
-                $em->persist($answer);
+               
                 $em->persist($question);
             }
 

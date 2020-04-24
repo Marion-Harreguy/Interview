@@ -18,7 +18,7 @@ class InterviewEditType extends AbstractType
      
             ->add('title')
             ->add('context')
-            ->add('localisation')
+            ->add('location')
             ->add('date')
             ->add('language')
             ->add('openLicence')
