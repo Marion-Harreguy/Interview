@@ -330,6 +330,17 @@ class Interview
         return $this;
     }
 
+
+    public function getYear()
+    {
+        //2020
+        $dateString = explode("-", $this->getDate());
+               
+        $year = $dateString[0];
+     
+       return $year;
+    }
+
     public function theLastestDate()
     {
         $date = $this->getDate();
