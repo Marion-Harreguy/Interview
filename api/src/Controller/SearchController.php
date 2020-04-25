@@ -79,6 +79,10 @@ class SearchController extends AbstractController
         }
 
 
+
+        $yearBegin = $request->query->get("yearBegin");
+        $yearEnd = $request->query->get("yearEnd");
+
         // if ($tags && $tags != null) {
 
         //     $tag = $tagRepository->findOneBy(["name" => $tags]);
@@ -109,7 +113,7 @@ class SearchController extends AbstractController
             OR $openSource
         ){
             //dd('coucou');
-            $interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource);
+            $interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource, $yearBegin, $yearEnd);
             
         }else {
             $interviewResult = $interviewRepository->findAllPublished();

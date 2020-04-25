@@ -34,7 +34,7 @@ class InterviewRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findWithCrit($title, $city, $language, $openLicence)
+    public function findWithCrit($title, $city, $language, $openLicence, $yearBegin, $yearEnd)
     {
         if($title === ''){
             $titleSql = "i.title != :title";
@@ -66,12 +66,15 @@ class InterviewRepository extends ServiceEntityRepository
             ->andWhere( $languageSql)
             ->andWhere( $titleSql )
            // ->andWhere( $dateSql )
+            ->andWhere( 'i.date BETWEEN :begin AND :end')
             ->andWhere( 'i.openLicence = :openLicence' )
 
             ->setParameter(':location', $city)
             ->setParameter(':language', $language)
             ->setParameter(':title', '%'.$title.'%')
             //->setParameter(':date', '%'.$date.'%')
+            ->setParameter('begin', $yearBegin.'%')
+            ->setParameter('end', $yearEnd.'%')
             ->setParameter('openLicence', $openLicence)
 
             ->getQuery()
