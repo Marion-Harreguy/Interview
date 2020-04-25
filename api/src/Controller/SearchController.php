@@ -73,13 +73,9 @@ class SearchController extends AbstractController
         // on vérifie les donnée du parametre
         // on les stocke 
         if ($request->query->get("openSource")) {
-            if ($request->query->get("openSource") === "true"){
-                $openSource = true;
-            }else {
-                $openSource = false;
-            }
+               $openSource = false;
         }else {
-            $openSource = '';
+            $openSource = true;
         }
 
 
@@ -105,8 +101,19 @@ class SearchController extends AbstractController
         // pram titleprecis lyon/anglais => 1 rel
         // param date 2018 => 1 rel 
         // param date 2010 / francais /lyon => 1 rel
+        if(
+            $title 
+            XOR $date 
+            XOR $city 
+            XOR $language 
+            XOR $openSource
+        ){
 
-        $interviews = $interviewRepository->findWithCrit($title, $date, $city, $language, $openSource);
+            $interviews = $interviewRepository->findWithCrit($title, $date, $city, $language, $openSource);
+        }else {
+            $interviews = $interviewRepository->findAllPublished();
+        }
+
         
         
 

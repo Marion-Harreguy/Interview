@@ -34,7 +34,7 @@ class InterviewRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findWithCrit($title, $date, $city, $language, $openLicence)
+    public function findWithCrit($title, $date, $city, $language, $openLicence = null)
     {
         if($title === ''){
             $titleSql = "i.title != :title";
@@ -57,7 +57,7 @@ class InterviewRepository extends ServiceEntityRepository
             $languageSql = "i.language = :language";
         }
         if($openLicence === ''){
-            $openLicenceSql = "i.openLicence = :openLicence";
+            $openLicenceSql = "i.openLicence != :openLicence";
         }else {
             $openLicenceSql = "i.openLicence = :openLicence";
         }
