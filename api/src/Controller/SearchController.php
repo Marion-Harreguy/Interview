@@ -51,11 +51,11 @@ class SearchController extends AbstractController
         }
         // on vérifie les donnée du parametre
         // on les stocke 
-        if ($request->query->get("date")) {
+        /*if ($request->query->get("date")) {
             $date = $request->query->get("date");  
         } else {
             $date = '';
-        }
+        }*/
         // on vérifie les donnée du parametre
         // on les stocke 
         if ($request->query->get("city")) {
@@ -103,13 +103,13 @@ class SearchController extends AbstractController
         // param date 2010 / francais /lyon => 1 rel
         if(
             $title 
-            OR $date 
+            //OR $date 
             OR $city 
             OR $language 
             OR $openSource
         ){
             //dd('coucou');
-            $interviewResult = $interviewRepository->findWithCrit($title, $date, $city, $language, $openSource);
+            $interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource);
             
         }else {
             $interviewResult = $interviewRepository->findAllPublished();
