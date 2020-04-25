@@ -123,12 +123,19 @@ class CategoryController extends AbstractController
      * 
      * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id":"\d+"})
      */
-    public function delete(Category $category)
+    public function delete(Category $category, EntityManagerInterface $em, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($category);
-        $em->flush();
-        return $this->json(['Category deleted'], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
-    
+        $userId = intval($request->attributes->get('users_id'));
+        $id = $this->getUser()->getId();
+
+        if ($id === $userId) {
+            $em->remove($category);
+            $em->flush();
+
+            return $this->json(['Category deleted'], $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
+    }
+
+    return $this->json(['Acess denied'], $status = 403, $headers = ['content-type' => 'application/Json'], $context = []);
+
     }
 }
