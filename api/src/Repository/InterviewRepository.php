@@ -73,10 +73,12 @@ class InterviewRepository extends ServiceEntityRepository
             ->setParameter(':language', $language)
             ->setParameter(':title', '%'.$title.'%')
             //->setParameter(':date', '%'.$date.'%')
-            ->setParameter('begin', $yearBegin.'%')
-            ->setParameter('end', $yearEnd.'%')
+            ->setParameter('begin', $yearBegin)
+            ->setParameter('end', $yearEnd)
             ->setParameter('openLicence', $openLicence)
 
+
+            ->orderBy('i.date', 'DESC')
             ->getQuery()
             ->getResult()
             ;
