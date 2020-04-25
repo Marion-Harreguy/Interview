@@ -38,12 +38,12 @@ class InterviewRepository extends ServiceEntityRepository
         if($title === ''){
             $titleSql = "i.title != :title";
         }else {
-            $titleSql = "i.title LIKE :title";
+            $titleSql = "i.title LIKE '%':title";
         }
         if($date === ''){
-            $dateSql = "i.title != :title";
+            $dateSql = "i.date != :date";
         }else {
-            $dateSql = "i.title LIKE :title";
+            $dateSql = "i.date LIKE :date";
         }
         if($city === ''){
             $citySql = "i.location != :location";
@@ -66,11 +66,12 @@ class InterviewRepository extends ServiceEntityRepository
             ->andWhere($citySql)
             ->andWhere($languageSql)
             ->andWhere( $titleSql )
-        
+            ->andWhere( $dateSql )
 
             ->setParameter(':location', $city)
             ->setParameter(':language', $language)
             ->setParameter(':title', $title)
+            ->setParameter(':date', '%'.$date.'%')
          
 
             ->getQuery()

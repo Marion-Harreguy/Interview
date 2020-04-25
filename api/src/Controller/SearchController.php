@@ -97,6 +97,9 @@ class SearchController extends AbstractController
         // unqiue param anglais => 6 rel
         // param lyon /anglais => 2rel 
         // pram titleprecis lyon/anglais => 1 rel
+        // param date 2018 => 1 rel 
+        // param date 2010 / francais /lyon => 1 rel
+
 
             $interviews = $interviewRepository->findWithCrit($title, $date, $city, $language);
             
