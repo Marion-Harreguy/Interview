@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Interview;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -33,12 +34,12 @@ class InterviewRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findWithCrit($title, $date, $city, $language)
+    public function findWithCrit($title, $date, $city, $language, $openLicence)
     {
         if($title === ''){
             $titleSql = "i.title != :title";
         }else {
-            $titleSql = "i.title LIKE '%':title";
+            $titleSql = "i.title LIKE :title";
         }
         if($date === ''){
             $dateSql = "i.date != :date";
@@ -55,24 +56,28 @@ class InterviewRepository extends ServiceEntityRepository
         }else {
             $languageSql = "i.language = :language";
         }
-
-
-
+        if($openLicence === ''){
+            $openLicenceSql = "i.openLicence = :openLicence";
+        }else {
+            $openLicenceSql = "i.openLicence = :openLicence";
+        }
+     
+      
         return $this->createQueryBuilder('i')
+            ->Where('i.isPublished = :isPublished')
+            ->setParameter('isPublished', true)
             
-            ->Where('i.isPublished = :val')
-            ->setParameter('val', true)
-            
-            ->andWhere($citySql)
-            ->andWhere($languageSql)
+            ->andWhere( $citySql)
+            ->andWhere( $languageSql)
             ->andWhere( $titleSql )
             ->andWhere( $dateSql )
+            ->andWhere( $openLicenceSql )
 
             ->setParameter(':location', $city)
             ->setParameter(':language', $language)
-            ->setParameter(':title', $title)
+            ->setParameter(':title', '%'.$title.'%')
             ->setParameter(':date', '%'.$date.'%')
-         
+            ->setParameter('openLicence', $openLicence)
 
             ->getQuery()
             ->getResult()

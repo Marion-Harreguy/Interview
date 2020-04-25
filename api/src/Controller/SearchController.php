@@ -39,43 +39,49 @@ class SearchController extends AbstractController
 
         $name = $request->query->get("name");
         $interviewed = $request->query->get("interviewed");
-        $tags = $request->query->get("tags");
-        $openSource = $request->query->get("openSource");
-      
+     
+        
 
-
+        // on vérifie les donnée du parametre
+        // on les stocke 
         if ($request->query->get("title")) {
             $title = $request->query->get("title");
-            //$interviews = $interviewRepository->findBy(["title" => $title]);
         } else {
             $title = '';
         }
-
-
-
+        // on vérifie les donnée du parametre
+        // on les stocke 
         if ($request->query->get("date")) {
-            $date = $request->query->get("date");   //1990 => Casse tout 
-            //{1990}-01-01
+            $date = $request->query->get("date");  
         } else {
             $date = '';
         }
-
-
-        if ($request->query->get("city") && $request->query->get("city") != null) {
-            $city = $request->query->get("city"); // test : france => 7 resultats
-            //$interviews = $interviewRepository->findBy(["location" => $city]);
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        if ($request->query->get("city")) {
+            $city = $request->query->get("city"); 
         } else {
             $city = '';
         }
-
-
-
-        if ($request->query->get("language") && $request->query->get("language") != null) {
-            $language = $request->query->get("language"); // test : francais => 10 resultat
-            //$interviews = $interviewRepository->findBy(["language" => $language]);
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        if ($request->query->get("language")) {
+            $language = $request->query->get("language");
         } else {
             $language = '';
         }
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        if ($request->query->get("openSource")) {
+            if ($request->query->get("openSource") === "true"){
+                $openSource = true;
+            }else {
+                $openSource = false;
+            }
+        }else {
+            $openSource = '';
+        }
+
 
         // if ($tags && $tags != null) {
 
@@ -100,10 +106,13 @@ class SearchController extends AbstractController
         // param date 2018 => 1 rel 
         // param date 2010 / francais /lyon => 1 rel
 
+        $interviews = $interviewRepository->findWithCrit($title, $date, $city, $language, $openSource);
+        
+        
 
-            $interviews = $interviewRepository->findWithCrit($title, $date, $city, $language);
-            
-            // $date -> year 
+
+
+//dd($openSource, count($interviews));
 
       
         
