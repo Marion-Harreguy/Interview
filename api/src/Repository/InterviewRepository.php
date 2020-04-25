@@ -34,7 +34,7 @@ class InterviewRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findWithCrit($title, $date, $city, $language, $openLicence = null)
+    public function findWithCrit($title, $date, $city, $language, $openLicence)
     {
         if($title === ''){
             $titleSql = "i.title != :title";
@@ -56,12 +56,7 @@ class InterviewRepository extends ServiceEntityRepository
         }else {
             $languageSql = "i.language = :language";
         }
-        if($openLicence === ''){
-            $openLicenceSql = "i.openLicence != :openLicence";
-        }else {
-            $openLicenceSql = "i.openLicence = :openLicence";
-        }
-     
+      
       
         return $this->createQueryBuilder('i')
             ->Where('i.isPublished = :isPublished')
@@ -71,7 +66,7 @@ class InterviewRepository extends ServiceEntityRepository
             ->andWhere( $languageSql)
             ->andWhere( $titleSql )
             ->andWhere( $dateSql )
-            ->andWhere( $openLicenceSql )
+            ->andWhere( 'i.openLicence = :openLicence' )
 
             ->setParameter(':location', $city)
             ->setParameter(':language', $language)

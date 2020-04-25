@@ -35,11 +35,11 @@ class SearchController extends AbstractController
     public function index(Request $request, InterviewRepository $interviewRepository, SerializerInterface $serializer, TagRepository $tagRepository)
     {
 
-       
+        $interviewResult = [];
 
         $name = $request->query->get("name");
         $interviewed = $request->query->get("interviewed");
-     
+        $tags = $request->query->get("tags");
         
 
         // on vérifie les donnée du parametre
@@ -103,27 +103,20 @@ class SearchController extends AbstractController
         // param date 2010 / francais /lyon => 1 rel
         if(
             $title 
-            XOR $date 
-            XOR $city 
-            XOR $language 
-            XOR $openSource
+            OR $date 
+            OR $city 
+            OR $language 
+            OR $openSource
         ){
-
-            $interviews = $interviewRepository->findWithCrit($title, $date, $city, $language, $openSource);
+            //dd('coucou');
+            $interviewResult = $interviewRepository->findWithCrit($title, $date, $city, $language, $openSource);
+            
         }else {
-            $interviews = $interviewRepository->findAllPublished();
+            $interviewResult = $interviewRepository->findAllPublished();
+            
         }
+       
 
-        
-        
-
-
-
-//dd($openSource, count($interviews));
-
-      
-        
-//dd($interviews, $title, $date, $city, $language);
 
 
 
@@ -138,7 +131,7 @@ class SearchController extends AbstractController
 
         //     
         //  }
-        $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
+        $data = $serializer->normalize($interviewResult, null, ['groups' => ['browseInterviews']]);
 
         return $this->json(
             $data,
