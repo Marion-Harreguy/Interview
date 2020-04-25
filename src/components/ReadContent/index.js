@@ -24,8 +24,8 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
       </div>
 
       { // Mapping on each questions
-      interviewContent.map((set) => (
-        <div>
+      interviewContent.map((set, index) => (
+        <div key={`question-${index}`}>
           <div className="interview__question">
             <span className="interview__initiales interview__initiales--question">{authorInitiales}</span>
             <p className="question__content">
@@ -33,8 +33,8 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
             </p>
           </div>
           { // Mapping on each answer for each question
-          set.answer.map((answer) => (
-            <div className="interview__answer">
+          set.answer.map((answer, indexA) => (
+            <div className="interview__answer" key={`answer-${indexA}`}>
               <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span>
               <p className="answer__content">{answer.content}</p>
             </div>
@@ -44,15 +44,60 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
       ))
     }
     </div>
-  )};
+  );
+};
 
-// TODO : Proptypes Validation
-// interview, interviewId, interviewGet
+
 ReadContent.propTypes = {
   interviewId: PropTypes.string.isRequired,
   interviewGet: PropTypes.func.isRequired,
   interview: PropTypes.shape({
-
+    meta: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      location: PropTypes.string.isRequired,
+      language: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number.isRequired),
+      date: PropTypes.string.isRequired,
+      openLicence: PropTypes.bool.isRequired,
+      author: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        firstname: PropTypes.string.isRequired,
+        lastname: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        structure: {
+          name: PropTypes.string.isRequired,
+          city: PropTypes.string.isRequired,
+          sector: PropTypes.string.isRequired,
+          id: PropTypes.number.isRequired,
+        },
+      }).isRequired,
+      interviewed: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        firstname: PropTypes.string.isRequired,
+        lastname: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        structure: {
+          name: PropTypes.string.isRequired,
+          city: PropTypes.string.isRequired,
+          sector: PropTypes.string.isRequired,
+          id: PropTypes.number.isRequired,
+        },
+      }).isRequired,
+      tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+      context: PropTypes.string.isRequired,
+    }).isRequired,
+    content: PropTypes.arrayOf(
+      PropTypes.shape({
+        question: PropTypes.string.isRequired,
+        answer: PropTypes.shape({
+          content: PropTypes.string.isRequired,
+          interviewed: PropTypes.string.isRequired,
+        }),
+      }),
+    ).isRequired,
   }).isRequired,
 };
 

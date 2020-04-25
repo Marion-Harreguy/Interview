@@ -3,7 +3,6 @@ import App from '../components/App';
 import { automaticLog, updateUserGet } from '../actions';
 
 const mapStateToProps = (state) => ({
-  // isConnected: localStorage.getItem('userLogs').isConnected,
   isConnected: state.userData.connection.isConnected,
   userCategories: state.userData.dashboard.categories,
 });

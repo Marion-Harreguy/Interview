@@ -30,6 +30,15 @@ import {
 import { render } from 'enzyme';
 
 export default (store) => (next) => (action) => {
+
+  const errorMessages = {
+    401: 'Votre session a expiré, veuillez vous reconnecter',
+    403: 'Vous n\'avez pas les droits d\'accès pour cette page',
+    406: 'Cette adresse mail est déjà reliée à un compte Interview',
+    404: 'Page introuvable',
+    500: 'Le serveur a rencontré un problème.',
+  };
+
   // TOKEN will be used for request headers
   const token = () => { if (localStorage.getItem('userLogs')) return JSON.parse(localStorage.getItem('userLogs')).token; };
 
@@ -79,13 +88,12 @@ export default (store) => (next) => (action) => {
           store.dispatch(automaticLogOk(action.payload));
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
           store.dispatch(logOut());
         });
       break;
 
     case NEW_USER_SUBMIT:
-      console.log(newUser);
       axios({
         url: 'http://184.73.143.2/register',
         method: 'post',
@@ -103,7 +111,8 @@ export default (store) => (next) => (action) => {
           store.dispatch(loginSubmit());
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          if (error.response.status === 403) error.response.status = 406;
+          window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -135,7 +144,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert('Identifiants invalides');
         });
       break;
 
@@ -153,7 +162,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(updateUserState(response.data));
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -173,7 +182,7 @@ export default (store) => (next) => (action) => {
           }
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -191,7 +200,7 @@ export default (store) => (next) => (action) => {
           if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -210,7 +219,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(loadWriteInterview(response.data));
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -228,7 +237,7 @@ export default (store) => (next) => (action) => {
           history.push('/');
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -248,7 +257,7 @@ export default (store) => (next) => (action) => {
           history.push(`/update/${response.data.id}`);
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
         });
       break;
     case SEARCH_SUBMIT:
@@ -272,7 +281,7 @@ export default (store) => (next) => (action) => {
           console.log(response.data);
         })
         .catch((error) => {
-          console.log(action.type + " failed : "+error);
+          window.alert(errorMessages[error.response.status]);
         });
       break;
     default:

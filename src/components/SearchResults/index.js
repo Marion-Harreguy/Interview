@@ -43,5 +43,53 @@ const SearchResults = ({ results, mode, changeMode }) => {
     }
 
   </div>
-)};
+  );
+};
+
+SearchResults.propTypes = {
+  results: PropTypes.arrayOf(
+    PropTypes.shape({
+      meta: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        location: PropTypes.string.isRequired,
+        language: PropTypes.string.isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.number.isRequired),
+        date: PropTypes.string.isRequired,
+        openLicence: PropTypes.bool.isRequired,
+        author: PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          firstname: PropTypes.string.isRequired,
+          lastname: PropTypes.string.isRequired,
+          status: PropTypes.string.isRequired,
+          email: PropTypes.string.isRequired,
+          structure: {
+            name: PropTypes.string.isRequired,
+            city: PropTypes.string.isRequired,
+            sector: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired,
+          },
+        }).isRequired,
+        interviewed: PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          firstname: PropTypes.string.isRequired,
+          lastname: PropTypes.string.isRequired,
+          status: PropTypes.string.isRequired,
+          email: PropTypes.string.isRequired,
+          structure: {
+            name: PropTypes.string.isRequired,
+            city: PropTypes.string.isRequired,
+            sector: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired,
+          },
+        }).isRequired,
+        tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+        context: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+  ).isRequired,
+  mode: PropTypes.string.isRequired,
+  changeMode: PropTypes.func.isRequired,
+};
+
 export default SearchResults;

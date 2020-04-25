@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import HeaderContainer from '../../containers/HeaderContainer';
 import UserLibraryContainer from '../../containers/UserLibraryContainer';
@@ -190,7 +191,17 @@ const App = ({ isConnected, userCategories, automaticLog, updateUserGet }) => {
   </div>
 )};
 
-// TODO : PropTypes Validation
-// isConnected, userCategories
+App.propTypes = {
+  isConnected: PropTypes.bool.isRequired,
+  userCategories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      color: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  automaticLog: PropTypes.func.isRequired,
+  updateUserGet: PropTypes.func.isRequired,
+};
 
 export default App;

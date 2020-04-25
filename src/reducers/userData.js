@@ -48,19 +48,20 @@ export const initialState = {
 };
 
 const categoryColors = [
-  'yellow',
-  'red',
-  'green',
-  'black',
-  'orange',
-  'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
-  'yellow',
+  '#FFFE9E',
+  '#ABFFC2',
+  '#CA9DFF',
+  '#FF8587',
+  '#7DC0FF',
+  '#FF96A4',
+  '#FFD38C',
+  '#96FFAC',
+  '#FFFF56',
+  '#A54FFF',
+  '#36CAFF',
+  '#FFD191',
+  '#00FFA7',
+  'grey',
 ];
 
 const userData = (state = initialState, action = {}) => {

@@ -3,7 +3,6 @@ import { SEARCH_INPUT_CHANGE, CHANGE_MODE, UPLOAD_RESULTS } from '../actions';
 export const initialState = {
   form: {
     title: '',
-    date: '',
     city: '',
     language: '',
     name: '',

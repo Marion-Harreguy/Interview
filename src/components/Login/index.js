@@ -32,6 +32,6 @@ Login.propTypes = {
   password: PropTypes.string.isRequired,
   loginInputChange: PropTypes.func.isRequired,
   loginSubmit: PropTypes.func.isRequired,
-}
+};
 
 export default Login;

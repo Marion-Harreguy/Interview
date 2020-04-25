@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './style.scss';
 import 'jquery-ui-dist/jquery-ui';
+import PropTypes from 'prop-types';
 import $ from 'jquery';
 
 const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
@@ -74,6 +75,24 @@ const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
         </form>
       </div>
     </aside>
-)};
+  );
+};
+
+
+SearchForm.propTypes = {
+  searchInputChange: PropTypes.func.isRequired,
+  searchValues: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    city: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    interviewed: PropTypes.string.isRequired,
+    tags: PropTypes.string.isRequired,
+    openSource: PropTypes.bool.isRequired,
+    yearBegin: PropTypes.number.isRequired,
+    yearEnd: PropTypes.number.isRequired,
+  }).isRequired,
+  searchSubmit: PropTypes.func.isRequired,
+};
 
 export default SearchForm;

@@ -88,8 +88,8 @@ const ReadMeta = ({
         <p className="interview__subdata interview__subdata--author interview__subdata--status">{interviewMeta.author.status}</p>
 
         { // Creating subdata for each interviewed person
-          interviewMeta.interviewed.map((inquired) => (
-            <div>
+          interviewMeta.interviewed.map((inquired, indexI) => (
+            <div key={`inquired-${indexI}`}>
               <p className="interview__data interview__data--interviewed" onClick={() => openSubdata(`interviewed--${inquired.id}`)}><span className={`span--interviewed--${inquired.id}`}>&#8594;</span> {`${inquired.firstname} ${inquired.lastname} (e)`}</p>
               <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.structure.name} — {inquired.structure.city}</p>
               <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.status}</p>
@@ -119,20 +119,58 @@ const ReadMeta = ({
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis exercitationem delectus nemo, quam magnam non facilis expedita rerum maxime iste eius consectetur odio totam repellat, debitis excepturi, assumenda quo vitae!</p>
       </div> */}
     </aside>
-  )};
+  );
+};
 
 // TODO : Proptypes Validation
 // interviewMeta, saveInterview, userCategories, updateUserGet,updateUserPut
 ReadMeta.propTypes = {
-  updateUserGet: PropTypes.func.isRequired,
   updateUserPut: PropTypes.func.isRequired,
   saveInterview: PropTypes.func.isRequired,
   interviewMeta: PropTypes.shape({
-
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+    coordinates: PropTypes.arrayOf(PropTypes.number.isRequired),
+    date: PropTypes.string.isRequired,
+    openLicence: PropTypes.bool.isRequired,
+    author: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      firstname: PropTypes.string.isRequired,
+      lastname: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      structure: {
+        name: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        sector: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+      },
+    }).isRequired,
+    interviewed: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      firstname: PropTypes.string.isRequired,
+      lastname: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      structure: {
+        name: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        sector: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+      },
+    }).isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    context: PropTypes.string.isRequired,
   }).isRequired,
-  userCategories: PropTypes.shape({
-
-  }).isRequired,
+  userCategories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      color: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default ReadMeta;

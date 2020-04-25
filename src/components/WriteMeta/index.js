@@ -7,7 +7,6 @@ import './style.scss';
 
 const WriteMeta = ({
   interviewMeta,
-  deleteInterview,
   publishInterview,
   changeMeta,
   userCategories,
@@ -16,14 +15,12 @@ const WriteMeta = ({
   changeInterviewed,
   changeInterviewedStructure,
   changeAuthor,
-  changeAuthorStructure,
+  // changeAuthorStructure,
   userName,
   interviewId,
-  updateUserGet,
   updateUserPut,
   writeInterviewPut,
   writeInterviewDelete,
-  getInterview,
   writeInterviewCreate,
   changeCoordinates,
 }) => {
@@ -130,7 +127,7 @@ const WriteMeta = ({
               interviewMeta.interviewed.map((interviewed, index) => {
                 const numero = index + 1;
                 return (
-                  <div>
+                  <div key={interviewed.id}>
                     <input className="write__form__input" type="text" name="firstname" placeholder={`Prénom de l'enquêté n°${numero}`} value={interviewed.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                     { // If the interviewed is different from default value "anonyme", subdata is created
                         interviewed.firstname !== 'Anonyme' && (
@@ -182,19 +179,62 @@ WriteMeta.propTypes = {
   interviewId: PropTypes.string.isRequired,
   addInterviewed: PropTypes.func.isRequired,
   changeAuthor: PropTypes.func.isRequired,
-  changeAuthorStructure: PropTypes.func.isRequired,
+  // changeAuthorStructure: PropTypes.func.isRequired,
   changeInterviewed: PropTypes.func.isRequired,
   changeInterviewedStructure: PropTypes.func.isRequired,
   changeInterviewCategories: PropTypes.func.isRequired,
-  deleteInterview: PropTypes.func.isRequired,
+  // deleteInterview: PropTypes.func.isRequired,
   publishInterview: PropTypes.func.isRequired,
   changeMeta: PropTypes.func.isRequired,
   interviewMeta: PropTypes.shape({
-
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+    coordinates: PropTypes.arrayOf(PropTypes.number.isRequired),
+    date: PropTypes.string.isRequired,
+    openLicence: PropTypes.bool.isRequired,
+    author: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      firstname: PropTypes.string.isRequired,
+      lastname: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      structure: {
+        name: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        sector: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+      },
+    }).isRequired,
+    interviewed: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      firstname: PropTypes.string.isRequired,
+      lastname: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      structure: {
+        name: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        sector: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+      },
+    }).isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    context: PropTypes.string.isRequired,
   }).isRequired,
-  userCategories: PropTypes.shape({
-
-  }).isRequired,
+  userCategories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      color: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  updateUserPut: PropTypes.func.isRequired,
+  writeInterviewPut: PropTypes.func.isRequired,
+  writeInterviewDelete: PropTypes.func.isRequired,
+  writeInterviewCreate: PropTypes.func.isRequired,
+  changeCoordinates: PropTypes.func.isRequired,
 };
 
 // TODO : Add proptypes validation

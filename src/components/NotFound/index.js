@@ -1,7 +1,8 @@
-import React from 'react';
+import ReactDOM from 'react-dom';
+import React, { useRef, useState } from 'react';
 
-export default () => (
-  <div>
-    <h1>404 - Page not found</h1>
-  </div>
+const PageNotFound = () => (
+  <div id="container" />
 );
+
+export default PageNotFound;

@@ -253,9 +253,12 @@ UserLibrary.propTypes = {
   addCategoryChange: PropTypes.func.isRequired,
   addCategorySubmit: PropTypes.func.isRequired,
   newCategoryName: PropTypes.string.isRequired,
+  modifyUserInfo: PropTypes.func.isRequired,
+  changeFormDisabled: PropTypes.func.isRequired,
+  formDisabled: PropTypes.bool.isRequired,
+  updateUserPut: PropTypes.func.isRequired,
+  updateUserGet: PropTypes.func.isRequired,
 };
 
-// TODO : Add to proptypes
-// changeFormDisabled, formDisabled, updateUserPut, updateUserGet, modifyUserInfo,
 
 export default UserLibrary;

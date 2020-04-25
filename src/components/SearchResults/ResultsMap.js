@@ -13,11 +13,11 @@ import { Style, Circle, Fill } from "ol/style";
 import ResultSelected from './ResultSelected';
 
 
-const ResultsMap = ({resultList}) => {
+const ResultsMap = ({ resultList }) => {
 
   const [chosenInterview, setChosenInterview] = useState({});
   let map;
-  let featuresList = [];
+  const featuresList = [];
   let places = [];
 
   const createMap = () => {
@@ -47,12 +47,12 @@ const ResultsMap = ({resultList}) => {
       ],
     });
 
-    map.on("moveend", function () {
+    map.on('moveend', () => {
       const view = map.getView();
       const center = view.getCenter();
     });
 
-    map.on("click", function (event) {
+    map.on('click', (event) => {
       const feature = map.getFeaturesAtPixel(event.pixel)[0];
       if (feature) {
         setChosenInterview({...resultList.find((interview) => interview.coordinates[0] === feature.getGeometry().getCoordinates()[0] && interview.coordinates[1] === feature.getGeometry().getCoordinates()[1])});
@@ -89,5 +89,46 @@ const ResultsMap = ({resultList}) => {
   );
 };
 
-export default ResultsMap;
+ResultsMap.propTypes = {
+  resultList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      location: PropTypes.string.isRequired,
+      language: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number.isRequired),
+      date: PropTypes.string.isRequired,
+      openLicence: PropTypes.bool.isRequired,
+      author: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        firstname: PropTypes.string.isRequired,
+        lastname: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        structure: {
+          name: PropTypes.string.isRequired,
+          city: PropTypes.string.isRequired,
+          sector: PropTypes.string.isRequired,
+          id: PropTypes.number.isRequired,
+        },
+      }).isRequired,
+      interviewed: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        firstname: PropTypes.string.isRequired,
+        lastname: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        structure: {
+          name: PropTypes.string.isRequired,
+          city: PropTypes.string.isRequired,
+          sector: PropTypes.string.isRequired,
+          id: PropTypes.number.isRequired,
+        },
+      }).isRequired,
+      tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+      context: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+};
 
+export default ResultsMap;
