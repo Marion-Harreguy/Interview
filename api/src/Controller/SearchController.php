@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\InterviewRepository;
+use App\Repository\TagRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -31,31 +32,110 @@ class SearchController extends AbstractController
      * 
      * 
      */
-    public function index(Request $request, InterviewRepository $interviewRepository, SerializerInterface $serializer)
+    public function index(Request $request, InterviewRepository $interviewRepository, SerializerInterface $serializer, TagRepository $tagRepository)
     {
-        $title = $request->query->get("title");
-        $date = $request->query->get("date");
-        $city = $request->query->get("city");
-        $language = $request->query->get("language");
+
+        $interviewResult = [];
+
         $name = $request->query->get("name");
         $interviewed = $request->query->get("interviewed");
         $tags = $request->query->get("tags");
-        $openSource = $request->query->get("openSource");
-        $yearBegin = $request->query->get("yearBegin");
-        $yearEnd = $request->query->get("yearEnd");
-
         
 
-        if ($city && $city != null) {
-            $interviews = $interviewRepository->findBy(["location" => $city]);
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        if ($request->query->get("title")) {
+            $title = $request->query->get("title");
         } else {
-            $interviews = $interviewRepository->findAllPublished();
+            $title = '';
+        }
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        /*if ($request->query->get("date")) {
+            $date = $request->query->get("date");  
+        } else {
+            $date = '';
+        }*/
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        if ($request->query->get("city")) {
+            $city = $request->query->get("city"); 
+        } else {
+            $city = '';
+        }
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        if ($request->query->get("language")) {
+            $language = $request->query->get("language");
+        } else {
+            $language = '';
+        }
+        // on vérifie les donnée du parametre
+        // on les stocke 
+        if ($request->query->get("openSource")) {
+               $openSource = false;
+        }else {
+            $openSource = true;
         }
 
 
 
+        $yearBegin = $request->query->get("yearBegin");
+        $yearEnd = $request->query->get("yearEnd");
 
-        $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
+        // if ($tags && $tags != null) {
+
+        //     $tag = $tagRepository->findOneBy(["name" => $tags]);
+
+        //   $critere["tags"] = $tag->getId();
+        // }
+        // if ($openSource && $openSource != null){
+        //     $critere["openLicence"] = boolval($openSource);
+        // }
+
+      
+       
+       
+        //dd($title, $date, $city, $language);
+
+        // aucun param en get => 19 rel
+        // unqiue param france => 2rel
+        // unqiue param anglais => 6 rel
+        // param lyon /anglais => 2rel 
+        // pram titleprecis lyon/anglais => 1 rel
+        // param date 2018 => 1 rel 
+        // param date 2010 / francais /lyon => 1 rel
+        if(
+            $title 
+            //OR $date 
+            OR $city 
+            OR $language 
+            OR $openSource
+        ){
+            //dd('coucou');
+            $interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource, $yearBegin, $yearEnd);
+            
+        }else {
+            $interviewResult = $interviewRepository->findAllPublished();
+            
+        }
+       
+
+
+
+
+
+
+        //array $criteria, array $orderBy = null, $limit = null, $offset = null)
+        // if ($city && $city != null) {
+        //     $interviews = $interviewRepository->findBy(["location" => $city, "title" => ""], ["date" => "DESC"]);
+        //  }else if ($title && $title != null) {
+        //      $interviews = $interviewRepository->findBy(["title" => $title], ["date" => "DESC"]);
+        //  } else {
+
+        //     
+        //  }
+        $data = $serializer->normalize($interviewResult, null, ['groups' => ['browseInterviews']]);
 
         return $this->json(
             $data,
