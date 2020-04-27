@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import { logOut } from '../actions';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  isConnected: state.userData.connection.isConnected,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   logOut: () => {

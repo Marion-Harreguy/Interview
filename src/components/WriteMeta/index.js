@@ -90,6 +90,22 @@ const WriteMeta = ({
     );
   };
 
+  const turnTableToString = (tagTable) => {
+    if (tagTable.length > 1) {
+      return tagTable.join(' ');
+    }
+   return tagTable[0];
+  };
+
+  const turnStringToTable = (tagString) => {
+    if (tagString.length > 0 && tagString.includes(' ')) {
+      const tagTable = tagString.split(' ');
+      console.log(tagTable);
+      return tagTable;
+    }
+    return [tagString];
+  };
+
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">
       <div className="write__tools">
@@ -111,8 +127,8 @@ const WriteMeta = ({
           <input className="write__form__input" type="date" name="date" placeholder="Année" date="dd-MM-yyyy" value={interviewMeta.date} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
           <input className="write__form__input" type="text" name="location" placeholder="Lieu de l'entretien" value={interviewMeta.location} onBlur={(event) => findLocation(event.target.value)} onChange={(event) => changeMeta(event.target)} />
           <input className="write__form__input" type="text" name="language" placeholder="Langue(s)" value={interviewMeta.language} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
-          <input className="write__form__input" type="text" name="firstname" placeholder="Prénom de l'auteur" value={interviewMeta.author.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
-          <input className="write__form__input" type="text" name="lastname" placeholder="Nom de l'auteur" value={interviewMeta.author.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
+          {/* <input className="write__form__input" type="text" name="firstname" placeholder="Prénom de l'auteur" value={interviewMeta.author.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
+          <input className="write__form__input" type="text" name="lastname" placeholder="Nom de l'auteur" value={interviewMeta.author.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} /> */}
           <input className="write__form__input" type="text" name="firstname" placeholder="Auteur" value={`Auteur : ${interviewMeta.author.firstname} ${interviewMeta.author.lastname}`} disabled />
 
           { // Open author subdata only if the name is changed from default user name to something else
@@ -155,6 +171,8 @@ const WriteMeta = ({
 
           <input className="write__form__button" type="checkbox" checked={interviewMeta.openLicence} name="openLicence" id="royalty-free" onChange={(event) => { changeMeta(event.target), writeInterviewPut(interviewId)}} />
           <label className="write__form__input write__form__input--royalty" htmlFor="royalty-free">Libre de droit</label>
+
+          <input className="write__form__input" type="text" name="tags" placeholder="Tags" value={turnTableToString(interviewMeta.tags)} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta({ value: turnStringToTable(event.target.value), name: 'tags' })} />
         </form>
 
         <div className="write__categories">

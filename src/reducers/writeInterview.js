@@ -17,6 +17,7 @@ import {
   DELETE_ANSWER,
   DELETE_QUESTION,
   LOAD_ID,
+  CHOOSE_INITIALES,
 } from '../actions';
 
 export const initialState = {
@@ -39,7 +40,7 @@ export const initialState = {
       structure: [{
         name: '',
         city: '',
-        sector:'',
+        sector: '',
       }],
     },
     interviewed: [
@@ -83,7 +84,7 @@ const readInterview = (state = initialState, action = {}) => {
               ...set.answer,
               {
                 content: '',
-                interviewed: 'AA',
+                interviewed: action.payload,
               },
             ],
           };
@@ -116,9 +117,8 @@ const readInterview = (state = initialState, action = {}) => {
       const newContentUpdateA = state.content.map((set, index) => {
         if (index === action.payload.indexQuestion) {
           set.answer[action.payload.indexAnswer] = {
-            id: set.answer[action.payload.indexAnswer].id,
+            ...set.answer[action.payload.indexAnswer],
             content: action.payload.value,
-            interviewed: 'AA',
           };
           return {
             ...set,
@@ -132,6 +132,27 @@ const readInterview = (state = initialState, action = {}) => {
           ...newContentUpdateA,
         ],
       };
+
+    case CHOOSE_INITIALES:
+      const initialesContentUpdate = state.content.map((set, index) => {
+        if (index === action.payload.indexQuestion) {
+          set.answer[action.payload.indexAnswer] = {
+            ...set.answer[action.payload.indexAnswer],
+            interviewed: action.payload.value,
+          };
+          return {
+            ...set,
+          };
+        }
+        return set;
+      });
+      return {
+        ...state,
+        content: [
+          ...initialesContentUpdate,
+        ],
+      };
+
     case DELETE_QUESTION:
       const deleteContentUpdate = state.content.filter((set, index) => (index !== action.payload.indexQuestion));
       return {

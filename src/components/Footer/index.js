@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 
 import './style.scss';
 
-const Footer = ({ logOut }) => (
+const Footer = ({ logOut, isConnected }) => (
   // TODO : Handle logout
   <footer className="left__footer">
-    <div className="footer__legal" onClick={() => logOut()}>Déconnexion</div>
-    <span>&bull;</span>
+    {
+      isConnected && (
+        <div className="footer__legal" onClick={() => logOut()}>Déconnexion <span>&bull;</span></div>
+      )
+    }
     <NavLink exact to="/legal-mentions" className="footer__legal-mentions">Mentions légales</NavLink>
   </footer>
 );

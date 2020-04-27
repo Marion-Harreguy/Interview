@@ -220,17 +220,18 @@
 
 .interview__context {
   font-family: 'Source-LightItalic' !important;
+  margin-left: 50px;
 }
 
 .question__content {
   font-family: 'Source-SemiBold' !important;
-  margin-left: 25px;
+  margin-left: 5px;
   width: calc(100% - 50px);
 }
 
 .answer__content {
   font-family: 'Source-Light' !important;
-  margin-left: 25px;
+  margin-left: 5px;
   width: calc(100% - 50px);
 }
 
@@ -244,4 +245,29 @@
   background-image: url("../../assets/icons/cross.png");
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.interview__content--write .interview__initiales{
+  margin-right: 25px;
+}
+
+.interview__initiales--answer--select, .interview__initiales--answer--select:focus {
+  outline: none;
+  top: 0;
+  right: 0;
+  border: solid 1px white;
+  border-radius: 20px !important;
+  background-color: transparent;
+  color: white;
+  text-align: left !important;
+  width: 40px;
+  font-size: 0.9em;
+  margin-top: 13px;
+  margin-right: 5px !important;
+  padding: 0;
+  vertical-align: top;
+}
+
+.interview__initiales--answer--select::-ms-expand {
+  display: none;
 }

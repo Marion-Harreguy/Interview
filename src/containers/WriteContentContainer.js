@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import WriteContent from '../components/WriteContent';
-import { deleteQuestion, deleteAnswer, addNewQuestion, addNewAnswer, updateAnswer, updateQuestion, updateContext, writeInterviewPut, interviewGet, writeInterviewCreate, fillAuthor } from '../actions';
+import { deleteQuestion, deleteAnswer, addNewQuestion, addNewAnswer, updateAnswer, updateQuestion, updateContext, writeInterviewPut, interviewGet, writeInterviewCreate, fillAuthor, chooseInitiales } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   writeInterview: state.writeInterview,
@@ -10,8 +10,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addNewAnswer: () => {
-    dispatch(addNewAnswer());
+  addNewAnswer: (defaultInitiales) => {
+    dispatch(addNewAnswer(defaultInitiales));
   },
   addNewQuestion: () => {
     dispatch(addNewQuestion());
@@ -39,6 +39,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fillAuthor: (info) => {
     dispatch(fillAuthor(info));
+  },
+  chooseInitiales: (info) => {
+    dispatch(chooseInitiales(info));
   },
 });
 

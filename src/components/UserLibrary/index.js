@@ -167,10 +167,14 @@ const UserLibrary = ({
                   </h3>
                   <div className={`section__list section__list--${library[sectionTitle] ? 'open' : 'closed'}`}>
 
-                    { sectionContent.map((interview) => (
+                    { sectionContent.map((interview) => {
+                      // ternaire
+                      // sectionTitle writtingInterviews = update sinon read
+                      const path = (sectionTitle === 'writtingInterviews' ? 'update' : 'read');
+                      return(
                       // Creating each interview
                       <div className="list__interview" key={`int-${interview.id}`}>
-                        <NavLink exact to={`/update/${interview.id}`}>
+                        <NavLink exact to={`/${path}/${interview.id}`}>
                           <h4 className="list__interview__title">{interview.title}</h4>
                           <div className="list__interview__categories">
                             {/* Creating each category dot for each article */}
@@ -180,7 +184,7 @@ const UserLibrary = ({
                           </div>
                         </NavLink>
                       </div>
-                    ))}
+                    )})}
 
                   </div>
                 </div>

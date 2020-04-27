@@ -18,6 +18,7 @@ const WriteContent = ({
   fillAuthor,
   dataUser,
   dataStructure,
+  chooseInitiales,
 }) => {
 
   // If the interview is new, create a new one in API
@@ -53,20 +54,20 @@ const WriteContent = ({
   };
 
   const createInitiales = (name) => {
-    let initiales = (name).match(/\b\w/g) || [];
+    let initiales = name.match(/\b\w/g) || [];
     initiales = ((initiales.shift() || '') + (initiales.pop() || '')).toUpperCase();
     return initiales;
   };
 
-  // TODO : get user (or author) initiales
-  // + get interviewed initiales (make select if several ?)
+  const defaultInitiales = createInitiales(writeInterview.meta.interviewed[0].firstname+' '+writeInterview.meta.interviewed[0].lastname);
+
   const authorInitiales = createInitiales(`${writeInterview.meta.author.firstname} ${writeInterview.meta.author.lastname}`);
 
   return (
     <div>
       <div className="interview__add">
         <button className="interview__add__button interview__add__button--question" onClick={() => addNewQuestion()} label="Ajouter une question" type="button">Question</button>
-        <button className="interview__add__button interview__add__button--answer" onClick={() => addNewAnswer()} label="Ajouter une réponse" type="button" style={{ pointerEvents: writeInterview.content.length <= 0 ? 'none' : 'all' }}>Réponse</button>
+        <button className="interview__add__button interview__add__button--answer" onClick={() => addNewAnswer(defaultInitiales)} label="Ajouter une réponse" type="button" style={{ pointerEvents: writeInterview.content.length <= 0 ? 'none' : 'all' }}>Réponse</button>
       </div>
 
       <div className="interview__content interview__content--write">
@@ -86,8 +87,8 @@ const WriteContent = ({
                     <div className="interview__answer" key={`answer-${indexAnswer}`}>
                       {
                         (writeInterview.meta.interviewed.length <= 1 ) ? ( 
-                          <span className="interview__initiales interview__initiales--answer">{createInitiales(writeInterview.meta.interviewed[0])}</span>) : (
-                          <select id="interviewed-initiales" className="interview__initiales interview__initiales--answer" name="interviewed-initiales" onChange={() => chooseInitiales()}>
+                          <span className="interview__initiales interview__initiales--answer">{createInitiales(writeInterview.meta.interviewed[0].firstname+' '+writeInterview.meta.interviewed[0].lastname)}</span>) : (
+                          <select id="interviewed-initiales" className="interview__initiales interview__initiales--answer--select interview__initiales--answer" name="interviewed-initiales" onChange={(event) => chooseInitiales({indexQuestion, indexAnswer, value: event.target.value})}>
                             {
                             writeInterview.meta.interviewed.map((interviewed) => (
                               <option value={createInitiales(`${interviewed.firstname} ${interviewed.lastname}`)}>{createInitiales(`${interviewed.firstname} ${interviewed.lastname}`)}</option>

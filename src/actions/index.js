@@ -51,6 +51,7 @@ export const CHANGE_AUTHOR = 'CHANGE_AUTHOR';
 export const CHANGE_AUTHOR_STRUCTURE = 'CHANGE_AUTHOR_STRUCTURE';
 export const FILL_AUTHOR = 'FILL_AUTHOR';
 export const CHANGE_COORDINATES = 'CHANGE_COORDINATES';
+export const CHOOSE_INITIALES = 'CHOOSE_INITIALES';
 
 // AJAX REQUESTS
 export const UPDATE_USER_PUT = 'UPDATE_USER_PUT';
@@ -161,8 +162,9 @@ export const saveInterview = (payload) => ({
 });
 
 // WRITE — Right
-export const addNewAnswer = () => ({
+export const addNewAnswer = (payload) => ({
   type: ADD_NEW_ANSWER,
+  payload
 });
 
 export const addNewQuestion = () => ({
@@ -252,6 +254,11 @@ export const deleteAnswer = (payload) => ({
 
 export const deleteQuestion = (payload) => ({
   type: DELETE_QUESTION,
+  payload,
+});
+
+export const chooseInitiales = (payload) => ({
+  type: CHOOSE_INITIALES,
   payload,
 });
 

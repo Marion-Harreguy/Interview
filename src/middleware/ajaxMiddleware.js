@@ -51,7 +51,7 @@ export default (store) => (next) => (action) => {
   };
 
   // FOR LOGIN_SUBMIT
-  let userConnect = { 
+  let userConnect = {
     username: store.getState().login.login,
     password: store.getState().login.password,
   };
@@ -104,12 +104,32 @@ export default (store) => (next) => (action) => {
         data: JSON.stringify(newUser),
       })
         .then(() => {
-          console.log(action.type + ": success !");
           userConnect = {
             username: store.getState().newUser.user.email,
             password: store.getState().newUser.user.password,
           };
-          store.dispatch(loginSubmit());
+          console.log(userConnect);
+          axios({
+            url: 'http://184.73.143.2/api/login_check',
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            data: JSON.stringify(userConnect),
+          })
+            .then((response) => {
+              const decodedToken = jwtDecode(response.data.token);
+              const userLogs = {
+                id: decodedToken.id,
+                token: response.data.token,
+                isConnected: true,
+              };
+              localStorage.setItem('userLogs', JSON.stringify(userLogs));
+              store.dispatch(automaticLog(userLogs));
+            })
+            .catch((error) => {
+              // window.alert('Identifiants invalides');
+            });
         })
         .catch((error) => {
           if (error.response.status === 403) error.response.status = 406;
