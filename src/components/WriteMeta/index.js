@@ -110,12 +110,9 @@ const WriteMeta = ({
     for (let inputIndex = 0; inputIndex < inputList.length; inputIndex++ ) {
       if (inputList[inputIndex].value === '' || inputList[inputIndex].value === undefined || inputList[inputIndex].value === false || inputList[inputIndex].value === null) {
         if (inputList[inputIndex].htmlFor !== 'royalty-free') {
-          // inputList[inputIndex].style.borderBottom = 'solid 0.5px red !important';
-          inputList[inputIndex].setAttribute('style', 'border-bottom:solid 0.5px #bf4b4c !important');
           canPublish = false;
         }
       }
-      else inputList[inputIndex].setAttribute('style', undefined);
     }
     if (interviewMeta.context === '') {
       window.alert('Veuillez saisir un contexte pour votre entretien');
@@ -131,16 +128,45 @@ const WriteMeta = ({
     else window.alert('Veuillez renseigner tous les champs avant de publier votre entretien.');
   };
 
+  const showMandatoryInfos = () => {
+    const inputList = document.querySelectorAll('.write__form__input');
+    for (let inputIndex = 0; inputIndex < inputList.length; inputIndex++ ) {
+      if (inputList[inputIndex].value === '' || inputList[inputIndex].value === undefined || inputList[inputIndex].value === false || inputList[inputIndex].value === null) {
+        if (inputList[inputIndex].htmlFor !== 'royalty-free') {
+          inputList[inputIndex].setAttribute('style', 'border-bottom:solid 0.5px #bf4b4c !important');
+        }
+      }
+      else inputList[inputIndex].setAttribute('style', undefined);
+    }
+    if (interviewMeta.context === '' || interviewMeta.context === null) {
+      document.querySelector('.interview__context').setAttribute('style', 'border-bottom:solid 1px #bf4b4c !important');
+    }
+    if (interviewContent.length < 1) { 
+      document.querySelector('.interview__add__button--question').setAttribute('style', 'border:solid 1px #bf4b4c !important');
+      document.querySelector('.interview__add__button--answer').setAttribute('style', 'border:solid 1px #bf4b4c !important');
+    }
+  };
+
+  const hideMandatoryInfos = () => {
+    const inputList = document.querySelectorAll('.write__form__input');
+    for (let inputIndex = 0; inputIndex < inputList.length; inputIndex++ ) {
+      inputList[inputIndex].setAttribute('style', undefined);
+    }
+    document.querySelector('.interview__context').setAttribute('style', undefined);
+    document.querySelector('.interview__add__button--question').setAttribute('style', undefined);
+    document.querySelector('.interview__add__button--answer').setAttribute('style', undefined);
+  };
+
   const closePublishMenu = () => {
     document.querySelector('.write__publish-menu').style.display = 'none';
-  }
+  };
 
 
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">
       <div className="write__tools">
-        <NavLink exact to="/"><button className="tools__close" type="button" type="button" label="Fermer" /></NavLink>
-        <button className="tools__publish" type="button" onClick={() => checkMandatoryInfos()} label="Publier" />
+        <NavLink exact to="/"><button className="tools__close" type="button" label="Fermer" /></NavLink>
+        <button className="tools__publish" type="button" onMouseOver={() => showMandatoryInfos()} onMouseOut={() => hideMandatoryInfos()}  onClick={checkMandatoryInfos} label="Publier" />
         <button className="tools__delete" type="button" onClick={openDeleteMenu} label="Supprimer" />
         
       </div>
