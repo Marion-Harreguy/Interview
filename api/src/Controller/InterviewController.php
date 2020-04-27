@@ -285,10 +285,7 @@ class InterviewController extends AbstractController
 
                     for ($i = 0; $i < count($questionsInDatabase); $i++) {
 
-                        if (isset($questionNotSaved[$i]["id"])) {
-
-                            if ($questionsInDatabase[$i]->getId() === $questionNotSaved[$i]["id"]) {
-                            }
+                        if (isset($questionNotSaved[$i]["id"]) && $questionsInDatabase[$i]->getId() === $questionNotSaved[$i]["id"]) {
                         } else {
                             $question = $questionRepository->find($questionsInDatabase[$i]->getId());
                             $interview->removeQuestion($question);
@@ -337,8 +334,7 @@ class InterviewController extends AbstractController
                     $question->setContent($questionReponse["question"]);
                     if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
 
-                        //dd($questionReponse["answer"], $question->getAnswers());
-                   
+
                         if (count($questionReponse["answer"]) < count($question->getAnswers())) {
 
                             $AnswerInDatabase = $question->getAnswers();
@@ -346,10 +342,7 @@ class InterviewController extends AbstractController
 
                             for ($i = 0; $i < count($AnswerInDatabase); $i++) {
 
-                                if (isset($answerNotSaved[$i]["id"])) {
-
-                                    if ($AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
-                                    }
+                                if (isset($answerNotSaved[$i]["id"]) && $AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
                                 } else {
                                     $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
                                     $question->removeAnswer($answer);
