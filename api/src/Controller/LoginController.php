@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\Structure;
 use App\Form\StructureType;
+use App\Repository\StructureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,7 @@ class LoginController extends AbstractController
     // public function login(Request $request, SerializerInterface $serializer, UserRepository $userRepository )
     // {
     //    $data = json_decode($request->getContent(), true);
-       
+
     //     $user = $userRepository->findOneBy(["email" => $data["username"] ]);
     //     $data = $serializer->normalize($user, null, ['groups' => ['user']]);
 
@@ -35,7 +36,7 @@ class LoginController extends AbstractController
     //         $headers = ['content-type' => 'application/Json'],
     //         $context = []
     //     );
-    
+
 
     //     // return $this->json([
     //     //     'token' => $user->getApiToken(),
@@ -43,11 +44,11 @@ class LoginController extends AbstractController
     //     //     'roles' => $user->getRoles(),
     //     // ]);
     // }
-    
+
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function register(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer)
+    public function register(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, StructureRepository $structureRepository)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -55,39 +56,50 @@ class LoginController extends AbstractController
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->submit($data["user"]);
 
-        if(($formUser->isSubmitted() && $formUser->isValid())) {
-              
+        if (($formUser->isSubmitted() && $formUser->isValid())) {
+
             $user->setPassword($passwordEncoder->encodePassword($user, $data["user"]["password"]));
             $user->setRoles(['ROLE_USER']);
-       
 
-        if(!empty($data["structure"]["name"])) {
-    
-           
-            $structure = new Structure();
-            $formStructure = $this->createForm(StructureType::class, $structure);
-            $formStructure->submit($data["structure"]);
 
-           if(($formStructure->isSubmitted() && $formStructure->isValid())) {
-                $em->persist($structure);
-                $user->addStructure($structure);
+            if (!empty($data["structure"]["name"])) {
+
+                $structure = $structureRepository->findOneBy(["name" => $data["structure"]["name"]]);
+
+                if ($structure) {
+                    $formStructure = $this->createForm(StructureType::class, $structure);
+                    $formStructure->submit($data["structure"]);
+
+                    if (($formStructure->isSubmitted() && $formStructure->isValid())) {
+                        $structure->setUpdatedAt(new \DateTime());
+                        $em->persist($structure);
+                        $user->addStructure($structure);
+                    }
+                } else {
+                    $structure = new Structure();
+                    $formStructure = $this->createForm(StructureType::class, $structure);
+                    $formStructure->submit($data["structure"]);
+
+                    if (($formStructure->isSubmitted() && $formStructure->isValid())) {
+                        $em->persist($structure);
+                        $user->addStructure($structure);
+                    }
+                }
             }
-        }
 
-        $em->persist($user);
-        $em->flush();
+            $em->persist($user);
+            $em->flush();
 
-   
-        return $this->json([], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
+
+            return $this->json([], $status = 201, $headers = ['content-type' => 'application/Json'], $context = []);
         }
 
         $errorsEmail = $formUser["email"]->getErrors();
 
-        if($errorsEmail->count() > 0){
+        if ($errorsEmail->count() > 0) {
             return $this->json(['Email taken'], $status = 403, $headers = ['content-type' => 'application/Json'], $context = []);
         }
 
         return $this->json(['error message' => 'serveur down - contact Admin'], $status = 500, $headers = ['content-type' => 'application/Json'], $context = []);
     }
-
 }

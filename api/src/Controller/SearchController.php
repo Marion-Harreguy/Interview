@@ -112,7 +112,6 @@ class SearchController extends AbstractController
             OR $language 
             OR $openSource
         ){
-            //dd('coucou');
             $interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource, $yearBegin, $yearEnd);
             
         }else {
