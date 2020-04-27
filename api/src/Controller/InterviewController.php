@@ -101,9 +101,9 @@ class InterviewController extends AbstractController
     {
         // on decode les données envoyées
         $data = json_decode($request->getContent(), true);
-  
-       
-        if ($interview->getUser() != $this->getUser() ) {
+
+
+        if ($interview->getUser() != $this->getUser()) {
             return $this->json(
                 ["message" => "notAuthorized"],
                 $status = 403,
@@ -129,7 +129,7 @@ class InterviewController extends AbstractController
 
         $interviewed =  $data["meta"]["interviewed"];
 
-      
+
         // on valide les données ainsi reçut
         $form = $this->createForm(InterviewEditType::class, $interview);
         $form->submit($dataInterview);
@@ -194,41 +194,41 @@ class InterviewController extends AbstractController
 
             foreach ($interviewed as $dataInterviewed) {
 
-             
+
                 $interviewedDefault = $interviewedRepository->find(1);
 
                 $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
 
-                        if($interviewed){
+                if ($interviewed) {
 
-                        $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
-                        $formIntervierwed->submit($dataInterviewed);
+                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                    $formIntervierwed->submit($dataInterviewed);
 
-                        if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-                            $interviewed->addInterview($interview);
-                            $interviewed->setUpdatedAt(new \DateTime());
-                          
-                            $interview->removeInterviewed($interviewedDefault);
-                        }
-                        } else {
+                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                        $interviewed->addInterview($interview);
+                        $interviewed->setUpdatedAt(new \DateTime());
 
-                        $interviewed = new Interviewed();
-                        $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
-                        $formIntervierwed->submit($dataInterviewed);
-
-                        if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-                            $interviewed->addInterview($interview);
-                            $interview->removeInterviewed($interviewedDefault);
-                        }
+                        $interview->removeInterviewed($interviewedDefault);
                     }
+                } else {
 
-                    $em->persist($interviewed);
+                    $interviewed = new Interviewed();
+                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                    $formIntervierwed->submit($dataInterviewed);
+
+                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                        $interviewed->addInterview($interview);
+                        $interview->removeInterviewed($interviewedDefault);
+                    }
                 }
 
-                //=============================//
-                //   Gestion des structures    //
-                //=============================//
-                /*
+                $em->persist($interviewed);
+            }
+
+            //=============================//
+            //   Gestion des structures    //
+            //=============================//
+            /*
                 - Boucler sur le tableau $data["interview"]["interviewed"]["structure"]
                     - Si l'index ["id"] existe
                         --> Recuperer l'objet Structure et le mettre à jour
@@ -236,26 +236,26 @@ class InterviewController extends AbstractController
                         --> Créer l'objet Structure et lui assigner l'interviewé
                 */
 
-                for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
+            for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
 
 
-                    if (isset($dataInterviewed["structure"][$i]["id"])) {
-                        $id = $dataInterviewed["structure"][$i]["id"];
+                if (isset($dataInterviewed["structure"][$i]["id"])) {
+                    $id = $dataInterviewed["structure"][$i]["id"];
 
-                        $structure = $structureRepository->find($id);
-                    } else {
-                        $structure = new Structure();
-                        $formStructure = $this->createForm(StructureType::class, $structure);
-                        $formStructure->submit($dataInterviewed["structure"]);
-                        if ($formStructure->isSubmitted() && $formStructure->isValid()) {
-                            $structure->addInterviewed($interviewed);
-                            $interviewed->setUpdatedAt(new \DateTime());
-                        }
+                    $structure = $structureRepository->find($id);
+                } else {
+                    $structure = new Structure();
+                    $formStructure = $this->createForm(StructureType::class, $structure);
+                    $formStructure->submit($dataInterviewed["structure"]);
+                    if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+                        $structure->addInterviewed($interviewed);
+                        $interviewed->setUpdatedAt(new \DateTime());
                     }
-
-                    $em->persist($structure);
                 }
-    
+
+                $em->persist($structure);
+            }
+
 
 
             //==================================//
@@ -331,13 +331,33 @@ class InterviewController extends AbstractController
                     }
                     $question->setInterview($interview);
                     $em->persist($question);
-                    
-                    
                 } else {
 
                     $question = $questionRepository->find($questionId);
                     $question->setContent($questionReponse["question"]);
                     if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
+
+                        //dd($questionReponse["answer"], $question->getAnswers());
+                   
+                        if (count($questionReponse["answer"]) < count($question->getAnswers())) {
+
+                            $AnswerInDatabase = $question->getAnswers();
+                            $answerNotSaved = $questionReponse["answer"];
+
+                            for ($i = 0; $i < count($AnswerInDatabase); $i++) {
+
+                                if (isset($answerNotSaved[$i]["id"])) {
+
+                                    if ($AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
+                                    }
+                                } else {
+                                    $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
+                                    $question->removeAnswer($answer);
+                                }
+                            }
+                        }
+
+
 
                         for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
                             if (isset($questionReponse["answer"][$i]["id"])) {
@@ -364,29 +384,25 @@ class InterviewController extends AbstractController
                     }
                     $question->setInterview($interview);
                     $em->persist($question);
-                    
                 }
-
-              $em->flush($question);
-                            }
+            }
 
             $interview->setUpdatedAt(new \Datetime);
-
             $em->flush();
-            
+
             $em->refresh($interview);
         }
 
 
-        
+
 
         $interviewResponse = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
         return $this->json(
-                 $interviewResponse,
-                 $status = 200,
-                 $headers = ['content-type' => 'application/Json'],
-                 $context = []
-             );
+            $interviewResponse,
+            $status = 200,
+            $headers = ['content-type' => 'application/Json'],
+            $context = []
+        );
 
         // $data = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
         // return $this->json(
