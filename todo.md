@@ -2,20 +2,7 @@ Week-end :
 — Faire une 404 cool 
 
 S4 :
-LUNDI :
-Requêtes :
-— Impossible de changer l'interviewé (en back)
-— Impossible de supprimer une question ou une réponse
-Register :
-— Gérer input mandatory (structure) — register
-Write :
-— Gérer la publication : 
-  - déplacer dans le dashboard et passer isPublished à true + êtes vous sûr ?
-  - Gérer les inputs mandatory (to publish)
-
 Moteur de recherche : titre, lieu, langues, dates, libre de droit
-
-
 
 MARDI :
 Search
@@ -30,6 +17,11 @@ UserLibrary
 — Supprimer une catégorie
 — Commenter et clean le code
 — Modifier le nom ou les data sur la structure d'un user
+Write
+— Cocher les catégories qui correspondent à l'entretien
+— Unpublish
+— Mettre focus sur le nouvel input quand bouton Question ou Réponse
+— Remettre le state par defaut au create (marche pas?)
 
 MERCREDI :
 — CSS mobile
@@ -38,6 +30,7 @@ MERCREDI :
 — Vérifier le système qui génère les coordonnées
 — Zoom dans la frise chronologique
 — Limiter le nombre de catégories (masquer l’input si il y a plus de 20 catégories)
+— CSS : enlever les vieux ronds qui apparaissent aux clic des tools (boutons)
 
 
 Futur :

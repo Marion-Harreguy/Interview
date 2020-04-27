@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW } from '../actions';
 import history from '../history';
 
 export const initialState = {
@@ -68,6 +68,22 @@ const categoryColors = [
 const userData = (state = initialState, action = {}) => {
 
   switch (action.type) {
+    case PUBLISH_INTERVIEW:
+      const publishingInterviewInfos = state.dashboard.writtingInterviews.find((interview) => interview.id == action.payload);
+      let newWrittingDashboard = [ {id:0}, ...state.dashboard.writtingInterviews];
+      newWrittingDashboard = newWrittingDashboard.filter((interview) => interview.id != action.payload);
+      newWrittingDashboard.splice(0, 1);
+      const newPublishedDashboard = [ ...state.dashboard.publishedInterviews, { ...publishingInterviewInfos } ];
+      // console.log(newWrittingDashboard);
+      // console.log(newPublishedDashboard);
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          writtingInterviews: [ ...newWrittingDashboard ],
+          publishedInterviews: [ ...newPublishedDashboard ],
+        },
+      };
     case MODIFY_USER_INFO:
       return {
         ...state,

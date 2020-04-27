@@ -148,7 +148,7 @@
     background-repeat: no-repeat;
   }
 
-  .write__delete-menu {
+  .write__delete-menu, .write__publish-menu {
     display: none;
     position: absolute;
     border: solid 1px white;
@@ -159,11 +159,11 @@
     text-align: right;
   }
 
-  .write__delete-menu p {
+  .write__delete-menu p,  .write__publish-menu p {
     text-align:center;
   }
 
-  .write__delete-menu button {
+  .write__delete-menu button,  .write__publish-menu button {
     margin: 15px 10px 0px 0px;
   }
 

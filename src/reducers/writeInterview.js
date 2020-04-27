@@ -18,6 +18,7 @@ import {
   DELETE_QUESTION,
   LOAD_ID,
   CHOOSE_INITIALES,
+  PUBLISH_INTERVIEW,
 } from '../actions';
 
 export const initialState = {
@@ -64,6 +65,14 @@ export const initialState = {
 
 const readInterview = (state = initialState, action = {}) => {
   switch (action.type) {
+    case PUBLISH_INTERVIEW:
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          isPublished: true,
+        },
+      };
     case ADD_NEW_QUESTION:
       return {
         ...state,

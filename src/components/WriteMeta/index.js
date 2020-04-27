@@ -23,6 +23,7 @@ const WriteMeta = ({
   writeInterviewDelete,
   writeInterviewCreate,
   changeCoordinates,
+  interviewContent,
 }) => {
   // If user clicks on delete
   const openDeleteMenu = () => {
@@ -57,37 +58,34 @@ const WriteMeta = ({
   };
 
   const createOrPut = () => {
-    console.log("create or put ?");
     if (interviewMeta.id === 0 && interviewMeta.title.length > 3) {
-      console.log("create");
       writeInterviewCreate();
     }
     else if (interviewMeta.id !== 0) {
-      console.log(interviewMeta);
-      console.log("put");
       writeInterviewPut(interviewId);
     }
-    console.log("none");
   };
 
   // Geocode.setApiKey("AIzaSyBtYuJUSNGudqHGhKyUN-ktG6RHCyjODM4");
   // Geocode.setLanguage("fr");
 
   const findLocation = (value) => {
-    axios({
-      url: `http://open.mapquestapi.com/geocoding/v1/address?key=0yrU5DyX2Ek89MaqwXGWCBUNpcPDJEv9&location=${value}`,
-      method: 'get',
-    })
-      .then((response) => {
-        const x = parseInt(response.data.results[0].locations[0].latLng.lat);
-        const y = parseInt(response.data.results[0].locations[0].latLng.lng);
-        changeCoordinates([x, y]);
-        writeInterviewPut(interviewId);
-      },
-      error => {
-        console.error(error);
-      },
-    );
+    if (value !== '') {
+      axios({
+        url: `http://open.mapquestapi.com/geocoding/v1/address?key=0yrU5DyX2Ek89MaqwXGWCBUNpcPDJEv9&location=${value}`,
+        method: 'get',
+      })
+        .then((response) => {
+          const x = parseInt(response.data.results[0].locations[0].latLng.lat);
+          const y = parseInt(response.data.results[0].locations[0].latLng.lng);
+          changeCoordinates([x, y]);
+          writeInterviewPut(interviewId);
+        },
+        error => {
+          console.error(error);
+        },
+      );
+    }
   };
 
   const turnTableToString = (tagTable) => {
@@ -106,11 +104,43 @@ const WriteMeta = ({
     return [tagString];
   };
 
+  const checkMandatoryInfos = () => {
+    const inputList = document.querySelectorAll('.write__form__input');
+    let canPublish = true;
+    for (let inputIndex = 0; inputIndex < inputList.length; inputIndex++ ) {
+      if (inputList[inputIndex].value === '' || inputList[inputIndex].value === undefined || inputList[inputIndex].value === false || inputList[inputIndex].value === null) {
+        if (inputList[inputIndex].htmlFor !== 'royalty-free') {
+          // inputList[inputIndex].style.borderBottom = 'solid 0.5px red !important';
+          inputList[inputIndex].setAttribute('style', 'border-bottom:solid 0.5px #bf4b4c !important');
+          canPublish = false;
+        }
+      }
+      else inputList[inputIndex].setAttribute('style', undefined);
+    }
+    if (interviewMeta.context === '') {
+      window.alert('Veuillez saisir un contexte pour votre entretien');
+      return false;
+    }
+    if (interviewContent.length < 1) {
+      window.alert('Veuillez saisir du contenu pour votre entretien');
+      return false;
+    }
+    if (canPublish) {
+      document.querySelector('.write__publish-menu').style.display = 'block';
+    }
+    else window.alert('Veuillez renseigner tous les champs avant de publier votre entretien.');
+  };
+
+  const closePublishMenu = () => {
+    document.querySelector('.write__publish-menu').style.display = 'none';
+  }
+
+
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">
       <div className="write__tools">
         <NavLink exact to="/"><button className="tools__close" type="button" type="button" label="Fermer" /></NavLink>
-        <button className="tools__publish" type="button" onClick={() => {publishInterview(); updateUserPut(); }} label="Publier" />
+        <button className="tools__publish" type="button" onClick={() => checkMandatoryInfos()} label="Publier" />
         <button className="tools__delete" type="button" onClick={openDeleteMenu} label="Supprimer" />
         
       </div>
@@ -119,6 +149,12 @@ const WriteMeta = ({
         <p>Êtes-vous sûr.e de vouloir supprimer cet entretien ?</p>
         <button className="write__delete-menu--no" onClick={closeDeleteMenu} label="Annuler" type="button">Annuler</button>
         <button className="write__delete-menu--yes" onClick={() =>{closeDeleteMenu(); writeInterviewDelete(interviewId); updateUserPut();}} label="Supprimer" type="button">Supprimer</button>
+      </div>
+
+      <div className="write__publish-menu">
+        <p>Êtes-vous sûr.e de vouloir publier cet entretien ?</p>
+        <button className="write__delete-menu--no" onClick={closePublishMenu} label="Annuler" type="button">Annuler</button>
+        <button className="write__delete-menu--yes" onClick={() =>{closePublishMenu(), publishInterview(interviewId), updateUserPut()}} label="Supprimer" type="button">Publier</button>
       </div>
 
       <div className="interview__meta">
