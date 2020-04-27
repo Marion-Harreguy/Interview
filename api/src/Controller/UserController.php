@@ -207,7 +207,7 @@ class UserController extends AbstractController
 
 
 
-            //$em->flush();
+            $em->flush();
 
             $data = $serializer->normalize($user, null, ['groups' => ['user']]);
             return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);
