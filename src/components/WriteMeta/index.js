@@ -15,7 +15,7 @@ const WriteMeta = ({
   changeInterviewed,
   changeInterviewedStructure,
   changeAuthor,
-  // changeAuthorStructure,
+  changeAuthorStructure,
   userName,
   interviewId,
   updateUserPut,
@@ -94,7 +94,7 @@ const WriteMeta = ({
     <aside className="left__menu left__menu--bottom left__menu--write">
       <div className="write__tools">
         <NavLink exact to="/"><button className="tools__close" type="button" type="button" label="Fermer" /></NavLink>
-        <button className="tools__publish" type="button" onClick={() => {publishInterview(); updateUserPut();}} label="Publier" />
+        <button className="tools__publish" type="button" onClick={() => {publishInterview(); updateUserPut(); }} label="Publier" />
         <button className="tools__delete" type="button" onClick={openDeleteMenu} label="Supprimer" />
         
       </div>
@@ -111,15 +111,16 @@ const WriteMeta = ({
           <input className="write__form__input" type="date" name="date" placeholder="Année" date="dd-MM-yyyy" value={interviewMeta.date} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
           <input className="write__form__input" type="text" name="location" placeholder="Lieu de l'entretien" value={interviewMeta.location} onBlur={(event) => findLocation(event.target.value)} onChange={(event) => changeMeta(event.target)} />
           <input className="write__form__input" type="text" name="language" placeholder="Langue(s)" value={interviewMeta.language} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta(event.target)} />
-          {/* <input className="write__form__input" type="text" name="firstname" placeholder="Prénom de l'auteur" value={interviewMeta.author.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
-          <input className="write__form__input" type="text" name="lastname" placeholder="Nom de l'auteur" value={interviewMeta.author.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} /> */}
+          <input className="write__form__input" type="text" name="firstname" placeholder="Prénom de l'auteur" value={interviewMeta.author.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
+          <input className="write__form__input" type="text" name="lastname" placeholder="Nom de l'auteur" value={interviewMeta.author.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
           <input className="write__form__input" type="text" name="firstname" placeholder="Auteur" value={`Auteur : ${interviewMeta.author.firstname} ${interviewMeta.author.lastname}`} disabled />
 
           { // Open author subdata only if the name is changed from default user name to something else
               interviewMeta.author.name !== userName && (
                 <div>
-                  {/* <input className="write__form__input" type="text" name="name" placeholder="Structure (auteur)" value={interviewMeta.structure[0].name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} />
-                  <input className="write__form__input" type="text" name="city" placeholder="Ville (auteur)" value={interviewMeta.structure[0].localisation} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} /> */}
+                  <input className="write__form__input" type="text" name="name" placeholder="Structure (auteur)" value={interviewMeta.author.structure.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} />
+                  <input className="write__form__input" type="text" name="city" placeholder="Ville (auteur)" value={interviewMeta.author.structure.city} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} />
+                  <input className="write__form__input" type="text" name="sector" placeholder="Secteur de la structure (auteur)" value={interviewMeta.author.structure.sector} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthorStructure(event.target)} />
                   <input className="write__form__input" type="text" name="status" placeholder="Statut (auteur)" value={interviewMeta.author.status} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeAuthor(event.target)} />
                 </div>
               ),
@@ -135,6 +136,7 @@ const WriteMeta = ({
                             <input className="write__form__input" type="text" name="lastname" placeholder={`Nom de l'enquêté n°${numero}`} value={interviewed.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="name" placeholder={`Structure (n°${numero})`} value={interviewed.structure.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="city" placeholder={`Ville (n°${numero})`} value={interviewed.structure.city} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
+                            <input className="write__form__input" type="text" name="sector" placeholder={`Secteur (n°${numero})`} value={interviewed.structure.sector} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="job" placeholder={`Statut (n°${numero})`} value={interviewed.job} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="email" placeholder={`Email de l'enquêté n°${numero}`} value={interviewMeta.interviewed.email} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                           </div>
@@ -147,7 +149,7 @@ const WriteMeta = ({
 
           { // If the interviewed is different from default value "anonyme", offer to add a new one
           interviewMeta.interviewed[interviewMeta.interviewed.length-1].name !== 'Anonyme' && (
-          <button className="write__form__add-interviewed write__form__button" onClick={(event)=>{event.preventDefault(); addInterviewed();}} label="Ajouter enquêté" type="button">Ajouter un.e enquêté.e</button>
+          <button className="write__form__add-interviewed write__form__button" onClick={(event)=>{event.preventDefault(); addInterviewed(); }} label="Ajouter enquêté" type="button">Ajouter un.e enquêté.e</button>
           )
          }
 
@@ -175,6 +177,7 @@ const WriteMeta = ({
 };
 
 WriteMeta.propTypes = {
+  changeAuthorStructure: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
   interviewId: PropTypes.string.isRequired,
   addInterviewed: PropTypes.func.isRequired,

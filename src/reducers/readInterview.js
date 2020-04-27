@@ -17,6 +17,7 @@ export const initialState = {
       structure: {
         name: '',
         city: '',
+        sector: '',
       },
     },
     interviewed: [
@@ -29,6 +30,7 @@ export const initialState = {
         structure: {
           name: '',
           city: '',
+          sector: '',
         },
       },
     ],

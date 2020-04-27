@@ -150,6 +150,7 @@ export default (store) => (next) => (action) => {
       break;
 
     case UPDATE_USER_PUT:
+      console.log(userInfo.dashboard);
       axios({
         url: `http://184.73.143.2/api/users/${userId()}`,
         method: 'put',

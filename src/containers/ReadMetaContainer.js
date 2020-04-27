@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import ReadMeta from 'src/components/ReadMeta';
-import { saveInterview, updateUserGet, updateUserPut } from '../actions';
+import { saveInterview, updateUserPut } from '../actions';
 
 
 const mapStateToProps = (state) => ({

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.scss';
@@ -32,15 +32,17 @@ const ReadMeta = ({
     }
   };
 
+  const [categoryList, setCategoryList] = useState([]);
+
   // Table where interview-categories will be saved
   // if user decides to save it in his library
-  const categories = [];
 
   // Add categories to the table
   // or remove them if already there
   const pushCategory = (categoryId) => {
     let toDelete = false;
     // This value is added so the array can get completely empty
+    const categories = [...categoryList];
     categories.unshift(0);
     for (let index = 0; index < categories.length; index++) {
       if (categories[index] === categoryId) toDelete = index;
@@ -55,6 +57,8 @@ const ReadMeta = ({
     }
     // Remove the first value (which might leave an empty array)
     categories.splice(0, 1);
+    setCategoryList(categories);
+    console.log(categories);
   };
 
   // Save interview in user library
@@ -66,17 +70,22 @@ const ReadMeta = ({
     console.log(isItSavedThis);
     if (document.querySelector('.read__categories').style.display !== 'block' && isItSavedThis !== 'saved') {
       document.querySelector('.read__categories').style.display = 'block';
+      document.querySelector('.tools__save').style.backgroundImage = "url(/a41f8aa1665f78a62484651e8d8671eb.png)";
     }
 
     // If saving menu is opened, interview needs to be added to library
     else if (document.querySelector('.read__categories').style.display === 'block') {
-      saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categories });
+      saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
       document.querySelector('.read__categories').style.display = 'none';
+      document.querySelector('.tools__save').style.backgroundImage = "url(/f8e8bb64237b6dbd4a5c95ac901177d9.png)";
+      updateUserPut();
     }
 
     // If article was already saved, and needs to be unsaved
     else {
-      saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categories });
+      saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
+      document.querySelector('.tools__save').style.backgroundImage = "url(/33b3bc6a9fdc212620382c0b6115a550.png)";
+      updateUserPut();
     }
   };
 
@@ -96,14 +105,33 @@ const ReadMeta = ({
         </NavLink>
         {
           // est-ce l'auteur ?
-          interviewMeta.author.id === userId ?
-          // Si oui 
-          ( <NavLink exact to={`/update/${interviewMeta.id}`}>
-            <button className="tools__modify" type="button" label="Modifier" />
-          </NavLink> ) : ( <button className={`tools__save tools__save--${isItSaved(interviewMeta.id)}`} type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />)
+          interviewMeta.author.id === userId
+            ?
+          // Si oui
+            (
+              <NavLink exact to={`/update/${interviewMeta.id}`}>
+                <button className="tools__modify" type="button" label="Modifier" />
+              </NavLink>
+            ) : (
+              <button className={`tools__save tools__save--${isItSaved(interviewMeta.id)}`} type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />
+            )
         }
         <button className="tools__download" type="button" onClick={() => downloadInterview()} label="Télécharger le PDF" />
       </div>
+
+
+      {
+      // Si l'entretien est enregistré
+      isItSaved(interviewMeta.id) === 'saved' &&
+      (
+        <div className="read__savedCategories">
+        {
+          dashboard.savedInterviews.find((interview) => interview.id === interviewMeta.id).categories.map((category) => (
+            <input className={`category-button category-button--${category}`} key={category} type="checkbox" disabled/>
+          ))
+        }
+      </div> )
+      }
 
       {/* CATEGORIES — shown when adding interview to library */}
       <div className="read__categories" style={{display: 'none'}}>
@@ -112,7 +140,7 @@ const ReadMeta = ({
           { // Creating each category
           userCategories.map((category) => (
             <div className="home__category" key={category.id}>
-              <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => { pushCategory(category.id); updateUserPut(); }} name={`category-${category.id}`} />
+              <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => pushCategory(category.id)} name={`category-${category.id}`} />
               <label htmlFor={category.id}>{category.name}</label>
             </div>
           ))
@@ -126,18 +154,25 @@ const ReadMeta = ({
         <p className="interview__data interview__data--city">{interviewMeta.location}</p>
         <p className="interview__data interview__data--language">{interviewMeta.language}</p>
         <p className="interview__data interview__data--author" onClick={() => openSubdata('author')}><span className="span--author">&#8594;</span>{`${interviewMeta.author.firstname} ${interviewMeta.author.lastname} (a)`}</p>
-        {/* <p className="interview__subdata interview__subdata--author interview__subdata--structure">{interviewMeta.structure.name} — {interviewMeta.structure.location}</p> */}
+        <p className="interview__subdata interview__subdata--author interview__subdata--structure" style={{display:'none'}}>{interviewMeta.author.structure.name} — {interviewMeta.author.structure.city} — ({interviewMeta.author.structure.sector})</p>
         <p className="interview__subdata interview__subdata--author interview__subdata--status">{interviewMeta.author.status}</p>
 
         { // Creating subdata for each interviewed person
           interviewMeta.interviewed.map((inquired, indexI) => (
             <div key={`inquired-${indexI}`}>
               <p className="interview__data interview__data--interviewed" onClick={() => openSubdata(`interviewed--${inquired.id}`)}><span className={`span--interviewed--${inquired.id}`}>&#8594;</span> {`${inquired.firstname} ${inquired.lastname} (e)`}</p>
-              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.structure.name} — {inquired.structure.location}</p>
-              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.status}</p>
+              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`} style={{display:'none'}}>{inquired.structure.name} — {inquired.structure.city} ({inquired.structure.sector})</p>
+              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`} style={{display:'none'}}>{inquired.job}</p>
             </div>
           ))
         }
+        <div className="interview__data interview__data--tags">
+          {
+            interviewMeta.tags.map((tag) => (
+              <span className="read__tags" key={tag}>{tag}</span>
+            ))
+          }
+        </div>
       </div>
 
       {/* LATER FOR ANNOTATIONS

@@ -101,3 +101,34 @@
   border: solid 0.5px white;
   background-color: #414a52;
 }
+
+.tools__modify {
+  width: 18px;
+  height: 18px;
+  background-image: url('./../../assets/icons/pencil.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 5px;
+  right: 0;
+  border-radius: 0;
+  border: 0;
+}
+
+.read__tools button, .read__tools button:focus {
+  border-radius: 0 !important;
+}
+
+.read__savedCategories {
+  width: 20px;
+  position: absolute;
+  right: 20px;
+  top: 100px;
+  height: fit-content;
+}
+
+.read__tags {
+  padding: 1px 7px 2px 7px;
+  border-radius: 7px;
+  border: solid 0.5px white;
+  display: inline-block;
+}

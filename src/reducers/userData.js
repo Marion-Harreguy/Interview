@@ -165,7 +165,7 @@ const userData = (state = initialState, action = {}) => {
         newSavedInterview.push({
           id: action.payload.id,
           name: action.payload.name,
-          categories: [...action.payload.categories],
+          categories: [...action.payload.categoryList],
         });
       }
       else {
