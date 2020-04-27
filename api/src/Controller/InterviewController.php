@@ -36,7 +36,7 @@ class InterviewController extends AbstractController
      */
     public function browse(InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
- 
+
         $interviews = $interviewRepository->findAllPublished();
 
         $data = $serializer->normalize($interviews, null, ['groups' => ['browseInterviews']]);
@@ -56,7 +56,7 @@ class InterviewController extends AbstractController
     public function read(Interview $interview, InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
 
-  
+
 
         //======================================//
         // Gestion de l'affichage des interview //
@@ -108,7 +108,7 @@ class InterviewController extends AbstractController
 
         $idAuthorized = $data["meta"]["author"]["id"];
 
-        if ($idAuthorized != $this->getUser()->getId()){
+        if ($idAuthorized != $this->getUser()->getId()) {
             return $this->json(
                 ["message" => "notAuthorized"],
                 $status = 403,
@@ -117,7 +117,7 @@ class InterviewController extends AbstractController
             );
         }
 
-       // dd($this->getUser());
+        // dd($this->getUser());
 
         $dataInterview = [];
 
@@ -135,21 +135,23 @@ class InterviewController extends AbstractController
         $interviewed =  $data["meta"]["interviewed"];
         // on valide les données ainsi reçut
         $form = $this->createForm(InterviewEditType::class, $interview);
-        $form->submit($dataInterview); 
-        
-     
-        if ($form->isSubmitted() && $form->isValid()) {
+        $form->submit($dataInterview);
 
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //=============================//
+            //   Gestion des coordinates   //
+            //=============================//
             $coordinates = [];
-            for ($i=0; $i < count($data["meta"]["coordinates"]) ; $i++) { 
+            for ($i = 0; $i < count($data["meta"]["coordinates"]); $i++) {
 
                 $coordinates[] = intval($data["meta"]["coordinates"][$i]);
             }
 
-            if(count($coordinates) == 2){
+            if (count($coordinates) == 2) {
                 $interview->setCoordinates($coordinates);
-            }else {
-                $interview->setCoordinates([0,0]);
+            } else {
+                $interview->setCoordinates([0, 0]);
             }
 
 
@@ -270,8 +272,26 @@ class InterviewController extends AbstractController
                           - Créer l'objet Answer
                           - Lui assginer la question et l'interviewé
             */
+
             foreach ($data["content"] as $questionReponse) {
 
+                if (count($data["content"]) < count($interview->getQuestions())) {
+
+                    $questionsInDatabase = $interview->getQuestions();
+                    $questionNotSaved = $data["content"];
+
+                    for ($i = 0; $i < count($questionsInDatabase); $i++) {
+
+                        if (isset($questionNotSaved[$i]["id"])) {
+
+                            if ($questionsInDatabase[$i]->getId() === $questionNotSaved[$i]["id"]) {
+                            }
+                        } else {
+                            $question = $questionRepository->find($questionsInDatabase[$i]->getId());
+                            $interview->removeQuestion($question);
+                        }
+                    }
+                }
 
                 if (isset($questionReponse["id"])) {
                     $questionId = $questionReponse["id"];
@@ -284,63 +304,63 @@ class InterviewController extends AbstractController
                     $question = new Question();
                     $question->setContent($questionReponse["question"]);
 
-                    if(isset($questionReponse["answer"])){
-                    for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
-                        if (isset($questionReponse["answer"][$i]["id"])) {
-                            $answerId = $questionReponse["answer"][$i]["id"];
-                        } else {
-                            $answerId = null;
-                        }
+                    if (isset($questionReponse["answer"])) {
+                        for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                            if (isset($questionReponse["answer"][$i]["id"])) {
+                                $answerId = $questionReponse["answer"][$i]["id"];
+                            } else {
+                                $answerId = null;
+                            }
 
-                        if (!$answerId) {
-                            $answer = new Answer();
-                            $answer->setContent($questionReponse["answer"][$i]["content"]);
-                            $answer->setQuestion($question);
-                            $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
-                            $answer->setInterviewed($interviewed);
-                        } else {
-                            $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
-                            $answer->setContent($questionReponse["answer"][$i]["content"]);
-                            $answer->setUpdatedAt(new \Datetime);
+                            if (!$answerId) {
+                                $answer = new Answer();
+                                $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                $answer->setQuestion($question);
+                                $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
+                                $answer->setInterviewed($interviewed);
+                            } else {
+                                $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
+                                $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                $answer->setUpdatedAt(new \Datetime);
+                            }
                         }
+                        $em->persist($answer);
                     }
-                    $em->persist($answer);
-                }
 
                     $question->setInterview($interview);
                 } else {
 
                     $question = $questionRepository->find($questionId);
                     $question->setContent($questionReponse["question"]);
-                    if(isset($questionReponse["answer"])){
-                     
-                    for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
-                        if (isset($questionReponse["answer"][$i]["id"])) {
-                            $answerId = $questionReponse["answer"][$i]["id"];
-                        } else {
-                            $answerId = null;
+                    if (isset($questionReponse["answer"])) {
+
+                        for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                            if (isset($questionReponse["answer"][$i]["id"])) {
+                                $answerId = $questionReponse["answer"][$i]["id"];
+                            } else {
+                                $answerId = null;
+                            }
+
+                            if (!$answerId) {
+
+                                $answer = new Answer();
+                                $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                $answer->setQuestion($question);
+                                $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
+                                $answer->setInterviewed($interviewed);
+                            } else {
+
+                                $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
+                                $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                $answer->setUpdatedAt(new \Datetime);
+                            }
                         }
-
-                        if (!$answerId) {
-
-                            $answer = new Answer();
-                            $answer->setContent($questionReponse["answer"][$i]["content"]);
-                            $answer->setQuestion($question);
-                            $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
-                            $answer->setInterviewed($interviewed);
-                        } else {
-
-                            $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
-                            $answer->setContent($questionReponse["answer"][$i]["content"]);
-                            $answer->setUpdatedAt(new \Datetime);
-                        }
+                        $em->persist($answer);
                     }
-                    $em->persist($answer);
-                }
                     $question->setInterview($interview);
                 }
 
-               
+
                 $em->persist($question);
             }
 
