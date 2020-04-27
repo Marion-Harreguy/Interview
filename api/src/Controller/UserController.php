@@ -63,7 +63,12 @@ class UserController extends AbstractController
 
             //=============================//
             //   Gestion de la structure   //
-            //=============================//   
+            //=============================//  
+     
+
+            if (!empty($data["structure"])){
+              
+            
             if (isset($data["structure"]["id"])) {
                 $structure = $structureRepository->find($data["structure"]["id"]);
 
@@ -85,7 +90,7 @@ class UserController extends AbstractController
                     $em->persist($structure);
                 }
             }
-
+        }
 
             //=============================//
             //    Gestion des categories   //
@@ -202,7 +207,7 @@ class UserController extends AbstractController
 
 
 
-            $em->flush();
+            //$em->flush();
 
             $data = $serializer->normalize($user, null, ['groups' => ['user']]);
             return $this->json($data, $status = 200, $headers = ['content-type' => 'application/Json'], $context = []);

@@ -55,9 +55,6 @@ class InterviewController extends AbstractController
      */
     public function read(Interview $interview, InterviewRepository $interviewRepository, SerializerInterface $serializer)
     {
-
-
-
         //======================================//
         // Gestion de l'affichage des interview //
         //======================================//
