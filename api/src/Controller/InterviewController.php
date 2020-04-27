@@ -395,14 +395,14 @@ class InterviewController extends AbstractController
         $dataInterview = [];
 
         $dataInterview["title"] = $data["meta"]["title"];
-        $dataInterview["context"] = $data["meta"]["context"];
-        $dataInterview["location"] = $data["meta"]["location"];
-        $dataInterview["language"] = $data["meta"]["language"];
-        $dataInterview["openLicence"] = $data["meta"]["openLicence"];
-        $dataInterview["isPublished"] = $data["meta"]["isPublished"];
+        // $dataInterview["context"] = $data["meta"]["context"];
+        // $dataInterview["location"] = $data["meta"]["location"];
+        // $dataInterview["language"] = $data["meta"]["language"];
+        // $dataInterview["openLicence"] = $data["meta"]["openLicence"];
+        // $dataInterview["isPublished"] = $data["meta"]["isPublished"];
 
 
-        $tags = $data["meta"]["tags"];
+        // $tags = $data["meta"]["tags"];
 
 
         $interviewed =  $data["meta"]["interviewed"];
@@ -418,25 +418,26 @@ class InterviewController extends AbstractController
             $em->persist($interview);
         }
 
+
         //=============================//
         //      Gestion des tags       //
         //=============================//
-        foreach ($tags as $tagUnSaved) {
+        // foreach ($tags as $tagUnSaved) {
 
-            $tag = $tagRepository->findOneBy(["name" => $tagUnSaved["name"]]);
+        //     $tag = $tagRepository->findOneBy(["name" => $tagUnSaved["name"]]);
 
-            if ($tag) {
+        //     if ($tag) {
 
-                $tag->addInterview($interview);
-            } else {
+        //         $tag->addInterview($interview);
+        //     } else {
 
-                $tag = new Tag();
-                $tag->setName($tagUnSaved["name"]);
-                $tag->addInterview($interview);
-            }
+        //         $tag = new Tag();
+        //         $tag->setName($tagUnSaved["name"]);
+        //         $tag->addInterview($interview);
+        //     }
 
-            $em->persist($tag);
-        }
+        //     $em->persist($tag);
+        // }
 
         //=============================//
         //  Gestion de l'interviewé    //
@@ -495,32 +496,32 @@ class InterviewController extends AbstractController
             }
         }
 
-
         $user->addInterview($interview);
-
         $em->persist($user);
+        $em->flush();
+
+
 
         //==================================//
         // Gestion des Questions & Réponses //
         //==================================//
-        for ($indexContent = 0; $indexContent < count($data["content"]); $indexContent++) {
+        // for ($indexContent = 0; $indexContent < count($data["content"]); $indexContent++) {
 
-            $content = $data["content"][$indexContent];
+        //     $content = $data["content"][$indexContent];
 
-            $question = new Question();
-            $answer = new Answer();
+        //     $question = new Question();
+        //     $answer = new Answer();
 
-            $question->setContent($content["question"]);
-            $question->addAnswer($answer);
-            $question->setInterview($interview);
+        //     $question->setContent($content["question"]);
+        //     $question->addAnswer($answer);
+        //     $question->setInterview($interview);
 
-            $answer->setContent($content["answers"]);
-            $answer->setInterviewed($interviewed);
+        //     $answer->setContent($content["answers"]);
+        //     $answer->setInterviewed($interviewed);
 
-            $em->persist($question, $answer);
-        }
+        //     $em->persist($question, $answer);
+        // }
 
-        $em->flush();
 
 
         return $this->json(

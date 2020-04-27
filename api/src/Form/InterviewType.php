@@ -21,13 +21,13 @@ class InterviewType extends AbstractType
             ->add('title', null, [
                 'constraints' => [new NotBlank, new NotNull()]
             ])
-            ->add('context', null, [
-                'constraints' => [new NotBlank, new NotNull()]
-            ])
+            ->add('context'
+            //, null, ['constraints' => [new NotBlank, new NotNull()]]
+            )
             ->add('location')
-            ->add('language', null, [
-                'constraints' => [new NotBlank, new NotNull()]
-            ])
+            ->add('language'
+            //, null, ['constraints' => [new NotBlank, new NotNull()]]
+            )
             ->add('openLicence')
             ->add('isPublished')
         //    ->add('date')

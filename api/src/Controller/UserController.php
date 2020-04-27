@@ -90,8 +90,8 @@ class UserController extends AbstractController
                     $em->persist($structure);
                 }
             }
-        }
 
+        }
             //=============================//
             //    Gestion des categories   //
             //=============================//
