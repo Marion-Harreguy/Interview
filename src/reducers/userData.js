@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO } from '../actions';
+import history from '../history';
 
 export const initialState = {
   connection: {
@@ -67,6 +68,14 @@ const categoryColors = [
 const userData = (state = initialState, action = {}) => {
 
   switch (action.type) {
+    case MODIFY_USER_INFO:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          [action.payload.name]: action.payload.value,
+        },
+      };
     case CHANGE_ORDER:
       return {
         ...state,
@@ -261,6 +270,7 @@ const userData = (state = initialState, action = {}) => {
     case LOG_OUT:
       console.log("loging out");
       localStorage.clear();
+      history.push('/');
       return {
         ...state,
         connection: {

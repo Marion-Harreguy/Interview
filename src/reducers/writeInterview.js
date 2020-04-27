@@ -38,6 +38,7 @@ export const initialState = {
       structure: [{
         name: '',
         city: '',
+        sector:'',
       }],
     },
     interviewed: [
@@ -49,7 +50,7 @@ export const initialState = {
         structure: [{
           name: 'undefined',
           city: 'undefined',
-          sector: 'unddefined',
+          sector: 'undefined',
         }],
       },
     ],
@@ -114,6 +115,7 @@ const readInterview = (state = initialState, action = {}) => {
       const newContentUpdateA = state.content.map((set, index) => {
         if (index === action.payload.indexQuestion) {
           set.answer[action.payload.indexAnswer] = {
+            id: set.answer[action.payload.indexAnswer].id,
             content: action.payload.value,
             interviewed: 'AA',
           };
@@ -167,13 +169,15 @@ const readInterview = (state = initialState, action = {}) => {
           interviewed: [
             ...state.meta.interviewed,
             {
-              name: '',
-              email: '',
-              status: '',
-              structure: {
-                name: '',
-                city: '',
-              },
+              firstname: 'Anonyme',
+              lastname: 'Anonyme',
+              job: 'undefined',
+              email: 'anonyme@inter.view',
+              structure: [{
+                name: 'undefined',
+                city: 'undefined',
+                sector: 'undefined',
+              }],
             },
           ],
         },
@@ -260,7 +264,10 @@ const readInterview = (state = initialState, action = {}) => {
     case LOAD_WRITE_INTERVIEW:
       return {
         ...state,
-        ...action.payload,
+        meta: {
+          ...state.meta,
+          ...action.payload,
+        },
       };
 
     case FILL_AUTHOR:

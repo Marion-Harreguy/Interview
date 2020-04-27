@@ -238,9 +238,10 @@
   width: 15px;
   height: 15px;
   position: absolute;
-  background-color: red;
   border: none !important;
   margin-left: -20px;
   margin-top: 17px;
   background-image: url("../../assets/icons/cross.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }

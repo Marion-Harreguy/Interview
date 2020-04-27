@@ -108,7 +108,7 @@ const UserLibrary = ({
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
       <div className="home__content">
         <form className="home__form">
-          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(); changeFormDisabled(event); updateUserPut();}} label="Changer mes infos" />
+          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(), changeFormDisabled(event), updateUserPut()}} label="Changer mes infos" />
           <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
         </form>
         <div className="home__library">
@@ -157,7 +157,7 @@ const UserLibrary = ({
               // Creating library reading section
               return (
                 <div className={`${sectionTitle}-container`}>
-                  <h3 className="library__section" onClick={() => { toggleSection(sectionTitle); smoothTransition(library[sectionTitle], sectionTitle); }}>{sectionFrenchTitles[index]}
+                  <h3 className="library__section" onClick={() => { smoothTransition(library[sectionTitle], sectionTitle), toggleSection(sectionTitle) }}>{sectionFrenchTitles[index]}
                     { sectionTitle === 'writtingInterviews'
                       && (
                       <NavLink exact to="/create">
@@ -169,7 +169,7 @@ const UserLibrary = ({
 
                     { sectionContent.map((interview) => (
                       // Creating each interview
-                      <div className="list__interview" key={`int-${interview.id}`} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
+                      <div className="list__interview" key={`int-${interview.id}`}>
                         <NavLink exact to={`/update/${interview.id}`}>
                           <h4 className="list__interview__title">{interview.title}</h4>
                           <div className="list__interview__categories">

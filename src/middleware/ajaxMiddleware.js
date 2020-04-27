@@ -88,7 +88,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(automaticLogOk(action.payload));
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
           store.dispatch(logOut());
         });
       break;
@@ -112,7 +112,7 @@ export default (store) => (next) => (action) => {
         })
         .catch((error) => {
           if (error.response.status === 403) error.response.status = 406;
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -144,7 +144,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
-          window.alert('Identifiants invalides');
+          // window.alert('Identifiants invalides');
         });
       break;
 
@@ -162,7 +162,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(updateUserState(response.data));
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -182,7 +182,7 @@ export default (store) => (next) => (action) => {
           }
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -200,7 +200,13 @@ export default (store) => (next) => (action) => {
           if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
+          if (action.payload.reducer === 'write' && error.response.status === 403) {
+            history.push(`/update/${action.payload.interviewId}`);
+          }
+          if (error.response.status === 404) {
+            history.push('/404');
+          }
         });
       break;
 
@@ -219,7 +225,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(loadWriteInterview(response.data));
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -237,7 +243,7 @@ export default (store) => (next) => (action) => {
           history.push('/');
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
         });
       break;
 
@@ -257,7 +263,7 @@ export default (store) => (next) => (action) => {
           history.push(`/update/${response.data.id}`);
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
         });
       break;
     case SEARCH_SUBMIT:
@@ -281,7 +287,7 @@ export default (store) => (next) => (action) => {
           console.log(response.data);
         })
         .catch((error) => {
-          window.alert(errorMessages[error.response.status]);
+          // window.alert(errorMessages[error.response.status]);
         });
       break;
     default:

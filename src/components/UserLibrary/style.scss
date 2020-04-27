@@ -11,7 +11,7 @@
   position: absolute;
   width: 18px;
   height: 18px;
-  background-image: url('../../assets/icons/pencil.png');
+  background-image: url('./../../assets/icons/pencil.png');
   background-size: contain;
   background-repeat: no-repeat;
   top: 5px;
@@ -58,7 +58,7 @@
   border-radius: 50%;
   bottom: 10px;
   padding: 0;
-  background-image: url("../../assets/icons/thick-plus.png");
+  background-image: url("./../../assets/icons/thick-plus.png");
   background-size: 7px;
   background-repeat: no-repeat;
   background-position: center;
@@ -75,7 +75,7 @@
   margin-top: 2px;
   border-radius: 50%;
   padding: 0;
-  background-image: url('../../assets/icons/thick-check.png');
+  background-image: url('./../../assets/icons/thick-check.png');
   background-size: 7px;
   background-position: center;
   border: solid 1px white;
@@ -105,6 +105,7 @@
   position: relative;
   border-bottom: solid 0.3px grey;
   margin-top: 7px;
+  display: block;
 }
 
 .list__interview__title {
@@ -159,7 +160,7 @@ TEST ICI NE FONCTIONNE PAS
 */
 
 .new-category-name:placeholder-shown ~ .category-button--add { 
-  background-image: url('../../assets/icons/thick-plus.png');
+  background-image: url('./../../assets/icons/thick-plus.png');
 }
 
 .home__content {

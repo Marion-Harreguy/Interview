@@ -25,10 +25,19 @@ const WriteContent = ({
   useEffect(() => {
     if (interviewId) {
       interviewGet({ interviewId, reducer: 'write' });
+
+      setTimeout(() => {
+        const allTextAreas = document.querySelectorAll('textarea');
+        console.log(allTextAreas);
+        for (let indexTA = 0; indexTA < allTextAreas.length; indexTA ++ ) {
+          fitSize(allTextAreas[indexTA]);
+        }
+      }, 1000);
     }
     else {
       fillAuthor({
-        name: `${dataUser.firstname} ${dataUser.lastname}`,
+        firstname: dataUser.firstname,
+        lastname: dataUser.lastname,
         status: dataUser.status,
         email: dataUser.email,
         structure: {
@@ -37,16 +46,21 @@ const WriteContent = ({
         },
       });
     }
-  },[interviewId]);
+  }, [interviewId]);
 
   const fitSize = (target) => {
-    console.log("fitting Size", $(target).height(),target.scrollHeight); 
     $(target).height(0).height(target.scrollHeight - 12);
   };
 
+  const createInitiales = (name) => {
+    let initiales = (name).match(/\b\w/g) || [];
+    initiales = ((initiales.shift() || '') + (initiales.pop() || '')).toUpperCase();
+    return initiales;
+  }
+
   // TODO : get user (or author) initiales
   // + get interviewed initiales (make select if several ?)
-  const authorInitiales = 'LP';
+  let authorInitiales = createInitiales(`${writeInterview.meta.author.firstname} ${writeInterview.meta.author.lastname}`);
 
   return (
     <div>
@@ -56,7 +70,7 @@ const WriteContent = ({
       </div>
 
       <div className="interview__content interview__content--write">
-        <textarea type="text" className="interview__context" value={writeInterview.meta.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => updateContext(event.target.value)} />
+        <textarea type="text" className="interview__context" value={writeInterview.meta.context} placeholder="Veuillez saisir le contexte de l'entretien" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => { fitSize(event.target), updateContext(event.target.value)}} />
         {
 
           writeInterview.content.map((set, indexQuestion) => (
@@ -70,8 +84,21 @@ const WriteContent = ({
                   set.answer.map((answer, indexAnswer) => (
                     // Creating all the answer blocs
                     <div className="interview__answer" key={`answer-${indexAnswer}`}>
-                      {/* <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span> */}
-                      <span className="interview__initiales interview__initiales--answer">AA</span>
+                      {
+                        (writeInterview.meta.interviewed.length <= 1 ) ? ( 
+                          <span className="interview__initiales interview__initiales--answer">{createInitiales(writeInterview.meta.interviewed[0])}</span>) : (
+                          <select id="interviewed-initiales" className="interview__initiales interview__initiales--answer" name="interviewed-initiales" onChange={() => chooseInitiales()}>
+                            {
+                            writeInterview.meta.interviewed.map((interviewed) => (
+                              <option value={createInitiales(`${interviewed.firstname} ${interviewed.lastname}`)}>{createInitiales(`${interviewed.firstname} ${interviewed.lastname}`)}</option>
+                            ))
+                            },
+                            );
+                            
+                          </select>
+                        )
+                      }
+                      
                       <textarea type="text" className="answer__content" value={answer.content} placeholder="Réponse" onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => {fitSize(event.target), updateAnswer({ indexQuestion, indexAnswer, value: event.target.value })}} /><button type="button" label="Supprimer cette question" className="answer__content--delete" onClick={() => { deleteAnswer({ indexQuestion, indexAnswer }), writeInterviewPut(interviewId)}} />
                     </div>
                   ))
