@@ -56,17 +56,17 @@ const WriteContent = ({
     let initiales = (name).match(/\b\w/g) || [];
     initiales = ((initiales.shift() || '') + (initiales.pop() || '')).toUpperCase();
     return initiales;
-  }
+  };
 
   // TODO : get user (or author) initiales
   // + get interviewed initiales (make select if several ?)
-  let authorInitiales = createInitiales(`${writeInterview.meta.author.firstname} ${writeInterview.meta.author.lastname}`);
+  const authorInitiales = createInitiales(`${writeInterview.meta.author.firstname} ${writeInterview.meta.author.lastname}`);
 
   return (
     <div>
       <div className="interview__add">
         <button className="interview__add__button interview__add__button--question" onClick={() => addNewQuestion()} label="Ajouter une question" type="button">Question</button>
-        <button className="interview__add__button interview__add__button--answer" onClick={() => addNewAnswer()} label="Ajouter une réponse" type="button">Réponse</button>
+        <button className="interview__add__button interview__add__button--answer" onClick={() => addNewAnswer()} label="Ajouter une réponse" type="button" style={{ pointerEvents: writeInterview.content.length <= 0 ? 'none' : 'all' }}>Réponse</button>
       </div>
 
       <div className="interview__content interview__content--write">

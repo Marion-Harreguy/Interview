@@ -9,6 +9,8 @@ const ReadMeta = ({
   saveInterview,
   userCategories,
   updateUserPut,
+  dashboard,
+  userId,
 }) => {
   // Generate & download a PDF
   const downloadInterview = () => {
@@ -57,15 +59,33 @@ const ReadMeta = ({
 
   // Save interview in user library
   const saveMenu = () => {
-    // If saving menu not opened yet : open category selection
-    if (document.querySelector('.read__categories').style.display !== 'block') {
+    // If saving menu not opened yet
+    // + article was not saved
+    // open category selection
+    const isItSavedThis = isItSaved(interviewMeta.id);
+    console.log(isItSavedThis);
+    if (document.querySelector('.read__categories').style.display !== 'block' && isItSavedThis !== 'saved') {
       document.querySelector('.read__categories').style.display = 'block';
     }
+
     // If saving menu is opened, interview needs to be added to library
-    else {
+    else if (document.querySelector('.read__categories').style.display === 'block') {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categories });
       document.querySelector('.read__categories').style.display = 'none';
     }
+
+    // If article was already saved, and needs to be unsaved
+    else {
+      saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categories });
+    }
+  };
+
+  const isItSaved = (id) => {
+    let saved = 'not-saved';
+    dashboard.savedInterviews.map((interview) => {
+      if (interview.id === id) saved = 'saved';
+    });
+    return saved;
   };
 
   return (
@@ -74,33 +94,20 @@ const ReadMeta = ({
         <NavLink exact to="/">
           <button className="tools__close" type="button" label="Fermer" />
         </NavLink>
-        <button className="tools__save" type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />
+        {
+          // est-ce l'auteur ?
+          interviewMeta.author.id === userId ?
+          // Si oui 
+          ( <NavLink exact to={`/update/${interviewMeta.id}`}>
+            <button className="tools__modify" type="button" label="Modifier" />
+          </NavLink> ) : ( <button className={`tools__save tools__save--${isItSaved(interviewMeta.id)}`} type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />)
+        }
         <button className="tools__download" type="button" onClick={() => downloadInterview()} label="Télécharger le PDF" />
       </div>
 
-      <div className="interview__meta">
-        <h2 className="interview__data interview__data--title">{interviewMeta.title}</h2>
-        <p className="interview__data interview__data--date">{interviewMeta.year}</p>
-        <p className="interview__data interview__data--city">{interviewMeta.city}</p>
-        <p className="interview__data interview__data--language">{interviewMeta.language}</p>
-        <p className="interview__data interview__data--author" onClick={() => openSubdata('author')}><span className="span--author">&#8594;</span>{`${interviewMeta.author.firstname} ${interviewMeta.author.lastname} (a)`}</p>
-        {/* <p className="interview__subdata interview__subdata--author interview__subdata--structure">{interviewMeta.structure.name} — {interviewMeta.structure.location}</p> */}
-        <p className="interview__subdata interview__subdata--author interview__subdata--status">{interviewMeta.author.status}</p>
-
-        { // Creating subdata for each interviewed person
-          interviewMeta.interviewed.map((inquired, indexI) => (
-            <div key={`inquired-${indexI}`}>
-              <p className="interview__data interview__data--interviewed" onClick={() => openSubdata(`interviewed--${inquired.id}`)}><span className={`span--interviewed--${inquired.id}`}>&#8594;</span> {`${inquired.firstname} ${inquired.lastname} (e)`}</p>
-              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.structure.name} — {inquired.structure.city}</p>
-              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.status}</p>
-            </div>
-          ))
-        }
-      </div>
-
       {/* CATEGORIES — shown when adding interview to library */}
-      <div className="read__categories">
-        <h2 className="categories__title">Catégorie(s) de l'entretien</h2>
+      <div className="read__categories" style={{display: 'none'}}>
+        <h2 className="categories__title">Catégorie(s) pour cet entretien</h2>
         <div className="categories__list">
           { // Creating each category
           userCategories.map((category) => (
@@ -111,6 +118,26 @@ const ReadMeta = ({
           ))
           }
         </div>
+      </div>
+
+      <div className="interview__meta">
+        <h2 className="interview__data interview__data--title">{interviewMeta.title}</h2>
+        <p className="interview__data interview__data--date">{interviewMeta.date}</p>
+        <p className="interview__data interview__data--city">{interviewMeta.location}</p>
+        <p className="interview__data interview__data--language">{interviewMeta.language}</p>
+        <p className="interview__data interview__data--author" onClick={() => openSubdata('author')}><span className="span--author">&#8594;</span>{`${interviewMeta.author.firstname} ${interviewMeta.author.lastname} (a)`}</p>
+        {/* <p className="interview__subdata interview__subdata--author interview__subdata--structure">{interviewMeta.structure.name} — {interviewMeta.structure.location}</p> */}
+        <p className="interview__subdata interview__subdata--author interview__subdata--status">{interviewMeta.author.status}</p>
+
+        { // Creating subdata for each interviewed person
+          interviewMeta.interviewed.map((inquired, indexI) => (
+            <div key={`inquired-${indexI}`}>
+              <p className="interview__data interview__data--interviewed" onClick={() => openSubdata(`interviewed--${inquired.id}`)}><span className={`span--interviewed--${inquired.id}`}>&#8594;</span> {`${inquired.firstname} ${inquired.lastname} (e)`}</p>
+              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.structure.name} — {inquired.structure.location}</p>
+              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`}>{inquired.status}</p>
+            </div>
+          ))
+        }
       </div>
 
       {/* LATER FOR ANNOTATIONS

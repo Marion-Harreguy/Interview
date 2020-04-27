@@ -7,6 +7,8 @@ import { saveInterview, updateUserGet, updateUserPut } from '../actions';
 const mapStateToProps = (state) => ({
   interviewMeta: state.readInterview.meta,
   userCategories: state.userData.dashboard.categories,
+  dashboard: state.userData.dashboard,
+  userId: state.userData.user.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

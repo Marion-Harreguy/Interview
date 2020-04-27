@@ -16,6 +16,7 @@ import {
   CHANGE_COORDINATES,
   DELETE_ANSWER,
   DELETE_QUESTION,
+  LOAD_ID,
 } from '../actions';
 
 export const initialState = {
@@ -264,10 +265,15 @@ const readInterview = (state = initialState, action = {}) => {
     case LOAD_WRITE_INTERVIEW:
       return {
         ...state,
+        ...action.payload,
+      };
+    case LOAD_ID:
+      return {
+        ...state,
         meta: {
           ...state.meta,
           ...action.payload,
-        },
+        }
       };
 
     case FILL_AUTHOR:

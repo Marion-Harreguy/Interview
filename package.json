@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "history": "^4.10.1",
     "jquery": "^3.5.0",
     "jquery-ui-dist": "^1.12.1",
     "jsrsasign": "^8.0.15",

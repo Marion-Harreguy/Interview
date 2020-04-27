@@ -3,15 +3,25 @@ Week-end :
 
 S4 :
 LUNDI :
-— Verifier tous les objets des requêtes axis, et que tout fonctionne
+— Verifier tous les objets des requêtes axios, et que tout fonctionne
 Read :
 — Avoir les pastilles de catégories si l'entretien est enregistré 
-— Write : Gérer les inputs mandatory (to publish)
+— Gérer les structures dans read 
 — Ajouter les tags
-LogOut & middleWare :
-— History ne recharge pas l'app ?
+— Si on est l'auteur, crayon modifier pour passer sur /update/id
+— Catégories ne passent pas dans l'enregistrement
 Write :
-— Si début : question obligée
+— Gérer les inputs mandatory (to publish)
+
+<!-- So it looks like you're trying to mix and match react-router v2 and v4, which are very different.
+
+A couple of points:
+
+Creating a new browserHistory won't work because <BrowserRouter> creates its own history instance, and listens for changes on that. So a different instance will change the url but not update the <BrowserRouter>.
+browserHistory is not exposed by react-router in v4, only in v2.
+If you want the full history object you can also grab that off context like router.
+
+this.context.history.push('/path') -->
 
 
 MARDI :

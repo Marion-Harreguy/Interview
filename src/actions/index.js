@@ -72,6 +72,7 @@ export const UPLOAD_RESULTS = 'UPLOAD_RESULTS';
 export const SEARCH_INPUT_CHANGE = 'SEARCH_INPUT_CHANGE';
 export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
 export const CHANGE_MODE = 'CHANGE_MODE';
+export const LOAD_ID = 'LOAD_ID';
 
 // APP
 export const automaticLog = (payload) => ({
@@ -326,5 +327,10 @@ export const searchSubmit = () => ({
 
 export const changeMode = (payload) => ({
   type: CHANGE_MODE,
+  payload,
+});
+
+export const loadId = (payload) => ({
+  type: LOAD_ID,
   payload,
 });

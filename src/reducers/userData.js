@@ -246,25 +246,19 @@ const userData = (state = initialState, action = {}) => {
         },
       };
     case DELETE_INTERVIEW:
-      const lastPublishedInterview = state.dashboard.publishedInterviews.map((interview) => {
-        if (interview.id === action.payload) return false;
-        return interview;
-      });
-      const lastWrittingInterviews = state.dashboard.writtingInterviews.map((interview) => {
-        if (interview.id === action.payload) return false;
-        return interview;
-      });
+      const lastPublishedInterview = state.dashboard.publishedInterviews.filter((interview) => interview.id !== action.payload);
+      const lastWrittingInterviews = state.dashboard.writtingInterviews.filter((interview) => interview.id !== action.payload);
 
       return {
         ...state,
         dashboard: {
           ...state.dashboard,
-          writtingInterviews: {
+          writtingInterviews: [
             ...lastWrittingInterviews,
-          },
-          publishedInterviews: {
+          ],
+          publishedInterviews: [
             ...lastPublishedInterview,
-          },
+          ],
         },
       };
     case LOG_OUT:

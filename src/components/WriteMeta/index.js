@@ -96,6 +96,7 @@ const WriteMeta = ({
         <NavLink exact to="/"><button className="tools__close" type="button" type="button" label="Fermer" /></NavLink>
         <button className="tools__publish" type="button" onClick={() => {publishInterview(); updateUserPut();}} label="Publier" />
         <button className="tools__delete" type="button" onClick={openDeleteMenu} label="Supprimer" />
+        
       </div>
 
       <div className="write__delete-menu">
@@ -175,7 +176,7 @@ const WriteMeta = ({
 
 WriteMeta.propTypes = {
   userName: PropTypes.string.isRequired,
-  interviewId: PropTypes.string,
+  interviewId: PropTypes.string.isRequired,
   addInterviewed: PropTypes.func.isRequired,
   changeAuthor: PropTypes.func.isRequired,
   // changeAuthorStructure: PropTypes.func.isRequired,

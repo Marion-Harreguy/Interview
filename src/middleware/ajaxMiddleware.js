@@ -26,6 +26,7 @@ import {
   logOut,
   loginSubmit,
   uploadResults,
+  loadId,
 } from '../actions';
 import { render } from 'enzyme';
 
@@ -195,7 +196,6 @@ export default (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.log(action.type + ": success !");
           if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
           if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
         })
@@ -259,7 +259,7 @@ export default (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log(action.type + ": success !");
-          store.dispatch(loadWriteInterview(response.data));
+          store.dispatch(loadId(response.data));
           history.push(`/update/${response.data.id}`);
         })
         .catch((error) => {

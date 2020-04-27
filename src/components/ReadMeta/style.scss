@@ -49,7 +49,11 @@
   right: 20px;
 }
 
-.tools__save {
+.tools__save--saved {
+  background-image: url('../../assets/icons/bookmark-on.png');
+}
+
+.tools__save--not-saved {
   background-image: url('../../assets/icons/bookmark.png');
 }
 
@@ -85,4 +89,15 @@
 
 .left__menu--top--closed h2 {
   margin-bottom: 0;
+}
+
+.read__categories {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 5px;
+  z-index: 3;
+  width: 75%;
+  padding: 20px;
+  border: solid 0.5px white;
+  background-color: #414a52;
 }
