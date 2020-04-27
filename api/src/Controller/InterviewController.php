@@ -194,24 +194,23 @@ class InterviewController extends AbstractController
 
             foreach ($interviewed as $dataInterviewed) {
 
-                if ($dataInterviewed["email"] === "anonyme@inter.view") {
-                    $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
-                    $interviewed->addInterview($interview);
-                } else {
+                $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
 
-                    if (isset($dataInterviewed["id"])) {
-                        $id = $dataInterviewed["id"];
-                        $interviewed = $interviewedRepository->find($id);
+                        if($interviewed){
+
                         $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
                         $formIntervierwed->submit($dataInterviewed);
+
                         if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
                             $interviewed->addInterview($interview);
                             $interviewed->setUpdatedAt(new \DateTime());
                         }
-                    } else {
+                        } else {
+                            
                         $interviewed = new Interviewed();
                         $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
                         $formIntervierwed->submit($dataInterviewed);
+
                         if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
                             $interviewed->addInterview($interview);
                         }
