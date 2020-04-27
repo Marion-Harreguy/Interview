@@ -206,7 +206,7 @@ class InterviewController extends AbstractController
                             $interviewed->setUpdatedAt(new \DateTime());
                         }
                         } else {
-                            
+
                         $interviewed = new Interviewed();
                         $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
                         $formIntervierwed->submit($dataInterviewed);
@@ -248,7 +248,7 @@ class InterviewController extends AbstractController
 
                     $em->persist($structure);
                 }
-            }
+    
 
 
             //==================================//
@@ -379,6 +379,7 @@ class InterviewController extends AbstractController
             $context = []
         );
     }
+
     /**
      * Créer une nouvelle interview
      * 
