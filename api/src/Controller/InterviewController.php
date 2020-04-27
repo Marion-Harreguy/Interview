@@ -130,6 +130,8 @@ class InterviewController extends AbstractController
         $tags = $data["meta"]["tags"];
 
         $interviewed =  $data["meta"]["interviewed"];
+
+      
         // on valide les données ainsi reçut
         $form = $this->createForm(InterviewEditType::class, $interview);
         $form->submit($dataInterview);
@@ -194,6 +196,9 @@ class InterviewController extends AbstractController
 
             foreach ($interviewed as $dataInterviewed) {
 
+             
+                $interviewedDefault = $interviewedRepository->find(1);
+
                 $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
 
                         if($interviewed){
@@ -204,6 +209,8 @@ class InterviewController extends AbstractController
                         if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
                             $interviewed->addInterview($interview);
                             $interviewed->setUpdatedAt(new \DateTime());
+                          
+                            $interview->removeInterviewed($interviewedDefault);
                         }
                         } else {
 
@@ -213,8 +220,10 @@ class InterviewController extends AbstractController
 
                         if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
                             $interviewed->addInterview($interview);
+                            $interview->removeInterviewed($interviewedDefault);
                         }
                     }
+
                     $em->persist($interviewed);
                 }
 
