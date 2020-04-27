@@ -177,6 +177,9 @@ class UserController extends AbstractController
             foreach ($favorites as $favoris) {
                 //Boucler sur les interviews 
                 $interviewFav = $interviewRepository->find($favoris["id"]);
+
+                $user->addFavorite($interviewFav);
+                
                 if (!empty($favoris["categories"])) {
                     // si "categories" Boucler dessus
 
