@@ -328,7 +328,7 @@ class InterviewController extends AbstractController
 
                     $question = $questionRepository->find($questionId);
                     $question->setContent($questionReponse["question"]);
-                    if (isset($questionReponse["answer"])) {
+                    if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
 
                         for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
                             if (isset($questionReponse["answer"][$i]["id"])) {
