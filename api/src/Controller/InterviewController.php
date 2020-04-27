@@ -97,15 +97,13 @@ class InterviewController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository, SerializerInterface $serializer)
+    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository, SerializerInterface $serializer, InterviewRepository $interviewRepository)
     {
         // on decode les données envoyées
         $data = json_decode($request->getContent(), true);
-
-
-        $idAuthorized = $data["meta"]["author"]["id"];
-
-        if ($idAuthorized != $this->getUser()->getId()) {
+  
+       
+        if ($interview->getUser() != $this->getUser() ) {
             return $this->json(
                 ["message" => "notAuthorized"],
                 $status = 403,
@@ -331,8 +329,10 @@ class InterviewController extends AbstractController
                         }
                         $em->persist($answer);
                     }
-
                     $question->setInterview($interview);
+                    $em->persist($question);
+                    
+                    
                 } else {
 
                     $question = $questionRepository->find($questionId);
@@ -363,30 +363,38 @@ class InterviewController extends AbstractController
                         $em->persist($answer);
                     }
                     $question->setInterview($interview);
+                    $em->persist($question);
+                    
                 }
 
-
-                $em->persist($question);
-            }
+              $em->flush($question);
+                            }
 
             $interview->setUpdatedAt(new \Datetime);
 
-            $em->persist($interview);
+            $em->flush();
+            
+            $em->refresh($interview);
         }
 
 
+        
 
-        $em->flush();
-
-
-
-        $data = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
+        $interviewResponse = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
         return $this->json(
-            $data,
-            $status = 200,
-            $headers = ['content-type' => 'application/Json'],
-            $context = []
-        );
+                 $interviewResponse,
+                 $status = 200,
+                 $headers = ['content-type' => 'application/Json'],
+                 $context = []
+             );
+
+        // $data = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
+        // return $this->json(
+        //     $data,
+        //     $status = 200,
+        //     $headers = ['content-type' => 'application/Json'],
+        //     $context = []
+        // );
     }
 
     /**

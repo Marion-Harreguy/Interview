@@ -466,6 +466,7 @@ class Interview
 
             $answerList = [];
             $questionList[] = $question;
+            
         }
         $interview["content"] = $questionList;
 
