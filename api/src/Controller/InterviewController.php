@@ -325,6 +325,7 @@ class InterviewController extends AbstractController
                                 $answer->setUpdatedAt(new \Datetime);
                             }
                         }
+                        $em->persist($answer);
                     }
                     $question->setInterview($interview);
                     // $em->persist($answer);
@@ -376,10 +377,11 @@ class InterviewController extends AbstractController
                                 $answer->setContent($questionReponse["answer"][$i]["content"]);
                                 $answer->setUpdatedAt(new \Datetime);
                             }
+                            $em->persist($answer);
                         }
                     }
                     $question->setInterview($interview);
-                    $em->persist($answer);
+                 
                 }
                 $em->persist($question);
             }
