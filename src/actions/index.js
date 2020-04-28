@@ -42,6 +42,7 @@ export const DELETE_QUESTION = 'DELETE_QUESTION';
 // WRITE - Left Buttons
 export const DELETE_INTERVIEW = 'DELETE_INTERVIEW';
 export const PUBLISH_INTERVIEW = 'PUBLISH_INTERVIEW';
+export const UNPUBLISH_INTERVIEW = 'UNPUBLISH_INTERVIEW';
 // WRITE - Meta Changes
 export const CHANGE_META = 'CHANGE_META';
 export const CHANGE_INTERVIEW_CATEGORIES = 'CHANGE_INTERVIEW_CATEGORIES';
@@ -207,6 +208,11 @@ export const deleteInterview = (payload) => ({
 
 export const publishInterview = (payload) => ({
   type: PUBLISH_INTERVIEW,
+  payload,
+});
+
+export const unpublishInterview = (payload) => ({
+  type: UNPUBLISH_INTERVIEW,
   payload,
 });
 

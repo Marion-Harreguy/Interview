@@ -5,7 +5,7 @@ import ResultsList from './ResultsList';
 import ResultsMap from './ResultsMap';
 import ResultsTimeline from './ResultsTimeline';
 
-const SearchResults = ({ results, mode, changeMode }) => {
+const SearchResults = ({ results, mode, changeMode, changeOrder }) => {
 
   let resultsConverted = results.map((result) => ({ ...result.meta }));
 

@@ -26,6 +26,7 @@ import {
   logOut,
   loginSubmit,
   uploadResults,
+  interviewGet,
   loadId,
 } from '../actions';
 import { render } from 'enzyme';
@@ -241,9 +242,9 @@ export default (store) => (next) => (action) => {
         },
         data: JSON.stringify(interviewInfo()),
       })
-        .then((response) => {
+        .then(() => {
           console.log(action.type + ": success !");
-          store.dispatch(loadWriteInterview(response.data));
+          store.dispatch(interviewGet({interviewId : action.payload}));
         })
         .catch((error) => {
           // window.alert(errorMessages[error.response.status]);

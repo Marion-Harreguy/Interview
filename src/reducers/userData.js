@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW, DELETE_CATEGORY, MODIFY_USER_STRUCTURE } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW, DELETE_CATEGORY, MODIFY_USER_STRUCTURE, UNPUBLISH_INTERVIEW } from '../actions';
 import history from '../history';
 import { SrcAlphaSaturateFactor } from 'three';
 
@@ -85,6 +85,22 @@ const userData = (state = initialState, action = {}) => {
           publishedInterviews: [ ...newPublishedDashboard ],
         },
       };
+    case UNPUBLISH_INTERVIEW:
+      const unpublishingInterviewInfos = state.dashboard.publishedInterviews.find((interview) => interview.id == action.payload);
+      let newUnpublishedDashboard = [ {id:0}, ...state.dashboard.publishedInterviews];
+      newUnpublishedDashboard = newUnpublishedDashboard.filter((interview) => interview.id != action.payload);
+      newUnpublishedDashboard.splice(0, 1);
+      const newUnwrittingDashboard = [ ...state.dashboard.writtingInterviews, { ...unpublishingInterviewInfos } ];
+      // console.log(newWrittingDashboard);
+      // console.log(newPublishedDashboard);
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          writtingInterviews: [ ...newUnwrittingDashboard ],
+          publishedInterviews: [ ...newUnpublishedDashboard ],
+        },
+      };
     case MODIFY_USER_INFO:
       return {
         ...state,
@@ -131,13 +147,37 @@ const userData = (state = initialState, action = {}) => {
 
     case DELETE_CATEGORY:
       const newCategoriesDelete = state.dashboard.categories.filter((category) => Number(category.id) !== Number(action.payload));
+      const newDashboard = {
+        writtingInterviews: [
+          ...state.dashboard.writtingInterviews.map((interview) => {
+            return {
+              ...interview,
+              categories: [...interview.categories.filter((category) => Number(category) !== Number(action.payload))],
+            };
+          }),
+        ],
+        publishedInterviews: [
+          ...state.dashboard.publishedInterviews.map((interview) => {
+            return {
+              ...interview,
+              categories: [...interview.categories.filter((category) => Number(category) !== Number(action.payload))],
+            };
+          }),
+        ],
+        savedInterviews: [
+          ...state.dashboard.savedInterviews.map((interview) => {
+            return {
+              ...interview,
+              categories: [...interview.categories.filter((category) => Number(category) !== Number(action.payload))],
+            };
+          }),
+        ],
+        categories: [...newCategoriesDelete],
+      };
       return {
         ...state,
         dashboard: {
-          ...state.dashboard,
-          categories: [
-            ...newCategoriesDelete,
-          ],
+          ...newDashboard,
         },
       };
 

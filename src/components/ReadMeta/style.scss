@@ -138,3 +138,35 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.read__quote-menu {
+  display: none;
+  position: absolute;
+  border: solid 1px white;
+  width: 90%;
+  padding: 20px;
+  background-color: #414a52;
+  border-radius: 15px;
+  text-align:left;
+}
+
+.read__quote-menu textarea, .right textarea:-internal-autofill-selected, .right textarea:-webkit-autofill, .right textarea:-webkit-autofill:focus, .right textarea:-webkit-autofill:hover, .right textarea:active, .right textarea:focus {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 0px #2b363e inset!important;
+  color: white !important;
+  border: none;
+  padding-bottom: 10px;
+  outline: none;
+  resize: none;
+  height: 20px;
+  width: 100%;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.read__quote-menu textarea, .read__quote-menu p {
+  display: inline-block;
+  height: 20px;
+  margin-bottom: 2px;
+}
+

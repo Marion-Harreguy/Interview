@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 const ResultsList = ({ resultList }) => (
   <div className="research__results research__results--list">
+    {/* <select className="research__order" name="order" value={results.order} onChange={(event) => changeOrder(event.target.value)}>
+      <option value="alphabet">Alphabétique</option>
+      <option value="chronologique">Chronologique</option>
+    </select> */}
     {
       resultList.map((interview) => (
         <div className="result-interview" key={interview.id}>

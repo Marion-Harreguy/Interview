@@ -5,34 +5,29 @@ S4 :
 Moteur de recherche : titre, lieu, langues, dates, libre de droit
 
 MARDI :
-Search
-— Menu déroulant pour classer les résultats ? [3]
-All
-— Ajouter les tutos quand pas d'entretien selectionné ou pas de contenu (write, search) [3]
-Read
-— Survol des initiales, noms qui se mettent en gras à gauche [3]
-— Cacher bouton télécharger si pas libre de droit [2]
-— Ajouter un bouton "citer" [2] [GAZEL]
-UserLibrary
-— Supprimer une catégorie [1] [Gael](ok mais a gérer en back et pour les entretients) 
-Write
-— Unpublish [1]
-— Mettre focus sur le nouvel input quand bouton Question ou Réponse [2]
 En +
 — Commenter et clean le code [4]
-
-— Bug enregistrement dans la bibliothèque
-— Unfocus sur les questions et réponse fait sauter derniere input vide
+— Regénérer les couleurs
+— Gérer interviewés input write
+— Styler la notice
 
 MERCREDI :
-— CSS mobile [1]
+— CSS mobile
+— CSS : enlever les vieux ronds qui apparaissent aux clic des tools (boutons)
+— Vérifier le système qui génère les coordonnées
+
+Régler les bugs :
+— Quand session expirée, rend une page grise au lieu de rediriger vers le login
+— Couleur de catégories — length pas ok
+— Interview masqués quand catégories pas cochées
+— Verifier tous les scrolls
+— Tableau tag ne veut pas se vider (pareil pour initialstate)
+
+NOPE:
 — Gérer le forgotten password ?
 — Mentions légales ?
-— Vérifier le système qui génère les coordonnées
 — Zoom dans la frise chronologique
-— Limiter le nombre de catégories (masquer l’input si il y a plus de 20 catégories)
-— CSS : enlever les vieux ronds qui apparaissent aux clic des tools (boutons)
-
+— Menu déroulant pour classer les résultats ?
 
 Futur :
 — Webtoprint [Baptiste]
@@ -45,6 +40,7 @@ Futur :
 — Enregistrer une recherche (avec notif si nouveau résultat dans résultats correspondant à une recherche enregistrée ?)
 — Bouton signaler ?
 — Nécessité d’accepter les conditions d’utilisation pour s’inscrire
+— State intermediaire entre publié 1 fois et publié 2 fois ??
 
 — Enlever 2eme enquête si vide
 
@@ -52,5 +48,5 @@ EN + :
 — Ajouter fausses interviews
 — CSS pour les autres navigateurs
 
-Pb :
-— Quand session expirée, rend une page grise au lieu de rediriger vers le login
+Pour la démo :
+— Masquer input recherche pas fonctionnels

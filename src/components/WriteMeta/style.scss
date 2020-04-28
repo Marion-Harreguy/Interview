@@ -46,8 +46,12 @@
   margin-left: 2px;
 }
 
-.tools__publish {
+.tools__publish, .tools__unpublish {
   background-image: url("../../assets/icons/export.png");
+}
+
+.tools__unpublish {
+  transform: rotate(180deg);
 }
 
 .tools__delete {
@@ -112,7 +116,7 @@
   margin-top: -2px;
   border-radius: 50%;
   padding: 0;
-  background-image: url('../../assets/icons/thick-check.png');
+  background-image: url('./../../assets/icons/thick-check.png');
   background-size: 7px;
   background-position: center;
   background-repeat: no-repeat;
@@ -142,13 +146,13 @@
     margin-top: -2px;
     border-radius: 50%;
     padding: 0;
-    background-image: url('/src/assets/icons/thick-check.png');
+    background-image: url('./../../assets/icons/thick-check.png');
     background-size: 7px;
     background-position: center;
     background-repeat: no-repeat;
   }
 
-  .write__delete-menu, .write__publish-menu {
+  .write__delete-menu, .write__publish-menu, .write__unpublish-menu {
     display: none;
     position: absolute;
     border: solid 1px white;
@@ -159,11 +163,11 @@
     text-align: right;
   }
 
-  .write__delete-menu p,  .write__publish-menu p {
+  .write__delete-menu p,  .write__publish-menu p, .write__unpublish-menu p {
     text-align:center;
   }
 
-  .write__delete-menu button,  .write__publish-menu button {
+  .write__delete-menu button,  .write__publish-menu button, .write__unpublish-menu button {
     margin: 15px 10px 0px 0px;
   }
 

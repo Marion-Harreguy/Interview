@@ -19,6 +19,7 @@ import {
   LOAD_ID,
   CHOOSE_INITIALES,
   PUBLISH_INTERVIEW,
+  UNPUBLISH_INTERVIEW,
 } from '../actions';
 
 export const initialState = {
@@ -47,13 +48,13 @@ export const initialState = {
     interviewed: [
       {
         firstname: 'Anonyme',
-        lastname: 'Anonyme',
-        job: 'undefined',
-        email: 'anonyme@inter.view',
+        lastname: '',
+        job: '',
+        email: '',
         structure: [{
-          name: 'undefined',
-          city: 'undefined',
-          sector: 'undefined',
+          name: '',
+          city: '',
+          sector: '',
         }],
       },
     ],
@@ -71,6 +72,26 @@ const readInterview = (state = initialState, action = {}) => {
         meta: {
           ...state.meta,
           isPublished: true,
+        },
+      };
+    case ADD_NEW_QUESTION:
+      return {
+        ...state,
+        content: [
+          ...state.content,
+          {
+            question: '',
+            answer: [],
+          },
+        ],
+      };
+
+    case UNPUBLISH_INTERVIEW:
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          isPublished: false,
         },
       };
     case ADD_NEW_QUESTION:

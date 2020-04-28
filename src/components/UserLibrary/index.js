@@ -147,7 +147,7 @@ const UserLibrary = ({
                       ))
                       }
 
-                      <div className="home__category home__category--add">
+                      { sectionContent.length < 12 && (<div className="home__category home__category--add">
                         <input className="new-category-name" onChange={(e) => addCategoryChange(e.target.value)} type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category" value={newCategoryName}/>
                         <button
                           className="category-button category-button--add" 
@@ -155,7 +155,7 @@ const UserLibrary = ({
                             addCategorySubmit(e.target);
                             setTimeout(() => { updateUserPut() },1000);
                           }} type="button" label="Ajouter une catégorie" />
-                      </div>
+                      </div>)}
                     </div>
                   </div>
                 );
@@ -186,7 +186,7 @@ const UserLibrary = ({
                           <div className="list__interview__categories">
                             {/* Creating each category dot for each article */}
                             { interview.categories.map((category) => (
-                              <span className={`list__category list__category--${category}`} key={`catt-${category.id}`} />
+                              <span className={`list__category list__category--${category}`} key={`catt-${category}`} />
                             ))}
                           </div>
                         </NavLink>

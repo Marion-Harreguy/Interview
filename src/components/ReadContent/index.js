@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
+import $ from 'jquery';
 
 const ReadContent = ({ interview, interviewId, interviewGet }) => {
   // Load the interview from API based on the ID put in the URL
@@ -17,6 +18,28 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
   let authorInitiales = author.match(/\b\w/g) || [];
   authorInitiales = ((authorInitiales.shift() || '') + (authorInitiales.pop() || '')).toUpperCase();
 
+  const highlightPerson = ({ person, content }) => {
+    if (person === 'author') {
+      document.querySelector('.interview__data--'+person+' p').style.fontFamily = 'Source-SemiBold';
+    }
+    else {
+      const interviewedList = document.querySelectorAll('.interview__data--'+person);
+      for (let interviewedIndex = 0; interviewedIndex < interviewedList.length; interviewedIndex ++) {
+        let currentInitiales = interviewedList[interviewedIndex].querySelector('p').innerHTML.replace('(e)', '').match(/\b\w/g) || [];
+        currentInitiales = ((currentInitiales.shift() || '') + (currentInitiales.pop() || '')).toUpperCase();
+        console.log(interviewedList[interviewedIndex].innerHTML);
+        if (currentInitiales === content) {
+          interviewedList[interviewedIndex].querySelector('p').style.fontFamily = 'Source-SemiBold';
+        }
+      }
+    }
+  };
+
+  const unhighlight = () => {
+    document.querySelector('.interview__data--author p').style.fontFamily = 'Source-Light';
+    $('.interview__data--interviewed p').css('font-family','Source-Light');
+  };
+
   return (
     <div className="interview__content">
       <div className="interview__context">
@@ -27,7 +50,7 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
       interviewContent.map((set, index) => (
         <div key={`question-${index}`}>
           <div className="interview__question">
-            <span className="interview__initiales interview__initiales--question">{authorInitiales}</span>
+            <span className="interview__initiales interview__initiales--question" onMouseOver={(event) => highlightPerson({ person: 'author', content: event.target.innerHTML})} onMouseOut={unhighlight}>{authorInitiales}</span>
             <p className="question__content">
               {set.question}
             </p>
@@ -35,7 +58,7 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
           { // Mapping on each answer for each question
           set.answer.map((answer, indexA) => (
             <div className="interview__answer" key={`answer-${indexA}`}>
-              <span className="interview__initiales interview__initiales--answer">{answer.interviewed}</span>
+              <span className="interview__initiales interview__initiales--answer" onMouseOver={(event) => highlightPerson({ person: 'interviewed', content: event.target.innerHTML})} onMouseOut={unhighlight}>{answer.interviewed}</span>
               <p className="answer__content">{answer.content}</p>
             </div>
           ))

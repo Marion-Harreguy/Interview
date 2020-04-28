@@ -59,6 +59,22 @@ const WriteContent = ({
     return initiales;
   };
 
+  const lastAnswerFocus = () => {
+    setTimeout(() => {
+      const inputList = document.querySelectorAll('.answer__content');
+      console.log(inputList);
+      inputList[(inputList.length-1)].focus();
+    }, 10);
+  };
+
+  const lastQuestionFocus = () => {
+    setTimeout(() => {
+      const inputList = document.querySelectorAll('.question__content');
+      console.log(inputList);
+      inputList[(inputList.length-1)].focus();
+    }, 10);
+  };
+
   const defaultInitiales = createInitiales(writeInterview.meta.interviewed[0].firstname+' '+writeInterview.meta.interviewed[0].lastname);
 
   const authorInitiales = createInitiales(`${writeInterview.meta.author.firstname} ${writeInterview.meta.author.lastname}`);
@@ -66,8 +82,8 @@ const WriteContent = ({
   return (
     <div>
       <div className="interview__add">
-        <button className="interview__add__button interview__add__button--question" onClick={() => addNewQuestion()} label="Ajouter une question" type="button">Question</button>
-        <button className="interview__add__button interview__add__button--answer" onClick={() => addNewAnswer(defaultInitiales)} label="Ajouter une réponse" type="button" style={{ pointerEvents: writeInterview.content.length <= 0 ? 'none' : 'all' }}>Réponse</button>
+        <button className="interview__add__button interview__add__button--question" onClick={() =>{ addNewQuestion(), lastQuestionFocus()}} label="Ajouter une question" type="button">Question</button>
+        <button className="interview__add__button interview__add__button--answer" onClick={() => {addNewAnswer(defaultInitiales),lastAnswerFocus()}} label="Ajouter une réponse" type="button" style={{ pointerEvents: writeInterview.content.length <= 0 ? 'none' : 'all' }}>Réponse</button>
       </div>
 
       <div className="interview__content interview__content--write">

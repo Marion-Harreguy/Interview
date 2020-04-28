@@ -8,6 +8,7 @@ import './style.scss';
 const WriteMeta = ({
   interviewMeta,
   publishInterview,
+  unpublishInterview,
   changeMeta,
   userCategories,
   changeInterviewCategories,
@@ -174,12 +175,22 @@ const WriteMeta = ({
     document.querySelector('.write__publish-menu').style.display = 'none';
   };
 
+  const openUnpublishMenu = () => {
+    document.querySelector('.write__unpublish-menu').style.display = 'block';
+  };
+
+  const closeUnpublishMenu = () => {
+    document.querySelector('.write__unpublish-menu').style.display = 'none';
+  };
+
 
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">
       <div className="write__tools">
         <NavLink exact to="/"><button className="tools__close" type="button" label="Fermer" /></NavLink>
-        <button className="tools__publish" type="button" onMouseOver={() => showMandatoryInfos()} onMouseOut={() => hideMandatoryInfos()}  onClick={checkMandatoryInfos} label="Publier" />
+        {
+          !interviewMeta.isPublished ? (<button className="tools__publish" type="button" onMouseOver={() => showMandatoryInfos()} onMouseOut={() => hideMandatoryInfos()}  onClick={checkMandatoryInfos} label="Publier" />) : (<button className="tools__unpublish" type="button" onClick={openUnpublishMenu} label="Annuler la publication" />)
+        }
         <button className="tools__delete" type="button" onClick={openDeleteMenu} label="Supprimer" />
         
       </div>
@@ -190,10 +201,16 @@ const WriteMeta = ({
         <button className="write__delete-menu--yes" onClick={() =>{closeDeleteMenu(); writeInterviewDelete(interviewId); updateUserPut();}} label="Supprimer" type="button">Supprimer</button>
       </div>
 
+      <div className="write__unpublish-menu">
+        <p>Êtes-vous sûr.e de vouloir annuler la publication de cet entretien ? (Vous pourrez le remettre en ligne par la suite)</p>
+        <button className="write__unpublish-menu--no" onClick={closeUnpublishMenu} label="Annuler" type="button">Annuler</button>
+        <button className="write__unpublish-menu--yes" onClick={() =>{closeUnpublishMenu(), unpublishInterview(interviewId), writeInterviewPut(interviewId), updateUserPut()}} label="Supprimer" type="button">Remettre en brouillon</button>
+      </div>
+
       <div className="write__publish-menu">
         <p>Êtes-vous sûr.e de vouloir publier cet entretien ?</p>
-        <button className="write__delete-menu--no" onClick={closePublishMenu} label="Annuler" type="button">Annuler</button>
-        <button className="write__delete-menu--yes" onClick={() =>{closePublishMenu(), publishInterview(interviewId), updateUserPut()}} label="Supprimer" type="button">Publier</button>
+        <button className="write__publish-menu--no" onClick={closePublishMenu} label="Annuler" type="button">Annuler</button>
+        <button className="write__publish-menu--yes" onClick={() =>{closePublishMenu(), publishInterview(interviewId), writeInterviewPut(interviewId), updateUserPut()}} label="Supprimer" type="button">Publier</button>
       </div>
 
       <div className="interview__meta">
@@ -229,7 +246,7 @@ const WriteMeta = ({
                             <input className="write__form__input" type="text" name="city" placeholder={`Ville (n°${numero})`} value={interviewed.structure.city} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="sector" placeholder={`Secteur (n°${numero})`} value={interviewed.structure.sector} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
                             <input className="write__form__input" type="text" name="job" placeholder={`Statut (n°${numero})`} value={interviewed.job} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
-                            <input className="write__form__input" type="text" name="email" placeholder={`Email de l'enquêté n°${numero}`} value={interviewMeta.interviewed.email} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                            <input className="write__form__input" type="text" name="email" placeholder={`Email de l'enquêté n°${numero}`} value={interviewed.email} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                           </div>
                         )
                         }
