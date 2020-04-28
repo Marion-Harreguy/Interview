@@ -284,6 +284,8 @@ class InterviewController extends AbstractController
                         } else {
                             $question = $questionRepository->find($questionsInDatabase[$i]->getId());
                             $interview->removeQuestion($question);
+                            $em->remove($question);
+                            $em->flush($question);
                         }
                     }
                 }
@@ -345,6 +347,8 @@ class InterviewController extends AbstractController
                             } else {
                                 $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
                                 $question->removeAnswer($answer);
+                                $em->remove($answer);
+                                $em->flush($answer);
                             }
                         }
                     }
