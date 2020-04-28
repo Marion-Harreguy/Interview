@@ -266,124 +266,129 @@ class InterviewController extends AbstractController
                           - Créer l'objet Answer
                           - Lui assginer la question et l'interviewé
             */
+           
+            if (!empty($data["content"])) {
+                foreach ($data["content"] as $questionReponse) {
 
-            foreach ($data["content"] as $questionReponse) {
+                    //=============================//
+                    //Compte les difference du nombre questions entre la base de données et celle envoyées
+                    //=============================//
 
-                //=============================//
-                //Compte les difference du nombre questions entre la base de données et celle envoyées
-                //=============================//
+                    if (count($data["content"]) < count($interview->getQuestions())) {
 
-                if (count($data["content"]) < count($interview->getQuestions())) {
+                        $questionsInDatabase = $interview->getQuestions();
+                        $questionNotSaved = $data["content"];
 
-                    $questionsInDatabase = $interview->getQuestions();
-                    $questionNotSaved = $data["content"];
+                        for ($i = 0; $i < count($questionsInDatabase); $i++) {
 
-                    for ($i = 0; $i < count($questionsInDatabase); $i++) {
-
-                        if (isset($questionNotSaved[$i]["id"]) && $questionsInDatabase[$i]->getId() === $questionNotSaved[$i]["id"]) {
-                        } else {
-                            $question = $questionRepository->find($questionsInDatabase[$i]->getId());
-                            $interview->removeQuestion($question);
-                            $em->remove($question);
-                            $em->flush($question);
-                        }
-                    }
-                }
-
-
-                if (isset($questionReponse["id"])) {
-                    $questionId = $questionReponse["id"];
-                } else {
-                    $questionId = null;
-                }
-
-                //=============================//
-                //Si la question est nouvelle donc pas d'id
-                //=============================//
-                if (!$questionId) {
-
-                    $question = new Question();
-                    $question->setContent($questionReponse["question"]);
-
-                    if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
-                        for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
-                            if (isset($questionReponse["answer"][$i]["id"])) {
-                                $answerId = $questionReponse["answer"][$i]["id"];
+                            if (isset($questionNotSaved[$i]["id"]) && $questionsInDatabase[$i]->getId() === $questionNotSaved[$i]["id"]) {
                             } else {
-                                $answerId = null;
-                            }
-
-                            if (!$answerId) {
-                                $answer = new Answer();
-                                $answer->setContent($questionReponse["answer"][$i]["content"]);
-                                $answer->setQuestion($question);
-                                $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
-                                $answer->setInterviewed($interviewed);
-                            } else {
-                                $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
-                                $answer->setContent($questionReponse["answer"][$i]["content"]);
-                                $answer->setUpdatedAt(new \Datetime);
-                            }
-                        }
-                        $em->persist($answer);
-                    }
-                    $question->setInterview($interview);
-                    // $em->persist($answer);
-                    // $em->persist($question);
-                } else {
-
-                    $question = $questionRepository->find($questionId);
-                    $question->setContent($questionReponse["question"]);
-
-
-
-                    if (count($questionReponse["answer"]) < count($question->getAnswers())) {
-
-                        $AnswerInDatabase = $question->getAnswers();
-                        $answerNotSaved = $questionReponse["answer"];
-
-                        for ($i = 0; $i < count($AnswerInDatabase); $i++) {
-
-                            if (isset($answerNotSaved[$i]["id"]) && $AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
-                            } else {
-                                $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
-                                $question->removeAnswer($answer);
-                                $em->remove($answer);
-                                $em->flush($answer);
+                                $question = $questionRepository->find($questionsInDatabase[$i]->getId());
+                                $interview->removeQuestion($question);
+                                $em->remove($question);
+                                $em->flush($question);
                             }
                         }
                     }
 
 
-                    if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
+                    if (isset($questionReponse["id"])) {
+                        $questionId = $questionReponse["id"];
+                    } else {
+                        $questionId = null;
+                    }
 
-                        for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
-                            if (isset($questionReponse["answer"][$i]["id"])) {
-                                $answerId = $questionReponse["answer"][$i]["id"];
-                            } else {
-                                $answerId = null;
-                            }
+                    //=============================//
+                    //Si la question est nouvelle donc pas d'id
+                    //=============================//
+                    if (!$questionId) {
 
-                            if (!$answerId) {
+                        $question = new Question();
+                        $question->setContent($questionReponse["question"]);
 
-                                $answer = new Answer();
-                                $answer->setContent($questionReponse["answer"][$i]["content"]);
-                                $answer->setQuestion($question);
-                                $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
-                                $answer->setInterviewed($interviewed);
-                            } else {
+                        if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
+                            for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                                if (isset($questionReponse["answer"][$i]["id"])) {
+                                    $answerId = $questionReponse["answer"][$i]["id"];
+                                } else {
+                                    $answerId = null;
+                                }
 
-                                $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
-                                $answer->setContent($questionReponse["answer"][$i]["content"]);
-                                $answer->setUpdatedAt(new \Datetime);
+                                if (!$answerId) {
+                                    $answer = new Answer();
+                                    $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                    $answer->setQuestion($question);
+                                    $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
+                                    $answer->setInterviewed($interviewed);
+                                } else {
+                                    $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
+                                    $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                    $answer->setUpdatedAt(new \Datetime);
+                                }
                             }
                             $em->persist($answer);
                         }
+                        $question->setInterview($interview);
+                        // $em->persist($answer);
+                        // $em->persist($question);
+                    } else {
+
+                        $question = $questionRepository->find($questionId);
+                        $question->setContent($questionReponse["question"]);
+
+
+
+                        if (count($questionReponse["answer"]) < count($question->getAnswers())) {
+
+                            $AnswerInDatabase = $question->getAnswers();
+                            $answerNotSaved = $questionReponse["answer"];
+
+                            for ($i = 0; $i < count($AnswerInDatabase); $i++) {
+
+                                if (isset($answerNotSaved[$i]["id"]) && $AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
+                                } else {
+                                    $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
+                                    $question->removeAnswer($answer);
+                                    $em->remove($answer);
+                                    $em->flush($answer);
+                                }
+                            }
+                        }
+
+
+                        if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
+
+                            for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                                if (isset($questionReponse["answer"][$i]["id"])) {
+                                    $answerId = $questionReponse["answer"][$i]["id"];
+                                } else {
+                                    $answerId = null;
+                                }
+
+                                if (!$answerId) {
+
+                                    $answer = new Answer();
+                                    $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                    $answer->setQuestion($question);
+                                    $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
+                                    $answer->setInterviewed($interviewed);
+                                } else {
+
+                                    $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
+                                    $answer->setContent($questionReponse["answer"][$i]["content"]);
+                                    $answer->setUpdatedAt(new \Datetime);
+                                }
+                                $em->persist($answer);
+                            }
+                        }
+                        $question->setInterview($interview);
                     }
-                    $question->setInterview($interview);
-                 
+                    $em->persist($question);
                 }
-                $em->persist($question);
+            }else {
+                $question = $interview->getQuestions()[0];
+                $interview->removeQuestion( $question);
+                $em->remove($question);
             }
 
             $interview->setUpdatedAt(new \Datetime);
@@ -532,7 +537,7 @@ class InterviewController extends AbstractController
                         $em->persist($structure);
                     }
                 }
-            }else {
+            } else {
                 $interview->addInterviewed($interviewedRepository->find(1));
             }
         }
