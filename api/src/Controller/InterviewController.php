@@ -379,8 +379,8 @@ class InterviewController extends AbstractController
                         }
                     }
                     $question->setInterview($interview);
+                    $em->persist($answer);
                 }
-                $em->persist($answer);
                 $em->persist($question);
             }
 
