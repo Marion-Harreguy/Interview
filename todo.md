@@ -1,22 +1,13 @@
-Week-end :
-— Faire une 404 cool 
-
-S4 :
-Moteur de recherche : titre, lieu, langues, dates, libre de droit
-
 MARDI :
 Régler les bugs :
 — Quand session expirée, rend une page grise au lieu de rediriger vers le login [1] OK ?
-— Couleur de catégories — length pas ok [1]
-— Problème avec le initial state quand creation nouvel entretien [1]
-— Interview masqués quand catégories pas cochées [2]
-— Structure register disabled input [2]
 
 MERCREDI :
 — CSS mobile
 — Gérer interviewés input write
 — Vérifier le système qui génère les coordonnées
-— Contact
+— Faire une 404 cool 
+— Contact & mentions légales
 — Verifier tous les scrolls
 — Commenter et clean le code [4]
 

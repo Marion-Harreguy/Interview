@@ -37,6 +37,7 @@ const WriteContent = ({
     }
     else {
       fillAuthor({
+        id: dataUser.id,
         firstname: dataUser.firstname,
         lastname: dataUser.lastname,
         status: dataUser.status,
@@ -44,6 +45,8 @@ const WriteContent = ({
         structure: {
           name: dataStructure.name,
           city: dataStructure.city,
+          sector: dataStructure.sector,
+          id: dataStructure.id,
         },
       });
     }

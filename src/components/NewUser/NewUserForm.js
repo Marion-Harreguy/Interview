@@ -19,7 +19,8 @@ const NewUserForm = ({
   newUserInputChange,
   newUserSubmit,
 }) => {
-  const structureFill = structure.length < 0 ? true : (structure.length > 0 && city.length > 0 && sector.length < 0) ;
+  const structureFill = structure.length <= 0 ? true : (structure.length > 0 && city.length > 0 && sector.length > 0);
+  console.log(structureFill);
   // Check if all the mandatory inputs are filled to be able to submit form
   // And that the password matches the confirmation-password
   const canSubmitForm = (lastname.length > 0 && firstname.length > 0 && email.length > 0 && password.length > 0 && passwordConfirmation.length > 0 && password === passwordConfirmation && structureFill === true);

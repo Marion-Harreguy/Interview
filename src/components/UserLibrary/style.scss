@@ -205,3 +205,32 @@ TEST ICI NE FONCTIONNE PAS
   display: none;
   margin-top: 0;
 }
+
+.left__menu--home .home__category--all:hover > label {
+  left: 25px;
+}
+
+.left__menu--home .home__category--all:hover > label::before {
+  margin-left: -25px;
+}
+
+.left__menu--home .home__category--all:hover > .category__delete {
+  display: inline-block;
+}
+
+
+.category-button--all + label::before, .category-button--all:hover + label::before{
+  background-color: #2b363e;
+  border: solid 1px white;
+}
+
+.category-button--all + label:focus, .category-button--all + label:focus{
+  margin-top:0;
+  top:0;
+  padding-top:0;
+} 
+
+.category-button--all:checked + label::before {
+  box-shadow: inset 0px 0px 0px 4px #2b363e;
+  background-color: white;
+}

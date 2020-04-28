@@ -132,7 +132,7 @@
 .research__tools__save--button, .research__tools__save--button:focus {
   width: 20px;
   height: 20px;
-  background-image: url('http://localhost:8080/src/assets/icons/bookmark.png');
+  background-image: url('../../assets/icons/bookmark.png');;
   background-size: contain;
   border: none;
   margin-left: 8px;
@@ -167,17 +167,17 @@
 }
 
 .research__tools__mode--list {
-  background-image: url('./icons/list.png');
+  background-image: url('../../assets/icons/list.png');
   background-size: 14px;
 }
 
 .research__tools__mode--timeline {
-  background-image: url('./icons/clock.png');
+  background-image: url('../../assets/icons/clock.png');
   background-size: contain;
 }
 
 .research__tools__mode--map {
-  background-image: url('./icons/planet.png');
+  background-image: url('../../assets/icons/planet.png');
   background-size: contain;
 }
 

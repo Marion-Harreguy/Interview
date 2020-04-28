@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -24,15 +24,22 @@ const UserLibrary = ({
   structure,
 }) => {
 
+  const [noTags, setNoTags] = useState(true);
   // Get all user info from API onload
   useEffect(() => {
     updateUserGet();
   }, [user.id]);
 
+  const toggleNoTags = () => {
+    setNoTags(!noTags);
+    smoothAdjustment();
+  };
+
   // Function to determine weather an interview is shown or not
   // Based on its category list, and which categories the user checked
   // Param = category list of the interview / Type = [table]
   const toggleInterview = (interviewCategoryList) => {
+    if (noTags) return true;
     let interviewShown = false;
     interviewCategoryList.forEach((interviewCategory) => {
       const categoryIndex = dashboard.categories.findIndex((dataCategory) => dataCategory.id === interviewCategory);
@@ -106,6 +113,10 @@ const UserLibrary = ({
     }
   };
 
+  const smoothAdjustment = () => {
+    $('.section__list--open').css('height', 'auto');
+  };
+
   return (
     <aside className="left__menu--top left__menu left__menu--home">
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
@@ -138,11 +149,17 @@ const UserLibrary = ({
                   <div key={`sec-${section.id}`} className="home__categories">
                     <h2 className="categories__title">Mes catégories</h2>
                     <div className="categories__list">
+
+                      <div className="home__category home__category--all" >
+                        <input className="category-button category-button--all" type="checkbox" onChange={toggleNoTags} id="all-tags" checked={noTags} name='category-all'/>
+                        <label htmlFor="all-tags">Sans catégories</label>
+                      </div>
+
                       {
                       // Creating each category
                       sectionContent.map((category, index) => (
                         <div className="home__category" key={`cat-${category.id}`}>
-                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={library.categoryDisplay[index]} name={`category-${category.id}`} />
+                          <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => {toggleCategory(category.id), smoothAdjustment()}} checked={library.categoryDisplay[index]} name={`category-${category.id}`} />
                           <label htmlFor={category.id}>{category.name}</label>
                           <button className="category__delete" onClick={() => { deleteCategory(category.id), updateUserPut() }} name={`category-${category.id}`} type="button" label="Supprimer la catégorie" />
                         </div>
@@ -180,20 +197,21 @@ const UserLibrary = ({
                       // ternaire
                       // sectionTitle writtingInterviews = update sinon read
                       const path = (sectionTitle === 'writtingInterviews' ? 'update' : 'read');
-                      return(
+                      return (
                       // Creating each interview
-                      <div className="list__interview" key={`int-${interview.id}`}>
-                        <NavLink exact to={`/${path}/${interview.id}`}>
-                          <h4 className="list__interview__title">{interview.title}</h4>
-                          <div className="list__interview__categories">
-                            {/* Creating each category dot for each article */}
-                            { interview.categories.map((category) => (
-                              <span className={`list__category list__category--${category}`} key={`catt-${category}`} />
-                            ))}
-                          </div>
-                        </NavLink>
-                      </div>
-                    )})}
+                        <div className="list__interview" key={`int-${interview.id}`} style={{ display: toggleInterview(interview.categories) ? 'block' : 'none' }}>
+                          <NavLink exact to={`/${path}/${interview.id}`}>
+                            <h4 className="list__interview__title">{interview.title}</h4>
+                            <div className="list__interview__categories">
+                              {/* Creating each category dot for each article */}
+                              { interview.categories.map((category) => (
+                                <span className={`list__category list__category--${category}`} key={`catt-${category}`} />
+                              ))}
+                            </div>
+                          </NavLink>
+                        </div>
+                      )}
+                    )}
 
                   </div>
                 </div>

@@ -192,6 +192,8 @@ const userData = (state = initialState, action = {}) => {
 
     case ADD_CATEGORY_SUBMIT:
       if (state.newCategory.name) {
+        const alreadyExistingColors = state.dashboard.categories.map((category) => category.color);
+        const remainingColors = categoryColors.filter((color) => !alreadyExistingColors.includes(color));
         return {
           ...state,
           dashboard: {
@@ -200,7 +202,7 @@ const userData = (state = initialState, action = {}) => {
               ...state.dashboard.categories,
               {
                 ...state.newCategory,
-                color: categoryColors[state.dashboard.categories.length],
+                color: remainingColors[0],
               },
             ],
           },

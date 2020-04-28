@@ -1,3 +1,109 @@
-strong {
+.tuto h2 {
   font-family: 'Source-Regular';
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.instructions {
+  height: 0px;
+  overflow: hidden;
+}
+
+.instructions--perso {
+  height: auto;
+  overflow: hidden;
+}
+
+.tuto h3 {
+  margin-top: 10px;
+  font-family: 'Source-Regular';
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.tuto p {
+  line-height: 1.2rem;
+  display: block;
+}
+
+.tuto {
+  overflow: scroll;
+  height: calc(100vh - 50px);
+  padding: 10px;
+}
+
+.tuto span {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background-color: none !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+  margin-top: 2px;
+}
+
+.tuto__round {
+  border: solid 0.5px white !important;
+  border-radius: 50%;
+  background-size: 7px !important;
+  background-position: center;
+}
+
+.tuto__mode {
+  width: 20px !important;
+  height: 20px !important;
+  background-size: 12px !important;
+}
+
+.tuto__pencil {
+  background-image: url('../../assets/icons/pencil.png');
+}
+.tuto__plus {
+  background-image: url('../../assets/icons/thick-plus.png');
+}
+.tuto__deroulant {
+  background-image: url('../../assets/icons/order.png');
+  width: 60px !important;
+  height: 20px;
+}
+.tuto__categoryplus {
+  background-image: url('../../assets/icons/thick-plus.png');
+}
+
+.tuto__bookmark-save {
+  background-image: url('../../assets/icons/bookmark.png');
+}
+.tuto__download {
+  background-image: url('../../assets/icons/download.png');
+}
+
+.tuto__trash {
+  background-image: url('../../assets/icons/trash.png');
+}
+.tuto__category {
+  background-image: url('../../assets/icons/category.png');
+}
+.tuto__export {
+  background-image: url('../../assets/icons/export.png');
+}
+.tuto__question {
+  background-image: url('../../assets/icons/question.png');
+  width: 50px !important;
+  height: 20px;
+}
+.tuto__answer {
+  background-image: url('../../assets/icons/answer.png');
+  width: 50px !important;
+  height: 20px;
+}
+.tuto__list {
+  background-image: url('../../assets/icons/list.png');
+}
+.tuto__planet {
+  background-image: url('../../assets/icons/planet.png');
+}
+.tuto__clock {
+  background-image: url('../../assets/icons/clock.png');
 }
