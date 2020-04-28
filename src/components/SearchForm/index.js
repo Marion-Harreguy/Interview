@@ -69,7 +69,7 @@ const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
             </div>
 
             <input className="search__form__button--royalty" type="checkbox" name="openSource" id="openSource" onChange={(event) => searchInputChange({ name: 'openSource', value: event.target.checked})} checked={searchValues.openSource}/>
-            <label className="search__form__input search__form__input--royalty" htmlFor="openSource">Libres de droit</label>
+            <label className="search__form__input search__form__input--royalty" htmlFor="openSource">Libres de droit seulement</label>
           </div>
           <button className="search__form__button--submit" type="submit">Rechercher</button>
         </form>

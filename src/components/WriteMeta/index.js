@@ -264,7 +264,9 @@ const WriteMeta = ({
           <input className="write__form__button" type="checkbox" checked={interviewMeta.openLicence} name="openLicence" id="royalty-free" onChange={(event) => { changeMeta(event.target), writeInterviewPut(interviewId)}} />
           <label className="write__form__input write__form__input--royalty" htmlFor="royalty-free">Libre de droit</label>
 
-          <input className="write__form__input" type="text" name="tags" placeholder="Tags" value={turnTableToString(interviewMeta.tags)} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta({ value: turnStringToTable(event.target.value), name: 'tags' })} />
+          {
+            interviewId ? (<input className="write__form__input" type="text" name="tags" placeholder="Tags" value={turnTableToString(interviewMeta.tags)} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeMeta({ value: turnStringToTable(event.target.value), name: 'tags' })} />) : (<input className="write__form__input" type="text" name="tags" placeholder="Tags" value={[]}/>) 
+          }
         </form>
 
         <div className="write__categories">

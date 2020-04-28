@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 const ResultsList = ({ resultList }) => (
   <div className="research__results research__results--list">
@@ -9,7 +10,7 @@ const ResultsList = ({ resultList }) => (
     </select> */}
     {
       resultList.map((interview) => (
-        <div className="result-interview" key={interview.id}>
+        <NavLink exact to={`read/${interview.id}`} className="result-interview" key={interview.id}>
           <div className="result-interview__meta-list">
             <h5 className="result-interview__meta result-interview__meta--title">{interview.title}</h5>
             <p className="result-interview__meta result-interview__meta--date">{interview.date}</p>
@@ -32,7 +33,7 @@ const ResultsList = ({ resultList }) => (
                 ))
             }
           </div>
-        </div>
+        </NavLink>
       ))
         }
   </div>

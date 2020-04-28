@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 const ResultSelected = ({ interview }) => (
-  <div className="result-timeline__interview">
+  <NavLink exact to={`read/${interview.id}`} className="result-timeline__interview">
     <div className="result-interview">
       <div className="result-interview__meta-list">
         <h5 className="result-interview__meta result-interview__meta--title">{interview.title}</h5>
@@ -23,7 +24,7 @@ const ResultSelected = ({ interview }) => (
         ))}
       </div>
     </div>
-  </div>
+  </NavLink>
 );
 
 ResultSelected.propTypes = {

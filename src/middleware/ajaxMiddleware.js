@@ -92,6 +92,7 @@ export default (store) => (next) => (action) => {
         .catch((error) => {
           // window.alert(errorMessages[error.response.status]);
           store.dispatch(logOut());
+          history.push('/');
         });
       break;
 
@@ -218,6 +219,7 @@ export default (store) => (next) => (action) => {
         },
       })
         .then((response) => {
+          console.log(action.type + ": success !");
           if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
           if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
         })

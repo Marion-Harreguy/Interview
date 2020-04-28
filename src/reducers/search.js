@@ -13,84 +13,85 @@ export const initialState = {
     yearEnd: 2020,
   },
   mode: 'list',
-  results: [{
-    meta: {
-      id: 13,
-      title: 'Bonjour',
-      location: 'Paris',
-      coordinates: [254, -14],
-      language: 'Français',
-      date: '2012',
-      openLicence: true,
-      author: {
-        id: 14,
-        firstname: 'Laura',
-        lastname: 'Piccolo',
-        status: 'fezegrez',
-        email: 'grezgrezgrezg',
-        structure: {
-          name: 'grezgrez',
-          city: 'grezgregre',
-          id: 'fezfenzf',
-          sector: 'dfghjk',
-        },
-      },
-      interviewed: [
-        {
-          id: 46,
-          firstname: 'gfdsgfds',
-          lastname: 'gfdgfdgsfd',
-          email: 'gfdsgfdsgfd',
-          job: 'gfdgfdgfd',
-          structure: {
-            name: 'gfdsgfdgfds',
-            city: 'gfdsgfdgfd',
-          },
-        },
-      ],
-      tags: ['yes','yas','verv'],
-      context: 'qdsfghjk',
-    },
-  },
+  results: [
+    // {
+  //   meta: {
+  //     id: 13,
+  //     title: 'Bonjour',
+  //     location: 'Paris',
+  //     coordinates: [254, -14],
+  //     language: 'Français',
+  //     date: '2012',
+  //     openLicence: true,
+  //     author: {
+  //       id: 14,
+  //       firstname: 'Laura',
+  //       lastname: 'Piccolo',
+  //       status: 'fezegrez',
+  //       email: 'grezgrezgrezg',
+  //       structure: {
+  //         name: 'grezgrez',
+  //         city: 'grezgregre',
+  //         id: 'fezfenzf',
+  //         sector: 'dfghjk',
+  //       },
+  //     },
+  //     interviewed: [
+  //       {
+  //         id: 46,
+  //         firstname: 'gfdsgfds',
+  //         lastname: 'gfdgfdgsfd',
+  //         email: 'gfdsgfdsgfd',
+  //         job: 'gfdgfdgfd',
+  //         structure: {
+  //           name: 'gfdsgfdgfds',
+  //           city: 'gfdsgfdgfd',
+  //         },
+  //       },
+  //     ],
+  //     tags: ['yes','yas','verv'],
+  //     context: 'qdsfghjk',
+  //   },
+  // },
 
-  {
-    meta: {
-      id: 143,
-      title: 'Bogesrgezrg',
-      location: 'Paris',
-      coordinates: [122, -234],
-      language: 'Français',
-      date: '2006',
-      openLicence: true,
-      author: {
-        id: 124,
-        firstname: 'Laura',
-        lastname: 'Piccolo',
-        status: 'fezegrez',
-        email: 'grezgrezgrezg',
-        structure: {
-          name: 'grezgrez',
-          city: 'grezgregre',
-        },
-      },
-      interviewed: [
-        {
-          id: 46,
-          firstname: 'gfdsgfds',
-          lastname: 'gfdgfdgsfd',
-          email: 'gfdsgfdsgfd',
-          status: 'gfdgfdgfd',
-          structure: {
-            name: 'gfdsgfdgfds',
-            city: 'gfdsgfdgfd',
-          },
-        },
-      ],
-      tags: ['yes','yas','verv'],
-      context: 'qdsfghjk',
-    },
-  },
-  ],
+  // {
+  //   meta: {
+  //     id: 143,
+  //     title: 'Bogesrgezrg',
+  //     location: 'Paris',
+  //     coordinates: [122, -234],
+  //     language: 'Français',
+  //     date: '2006',
+  //     openLicence: true,
+  //     author: {
+  //       id: 124,
+  //       firstname: 'Laura',
+  //       lastname: 'Piccolo',
+  //       status: 'fezegrez',
+  //       email: 'grezgrezgrezg',
+  //       structure: {
+  //         name: 'grezgrez',
+  //         city: 'grezgregre',
+  //       },
+  //     },
+  //     interviewed: [
+  //       {
+  //         id: 46,
+  //         firstname: 'gfdsgfds',
+  //         lastname: 'gfdgfdgsfd',
+  //         email: 'gfdsgfdsgfd',
+  //         status: 'gfdgfdgfd',
+  //         structure: {
+  //           name: 'gfdsgfdgfds',
+  //           city: 'gfdsgfdgfd',
+  //         },
+  //       },
+  //     ],
+  //     tags: ['yes','yas','verv'],
+  //     context: 'qdsfghjk',
+  //   },
+  // },
+   ],
 };
 
 const search = (state = initialState, action = {}) => {

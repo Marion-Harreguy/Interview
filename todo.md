@@ -5,23 +5,21 @@ S4 :
 Moteur de recherche : titre, lieu, langues, dates, libre de droit
 
 MARDI :
-En +
-— Commenter et clean le code [4]
-— Regénérer les couleurs
-— Gérer interviewés input write
-— Styler la notice
+Régler les bugs :
+— Quand session expirée, rend une page grise au lieu de rediriger vers le login [1] OK ?
+— Couleur de catégories — length pas ok [1]
+— Problème avec le initial state quand creation nouvel entretien [1]
+— Interview masqués quand catégories pas cochées [2]
+— Structure register disabled input [2]
 
 MERCREDI :
 — CSS mobile
-— CSS : enlever les vieux ronds qui apparaissent aux clic des tools (boutons)
+— Gérer interviewés input write
 — Vérifier le système qui génère les coordonnées
-
-Régler les bugs :
-— Quand session expirée, rend une page grise au lieu de rediriger vers le login
-— Couleur de catégories — length pas ok
-— Interview masqués quand catégories pas cochées
+— Contact
 — Verifier tous les scrolls
-— Tableau tag ne veut pas se vider (pareil pour initialstate)
+— Commenter et clean le code [4]
+
 
 NOPE:
 — Gérer le forgotten password ?
@@ -50,3 +48,33 @@ EN + :
 
 Pour la démo :
 — Masquer input recherche pas fonctionnels
+— Messages inscription et connexion
+
+Microdetails à regler :
+userLibrary
+— Disquette changeInfo
+— CSS notice
+— Les sections s'ouvrent au deuxième clic
+— Cursor pointer sur les sections
+— Quand les inputs sont modifiables : mettre border bottom solid
+— Transition de taille quand input enabled
+Read :
+— Subdata doivent être en dsiplay none au début
+— Tags moches
+— Changer icone citer
+— margin-left context a 5px de trop
+— (Scroll)
+Write :
+— Anonyme ?
+— Bouton ajouter un.e enquêté a un z-index trop elevé
+Search :
+— Icones manquent
+— cursor pointer sur les ronds générés
+— Couleur des ronds sur la map
+— Curseur date un tout petit peu trop long
+— Masquer les icones mode si rien dans les résultats
+— Style des résultats par liste
+Else :
+— Regénérer les couleurs
+— Styler la notice
+— CSS : enlever les vieux ronds qui apparaissent aux clic des tools (boutons)

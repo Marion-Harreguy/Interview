@@ -328,6 +328,7 @@ const readInterview = (state = initialState, action = {}) => {
       };
 
     case FILL_AUTHOR:
+      console.log(initialState);
       return {
         ...initialState,
         meta: {
