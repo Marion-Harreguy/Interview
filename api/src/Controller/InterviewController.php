@@ -471,8 +471,8 @@ class InterviewController extends AbstractController
         //  Gestion de l'interviewé    //
         //=============================//
         foreach ($interviewed as $interviewedUnSaved) {
-            if (!empty($interviewedUnSaved["email"])) {
 
+            if (!empty($interviewedUnSaved["email"])) {
 
                 $interviewed = $interviewedRepository->findOneBy(["email" => $interviewedUnSaved["email"]]);
 
@@ -526,6 +526,8 @@ class InterviewController extends AbstractController
                         $em->persist($structure);
                     }
                 }
+            }else {
+                $interview->addInterviewed($interviewedRepository->find(1));
             }
         }
 
