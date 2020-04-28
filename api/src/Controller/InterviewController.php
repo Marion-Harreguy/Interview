@@ -97,11 +97,11 @@ class InterviewController extends AbstractController
      * 
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id":"\d+"})
      */
-    public function edit(Interview $interview, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository, SerializerInterface $serializer, InterviewRepository $interviewRepository)
+    public function edit($id, Request $request, EntityManagerInterface $em, TagRepository $tagRepository, QuestionRepository $questionRepository, AnswerRepository $answerRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository, SerializerInterface $serializer, InterviewRepository $interviewRepository)
     {
         // on decode les données envoyées
         $data = json_decode($request->getContent(), true);
-
+        $interview = $interviewRepository->find($id);
 
         if ($interview->getUser() != $this->getUser()) {
             return $this->json(
@@ -127,7 +127,7 @@ class InterviewController extends AbstractController
 
         $tags = $data["meta"]["tags"];
 
-        $interviewed =  $data["meta"]["interviewed"];
+        $interviewedList =  $data["meta"]["interviewed"];
 
 
         // on valide les données ainsi reçut
@@ -191,40 +191,39 @@ class InterviewController extends AbstractController
                     --> Créer l'objet Interviewed
             */
 
+            foreach ($interviewedList as $dataInterviewed) {
 
-            foreach ($interviewed as $dataInterviewed) {
+                if (!empty($dataInterviewed["email"])) {
+                    $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
+                    $interview->removeInterviewed($interviewedRepository->findOneBy(["email" => "anonyme@inter.view"]));
 
+                    if ($interviewed) {
 
-                $interviewedDefault = $interviewedRepository->find(1);
+                        $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                        $formIntervierwed->submit($dataInterviewed);
 
-                $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
+                        if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                           $interviewed->setUpdatedAt(new \DateTime());
+                            
+                        }
+                    } else {
 
-                if ($interviewed) {
+                        $interviewed = new Interviewed();
+                        $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                        $formIntervierwed->submit($dataInterviewed);
 
-                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
-                    $formIntervierwed->submit($dataInterviewed);
+                        if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
 
-                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-                        $interviewed->addInterview($interview);
-                        $interviewed->setUpdatedAt(new \DateTime());
-
-                        $interview->removeInterviewed($interviewedDefault);
+                        
+                        }
                     }
-                } else {
 
-                    $interviewed = new Interviewed();
-                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
-                    $formIntervierwed->submit($dataInterviewed);
-
-                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-                        $interviewed->addInterview($interview);
-                        $interview->removeInterviewed($interviewedDefault);
-                    }
+                    $em->persist($interviewed);
+                    $interview->addInterviewed($interviewed);
                 }
+            
 
-                $em->persist($interviewed);
-            }
-
+            
             //=============================//
             //   Gestion des structures    //
             //=============================//
@@ -238,11 +237,15 @@ class InterviewController extends AbstractController
 
             for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
 
+                
+                if (isset($dataInterviewed["structure"][$i]["name"])) {
+                    $name = $dataInterviewed["structure"][$i]["name"];
 
-                if (isset($dataInterviewed["structure"][$i]["id"])) {
-                    $id = $dataInterviewed["structure"][$i]["id"];
+                    $structure = $structureRepository->findOneBy(["name" =>$name]);
 
-                    $structure = $structureRepository->find($id);
+                   
+
+
                 } else {
                     $structure = new Structure();
                     $formStructure = $this->createForm(StructureType::class, $structure);
@@ -254,9 +257,10 @@ class InterviewController extends AbstractController
                 }
 
                 $em->persist($structure);
+                $interviewed->addStructure($structure);
             }
 
-
+        }
 
             //==================================//
             // Gestion des Questions & Réponses //
@@ -278,6 +282,10 @@ class InterviewController extends AbstractController
 
             foreach ($data["content"] as $questionReponse) {
 
+                //=============================//
+                //Compte les difference du nombre questions entre la base de données et celle envoyées
+                //=============================//
+
                 if (count($data["content"]) < count($interview->getQuestions())) {
 
                     $questionsInDatabase = $interview->getQuestions();
@@ -293,12 +301,16 @@ class InterviewController extends AbstractController
                     }
                 }
 
+
                 if (isset($questionReponse["id"])) {
                     $questionId = $questionReponse["id"];
                 } else {
                     $questionId = null;
                 }
 
+                //=============================//
+                //Si la question est nouvelle donc pas d'id
+                //=============================//
                 if (!$questionId) {
 
                     $question = new Question();
@@ -324,33 +336,34 @@ class InterviewController extends AbstractController
                                 $answer->setUpdatedAt(new \Datetime);
                             }
                         }
-                        $em->persist($answer);
                     }
                     $question->setInterview($interview);
-                    $em->persist($question);
+                    // $em->persist($answer);
+                    // $em->persist($question);
                 } else {
 
                     $question = $questionRepository->find($questionId);
                     $question->setContent($questionReponse["question"]);
-                    if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
 
 
-                        if (count($questionReponse["answer"]) < count($question->getAnswers())) {
 
-                            $AnswerInDatabase = $question->getAnswers();
-                            $answerNotSaved = $questionReponse["answer"];
+                    if (count($questionReponse["answer"]) < count($question->getAnswers())) {
 
-                            for ($i = 0; $i < count($AnswerInDatabase); $i++) {
+                        $AnswerInDatabase = $question->getAnswers();
+                        $answerNotSaved = $questionReponse["answer"];
 
-                                if (isset($answerNotSaved[$i]["id"]) && $AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
-                                } else {
-                                    $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
-                                    $question->removeAnswer($answer);
-                                }
+                        for ($i = 0; $i < count($AnswerInDatabase); $i++) {
+
+                            if (isset($answerNotSaved[$i]["id"]) && $AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
+                            } else {
+                                $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
+                                $question->removeAnswer($answer);
                             }
                         }
+                    }
 
 
+                    if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
 
                         for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
                             if (isset($questionReponse["answer"][$i]["id"])) {
@@ -373,21 +386,23 @@ class InterviewController extends AbstractController
                                 $answer->setUpdatedAt(new \Datetime);
                             }
                         }
-                        $em->persist($answer);
                     }
                     $question->setInterview($interview);
-                    $em->persist($question);
                 }
+                $em->persist($answer);
+                $em->persist($question);
             }
 
             $interview->setUpdatedAt(new \Datetime);
-            $em->flush();
 
-            $em->refresh($interview);
+            $em->flush();
         }
 
 
 
+        $em->refresh($interview);
+
+     
 
         $interviewResponse = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
         return $this->json(
