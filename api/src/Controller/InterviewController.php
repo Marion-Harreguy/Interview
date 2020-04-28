@@ -129,7 +129,7 @@ class InterviewController extends AbstractController
         $interviewedList =  $data["meta"]["interviewed"];
 
 
-        // on valide les données ainsi reçut
+        // on valide les données ainsi reçues
         $form = $this->createForm(InterviewEditType::class, $interview);
         $form->submit($dataInterview);
 
@@ -156,11 +156,11 @@ class InterviewController extends AbstractController
             //      Gestion des tags       //
             //=============================//
             /*
-            - Boucler sur le tableau $data["interview"]["tags"]
-                - Recherche par le nom si le tag existe
-                    --> Si on le retrouve : on lui ajoute l'interview
-                    --> Sinon on le créer et on lui ajoute l'interview
-            */
+    - Boucler sur le tableau $data["interview"]["tags"]
+        - Recherche par le nom si le tag existe
+            --> Si on le retrouve : on lui ajoute l'interview
+            --> Sinon on le créer et on lui ajoute l'interview
+    */
 
 
             if (count($tags) < count($interview->getTags())) {
@@ -174,7 +174,7 @@ class InterviewController extends AbstractController
 
                     if (isset($tags[$i]) && $tagsSaved[$i] = $tagsNotSave) {
                     } else {
-                        $interview->removeTag($tagsSaved[$i]);                     
+                        $interview->removeTag($tagsSaved[$i]);
                     }
                 }
             }
@@ -205,13 +205,12 @@ class InterviewController extends AbstractController
             //  Gestion de l'interviewé    //
             //=============================//
             /*
-            - Boucler sur le tableau $data["interview"]["interviewed"]
-                - Si l'index ["id"] existe 
-                    --> Récuperer l'objet Interviewed et le mettre à jour
-                - Si il n'existe pas 
-                    --> Créer l'objet Interviewed
-            */
-
+    - Boucler sur le tableau $data["interview"]["interviewed"]
+        - Si l'index ["id"] existe 
+            --> Récuperer l'objet Interviewed et le mettre à jour
+        - Si il n'existe pas 
+            --> Créer l'objet Interviewed
+    */
             foreach ($interviewedList as $dataInterviewed) {
 
                 if (!empty($dataInterviewed["email"])) {
@@ -243,14 +242,12 @@ class InterviewController extends AbstractController
                     //   Gestion des structures    //
                     //=============================//
                     /*
-                - Boucler sur le tableau $data["interview"]["interviewed"]["structure"]
-                    - Si l'index ["id"] existe
-                        --> Recuperer l'objet Structure et le mettre à jour
-                    - Si il n'existe pas
-                        --> Créer l'objet Structure et lui assigner l'interviewé
-                */
-
-
+    - Boucler sur le tableau $data["interview"]["interviewed"]["structure"]
+        - Si l'index ["id"] existe
+            --> Recuperer l'objet Structure et le mettre à jour
+        - Si il n'existe pas
+            --> Créer l'objet Structure et lui assigner l'interviewé
+    */
                     for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
                         if (isset($dataInterviewed["structure"][$i]["name"]) && !empty($dataInterviewed["structure"][$i]["name"])) {
                             $name = $dataInterviewed["structure"][$i]["name"];
@@ -274,152 +271,207 @@ class InterviewController extends AbstractController
             // Gestion des Questions & Réponses //
             //==================================//
             /*
-            - Boucler sur le tableau $data["content]
-                - Vérifier l'existence l'index ["id"]
-                    -> Si il existe : 
-                        - Recuperer l'objet Question, le mettre à jour
-                    -> Sinon :
-                        - Créer l'objet Question
-                  - Vérifier si il existe un index ["answers"]["id"]
-                      -> Si il existe : 
-                          - Recuperer l'objet Answer, le mettre à jour
-                      -> Sinon :
-                          - Créer l'objet Answer
-                          - Lui assginer la question et l'interviewé
-            */
+    - Boucler sur le tableau $data["content]
+        - Vérifier l'existence l'index ["id"]
+            -> S'il existe : 
+                - Recuperer l'objet Question, le mettre à jour
+            -> Sinon :
+                - Créer l'objet Question
+            - Vérifier s'il existe un index ["answers"]["id"]
+                -> S'il existe : 
+                    - Recuperer l'objet Answer, le mettre à jour
+                -> Sinon :
+                    - Créer l'objet Answer
+                    - Lui assigner la question et l'interviewé
+    */
 
             if (!empty($data["content"])) {
                 foreach ($data["content"] as $questionReponse) {
 
-                    //=============================//
-                    //Compte les difference du nombre questions entre la base de données et celle envoyées
-                    //=============================//
-
+                    //=====================================//
+                    // Vérification du nombre de questions //
+                    //=====================================//
+                    // Vérifier si il y a moins de questions envoyées par rapport au nombre de questions stockées en bdd (liées a l'interview)
                     if (count($data["content"]) < count($interview->getQuestions())) {
 
+                        // on définit deux variables 
+                        // Pour les question stockées en bdd
+                        // pour les question envoyées en PUT 
                         $questionsInDatabase = $interview->getQuestions();
                         $questionNotSaved = $data["content"];
 
+                        // on boucle tant que les question en bdd ne sont pas épuisées
                         for ($i = 0; $i < count($questionsInDatabase); $i++) {
 
+                            // si le champ id existe ET s'il est égale a celui de la question stockée en bdd
                             if (isset($questionNotSaved[$i]["id"]) && $questionsInDatabase[$i]->getId() === $questionNotSaved[$i]["id"]) {
                             } else {
+                                //sinon on récupere l'objet en fonction de l'id de la question
                                 $question = $questionRepository->find($questionsInDatabase[$i]->getId());
+                                // on remove la question de l'interview
                                 $interview->removeQuestion($question);
+                                // on supprime la question de la bdd 
                                 $em->remove($question);
                                 $em->flush($question);
                             }
                         }
                     }
 
-
+                    //=======================================//
+                    // Récuperation de l'id  de la quesiton  //
+                    //=======================================//
+                    // On check si l'id de la question est existant.
                     if (isset($questionReponse["id"])) {
                         $questionId = $questionReponse["id"];
                     } else {
+                        // sinon on lui attribue: null
                         $questionId = null;
                     }
 
-                    //=============================//
-                    //Si la question est nouvelle donc pas d'id
-                    //=============================//
+                    //==========================================//
+                    //Si la question est nouvelle donc pas d'id //
+                    //==========================================//
                     if (!$questionId) {
-
+                        // on crée un objet Question
                         $question = new Question();
+                        // on set le contenu 
                         $question->setContent($questionReponse["question"]);
+                        // et on l'applique a l'interview
+                        $question->setInterview($interview);
 
+                        //=================================================//
+                        // Vérification des réponse                        //
+                        // si elles sont déclarer / modifier / supprimer   //
+                        //=================================================//
+                        // si le tableau de Answer existe ET est non vide 
                         if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
+                            // on boucle dessus tant qu'il y a des réponses 
                             for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                                // on vérifie l'existence du champ ID ==> s'il existe la question est en Bdd
                                 if (isset($questionReponse["answer"][$i]["id"])) {
                                     $answerId = $questionReponse["answer"][$i]["id"];
                                 } else {
+                                    // sinon on le définit a null
                                     $answerId = null;
                                 }
-
+                                // si l'id est a null 
+                                // on créer un objet Anwser
                                 if (!$answerId) {
                                     $answer = new Answer();
+                                    // on set le contenu, les initiales, et l'interviewé
                                     $answer->setContent($questionReponse["answer"][$i]["content"]);
-                                    $answer->setQuestion($question);
                                     $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
                                     $answer->setInterviewed($interviewed);
+                                    // on lui assigne sa question
+                                    $answer->setQuestion($question);
                                 } else {
+                                    // sinon on récupere la réponse en bdd et on la modifie
                                     $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
                                     $answer->setContent($questionReponse["answer"][$i]["content"]);
                                     $answer->setUpdatedAt(new \Datetime);
                                 }
                             }
+                            // une fois cela fait on persiste les responses
                             $em->persist($answer);
                         }
-                        $question->setInterview($interview);
-                        // $em->persist($answer);
-                        // $em->persist($question);
+
+                        //===================================================//
+                        // Sinon la question a un id donc elle existe en Bdd //
+                        //===================================================//
                     } else {
-
+                        // on retrouve la question précise 
                         $question = $questionRepository->find($questionId);
+                        // on lui applique son nouveau contenu
                         $question->setContent($questionReponse["question"]);
-
-
-
+                        //===================================================//
+                        // Vérification des réponses                          //
+                        // si elles sont déclarées / modifiées / supprimées  //
+                        //===================================================//
+                        // Donc si le compte des réponses envoyées n'est pas le même que le compte des réponses stockées  
                         if (count($questionReponse["answer"]) < count($question->getAnswers())) {
-
+                            // On définit deux variables contenant :
+                            // d'une part les réponses de l'objet (stockées en bdd)
+                            // d'autre part les réponses renvoyées (dans la requete PUT)
                             $AnswerInDatabase = $question->getAnswers();
                             $answerNotSaved = $questionReponse["answer"];
 
+                            // on boucle tant que le compte des reponses stockées n'est pas atteint 
                             for ($i = 0; $i < count($AnswerInDatabase); $i++) {
 
+                                // si l'index "id" d'une réponse existe ET qu'il est égale a celui stocké en bdd (lié à l'objet) ==> On ne fait rien de plus
                                 if (isset($answerNotSaved[$i]["id"]) && $AnswerInDatabase[$i]->getId() === $answerNotSaved[$i]["id"]) {
                                 } else {
+                                    // Sinon on va récupérer l'objet réponse 
                                     $answer = $answerRepository->find($AnswerInDatabase[$i]->getId());
+                                    // et retirer la réponse de sa question
                                     $question->removeAnswer($answer);
+                                    // puis supprimer la réponse de la bdd
                                     $em->remove($answer);
                                     $em->flush($answer);
                                 }
                             }
                         }
 
-
+                        // si le tableau de Answer existe ET est non vide 
                         if (isset($questionReponse["answer"]) && !empty($questionReponse["answer"])) {
-
+                            // on boucle dessus tant qu'il y a des réponses 
                             for ($i = 0; $i < count($questionReponse["answer"]); $i++) {
+                                // on vérifie l'existence du champ ID ==> s'il existe la question est en Bdd
                                 if (isset($questionReponse["answer"][$i]["id"])) {
                                     $answerId = $questionReponse["answer"][$i]["id"];
                                 } else {
+                                    // sinon on le définit a null
                                     $answerId = null;
                                 }
 
+                                // si l'id est a null 
+                                // on crée un objet Anwser
                                 if (!$answerId) {
-
                                     $answer = new Answer();
+                                    // on set le contenu, les initiales, et l'interviewé
                                     $answer->setContent($questionReponse["answer"][$i]["content"]);
-                                    $answer->setQuestion($question);
                                     $answer->setInitials($questionReponse["answer"][$i]["interviewed"]);
                                     $answer->setInterviewed($interviewed);
+                                    // on lui assigne sa question
+                                    $answer->setQuestion($question);
                                 } else {
-
+                                    // sinon on récupere la réponse en bdd et on la modifie
                                     $answer = $answerRepository->find($questionReponse["answer"][$i]["id"]);
                                     $answer->setContent($questionReponse["answer"][$i]["content"]);
                                     $answer->setUpdatedAt(new \Datetime);
                                 }
-                                $em->persist($answer);
                             }
+                            // une fois cela fait on persiste les responses
+                            $em->persist($answer);
                         }
+                        // on ajoute la question a l'interview
                         $question->setInterview($interview);
                     }
+                    // on persiste les questions
                     $em->persist($question);
                 }
             } else {
+                // sinon cela veut dire: 
+                // le tableau du contenu est vide (la derniere question présente a été supprimée)
+                // on va donc rechercher la derniere question de l'interview
                 $question = $interview->getQuestions()[0];
-                $interview->removeQuestion($question);
-                $em->remove($question);
+                if ($question) {
+                    // on la supprime de l'interview
+                    $interview->removeQuestion($question);
+                    // on la retire de la bdd
+                    $em->remove($question);
+                }
             }
 
+            // on applique une date de mise a jour sur l'interview
             $interview->setUpdatedAt(new \Datetime);
 
-
+            // on flush le tout 
             $em->flush();
         }
 
 
-
+        // on va refresh afin de pouvoir renvoyer l'objet de la bdd  
         $em->refresh($interview);
 
 
@@ -431,14 +483,6 @@ class InterviewController extends AbstractController
             $headers = ['content-type' => 'application/Json'],
             $context = []
         );
-
-        // $data = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
-        // return $this->json(
-        //     $data,
-        //     $status = 200,
-        //     $headers = ['content-type' => 'application/Json'],
-        //     $context = []
-        // );
     }
 
     /**
@@ -448,8 +492,9 @@ class InterviewController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em, TagRepository $tagRepository, InterviewedRepository $interviewedRepository, StructureRepository $structureRepository, SerializerInterface $serializer)
     {
-        // on decode les données reçut
+        // on decode les données reçues
         $data = json_decode($request->getContent(), true);
+        // on récupere le User connecté
         $user = $this->getUser();
 
 
