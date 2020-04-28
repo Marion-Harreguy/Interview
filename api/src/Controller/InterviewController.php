@@ -203,8 +203,7 @@ class InterviewController extends AbstractController
                         $formIntervierwed->submit($dataInterviewed);
 
                         if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-                           $interviewed->setUpdatedAt(new \DateTime());
-                            
+                            $interviewed->setUpdatedAt(new \DateTime());
                         }
                     } else {
 
@@ -213,21 +212,16 @@ class InterviewController extends AbstractController
                         $formIntervierwed->submit($dataInterviewed);
 
                         if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
-
-                        
                         }
                     }
 
                     $em->persist($interviewed);
                     $interview->addInterviewed($interviewed);
-                }
-            
 
-            
-            //=============================//
-            //   Gestion des structures    //
-            //=============================//
-            /*
+                    //=============================//
+                    //   Gestion des structures    //
+                    //=============================//
+                    /*
                 - Boucler sur le tableau $data["interview"]["interviewed"]["structure"]
                     - Si l'index ["id"] existe
                         --> Recuperer l'objet Structure et le mettre à jour
@@ -235,32 +229,25 @@ class InterviewController extends AbstractController
                         --> Créer l'objet Structure et lui assigner l'interviewé
                 */
 
-            for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
 
-                
-                if (isset($dataInterviewed["structure"][$i]["name"])) {
-                    $name = $dataInterviewed["structure"][$i]["name"];
-
-                    $structure = $structureRepository->findOneBy(["name" =>$name]);
-
-                   
-
-
-                } else {
-                    $structure = new Structure();
-                    $formStructure = $this->createForm(StructureType::class, $structure);
-                    $formStructure->submit($dataInterviewed["structure"]);
-                    if ($formStructure->isSubmitted() && $formStructure->isValid()) {
-                        $structure->addInterviewed($interviewed);
-                        $interviewed->setUpdatedAt(new \DateTime());
+                    for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
+                        if (isset($dataInterviewed["structure"][$i]["name"]) && !empty($dataInterviewed["structure"][$i]["name"])) {
+                            $name = $dataInterviewed["structure"][$i]["name"];
+                            $structure = $structureRepository->findOneBy(["name" => $name]);
+                        } else {
+                            $structure = new Structure();
+                            $formStructure = $this->createForm(StructureType::class, $structure);
+                            $formStructure->submit($dataInterviewed["structure"]);
+                            if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+                                $structure->addInterviewed($interviewed);
+                                $interviewed->setUpdatedAt(new \DateTime());
+                            }
+                        }
+                        $em->persist($structure);
+                        $interviewed->addStructure($structure);
                     }
                 }
-
-                $em->persist($structure);
-                $interviewed->addStructure($structure);
             }
-
-        }
 
             //==================================//
             // Gestion des Questions & Réponses //
@@ -402,7 +389,7 @@ class InterviewController extends AbstractController
 
         $em->refresh($interview);
 
-     
+
 
         $interviewResponse = $serializer->normalize($interview->getInterview(), null, ['groups' => ['interview']]);
         return $this->json(
@@ -484,58 +471,64 @@ class InterviewController extends AbstractController
         //  Gestion de l'interviewé    //
         //=============================//
         foreach ($interviewed as $interviewedUnSaved) {
+            if (!empty($interviewedUnSaved["email"])) {
 
-            $interviewed = $interviewedRepository->findOneBy(["email" => $interviewedUnSaved["email"]]);
 
-            if ($interviewed) {
+                $interviewed = $interviewedRepository->findOneBy(["email" => $interviewedUnSaved["email"]]);
 
-                $interviewed->addInterview($interview);
-            } else {
-
-                $interviewed = new Interviewed();
-                $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
-                $formIntervierwed->submit($interviewedUnSaved);
-
-                if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
+                if ($interviewed) {
 
                     $interviewed->addInterview($interview);
-                }
-            }
-            $em->persist($interviewed);
-
-            //=============================//
-            //   Gestion des structures    //
-            //=============================//
-
-            foreach ($interviewedUnSaved["structure"] as $dataStructure) {
-
-                $structure = $structureRepository->findOneBy(["name" => $dataStructure["name"]]);
-
-                if ($structure) {
-
-                    $formStructure = $this->createForm(StructureType::class, $structure);
-                    $formStructure->submit($dataStructure);
-
-                    if ($formStructure->isSubmitted() && $formStructure->isValid()) {
-
-                        $structure->addInterviewed($interviewed);
-                        $interviewed->setUpdatedAt(new \DateTime());
-                    }
                 } else {
 
-                    $structure = new Structure();
-                    $formStructure = $this->createForm(StructureType::class, $structure);
-                    $formStructure->submit($dataStructure);
+                    $interviewed = new Interviewed();
+                    $formIntervierwed = $this->createForm(InterviewedType::class, $interviewed);
+                    $formIntervierwed->submit($interviewedUnSaved);
 
-                    if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+                    if ($formIntervierwed->isSubmitted() && $formIntervierwed->isValid()) {
 
-                        $structure->addInterviewed($interviewed);
+                        $interviewed->addInterview($interview);
                     }
                 }
+                $em->persist($interviewed);
 
-                $em->persist($structure);
+                //=============================//
+                //   Gestion des structures    //
+                //=============================//
+
+                foreach ($interviewedUnSaved["structure"] as $dataStructure) {
+
+                    if (empty($dataStructure["name"])) {
+                    } else {
+                        $structure = $structureRepository->findOneBy(["name" => $dataStructure["name"]]);
+
+                        if ($structure) {
+
+                            $formStructure = $this->createForm(StructureType::class, $structure);
+                            $formStructure->submit($dataStructure);
+
+                            if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+
+                                $structure->addInterviewed($interviewed);
+                                $interviewed->setUpdatedAt(new \DateTime());
+                            }
+                        } else {
+
+                            $structure = new Structure();
+                            $formStructure = $this->createForm(StructureType::class, $structure);
+                            $formStructure->submit($dataStructure);
+
+                            if ($formStructure->isSubmitted() && $formStructure->isValid()) {
+
+                                $structure->addInterviewed($interviewed);
+                            }
+                        }
+                        $em->persist($structure);
+                    }
+                }
             }
         }
+
 
         $user->addInterview($interview);
         $em->persist($user);
