@@ -169,6 +169,7 @@ class InterviewController extends AbstractController
 
                 if ($tag) {
                     $tag->addInterview($interview);
+                    $interview->addTag($tag);
                 } else {
                     $tag = new Tag();
                     $tag->setName($tagName);
