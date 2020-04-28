@@ -12,12 +12,10 @@ All
 Read
 — Survol des initiales, noms qui se mettent en gras à gauche [3]
 — Cacher bouton télécharger si pas libre de droit [2]
-— Ajouter un bouton "citer" [2]
+— Ajouter un bouton "citer" [2] [GAZEL]
 UserLibrary
 — Supprimer une catégorie [1] [Gael](ok mais a gérer en back et pour les entretients) 
-— Modifier le nom ou la structure d'un user [1] moi
 Write
-— Cocher les catégories qui correspondent à l'entretien [1] [Laura]
 — Unpublish [1]
 — Mettre focus sur le nouvel input quand bouton Question ou Réponse [2]
 En +

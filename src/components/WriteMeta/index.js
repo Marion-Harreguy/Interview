@@ -26,6 +26,21 @@ const WriteMeta = ({
   interviewContent,
   dashboard,
 }) => {
+
+  // Table to stack the categories in which the user wants to put the interview
+  let categories = [];
+
+  useEffect(() => {
+    setTimeout(() => {
+      categories = interviewMeta.isPublished ? dashboard.publishedInterviews.find((interview) => interview.id == interviewId).categories : dashboard.writtingInterviews.find((interview) => interview.id == interviewId).categories;
+      console.log(categories);
+        
+      for (let indexCategory = 0; indexCategory < categories.length; indexCategory ++){
+        if(document.getElementById(categories[indexCategory])) document.getElementById(categories[indexCategory]).checked = true;
+      }
+    }, 1000);
+  }, [dashboard]);
+
   // If user clicks on delete
   const openDeleteMenu = () => {
     document.querySelector('.write__delete-menu').style.display = 'block';
@@ -36,30 +51,22 @@ const WriteMeta = ({
     document.querySelector('.write__delete-menu').style.display = 'none';
   };
 
-  // Table to stack the categories in which the user wants to put the interview
-  const categories = () => {
-    if (interviewMeta.isPublished) {
-      return [...dashboard.publishedInterviews.find((interview) => interview.id == interviewId).categories];
-    }
-    return [...dashboard.writtingInterviews.find((interview) => interview.id == interviewId).categories];
-  }
-
   // Add category to the table if it's not there, remove it otherwise
   // For more details : see ReadMeta component (pushCategory function)
   const pushCategory = (categoryId) => {
     let toDelete = false;
-    categories().unshift(0);
+    categories.unshift(0);
     for (let index = 0; index < categories.length; index++ ) {
       if (categories[index] === categoryId) toDelete = index;
     }
     if (toDelete) {
-      categories().splice(toDelete, 1);
+      categories.splice(toDelete, 1);
     }
     else {
-      categories().push(categoryId);
+      categories.push(categoryId);
     }
-    categories().splice(0, 1);
-    changeInterviewCategories({ categories: categories(), interviewId: interviewMeta.id });
+    categories.splice(0, 1);
+    changeInterviewCategories({ categories, interviewId: interviewMeta.id });
     updateUserPut();
   };
 
@@ -251,9 +258,7 @@ const WriteMeta = ({
             userCategories.map((category) => (
               <div className="home__category" key={category.id}>
                 <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => pushCategory(category.id)} name={`category-${category.id}`}
-                  { ...categories().filter((interviewCategory) => interviewCategory === category.id ) && 'checked'
-                  }
-                 />
+                />
                 <label htmlFor={category.id}>{category.name}</label>
               </div>
             ))

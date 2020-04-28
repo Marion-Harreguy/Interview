@@ -18,6 +18,18 @@ const ReadMeta = ({
     console.log("downloading the interview");
   };
 
+  const createInitiales = (name) => {
+    let initiales = name.match(/\b\w/g) || [];
+    initiales = ((initiales.shift() || '') + (initiales.pop() || '')).toUpperCase();
+    return initiales;
+  };
+
+  const quoteInterview = () => {
+    const quote = `${interviewMeta.author.lastname}, ${createInitiales(interviewMeta.author.firstname)}. (${interviewMeta.date}). ${interviewMeta.title}. ${interviewMeta.location}.`;
+    console.log(quote);
+    // Author Surname, Author Initial. (Year Published). Title. Location.
+  };
+
   // Toggle infos about author or interviewed
   const openSubdata = (person) => {
     // If infos are already shown, close the infos
@@ -117,6 +129,7 @@ const ReadMeta = ({
             )
         }
         <button className="tools__download" type="button" onClick={() => downloadInterview()} label="Télécharger le PDF" />
+        <button className="tools__quote" type="button" label="Citer" onClick={() => quoteInterview()} />
       </div>
 
 

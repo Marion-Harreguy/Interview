@@ -146,14 +146,6 @@
   position: relative;
 }
 
-.home__category label, .new-category-name, .new-category-name:focus {
-  vertical-align: top;
-  position: absolute;
-  left: 25px;
-  top: -5.5px !important;
-  font-size: 1.2em;
-}
-
 /* 
 TODO : Changer la background-image quand le placeholder est vide 
 TEST ICI NE FONCTIONNE PAS
@@ -171,7 +163,45 @@ TEST ICI NE FONCTIONNE PAS
   display: block;
 }
 
-.delete__category {
-  background-image: url('./../../assets/icons/cross.png');
+.home__category {
+  padding-top: 1px;
+}
 
+.home__category label, .new-category-name, .new-category-name:focus {
+  vertical-align: top;
+  position: absolute;
+  left: 25px;
+  top: -5.5px !important;
+  font-size: 1.2em;
+  // transition-duration: 0.3s;
+}
+
+.left__menu--home .home__category:hover > label {
+  left: 45px;
+}
+
+.left__menu--home .home__category:hover > label::before {
+  margin-left: -45px;
+  transition-duration: 0;
+}
+
+.left__menu--home .home__category:hover > .category__delete {
+  display: inline-block;
+}
+
+.category__delete:hover ~ label {
+  left: 45px;
+}
+
+.category__delete {
+  background-image: url('./../../assets/icons/cross.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border: none;
+  margin-left: 25px;
+  display: none;
+  margin-top: 0;
 }
