@@ -111,6 +111,7 @@ class UserController extends AbstractController
                     } else {
                         $category = $categoryRepository->find($categorySaved[$i]->getId());
                         $user->removeCategory($category);
+                        $em->remove($category);
                     }
                 }
             }
