@@ -148,7 +148,7 @@ class UserController extends AbstractController
                 }
             }
 
-            // Gestion de l'attribution d'une category a un interview 
+            // Gestion de l'attribution d'une category a une interview 
 
             // boucler sur "dahsboard"
             // publishedInterviews
@@ -194,8 +194,26 @@ class UserController extends AbstractController
                 }
             }
 
-            // savedInterviews
+            //=============================//
+            //      savedInterviews        //
+            //=============================//
             $favorites = $data["dashboard"]["savedInterviews"];
+
+            if(count($favorites) < count($user->getFavorite())){
+               
+                $favoriteSaved = $user->getFavorite();
+                $favoritesNotSaved = $favorites;
+                for ($i=0; $i < count($favoriteSaved); $i++) { 
+                  
+                  if (isset($favoritesNotSaved[$i]["id"]) && $favoriteSaved[$i]->getId() === $favoritesNotSaved[$i]["id"]){
+                  }else {
+                      $interviewFavorite = $interviewRepository->find($favoriteSaved[$i]->getId());
+                      $user->removeFavorite($interviewFavorite);
+                
+                  }
+                }
+            }
+
             foreach ($favorites as $favoris) {
                 //Boucler sur les interviews 
                 $interviewFav = $interviewRepository->find($favoris["id"]);
