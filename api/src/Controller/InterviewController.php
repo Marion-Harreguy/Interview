@@ -102,7 +102,6 @@ class InterviewController extends AbstractController
         // on decode les données envoyées
         $data = json_decode($request->getContent(), true);
         $interview = $interviewRepository->find($id);
-
         if ($interview->getUser() != $this->getUser()) {
             return $this->json(
                 ["message" => "notAuthorized"],
@@ -162,12 +161,31 @@ class InterviewController extends AbstractController
                     --> Si on le retrouve : on lui ajoute l'interview
                     --> Sinon on le créer et on lui ajoute l'interview
             */
+
+
+            if (count($tags) < count($interview->getTags())) {
+
+                $tagsSaved = $interview->getTags();
+                for ($i = 0; $i < count($tagsSaved); $i++) {
+
+                    if (isset($tags[$i])) {
+                        $tagsNotSave = $tagRepository->findOneBy(["name" => $tags[$i]]);
+                    }
+
+                    if (isset($tags[$i]) && $tagsSaved[$i] = $tagsNotSave) {
+                    } else {
+                        $interview->removeTag($tagsSaved[$i]);                     
+                    }
+                }
+            }
+
             for ($i = 0; $i < count($tags); $i++) {
 
                 $tagName = $tags[$i];
                 $tag = $tagRepository->findOneBy(["name" => $tagName]);
 
                 if ($tag) {
+
                     $tag->addInterview($interview);
                     $interview->addTag($tag);
                 } else {
@@ -177,8 +195,10 @@ class InterviewController extends AbstractController
                 }
 
 
+
                 $em->persist($tag);
             }
+
 
 
             //=============================//
@@ -267,7 +287,7 @@ class InterviewController extends AbstractController
                           - Créer l'objet Answer
                           - Lui assginer la question et l'interviewé
             */
-           
+
             if (!empty($data["content"])) {
                 foreach ($data["content"] as $questionReponse) {
 
@@ -386,13 +406,14 @@ class InterviewController extends AbstractController
                     }
                     $em->persist($question);
                 }
-            }else {
+            } else {
                 $question = $interview->getQuestions()[0];
-                $interview->removeQuestion( $question);
+                $interview->removeQuestion($question);
                 $em->remove($question);
             }
 
             $interview->setUpdatedAt(new \Datetime);
+
 
             $em->flush();
         }
