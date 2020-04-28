@@ -100,6 +100,22 @@ class UserController extends AbstractController
 
 
 
+            if (count($categoriesList) < count($user->getCategories())) {
+
+                $categorySaved = $user->getCategories();
+                $actegoryNotSaved = $categoriesList;
+
+                for ($i = 0; $i < count($categorySaved); $i++) {
+
+                    if (isset($actegoryNotSaved[$i]["id"]) && $categorySaved[$i]->getId() === $actegoryNotSaved[$i]["id"]) {
+                    } else {
+                        $category = $categoryRepository->find($categorySaved[$i]->getId());
+                        $user->removeCategory($category);
+                    }
+                }
+            }
+
+
             foreach ($categoriesList as $categoryUnsaved) {
 
                 if ($categoryUnsaved["id"] != 0) {
