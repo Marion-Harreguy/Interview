@@ -14,15 +14,17 @@ Read
 — Cacher bouton télécharger si pas libre de droit [2]
 — Ajouter un bouton "citer" [2]
 UserLibrary
-— Supprimer une catégorie [1]
-— Modifier le nom ou la structure d'un user [1]
+— Supprimer une catégorie [1] [Gael](ok mais a gérer en back et pour les entretients) 
+— Modifier le nom ou la structure d'un user [1] moi
 Write
-— Cocher les catégories qui correspondent à l'entretien [1]
+— Cocher les catégories qui correspondent à l'entretien [1] [Laura]
 — Unpublish [1]
 — Mettre focus sur le nouvel input quand bouton Question ou Réponse [2]
-— Remettre le state par defaut au create (marche pas?) [0]
 En +
 — Commenter et clean le code [4]
+
+— Bug enregistrement dans la bibliothèque
+— Unfocus sur les questions et réponse fait sauter derniere input vide
 
 MERCREDI :
 — CSS mobile [1]
@@ -51,3 +53,6 @@ Futur :
 EN + :
 — Ajouter fausses interviews
 — CSS pour les autres navigateurs
+
+Pb :
+— Quand session expirée, rend une page grise au lieu de rediriger vers le login

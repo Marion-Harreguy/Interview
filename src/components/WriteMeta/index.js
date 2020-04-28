@@ -24,6 +24,7 @@ const WriteMeta = ({
   writeInterviewCreate,
   changeCoordinates,
   interviewContent,
+  dashboard,
 }) => {
   // If user clicks on delete
   const openDeleteMenu = () => {
@@ -36,24 +37,29 @@ const WriteMeta = ({
   };
 
   // Table to stack the categories in which the user wants to put the interview
-  const categories = [];
+  const categories = () => {
+    if (interviewMeta.isPublished) {
+      return [...dashboard.publishedInterviews.find((interview) => interview.id == interviewId).categories];
+    }
+    return [...dashboard.writtingInterviews.find((interview) => interview.id == interviewId).categories];
+  }
 
   // Add category to the table if it's not there, remove it otherwise
   // For more details : see ReadMeta component (pushCategory function)
   const pushCategory = (categoryId) => {
     let toDelete = false;
-    categories.unshift(0);
+    categories().unshift(0);
     for (let index = 0; index < categories.length; index++ ) {
       if (categories[index] === categoryId) toDelete = index;
     }
     if (toDelete) {
-      categories.splice(toDelete, 1);
+      categories().splice(toDelete, 1);
     }
     else {
-      categories.push(categoryId);
+      categories().push(categoryId);
     }
-    categories.splice(0, 1);
-    changeInterviewCategories({ categories, interviewId: interviewMeta.id });
+    categories().splice(0, 1);
+    changeInterviewCategories({ categories: categories(), interviewId: interviewMeta.id });
     updateUserPut();
   };
 
@@ -244,7 +250,10 @@ const WriteMeta = ({
             // Creating each category
             userCategories.map((category) => (
               <div className="home__category" key={category.id}>
-                <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => pushCategory(category.id)} name={`category-${category.id}`} />
+                <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => pushCategory(category.id)} name={`category-${category.id}`}
+                  { ...categories().filter((interviewCategory) => interviewCategory === category.id ) && 'checked'
+                  }
+                 />
                 <label htmlFor={category.id}>{category.name}</label>
               </div>
             ))

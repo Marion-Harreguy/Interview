@@ -25,6 +25,8 @@ export const ADD_CATEGORY_CHANGE = 'ADD_CATEGORY_CHANGE';
 export const ADD_CATEGORY_SUBMIT = 'ADD_CATEGORY_SUBMIT';
 export const CHANGE_FORM_DISABLED = 'CHANGE_FORM_DISABLED';
 export const MODIFY_USER_INFO = 'MODIFY_USER_INFO';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
+export const MODIFY_USER_STRUCTURE = 'MODIFY_USER_STRUCTURE';
 
 // READ
 export const SAVE_INTERVIEW = 'SAVE_INTERVIEW';
@@ -152,6 +154,16 @@ export const changeFormDisabled = () => ({
 
 export const modifyUserInfo = (payload) => ({
   type: MODIFY_USER_INFO,
+  payload,
+});
+
+export const deleteCategory = (payload) => ({
+  type: DELETE_CATEGORY,
+  payload,
+});
+
+export const modifyUserStructure = (payload) => ({
+  type: MODIFY_USER_STRUCTURE,
   payload,
 });
 

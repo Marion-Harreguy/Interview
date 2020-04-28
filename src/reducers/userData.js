@@ -1,7 +1,8 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW, DELETE_CATEGORY, MODIFY_USER_STRUCTURE } from '../actions';
 import history from '../history';
+import { SrcAlphaSaturateFactor } from 'three';
 
 export const initialState = {
   connection: {
@@ -127,6 +128,28 @@ const userData = (state = initialState, action = {}) => {
           ],
         },
       };
+
+    case DELETE_CATEGORY:
+      const newCategoriesDelete = state.dashboard.categories.filter((category) => Number(category.id) !== Number(action.payload));
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          categories: [
+            ...newCategoriesDelete,
+          ],
+        },
+      };
+
+    case MODIFY_USER_STRUCTURE:
+      return {
+        ...state,
+        structure: {
+          ...state.structure,
+          [action.payload.name]: action.payload.value,
+        },
+      };
+
     case ADD_CATEGORY_SUBMIT:
       if (state.newCategory.name) {
         return {

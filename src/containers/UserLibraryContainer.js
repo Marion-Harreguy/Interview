@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import UserLibrary from 'src/components/UserLibrary';
-import { changeOrder, toggleSection, toggleCategory, addCategoryChange, addCategorySubmit, updateUserGet, updateUserPut, changeFormDisabled, modifyUserInfo } from '../actions';
+import { deleteCategory, changeOrder, toggleSection, toggleCategory, addCategoryChange, addCategorySubmit, updateUserGet, updateUserPut, changeFormDisabled, modifyUserInfo, modifyUserStructure } from '../actions';
 
 const mapStateToProps = (state) => ({
   user: state.userData.user,
@@ -48,6 +48,14 @@ const mapDispatchToProps = (dispatch) => ({
 
   modifyUserInfo: (input) => {
     dispatch(modifyUserInfo(input));
+  },
+
+  deleteCategory: (category) => {
+    dispatch(deleteCategory(category));
+  },
+
+  modifyUserStructure: (input) => {
+    dispatch(modifyUserStructure(input));
   },
 });
 

@@ -15,10 +15,13 @@ const UserLibrary = ({
   addCategorySubmit,
   newCategoryName,
   modifyUserInfo,
+  modifyUserStructure,
   changeFormDisabled,
   formDisabled,
   updateUserPut,
   updateUserGet,
+  deleteCategory,
+  structure,
 }) => {
 
   // Get all user info from API onload
@@ -108,8 +111,11 @@ const UserLibrary = ({
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
       <div className="home__content">
         <form className="home__form">
-          <button className="home__form__button" type="submit" onClick={(event) => {event.preventDefault(), changeFormDisabled(event), updateUserPut()}} label="Changer mes infos" />
-          <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial' }} />
+          <button className="home__form__button" type="submit" onClick={(event) => { event.preventDefault(), changeFormDisabled(event), updateUserPut() }} label="Changer mes infos" />
+          <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial'}} />
+          <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="name" value={structure.name} placeholder="Structure" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} />
+          <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="city" value={structure.city} placeholder="Ville" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} />
+          <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="sector" value={structure.sector} placeholder="Secteur" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} />
         </form>
         <div className="home__library">
           <h2 className="library__title">Ma bibliothèque</h2>
@@ -136,6 +142,7 @@ const UserLibrary = ({
                         <div className="home__category" key={`cat-${category.id}`}>
                           <input className={`category-button category-button--${category.id}`} id={category.id} type="checkbox" onChange={() => toggleCategory(category.id)} checked={library.categoryDisplay[index]} name={`category-${category.id}`} />
                           <label htmlFor={category.id}>{category.name}</label>
+                          <button className="category__delete" onClick={() => { deleteCategory(category.id), updateUserPut() }} name={`category-${category.id}`} type="button" label="Supprimer la catégorie" />
                         </div>
                       ))
                       }
@@ -144,8 +151,8 @@ const UserLibrary = ({
                         <input className="new-category-name" onChange={(e) => addCategoryChange(e.target.value)} type="text" name="new-category" placeholder="Nouvelle catégorie" name="new-category" value={newCategoryName}/>
                         <button
                           className="category-button category-button--add" 
-                          onClick={(e) => { 
-                            addCategorySubmit(e.target); 
+                          onClick={(e) => {
+                            addCategorySubmit(e.target);
                             setTimeout(() => { updateUserPut() },1000);
                           }} type="button" label="Ajouter une catégorie" />
                       </div>

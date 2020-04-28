@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
   userName: `${state.userData.user.firstname} ${state.userData.user.lastname}`,
   interviewId: ownProps.interviewId,
   interviewContent: state.writeInterview.content,
+  dashboard: state.userData.dashboard,
 });
 
 const mapDispatchToProps = (dispatch) => ({

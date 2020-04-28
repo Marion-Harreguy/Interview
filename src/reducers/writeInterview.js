@@ -303,7 +303,7 @@ const readInterview = (state = initialState, action = {}) => {
         meta: {
           ...state.meta,
           ...action.payload,
-        }
+        },
       };
 
     case FILL_AUTHOR:
@@ -314,6 +314,7 @@ const readInterview = (state = initialState, action = {}) => {
           author: {
             ...action.payload,
           },
+          tags: [],
         },
       };
     case CHANGE_COORDINATES:
