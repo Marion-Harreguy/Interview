@@ -3,12 +3,12 @@ Régler les bugs :
 — Quand session expirée, rend une page grise au lieu de rediriger vers le login [1] OK ?
 
 MERCREDI :
-— CSS mobile
-— Vérifier le système qui génère les coordonnées
-— Contact & mentions légales [Gael]
-— Verifier tous les scrolls
-— Faire les micro détails
-— CSS pour les autres navigateurs ?
+— CSS mobile [1] [Laura]
+— Vérifier le système qui génère les coordonnées [1]
+— CSS Contact & mentions légales [Gael]
+— Verifier tous les scrolls [1]
+— Faire les micro détails [Gael?]
+— CSS pour les autres navigateurs : gérer les input
 
 
 — Commenter et clean le code [4]
@@ -21,6 +21,9 @@ NOPE:
 — Mentions légales ?
 — Zoom dans la frise chronologique
 — Menu déroulant pour classer les résultats ?
+
+JEUDI:
+— Mise en ligne
 
 Futur :
 — Webtoprint [Baptiste]
