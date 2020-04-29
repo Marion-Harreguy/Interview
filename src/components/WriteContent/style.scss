@@ -2,6 +2,32 @@
   overflow: scroll;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input, 
+input:-internal-autofill-selected,
+input:focus, 
+input:active {
+  outline: none !important;
+  border: none !important;
+  border-bottom: solid 0.5px grey !important;
+  background-color: #2b363e !important;
+  background: none;
+  color: white !important;
+  font-size: 1em;
+  // Remove background-color on Chrome when autofill
+  -webkit-box-shadow: 0 0 0 30px #2b363e inset !important;
+  font-family: 'Source-Light' !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white!important;
+  font-size: 1em;
+}
+
 .interview__add {
   margin-left: 40px;
 }

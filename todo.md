@@ -3,14 +3,8 @@ Régler les bugs :
 — Envoie de l'id au moment ou on change d'interviewé
 
 MERCREDI :
-— CSS mentions légales [Laura]
 — Faire les micro détails [Gael?]
-— CSS pour les autres navigateurs : gérer les input
-— Vider recherche au début & resultats
-
-— Commenter et clean le code [4]
-— Préparer la présentation
-
+— Vider recherche au début & resultats [Laura]
 
 NOPE:
 — Gérer le forgotten password ?
@@ -20,6 +14,8 @@ NOPE:
 
 JEUDI:
 — Mise en ligne
+— CSS pour les autres navigateurs : gérer les input
+— Régler bugs restants si
 
 ??
 — CSS mobile [1] [Laura]
