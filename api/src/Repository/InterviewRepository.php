@@ -28,7 +28,7 @@ class InterviewRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('i')
             ->andWhere('i.isPublished = :val')
             ->setParameter('val', true)
-            ->orderBy('i.id', 'ASC')
+            ->orderBy('i.date', 'DESC')
             ->getQuery()
             ->getResult()
         ;
