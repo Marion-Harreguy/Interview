@@ -213,8 +213,29 @@ class InterviewController extends AbstractController
     */
             foreach ($interviewedList as $dataInterviewed) {
 
+              
+
+               if(count($interviewedList) < count($interview->getInterviewed())){
+                $interviewedInbase = $interview->getInterviewed();
+                $interviewedNotSaved = $interviewedList;
+
+                    for ($i=0; $i < count($interviewedInbase); $i++) { 
+
+
+                        if (isset($interviewedNotSaved[$i]["email"]) 
+                        && $interviewedInbase[$i]->getEmail() 
+                        === $interviewedNotSaved[$i]["email"]) {
+                        } else {
+                            $interview->removeInterviewed($interviewedInbase[$i]);                          
+                        }
+
+
+                    }
+
+
+               }
+
                 if (!empty($dataInterviewed["email"])) {
-                    
                     if ($dataInterviewed["email"] == "anonyme@inter.view") {
                         $interviewed = $interviewedRepository->findOneBy(["email" => "anonyme@inter.view"]);
                         $interview->addInterviewed($interviewed);
