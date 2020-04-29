@@ -134,3 +134,21 @@ input:-webkit-autofill:focus {
   .interview__meta {
     
   }
+
+.left__menu--search h2 {
+  display: inline-block;
+  width: calc(100% - 27px);
+}
+
+.search__form__button--empty {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-image: url('../../assets/icons/erase.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 0;
+  border:none;
+  margin-top: 2px;
+  vertical-align: top;
+}

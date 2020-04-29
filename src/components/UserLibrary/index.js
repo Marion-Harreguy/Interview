@@ -3,6 +3,8 @@ import './style.scss';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
+import pencil from '../../assets/icons/pencil.png';
+import save from '../../assets/icons/save.png';
 
 const UserLibrary = ({
   user,
@@ -122,13 +124,15 @@ const UserLibrary = ({
       <h2 className="home__name">{user.firstname} {user.lastname}</h2>
       <div className="home__content">
         <form className="home__form">
-          <button className="home__form__button" type="submit" onClick={(event) => { event.preventDefault(), changeFormDisabled(event), updateUserPut() }} label="Changer mes infos" />
+          <button className="home__form__button" type="submit" onClick={(event) => { event.preventDefault(), changeFormDisabled(event), updateUserPut() }} label="Changer mes infos" style={{ backgroundImage: formDisabled ? `url(${pencil})` : `url(${save})` }}/>
           <input className="home__form__input" onChange={(event) => modifyUserInfo(event.target)} type="text" name="status" value={user.status} placeholder="Statut" style={{ pointerEvents: formDisabled ? 'none' : 'initial'}} />
           {/* <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="firstname" value={user.firstname} placeholder="Prénom" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} />
           <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="lastname" value={user.lastname} placeholder="Nom" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} /> */}
-          <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="name" value={structure.name} placeholder="Structure" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} />
-          <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="city" value={structure.city} placeholder="Ville" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} />
-          <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="sector" value={structure.sector} placeholder="Secteur" style={{ pointerEvents: formDisabled ? 'none' : 'initial', display: formDisabled ? 'none' : 'block' }} />
+          <div className="home__form__input__hidden" style={{ height: formDisabled ? 0 : '82px' }}>
+            <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="name" value={structure.name} placeholder="Structure" />
+            <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="city" value={structure.city} placeholder="Ville"/>
+            <input className="home__form__input" onChange={(event) => modifyUserStructure(event.target)} type="text" name="sector" value={structure.sector} placeholder="Secteur"/>
+          </div>
         </form>
         <div className="home__library">
           <h2 className="library__title">Ma bibliothèque</h2>

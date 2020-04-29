@@ -34,14 +34,16 @@ const WriteMeta = ({
   let categories = [];
 
   const openInterviewedOnLoad = () => {
-    for(let interviewedIndex = 0; interviewedIndex < interviewMeta.interviewed.length; interviewedIndex++){
-      if(interviewMeta.interviewed[interviewedIndex].email !== '' && interviewMeta.interviewed[interviewedIndex].email !== 'anonyme@inter.view') {
+    for (let interviewedIndex = 0;
+      interviewedIndex < interviewMeta.interviewed.length; 
+      interviewedIndex++ ) {
+      if (interviewMeta.interviewed[interviewedIndex].email !== '' && interviewMeta.interviewed[interviewedIndex].email !== 'anonyme@inter.view') {
         $(`#interviewed--${interviewedIndex} .interviewed-second`).css('display','block');
-      $(`#interviewed--${interviewedIndex} .interviewed-first--notice`).css('display','none');
-      $(`#interviewed--${interviewedIndex} .write__form__add-infos`).css('display','none');
+        $(`#interviewed--${interviewedIndex} .interviewed-first--notice`).css('display','none');
+        $(`#interviewed--${interviewedIndex} .write__form__add-infos`).css('display','none');
       }
     }
-  }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -54,6 +56,8 @@ const WriteMeta = ({
       openInterviewedOnLoad();
     }, 1000);
   }, [dashboard]);
+
+  useEffect(() => openInterviewedOnLoad(), [interviewMeta.interviewed]);
 
   // If user clicks on delete
   const openDeleteMenu = () => {
@@ -197,21 +201,22 @@ const WriteMeta = ({
     document.querySelector('.write__unpublish-menu').style.display = 'none';
   };
 
-  const blankInterviewedLast = () => {
-    setTimeout(() => {
-      const indexLast = interviewMeta.interviewed.length;
-      // $('.write__form__input--anonymous').css('display', 'none');
-      $(`#interviewed--${indexLast} .interviewed-first`).css('display', 'block');
-      $('.write__form__input--interviewed--email').css('display', 'inline-block');
-      $(`#interviewed--${indexLast} .interviewed-second`).css('display', 'none');
-      //$(`#interviewed--${indexLast} .write__form__input--anonymous`).css('display', 'none');
-    }, 200);
-  };
+  // const blankInterviewedLast = () => {
+  //   setTimeout(() => {
+  //     const indexLast = interviewMeta.interviewed.length;
+  //     // $('.write__form__input--anonymous').css('display', 'none');
+  //     $(`#interviewed--${indexLast} .interviewed-first`).css('display', 'block');
+  //     $('.write__form__input--interviewed--email').css('display', 'inline-block');
+  //     $(`#interviewed--${indexLast} .interviewed-second`).css('display', 'none');
+  //     //$(`#interviewed--${indexLast} .write__form__input--anonymous`).css('display', 'none');
+  //   }, 200);
+  // };
 
   const blankInterviewed = () => {
     // Add interviewed button click
     // If there is interviewed created alreade
-    if (!interviewMeta.interviewed[0].firstname !== 'Anonyme') {
+    console.log('blank interview was called');
+    if (interviewMeta.interviewed[0].firstname === 'Anonyme') {
       changeInterviewed({ target: {name: 'firstname', value: '' }, index: 0 });
       changeInterviewed({ target: {name: 'lastname', value: '' }, index: 0 });
       changeInterviewed({ target: {name: 'email', value: '' }, index: 0 });
@@ -222,6 +227,7 @@ const WriteMeta = ({
       changeInterviewedStructure({ target: {name: 'city', value: '' }, index: 0 });
       changeInterviewedStructure({ target: {name: 'id', value: '' }, index: 0 });
     }
+    else addInterviewed();
   };
 
   const checkEmail = (value) => {
@@ -236,13 +242,13 @@ const WriteMeta = ({
     $(`#interviewed--${indexLast} .write__form__add-infos`).css('display','none');
   };
 
-  const addInterviewedCheck = () => {
-    if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
-      console.log("New interviewed");
-      addInterviewed();
-    }
-    else console.log("Changing from anonymous");
-  };
+  // const addInterviewedCheck = () => {
+  //   if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
+  //     console.log("New interviewed");
+  //     addInterviewed();
+  //   }
+  //   else console.log("Changing from anonymous");
+  // };
 
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">

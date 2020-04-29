@@ -122,11 +122,6 @@ input:-webkit-autofill:focus {
   font-size: 1.2em;
 }
 
-.new-category-name, .new-category-name:focus {
-  margin-top: 0;
-  width: 20vw;
-}
-
 .interview__meta {
   overflow: scroll;
   height: 100%;
@@ -168,6 +163,9 @@ input:-webkit-autofill:focus {
   right: 20px;
 }
 
+.write__form__add-interviewed {
+  z-index: 1;
+}
 
 .write__tools button {
   width: 20px;
@@ -242,7 +240,7 @@ input:-webkit-autofill:focus {
 
 .interview__context {
   font-family: 'Source-LightItalic' !important;
-  margin-left: 50px;
+  margin-left: 45px;
 }
 
 .question__content {

@@ -124,7 +124,6 @@ input:-webkit-autofill:focus {
     margin-bottom: 30vh;
   }
   
-  
   .animated-icon1 span {
     background: white;
   }
@@ -179,9 +178,14 @@ input:-webkit-autofill:focus {
     cursor: default;
   }
   
-  .nav__link a:hover {
+  .nav__link--library a:hover {
     font-family: 'AGBHF';
     padding: 0px 0px;
+  }
+
+  .nav__link--search a:hover {
+    padding: 0 3px 0 2px;
+    font-family: 'AGBHF';
   }
   
   

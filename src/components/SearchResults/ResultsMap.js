@@ -9,7 +9,7 @@ import { Point } from "ol/geom";
 import { Vector as VectorLayer, Tile as TileLayer } from "ol/layer";
 // import CanvasVectorTileLayerRenderer from 'ol/renderer/canvas/VectorTileLayer';
 import { Stamen, Vector as VectorSource } from "ol/source";
-import { Style, Circle, Fill } from "ol/style";
+import { Style, Circle, Fill, Stroke } from "ol/style";
 import ResultSelected from './ResultSelected';
 
 
@@ -39,8 +39,11 @@ const ResultsMap = ({ resultList }) => {
           }),
           style: new Style({
             image: new Circle({
-              radius: 9,
-              fill: new Fill({ color: "red" }),
+              radius: 8,
+              // strokeWidth: 3,
+              // strokeColor: '#ffffff',#2b363e
+              stroke: new Stroke({ color: "#bf4b4c", width: 1.5 }),
+              fill: new Fill({ color: "white" }),
             }),
           }),
         }),
@@ -55,7 +58,7 @@ const ResultsMap = ({ resultList }) => {
     map.on('click', (event) => {
       const feature = map.getFeaturesAtPixel(event.pixel)[0];
       if (feature) {
-        setChosenInterview({...resultList.find((interview) => interview.coordinates[0] === feature.getGeometry().getCoordinates()[0] && interview.coordinates[1] === feature.getGeometry().getCoordinates()[1])});
+        setChosenInterview({...resultList.find((interview) => interview.coordinates[0] === feature.getGeometry().getCoordinates()[1] && interview.coordinates[1] === feature.getGeometry().getCoordinates()[0])});
       }
     });
 
@@ -72,7 +75,7 @@ const ResultsMap = ({ resultList }) => {
   useEffect(() => {
     if (document.querySelector('.ol-viewport')) document.querySelector('.ol-viewport').remove();
     places = resultList.map((interview) => (
-      [interview.coordinates[0], interview.coordinates[1]]
+      [interview.coordinates[1], interview.coordinates[0]]
     ));
     useGeographic();
     generateDots();

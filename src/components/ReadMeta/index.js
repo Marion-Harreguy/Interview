@@ -187,15 +187,14 @@ const ReadMeta = ({
         <p className="interview__data interview__data--city">{interviewMeta.location}</p>
         <p className="interview__data interview__data--language">{interviewMeta.language}</p>
         <p className="interview__data interview__data--author" onClick={() => openSubdata('author')}><span className="span--author">&#8594;</span><p>{`${interviewMeta.author.firstname} ${interviewMeta.author.lastname} (a)`}</p></p>
-        <p className="interview__subdata interview__subdata--author interview__subdata--structure" style={{display:'none'}}>{interviewMeta.author.structure.name} — {interviewMeta.author.structure.city} — ({interviewMeta.author.structure.sector})</p>
-        <p className="interview__subdata interview__subdata--author interview__subdata--status">{interviewMeta.author.status}</p>
-
+        <p className="interview__subdata interview__subdata--author interview__subdata--status" style={{display:'none'}}>{interviewMeta.author.status}</p>
+        <p className="interview__subdata interview__subdata--author interview__subdata--structure" style={{display:'none'}}>{interviewMeta.author.structure.name} — {interviewMeta.author.structure.city} ({interviewMeta.author.structure.sector})</p>
         { // Creating subdata for each interviewed person
           interviewMeta.interviewed.map((inquired, indexI) => (
             <div key={`inquired-${indexI}`}>
               <p className="interview__data interview__data--interviewed" onClick={() => openSubdata(`interviewed--${inquired.id}`)}><span className={`span--interviewed--${inquired.id}`}>&#8594;</span><p>{`${inquired.firstname} ${inquired.lastname} (e)`}</p></p>
-              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`} style={{display:'none'}}>{inquired.structure.name} — {inquired.structure.city} ({inquired.structure.sector})</p>
               <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`} style={{display:'none'}}>{inquired.job}</p>
+              <p className={`interview__subdata interview__subdata--interviewed interview__subdata--interviewed--${inquired.id}`} style={{display:'none'}}>{inquired.structure.name} — {inquired.structure.city} ({inquired.structure.sector})</p>
             </div>
           ))
         }

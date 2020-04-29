@@ -5,7 +5,7 @@ import ResultsList from './ResultsList';
 import ResultsMap from './ResultsMap';
 import ResultsTimeline from './ResultsTimeline';
 
-const SearchResults = ({ results, mode, changeMode, changeOrder }) => {
+const SearchResults = ({ results, mode, changeMode }) => {
 
   let resultsConverted = results.map((result) => ({ ...result.meta }));
 
@@ -26,11 +26,14 @@ const SearchResults = ({ results, mode, changeMode, changeOrder }) => {
         <input className="category-button category-button--orange" id="cat-memoire" name="cat-memoire" type="checkbox"/>
         <label for="cat-memoire" />
       </div> */}
-      <div className="research__tools__modes">
-        <button onClick={() => changeMode('list')} className="research__tools__mode research__tools__mode--list" label="Mode liste" type="button" />
-        <button onClick={() => changeMode('map')} className="research__tools__mode research__tools__mode--map" label="Mode carte" type="button" />
-        <button onClick={() => changeMode('timeline')} className="research__tools__mode research__tools__mode--timeline" label="Mode frise chronologique" type="button"/>
-      </div>
+      { results.length >= 1 && (
+         <div className="research__tools__modes">
+         <button onClick={() => changeMode('list')} className="research__tools__mode research__tools__mode--list" label="Mode liste" type="button" />
+         <button onClick={() => changeMode('map')} className="research__tools__mode research__tools__mode--map" label="Mode carte" type="button" />
+         <button onClick={() => changeMode('timeline')} className="research__tools__mode research__tools__mode--timeline" label="Mode frise chronologique" type="button"/>
+       </div>
+      )
+      }
     </div>
     {
       mode === 'map' && (<ResultsMap resultList={resultsConverted} />)

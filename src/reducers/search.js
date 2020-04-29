@@ -1,4 +1,4 @@
-import { SEARCH_INPUT_CHANGE, CHANGE_MODE, UPLOAD_RESULTS } from '../actions';
+import { SEARCH_INPUT_CHANGE, CHANGE_MODE, UPLOAD_RESULTS, EMPTY_RESULTS, EMPTY_FORM } from '../actions';
 
 export const initialState = {
   form: {
@@ -8,6 +8,8 @@ export const initialState = {
     name: '',
     interviewed: '',
     tags: '',
+    author: '',
+    structure: '',
     openSource: false,
     yearBegin: 1990,
     yearEnd: 2020,
@@ -103,6 +105,18 @@ const search = (state = initialState, action = {}) => {
           ...state.form,
           [action.payload.name]: action.payload.value,
         },
+      };
+    case EMPTY_RESULTS:
+      return {
+        ...state,
+        results: [],
+      };
+    case EMPTY_FORM:
+      return {
+        ...state,
+        form: {
+          ...initialState.form,
+        }
       };
     case CHANGE_MODE:
       return {

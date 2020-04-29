@@ -42,6 +42,7 @@ input:-webkit-autofill:focus {
   top: 3px;
   height: 2px;
   border-bottom: 1.5px solid white;
+  width: calc(90% - 3px);
 }
 
 .timeline__cursor {
@@ -107,6 +108,13 @@ input:-webkit-autofill:focus {
   content: "";
   padding-left: 0;
 } 
+
+.research__results--list a {
+  padding: 12px;
+  height: fit-content;
+  width: 100%;
+  display: block;
+}
 
 .result-interview {
   width: 100%;
@@ -229,22 +237,25 @@ input:-webkit-autofill:focus {
 
 .result-timeline__map {
   height: calc(100% - 150px);
-  width: 100%;
+  width: 92%;
   position: relative;
+  overflow-x: visible;
+  left: 4%;
 }
 
 .result-timeline__map__line {
-  width: 100%;
   height: 1px;
   border: solid 1px white;
   position: absolute;
   bottom: 35px;
+  width: 100%;
 }
 
 .result-timeline__map__group {
   position: absolute;
   width: 35px;
   height: 100%;
+  margin-left: -15px;
 }
 
 .map__group__date {

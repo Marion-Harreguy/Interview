@@ -28,6 +28,11 @@ input:-webkit-autofill:focus {
  display: inline-block;
  cursor: pointer;
  opacity: 0.5;
+ padding-top: 2px;
+}
+
+.left__footer {
+  text-align: center;
 }
 
 .left__footer p:hover {

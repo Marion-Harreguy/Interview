@@ -53,7 +53,7 @@ const ResultsTimeline = ({ resultList }) => {
           const yearleft = calculateLeft(year[0]);
           return (
             <div key={year[0]} className="result-timeline__map__group" style={{ left: yearleft }}>
-              <div className="map__group__date">{year[0].substring(0,4)}</div>
+              <div className="map__group__date">{year[0].substring(0,4) == 1990 ? '' : (year[0].substring(0,4) == currentYear ? '' : year[0].substring(0,4))}</div>
               <div className="map__group__cursor" />
               <div className="map__group__dot-list">
                 {

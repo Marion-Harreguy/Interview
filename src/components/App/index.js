@@ -24,7 +24,7 @@ import Contact from '../Footer/Contact';
 // Temporary : all style put in one file
 import './style.scss';
 
-const App = ({ isConnected, userCategories, automaticLog, updateUserGet }) => {
+const App = ({ isConnected = false, userCategories, automaticLog, updateUserGet }) => {
 
   useEffect(() => {
     const localStorageLog = localStorage.getItem('userLogs');

@@ -96,19 +96,6 @@ input:-webkit-autofill:focus {
   height: 0;
 }
 
-/* .home__category--add {
-  height:15px;
-  width:15px;
-  margin-top: 2px;
-  border-radius: 50%;
-  padding: 0;
-  background-image: url('./../../assets/icons/thick-check.png');
-  background-size: 7px;
-  background-position: center;
-  border: solid 1px white;
-  background-repeat: no-repeat;
-} */
-
 .home__library h3 button:hover {
   background-color: rgba(255,255,255,0.3);
 }
@@ -203,6 +190,10 @@ TEST ICI NE FONCTIONNE PAS
   // transition-duration: 0.3s;
 }
 
+.new-category-name {
+  width: 80%;
+}
+
 .left__menu--home .home__category:hover > label {
   left: 45px;
 }
@@ -260,4 +251,10 @@ TEST ICI NE FONCTIONNE PAS
 .category-button--all:checked + label::before {
   box-shadow: inset 0px 0px 0px 4px #2b363e;
   background-color: white;
+}
+
+
+.home__form__input__hidden {
+  overflow: hidden;
+  transition: .3s;
 }

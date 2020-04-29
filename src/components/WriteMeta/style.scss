@@ -124,7 +124,7 @@ input:-webkit-autofill:focus {
 
 .new-category-name, .new-category-name:focus {
   margin-top: 0;
-  width: 20vw;
+  width: fit-content;
 }
 
 .interview__meta {
@@ -151,12 +151,6 @@ input:-webkit-autofill:focus {
     top: -5.5px;
     font-size: 1.2em;
   }
-  
-  .new-category-name, .new-category-name:focus {
-    margin-top: 0;
-    width: 20vw;
-  }
-  
   .interview__meta {
     overflow: scroll;
     // height: 100%;
@@ -196,6 +190,7 @@ input:-webkit-autofill:focus {
 .write__form__add-interviewed {
   margin: 15px 0 30px 0;
   margin-left: calc(100% - 153px);
+  z-index: auto;
 }
 
 input[type="date"]::-webkit-inner-spin-button,

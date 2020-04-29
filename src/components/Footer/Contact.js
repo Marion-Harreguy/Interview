@@ -6,7 +6,7 @@ import $ from 'jquery';
 const Contact = () => {
 
   const toggleClosed = () => {
-    $('.right__contact').animate({ marginTop: '-110vh' }, 300);
+    $('.right__contact').animate({ marginTop: '110vh' }, 300);
   };
 
   return (

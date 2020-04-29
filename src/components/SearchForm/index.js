@@ -4,11 +4,15 @@ import 'jquery-ui-dist/jquery-ui';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
 
-const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
+const SearchForm = ({ searchInputChange, searchValues, searchSubmit, emptyResults, emptyForm }) => {
 
   useEffect(() => {
     $('.timeline__cursor').draggable({ axis: 'x', containment: 'parent' });
   }, [searchInputChange]);
+
+  useEffect(() => {
+    emptyResults();
+  }, [searchSubmit])
 
   let yearBegin = searchValues.yearBegin;
   let yearEnd = searchValues.yearEnd;
@@ -43,6 +47,7 @@ const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
     <aside className="left__menu left__menu left__menu--search">
       <div className="interview__meta">
         <h2>Recherche </h2>
+        <button className="search__form__button--empty" type="button" label="Réinitialiser le formulaire" onClick={emptyForm}/>
         <form className="search__form" onSubmit={(event) => { event.preventDefault(); searchSubmit()}}>
           <div className="search__form--overflow">
             <input className="search__form__input search__form__input--title" type="text" name="title" placeholder="Titre" onChange={(event) => searchInputChange(event.target)} value={searchValues.title}/>
@@ -50,7 +55,7 @@ const SearchForm = ({ searchInputChange, searchValues, searchSubmit }) => {
             <input className="search__form__input" type="text" name="language" placeholder="Langue(s)" onChange={(event) => searchInputChange(event.target)} value={searchValues.language}/>
             <input className="search__form__input" type="text" name="author" placeholder="Auteur" onChange={(event) => searchInputChange(event.target)} value={searchValues.author}/>
             <input className="search__form__input" type="text" name="interviewed" placeholder="Enquêté" onChange={(event) => searchInputChange(event.target)} value={searchValues.interviewed}/>
-            <input className="search__form__input" type="text" name="interviewed-structure" placeholder="Structure(s)" onChange={(event) => searchInputChange(event.target)} value={searchValues.structure}/>
+            <input className="search__form__input" type="text" name="structure" placeholder="Structure(s)" onChange={(event) => searchInputChange(event.target)} value={searchValues.structure}/>
             <input className="search__form__input" type="text" name="tags" placeholder="Tags"  onChange={(event) => searchInputChange(event.target)} value={searchValues.tags}/>
 
             <div className="search__form__date">

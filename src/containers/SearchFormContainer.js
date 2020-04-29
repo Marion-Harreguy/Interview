@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SearchForm from '../components/SearchForm';
-import { searchInputChange, searchSubmit } from '../actions';
+import { searchInputChange, searchSubmit, emptyResults, emptyForm } from '../actions';
 
 
 const mapStateToProps = (state) => ({
@@ -13,6 +13,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   searchSubmit: () => {
     dispatch(searchSubmit());
+  },
+  emptyResults: () => {
+    dispatch(emptyResults());
+  },
+  emptyForm: () => {
+    dispatch(emptyForm());
   },
 });
 

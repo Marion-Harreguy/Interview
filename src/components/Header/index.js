@@ -15,28 +15,28 @@ const Header = ({ isConnected }) => (
     </nav>
   </header> */}
 
-    <nav class="header__nav sticky-top navbar-expand-sm">
-    <div class="nav-container">
+    <nav className="header__nav sticky-top navbar-expand-sm">
+    <div className="nav-container">
 
-        <li class="nav__link nav-item nav-item--bar-hidden active">
+        <li className="nav__link nav-item nav-item--bar-hidden active">
             <p>Inter.view</p>
         </li>
 
-        <button class="navbar-toggler first-button" type="button" data-toggle="collapse"
+        <button className="navbar-toggler first-button" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
-            <div class="animated-icon1"><span></span><span></span><span></span></div>
+            <div className="animated-icon1"><span></span><span></span><span></span></div>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav__link nav-item active nav-item--collapse-hidden">
-                    <p class="nav-link">Inter.view</p>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto">
+                <li className="nav__link nav-item active nav-item--collapse-hidden">
+                    <p className="nav-link">Inter.view</p>
                 </li>
-                <li class="nav__link nav-item">
+                <li className="nav__link nav-item nav__link--library">
                   <NavLink exact to="/" className="nav__link">Mon espace</NavLink>
                 </li>
-                <li class="nav__link nav-item">
+                <li className="nav__link nav-item nav__link--search">
                     <NavLink exact to="/search" className="nav__link" style={{ opacity: isConnected ? '1' : '0', pointerEvents: isConnected ? 'all' : 'none' }}>Rechercher</NavLink>
                 </li>
             </ul>
