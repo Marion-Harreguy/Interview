@@ -472,7 +472,7 @@ class InterviewController extends AbstractController
 
 
         // on va refresh afin de pouvoir renvoyer l'objet de la bdd  
-        $em->refresh($interview);
+        // $em->refresh($interview);
 
 
 
