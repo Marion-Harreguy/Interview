@@ -70,12 +70,12 @@ class SearchController extends AbstractController
         } else {
             $language = '';
         }
-        // on vérifie les donnée du parametre
+        // on vérifie les données du parametre
         // on les stocke 
         if ($request->query->get("openSource")) {
-               $openSource = false;
+               $openSource = true;
         }else {
-            $openSource = true;
+            $openSource = '';
         }
 
 
