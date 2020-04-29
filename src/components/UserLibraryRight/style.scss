@@ -8,6 +8,7 @@
 .instructions {
   height: 0px;
   overflow: hidden;
+  margin-top: 10px;
 }
 
 .instructions--perso {
@@ -16,10 +17,12 @@
 }
 
 .tuto h3 {
-  margin-top: 10px;
+  margin-top: 15px;
   font-family: 'Source-Regular';
   font-size: 1.5rem;
   cursor: pointer;
+  border-bottom: solid .1px white;
+  padding-bottom: 7px;
 }
 
 .tuto p {

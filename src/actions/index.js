@@ -4,6 +4,7 @@ export const AUTOMATIC_LOG_OK = 'AUTOMATIC_LOG_OK';
 
 // FOOTER
 export const LOG_OUT = 'LOG_OUT';
+export const TOGGLE_OPENED = 'TOGGLE_OPENED';
 
 // NEW USER
 export const NEW_USER_INPUT_CHANGE = 'NEW_USER_INPUT_CHANGE';
@@ -55,6 +56,7 @@ export const CHANGE_AUTHOR_STRUCTURE = 'CHANGE_AUTHOR_STRUCTURE';
 export const FILL_AUTHOR = 'FILL_AUTHOR';
 export const CHANGE_COORDINATES = 'CHANGE_COORDINATES';
 export const CHOOSE_INITIALES = 'CHOOSE_INITIALES';
+export const DELETE_INTERVIEWED = 'DELETE_INTERVIEWED';
 
 // AJAX REQUESTS
 export const UPDATE_USER_PUT = 'UPDATE_USER_PUT';
@@ -93,6 +95,7 @@ export const automaticLogOk = (payload) => ({
 export const logOut = () => ({
   type: LOG_OUT,
 });
+
 
 // NEW USER
 export const newUserInputChange = (payload) => ({
@@ -278,6 +281,11 @@ export const deleteQuestion = (payload) => ({
 
 export const chooseInitiales = (payload) => ({
   type: CHOOSE_INITIALES,
+  payload,
+});
+
+export const deleteInterviewed = (payload) => ({
+  type: DELETE_INTERVIEWED,
   payload,
 });
 

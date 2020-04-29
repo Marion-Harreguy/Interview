@@ -70,6 +70,7 @@ const ResultsMap = ({ resultList }) => {
   };
 
   useEffect(() => {
+    if (document.querySelector('.ol-viewport')) document.querySelector('.ol-viewport').remove();
     places = resultList.map((interview) => (
       [interview.coordinates[0], interview.coordinates[1]]
     ));

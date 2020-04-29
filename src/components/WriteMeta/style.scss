@@ -163,13 +163,13 @@
     text-align: right;
   }
 
-  .write__delete-menu p,  .write__publish-menu p, .write__unpublish-menu p {
-    text-align:center;
-  }
+.write__delete-menu p,  .write__publish-menu p, .write__unpublish-menu p {
+  text-align:center;
+}
 
-  .write__delete-menu button,  .write__publish-menu button, .write__unpublish-menu button {
-    margin: 15px 10px 0px 0px;
-  }
+.write__delete-menu button,  .write__publish-menu button, .write__unpublish-menu button {
+  margin: 15px 10px 0px 0px;
+}
 
 .write__form__add-interviewed {
   margin: 15px 0 30px 0;
@@ -180,4 +180,45 @@ input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
+}
+
+.interviewed-first--notice {
+  font-size: 0.7em;
+  color: grey;
+  text-align: justify;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.write__form__add-infos {
+  font-size: 0.7em !important;
+  border-color: grey !important;
+  color: grey !important;
+  text-align: right;
+}
+
+.write__form__input--interviewed--email {
+  width: calc(100% - 38px) !important;
+  display: inline-block;
+  vertical-align: top;
+}
+.write__form__interviewed--number {
+  margin-left: 10px;
+  width: 13px;
+  display: inline-block;
+  height: 13px;
+  margin-top: 16px;
+  vertical-align: top;
+}
+.write__form__interviewed--delete {
+  width: 12px;
+  display: inline-block;
+  height: 12px;
+  background-image: url(../../assets/icons/trash.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none !important;
+  margin-top: 20px;
+  border-radius: 0 !important;
+  vertical-align: top;
 }

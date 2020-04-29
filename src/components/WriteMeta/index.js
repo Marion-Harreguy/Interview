@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 // import Geocode from "react-geocode";
+import $ from 'jquery';
 import './style.scss';
 
 const WriteMeta = ({
@@ -25,6 +26,7 @@ const WriteMeta = ({
   writeInterviewCreate,
   changeCoordinates,
   interviewContent,
+  deleteInterviewed,
   dashboard,
 }) => {
 
@@ -183,6 +185,52 @@ const WriteMeta = ({
     document.querySelector('.write__unpublish-menu').style.display = 'none';
   };
 
+  const blankInterviewed = () => {
+    // Add interviewed button click
+    // If there is interviewed created alreade
+    if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
+      addInterviewed();
+      // $('.write__form__input--anonymous').css('display', 'none');
+      setTimeout(()=> blankInterviewedLast(), 100);
+    }
+    else {
+      changeInterviewed({ target: {name: 'firstname', value: '' }, index: 0 });
+      // $('.write__form__input--anonymous').css('display', 'none');
+      blankInterviewedLast();
+    }
+  };
+
+  const blankInterviewedLast = () => {
+    setTimeout(() => {
+      const indexLast = interviewMeta.interviewed.length;
+      // $('.write__form__input--anonymous').css('display', 'none');
+      $(`#interviewed--${indexLast} .interviewed-first`).css('display', 'block');
+      $('.write__form__input--interviewed--email').css('display', 'inline-block');
+      $(`#interviewed--${indexLast} .interviewed-second`).css('display', 'none');
+      //$(`#interviewed--${indexLast} .write__form__input--anonymous`).css('display', 'none');
+    }, 200);
+  }
+
+  const checkEmail = (value) => {
+    if (value !== '') showOtherFields();
+    else blankInterviewed();
+  };
+
+  const showOtherFields = () => {
+    const indexLast = interviewMeta.interviewed.length - 1;
+    $(`#interviewed--${indexLast} .interviewed-second`).css('display','block');
+    $(`#interviewed--${indexLast} .interviewed-first--notice`).css('display','none');
+    $(`#interviewed--${indexLast} .write__form__add-infos`).css('display','none');
+  };
+
+  // const addInterviewedCheck = () => {
+  //   if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
+  //     console.log("New interviewed");
+  //     addInterviewed();
+  //   }
+  //   else console.log("Changing from anonymous");
+  // }
+
 
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">
@@ -236,17 +284,26 @@ const WriteMeta = ({
               interviewMeta.interviewed.map((interviewed, index) => {
                 const numero = index + 1;
                 return (
-                  <div key={interviewed.id}>
-                    <input className="write__form__input" type="text" name="firstname" placeholder={`Prénom de l'enquêté n°${numero}`} value={interviewed.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                  <div key={interviewed.id} id={`interviewed--${index}`}>
+                    {
+                      (index === 0 && interviewed.firstname === 'Anonyme') && (<input className="write__form__input write__form__input--anonymous" type="text" name="anonyme" value="Anonyme" disabled/>)
+                    }
                     { // If the interviewed is different from default value "anonyme", subdata is created
                         interviewed.firstname !== 'Anonyme' && (
-                          <div>
-                            <input className="write__form__input" type="text" name="lastname" placeholder={`Nom de l'enquêté n°${numero}`} value={interviewed.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
-                            <input className="write__form__input" type="text" name="name" placeholder={`Structure (n°${numero})`} value={interviewed.structure.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
-                            <input className="write__form__input" type="text" name="city" placeholder={`Ville (n°${numero})`} value={interviewed.structure.city} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
-                            <input className="write__form__input" type="text" name="sector" placeholder={`Secteur (n°${numero})`} value={interviewed.structure.sector} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
-                            <input className="write__form__input" type="text" name="job" placeholder={`Statut (n°${numero})`} value={interviewed.job} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
-                            <input className="write__form__input" type="text" name="email" placeholder={`Email de l'enquêté n°${numero}`} value={interviewed.email} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                          <div className="write__form__interviewed">
+
+                            <input className="write__form__input write__form__input--interviewed interviewed-first write__form__input--interviewed--email" type="text" name="email" placeholder={`Email de l'enquêté n°${numero}`} value={interviewed.email} onBlur={(event) => {writeInterviewPut(interviewId), checkEmail(event.target.value)}} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                            <span className="write__form__interviewed--number">{numero}</span>
+                              <button className="write__form__interviewed--delete" onClick={(event) => {event.preventDefault(), deleteInterviewed(index)}}></button>
+                            <p className="interviewed-first interviewed-first--notice">L'adresse email est nécessaire pour identifier l'enquêté. Si vous décidez de remplir les autres informations avant, il est possible qu'elles soient remplacées au moment où vous saisirez l'adresse, si l'enquêté est déjà connu de notre plateforme.</p>
+                            <button className="write__form__add-infos write__form__button interviewed-first" onClick={(event)=>{event.preventDefault(), showOtherFields() }} label="Ajouter enquêté" type="button">Remplir les autres champs quand même</button>
+
+                            <input className="write__form__input write__form__input--interviewed interviewed-second" style={{display: 'none'}} type="text" name="firstname" placeholder={`Prénom de l'enquêté n°${numero}`} value={interviewed.firstname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                            <input className="write__form__input write__form__input--interviewed interviewed-second" style={{display: 'none'}} type="text" name="lastname" placeholder={`Nom de l'enquêté n°${numero}`} value={interviewed.lastname} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
+                            <input className="write__form__input write__form__input--interviewed interviewed-second" style={{display: 'none'}} type="text" name="name" placeholder={`Structure (n°${numero})`} value={interviewed.structure.name} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
+                            <input className="write__form__input write__form__input--interviewed interviewed-second" style={{display: 'none'}} type="text" name="city" placeholder={`Ville (n°${numero})`} value={interviewed.structure.city} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
+                            <input className="write__form__input write__form__input--interviewed interviewed-second" style={{display: 'none'}} type="text" name="sector" placeholder={`Secteur (n°${numero})`} value={interviewed.structure.sector} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewedStructure({ target: event.target, index })} />
+                            <input className="write__form__input write__form__input--interviewed interviewed-second" style={{display: 'none'}} type="text" name="job" placeholder={`Statut (n°${numero})`} value={interviewed.job} onBlur={() => writeInterviewPut(interviewId)} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                           </div>
                         )
                         }
@@ -255,11 +312,11 @@ const WriteMeta = ({
               })
           }
 
-          { // If the interviewed is different from default value "anonyme", offer to add a new one
-          interviewMeta.interviewed[interviewMeta.interviewed.length-1].name !== 'Anonyme' && (
-          <button className="write__form__add-interviewed write__form__button" onClick={(event)=>{event.preventDefault(); addInterviewed(); }} label="Ajouter enquêté" type="button">Ajouter un.e enquêté.e</button>
-          )
-         }
+          {
+            (interviewMeta.interviewed[0].firstname === 'Anonyme' ? true : (interviewMeta.interviewed[interviewMeta.interviewed.length-1].firstname !== '')) && (
+              <button className="write__form__add-interviewed write__form__button" onClick={(event)=>{event.preventDefault(), blankInterviewed() }} label="Ajouter enquêté" type="button">Ajouter un.e enquêté.e</button>
+            )
+          }
 
           <input className="write__form__button" type="checkbox" checked={interviewMeta.openLicence} name="openLicence" id="royalty-free" onChange={(event) => { changeMeta(event.target), writeInterviewPut(interviewId)}} />
           <label className="write__form__input write__form__input--royalty" htmlFor="royalty-free">Libre de droit</label>

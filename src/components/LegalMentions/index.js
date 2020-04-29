@@ -3,8 +3,9 @@ import './style.scss';
 
 
 const LegalMentions = () => (
-  <div>
-    <h1>LegalMentions</h1>
+  <div className="right__contact">
+    <button type="button" className="contact__button" onClick={() => toggleOpened()} label="Nous Contacter" />
+    Mentions légales
   </div>
 );
 

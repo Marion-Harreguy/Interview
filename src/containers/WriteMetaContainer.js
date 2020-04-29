@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import WriteMeta from '../components/WriteMeta';
-import { publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure, updateUserGet, updateUserPut, writeInterviewDelete, writeInterviewPut, interviewGet, writeInterviewCreate, changeCoordinates, unpublishInterview } from '../actions';
+import { publishInterview, changeMeta, changeInterviewCategories, addWrittingInterview, addInterviewed, changeInterviewed, changeInterviewStructure, changeAuthor, changeAuthorStructure, updateUserGet, updateUserPut, writeInterviewDelete, writeInterviewPut, interviewGet, writeInterviewCreate, changeCoordinates, unpublishInterview, deleteInterviewed } from '../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   interviewMeta: state.writeInterview.meta,
@@ -62,6 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeCoordinates: (coordinates) => {
     dispatch(changeCoordinates(coordinates));
+  },
+  deleteInterviewed: (index) => {
+    dispatch(deleteInterviewed(index));
   },
 });
 

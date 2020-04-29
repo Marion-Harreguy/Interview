@@ -1,23 +1,29 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import $ from 'jquery';
 import './style.scss';
 
-const Footer = ({ logOut, isConnected }) => (
+const Footer = ({ logOut, isConnected }) => {
+
+  const toggleOpened = () => {
+    $('.right__contact').animate({ marginTop: '0' }, 500);
+  };
+
+  return (
   // TODO : Handle logout
   <footer className="left__footer">
     {
       isConnected && (
-        <div className="footer__legal" onClick={() => logOut()}>Déconnexion <span>&bull;</span></div>
+        <p className="footer__legal" onClick={() => logOut()}>Déconnexion <span>&bull;</span></p>
       )
     }
-    <NavLink exact to="/legal-mentions" className="footer__legal-mentions">Mentions légales</NavLink>
+    <p className="footer__legal-mentions" onClick={toggleOpened}>Contact & Mentions légales<span>&bull;</span></p>
   </footer>
-);
+)};
 
 Footer.propTypes = {
   logOut: PropTypes.func.isRequired,
+  isConnected: PropTypes.bool.isRequired,
 };
 
 export default Footer;

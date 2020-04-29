@@ -1,4 +1,25 @@
-.footer__legal {
+.left__footer p {
  display: inline-block;
  cursor: pointer;
+}
+
+.right__contact {
+    height: calc(100vh - 50px);
+    background-color: #414A52;
+    border: white 1px solid;
+    z-index: 5;
+    width: 95%;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.contact__button {
+    background-image: url('./../../assets/icons/cross.png');
+    background-repeat: no-repeat;
+    background-size: 7px;
+    background-position: center;
+    height: 2vh;
+    padding-left: 10px;
+    margin-left: 7px;
+    margin-top: 7px;
+    margin-right: 4px;
 }

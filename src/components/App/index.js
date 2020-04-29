@@ -19,6 +19,7 @@ import LoginContainer from '../../containers/LoginContainer';
 import ForgottenPasswordContainer from '../../containers/ForgottenPasswordContainer';
 import SearchFormContainer from '../../containers/SearchFormContainer';
 import SearchResultsContainer from '../../containers/SearchResultsContainer';
+import Contact from '../Footer/Contact';
 
 // Temporary : all style put in one file
 import './style.scss';
@@ -63,6 +64,8 @@ const App = ({ isConnected, userCategories, automaticLog, updateUserGet }) => {
 
     <HeaderContainer />
     <main className="main row">
+
+      
 
       <div className="left col-12 col-md-5 col-lg-4 col-xl-4">
         <Switch>
@@ -119,6 +122,8 @@ const App = ({ isConnected, userCategories, automaticLog, updateUserGet }) => {
       </div>
 
       <div className="right col-12 col-md-7 col-lg-8 col-xl-8">
+        <Contact />
+
         <Switch>
           {/* PATH : / 
           If user is connected : UserLibraryContainer / if user is not connected : login */}

@@ -20,6 +20,7 @@ import {
   CHOOSE_INITIALES,
   PUBLISH_INTERVIEW,
   UNPUBLISH_INTERVIEW,
+  DELETE_INTERVIEWED,
 } from '../actions';
 
 export const initialState = {
@@ -185,7 +186,33 @@ const readInterview = (state = initialState, action = {}) => {
           ...initialesContentUpdate,
         ],
       };
-
+    case DELETE_INTERVIEWED:
+      let newInterviewedDelete = [];
+      if (state.meta.interviewed.length === 1) {
+        newInterviewedDelete = [{
+          firstname: 'Anonyme',
+          lastname: '',
+          job: '',
+          id: 0,
+          email: '',
+          structure: [{
+            name: '',
+            city: '',
+            sector: '',
+            id: 0,
+          }],
+        }];
+      }
+      else newInterviewedDelete = state.meta.interviewed.filter((interviewed, index) => index !== action.payload);
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          interviewed: [
+            ...newInterviewedDelete,
+          ],
+        },
+      };
     case DELETE_QUESTION:
       const deleteContentUpdate = state.content.filter((set, index) => (index !== action.payload.indexQuestion));
       return {
@@ -217,6 +244,37 @@ const readInterview = (state = initialState, action = {}) => {
         },
       };
     case ADD_INTERVIEWED:
+      let newInterviewedAdd = {};
+      if (state.meta.interviewed.length === 0) {
+        newInterviewedAdd = {
+          firstname: 'Anonyme',
+          lastname: '',
+          job: '',
+          id: 0,
+          email: '',
+          structure: [{
+            name: '',
+            city: '',
+            sector: '',
+            id: 0,
+          }],
+        };
+      }
+      else {
+        newInterviewedAdd = {
+          firstname: '',
+          lastname: '',
+          job: '',
+          id: 0,
+          email: '',
+          structure: [{
+            name: '',
+            city: '',
+            sector: '',
+            id: 0,
+          }],
+        };
+      }
       return {
         ...state,
         meta: {
@@ -224,15 +282,7 @@ const readInterview = (state = initialState, action = {}) => {
           interviewed: [
             ...state.meta.interviewed,
             {
-              firstname: 'Anonyme',
-              lastname: 'Anonyme',
-              job: 'undefined',
-              email: 'anonyme@inter.view',
-              structure: [{
-                name: 'undefined',
-                city: 'undefined',
-                sector: 'undefined',
-              }],
+              ...newInterviewedAdd,
             },
           ],
         },

@@ -4,12 +4,15 @@ Régler les bugs :
 
 MERCREDI :
 — CSS mobile
-— Gérer interviewés input write
+— Gérer interviewés input write [Laura]
 — Vérifier le système qui génère les coordonnées
-— Faire une 404 cool 
-— Contact & mentions légales
+— Contact & mentions légales [Gael]
 — Verifier tous les scrolls
 — Commenter et clean le code [4]
+— Faire les micro détails
+— CSS pour les autres navigateurs ?
+— Préparer la présentation
+
 
 
 NOPE:
