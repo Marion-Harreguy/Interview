@@ -17,7 +17,7 @@ const Footer = ({ logOut, isConnected }) => {
         <p className="footer__legal" onClick={() => logOut()}>Déconnexion <span>&bull;</span></p>
       )
     }
-    <p className="footer__legal-mentions" onClick={toggleOpened}>Contact & Mentions légales<span>&bull;</span></p>
+    <p className="footer__legal-mentions" onClick={toggleOpened}>Contact & Mentions légales</p>
   </footer>
 )};
 

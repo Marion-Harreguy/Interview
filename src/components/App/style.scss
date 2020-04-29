@@ -69,7 +69,8 @@ input:active {
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus {
-  -webkit-text-fill-color: white!important;
+  -webkit-text-fill-color: #2b363e !important;
+  color : white;
   font-size: 1em;
 }
 

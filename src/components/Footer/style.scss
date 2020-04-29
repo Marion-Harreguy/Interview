@@ -1,6 +1,15 @@
 .left__footer p {
  display: inline-block;
  cursor: pointer;
+ opacity: 0.5;
+}
+
+.left__footer p:hover {
+    opacity: 1;
+}
+
+.left__footer p span {
+    margin-right: 7px;
 }
 
 .right__contact {
