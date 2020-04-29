@@ -273,7 +273,7 @@ class InterviewController extends AbstractController
                     --> Créer l'objet Structure et lui assigner l'interviewé
                     */
                     
-                    dd($dataInterviewed["structure"]);
+            
                     if (empty($dataInterviewed["structure"]["name"])) {
 
                     }
