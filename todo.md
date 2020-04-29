@@ -1,19 +1,15 @@
-MARDI :
 Régler les bugs :
-— Quand session expirée, rend une page grise au lieu de rediriger vers le login [1] OK ?
+— Quand session expirée, rend une page grise au lieu de rediriger vers le login [1]
+— Envoie de l'id au moment ou on change d'interviewé
 
 MERCREDI :
-— CSS mobile [1] [Laura]
-— Vérifier le système qui génère les coordonnées [1]
-— CSS Contact & mentions légales [Gael]
-— Verifier tous les scrolls [1]
+— CSS mentions légales [Laura]
 — Faire les micro détails [Gael?]
 — CSS pour les autres navigateurs : gérer les input
-
+— Vider recherche au début & resultats
 
 — Commenter et clean le code [4]
 — Préparer la présentation
-
 
 
 NOPE:
@@ -24,6 +20,9 @@ NOPE:
 
 JEUDI:
 — Mise en ligne
+
+??
+— CSS mobile [1] [Laura]
 
 Futur :
 — Webtoprint [Baptiste]
@@ -53,9 +52,9 @@ userLibrary
 — Disquette changeInfo
 — CSS notice
 — Les sections s'ouvrent au deuxième clic
-— Cursor pointer sur les sections
 — Quand les inputs sont modifiables : mettre border bottom solid
 — Transition de taille quand input enabled
+— Nouvelle catégorie : input trop petit
 Read :
 — Subdata doivent être en dsiplay none au début
 — Tags moches
@@ -67,11 +66,11 @@ Write :
 — Bouton ajouter un.e enquêté a un z-index trop elevé
 Search :
 — Icones manquent
-— cursor pointer sur les ronds générés
 — Couleur des ronds sur la map
 — Curseur date un tout petit peu trop long
 — Masquer les icones mode si rien dans les résultats
 — Style des résultats par liste
+— Frise dépassée si 2020 (timeline)
 Else :
 — Regénérer les couleurs
 — Styler la notice

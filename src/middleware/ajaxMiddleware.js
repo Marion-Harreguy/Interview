@@ -220,6 +220,7 @@ export default (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log(action.type + ": success !");
+          console.log(response.data);
           if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
           if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
         })
@@ -246,7 +247,7 @@ export default (store) => (next) => (action) => {
       })
         .then(() => {
           console.log(action.type + ": success !");
-          store.dispatch(interviewGet({interviewId : action.payload}));
+          store.dispatch(interviewGet({interviewId : action.payload, reducer: 'write'}));
         })
         .catch((error) => {
           // window.alert(errorMessages[error.response.status]);

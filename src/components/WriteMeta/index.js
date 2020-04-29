@@ -33,6 +33,16 @@ const WriteMeta = ({
   // Table to stack the categories in which the user wants to put the interview
   let categories = [];
 
+  const openInterviewedOnLoad = () => {
+    for(let interviewedIndex = 0; interviewedIndex < interviewMeta.interviewed.length; interviewedIndex++){
+      if(interviewMeta.interviewed[interviewedIndex].email !== '' && interviewMeta.interviewed[interviewedIndex].email !== 'anonyme@inter.view') {
+        $(`#interviewed--${interviewedIndex} .interviewed-second`).css('display','block');
+      $(`#interviewed--${interviewedIndex} .interviewed-first--notice`).css('display','none');
+      $(`#interviewed--${interviewedIndex} .write__form__add-infos`).css('display','none');
+      }
+    }
+  }
+
   useEffect(() => {
     setTimeout(() => {
       categories = interviewMeta.isPublished ? dashboard.publishedInterviews.find((interview) => interview.id == interviewId).categories : dashboard.writtingInterviews.find((interview) => interview.id == interviewId).categories;
@@ -41,6 +51,7 @@ const WriteMeta = ({
       for (let indexCategory = 0; indexCategory < categories.length; indexCategory ++){
         if(document.getElementById(categories[indexCategory])) document.getElementById(categories[indexCategory]).checked = true;
       }
+      openInterviewedOnLoad();
     }, 1000);
   }, [dashboard]);
 
@@ -92,8 +103,9 @@ const WriteMeta = ({
         method: 'get',
       })
         .then((response) => {
-          const x = parseInt(response.data.results[0].locations[0].latLng.lat);
-          const y = parseInt(response.data.results[0].locations[0].latLng.lng);
+          const x = response.data.results[0].locations[0].latLng.lat;
+          const y = response.data.results[0].locations[0].latLng.lng;
+          console.log(x, y);
           changeCoordinates([x, y]);
           writeInterviewPut(interviewId);
         },
@@ -185,21 +197,6 @@ const WriteMeta = ({
     document.querySelector('.write__unpublish-menu').style.display = 'none';
   };
 
-  const blankInterviewed = () => {
-    // Add interviewed button click
-    // If there is interviewed created alreade
-    if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
-      addInterviewed();
-      // $('.write__form__input--anonymous').css('display', 'none');
-      setTimeout(()=> blankInterviewedLast(), 100);
-    }
-    else {
-      changeInterviewed({ target: {name: 'firstname', value: '' }, index: 0 });
-      // $('.write__form__input--anonymous').css('display', 'none');
-      blankInterviewedLast();
-    }
-  };
-
   const blankInterviewedLast = () => {
     setTimeout(() => {
       const indexLast = interviewMeta.interviewed.length;
@@ -209,7 +206,23 @@ const WriteMeta = ({
       $(`#interviewed--${indexLast} .interviewed-second`).css('display', 'none');
       //$(`#interviewed--${indexLast} .write__form__input--anonymous`).css('display', 'none');
     }, 200);
-  }
+  };
+
+  const blankInterviewed = () => {
+    // Add interviewed button click
+    // If there is interviewed created alreade
+    if (!interviewMeta.interviewed[0].firstname !== 'Anonyme') {
+      changeInterviewed({ target: {name: 'firstname', value: '' }, index: 0 });
+      changeInterviewed({ target: {name: 'lastname', value: '' }, index: 0 });
+      changeInterviewed({ target: {name: 'email', value: '' }, index: 0 });
+      changeInterviewed({ target: {name: 'job', value: '' }, index: 0 });
+      changeInterviewed({ target: {name: 'id', value: '' }, index: 0 });
+      changeInterviewedStructure({ target: {name: 'name', value: '' }, index: 0 });
+      changeInterviewedStructure({ target: {name: 'sector', value: '' }, index: 0 });
+      changeInterviewedStructure({ target: {name: 'city', value: '' }, index: 0 });
+      changeInterviewedStructure({ target: {name: 'id', value: '' }, index: 0 });
+    }
+  };
 
   const checkEmail = (value) => {
     if (value !== '') showOtherFields();
@@ -223,14 +236,13 @@ const WriteMeta = ({
     $(`#interviewed--${indexLast} .write__form__add-infos`).css('display','none');
   };
 
-  // const addInterviewedCheck = () => {
-  //   if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
-  //     console.log("New interviewed");
-  //     addInterviewed();
-  //   }
-  //   else console.log("Changing from anonymous");
-  // }
-
+  const addInterviewedCheck = () => {
+    if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
+      console.log("New interviewed");
+      addInterviewed();
+    }
+    else console.log("Changing from anonymous");
+  };
 
   return (
     <aside className="left__menu left__menu--bottom left__menu--write">
@@ -294,7 +306,7 @@ const WriteMeta = ({
 
                             <input className="write__form__input write__form__input--interviewed interviewed-first write__form__input--interviewed--email" type="text" name="email" placeholder={`Email de l'enquêté n°${numero}`} value={interviewed.email} onBlur={(event) => {writeInterviewPut(interviewId), checkEmail(event.target.value)}} onChange={(event) => changeInterviewed({ target: event.target, index })} />
                             <span className="write__form__interviewed--number">{numero}</span>
-                              <button className="write__form__interviewed--delete" onClick={(event) => {event.preventDefault(), deleteInterviewed(index)}}></button>
+                              <button className="write__form__interviewed--delete" onClick={(event) => {event.preventDefault(), deleteInterviewed(index), writeInterviewPut(interviewId)}}></button>
                             <p className="interviewed-first interviewed-first--notice">L'adresse email est nécessaire pour identifier l'enquêté. Si vous décidez de remplir les autres informations avant, il est possible qu'elles soient remplacées au moment où vous saisirez l'adresse, si l'enquêté est déjà connu de notre plateforme.</p>
                             <button className="write__form__add-infos write__form__button interviewed-first" onClick={(event)=>{event.preventDefault(), showOtherFields() }} label="Ajouter enquêté" type="button">Remplir les autres champs quand même</button>
 

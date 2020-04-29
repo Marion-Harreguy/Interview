@@ -2,7 +2,7 @@
 
 .interview__content {
   overflow-y: scroll;
-  height: 100%;
+  height: calc(100vh - 47px);
 }
 .interview__content::-webkit-scrollbar {
   display: block;
@@ -46,7 +46,7 @@
 
 .interview__content {
     overflow-y: scroll;
-    height: 100%;
+    height: calc(100vh - 47px);
   }
 
 .interview__content::-webkit-scrollbar {

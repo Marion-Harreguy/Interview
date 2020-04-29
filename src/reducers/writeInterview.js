@@ -50,14 +50,14 @@ export const initialState = {
     interviewed: [
       {
         firstname: 'Anonyme',
-        lastname: '',
-        job: '',
-        email: '',
+        lastname: 'Anonyme',
+        job: 'undefined',
+        email: 'anonyme@inter.view',
         id: 0,
         structure: [{
-          name: '',
-          city: '',
-          sector: '',
+          name: 'undefined',
+          city: 'undefined',
+          sector: 'undefined',
           id: 0,
         }],
       },
@@ -191,19 +191,20 @@ const readInterview = (state = initialState, action = {}) => {
       if (state.meta.interviewed.length === 1) {
         newInterviewedDelete = [{
           firstname: 'Anonyme',
-          lastname: '',
-          job: '',
+          lastname: 'Anonyme',
+          job: 'undefined',
           id: 0,
-          email: '',
-          structure: [{
-            name: '',
-            city: '',
-            sector: '',
+          email: 'anonyme@inter.view',
+          structure: {
+            name: 'undefined',
+            city: 'undefined',
+            sector: 'undefined',
             id: 0,
-          }],
+          },
         }];
       }
       else newInterviewedDelete = state.meta.interviewed.filter((interviewed, index) => index !== action.payload);
+      console.log(newInterviewedDelete);
       return {
         ...state,
         meta: {
@@ -247,17 +248,17 @@ const readInterview = (state = initialState, action = {}) => {
       let newInterviewedAdd = {};
       if (state.meta.interviewed.length === 0) {
         newInterviewedAdd = {
-          firstname: 'Anonyme',
+          firstname: '',
           lastname: '',
           job: '',
           id: 0,
           email: '',
-          structure: [{
+          structure: {
             name: '',
             city: '',
             sector: '',
             id: 0,
-          }],
+          },
         };
       }
       else {
@@ -267,12 +268,12 @@ const readInterview = (state = initialState, action = {}) => {
           job: '',
           id: 0,
           email: '',
-          structure: [{
+          structure: {
             name: '',
             city: '',
             sector: '',
             id: 0,
-          }],
+          },
         };
       }
       return {
@@ -367,6 +368,7 @@ const readInterview = (state = initialState, action = {}) => {
         },
       };
     case LOAD_WRITE_INTERVIEW:
+      console.log(action.payload);
       return {
         ...state,
         ...action.payload,

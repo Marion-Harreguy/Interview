@@ -8,7 +8,8 @@
 
 .interview__content--write {
   margin-top: 20px;
-  height: calc(100% - 47px);
+  height: calc(100vh - 105px);
+  padding-bottom: 10px;
 }
 .interview__content--write::-webkit-scrollbar {
   display: block;
@@ -124,11 +125,6 @@
 .interview__add {
   margin-left: 40px;
 }
-
-.interview__content--write {
-  margin-top: 20px;
-  height: calc(100% - 47px);
-}
 .interview__content--write::-webkit-scrollbar {
   display: block;
 }
@@ -238,13 +234,15 @@
 .answer__content--delete, .question__content--delete {
   width: 15px;
   height: 15px;
-  position: absolute;
+  // position: absolute;
   border: none !important;
   margin-left: -20px;
   margin-top: 17px;
+  vertical-align: top;
   background-image: url("../../assets/icons/cross.png");
   background-size: contain;
   background-repeat: no-repeat;
+  display: inline-block;
 }
 
 .interview__content--write .interview__initiales{

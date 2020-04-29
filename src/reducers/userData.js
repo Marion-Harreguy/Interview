@@ -242,16 +242,22 @@ const userData = (state = initialState, action = {}) => {
         if (interview.id !== action.payload.id) return interview;
         else alreadySaved = index;
       });
-      if (!alreadySaved) {
-        newSavedInterview.push({
-          id: action.payload.id,
-          name: action.payload.name,
-          categories: [...action.payload.categoryList],
-        });
+      if(state.dashboard.savedInterviews.length === 1) {
+        newSavedInterview = [];
       }
       else {
-        newSavedInterview.splice(alreadySaved, 1);
+        if (!alreadySaved) {
+          newSavedInterview.push({
+            id: action.payload.id,
+            name: action.payload.name,
+            categories: [...action.payload.categoryList],
+          });
+        }
+        else {
+          newSavedInterview.splice(alreadySaved, 1);
+        }
       }
+      // console.log(new);
       return {
         ...state,
         dashboard: {

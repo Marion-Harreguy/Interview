@@ -11,7 +11,7 @@ const Contact = () => {
 
   return (
       <div>
-        <div className="right__contact" style={{ position: 'absolute', marginTop:'110vh' }}>
+    <div className="right__contact" style={{ position: 'absolute', marginTop:'110vh' }}>
       <button type="button" className="contact__button" onClick={() => toggleClosed()} label="Nous Contacter" />
       <h4>Contact</h4>
       <p> email: inter.view@gmail.com</p>
