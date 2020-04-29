@@ -81,7 +81,7 @@ class SearchController extends AbstractController
 
 
         $yearBegin = $request->query->get("yearBegin");
-        $yearEnd = $request->query->get("yearEnd");
+        $yearEnd = $request->query->get("yearEnd") + 1 ;
 
         // if ($tags && $tags != null) {
 
