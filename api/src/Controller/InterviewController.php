@@ -266,14 +266,21 @@ class InterviewController extends AbstractController
                     //   Gestion des structures    //
                     //=============================//
                     /*
-    - Boucler sur le tableau $data["interview"]["interviewed"]["structure"]
-        - Si l'index ["id"] existe
-            --> Recuperer l'objet Structure et le mettre à jour
-        - Si il n'existe pas
-            --> Créer l'objet Structure et lui assigner l'interviewé
-    */
-                    for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
-                        if (isset($dataInterviewed["structure"][$i]["name"]) && !empty($dataInterviewed["structure"][$i]["name"])) {
+                    - Boucler sur le tableau $data["interview"]["interviewed"]["structure"]
+                    - Si l'index ["id"] existe
+                    --> Recuperer l'objet Structure et le mettre à jour
+                    - Si il n'existe pas
+                    --> Créer l'objet Structure et lui assigner l'interviewé
+                    */
+                    
+                    dd($dataInterviewed["structure"]);
+                    if (empty($dataInterviewed["structure"]["name"])) {
+
+                    }
+
+    
+    for ($i = 0; $i < count($dataInterviewed["structure"]); $i++) {
+                         if (isset($dataInterviewed["structure"][$i]["name"]) && !empty($dataInterviewed["structure"][$i]["name"])) {
                             $name = $dataInterviewed["structure"][$i]["name"];
                             $structure = $structureRepository->findOneBy(["name" => $name]);
                         } else {

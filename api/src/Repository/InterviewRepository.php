@@ -84,5 +84,56 @@ class InterviewRepository extends ServiceEntityRepository
             ;
        
     }
+
+    public function findAllWithCrit($title, $city, $language, $yearBegin, $yearEnd)
+    {
+        if($title === ''){
+            $titleSql = "i.title != :title";
+        }else {
+            $titleSql = "i.title LIKE :title";
+        }
+        /*if($date === ''){
+            $dateSql = "i.date != :date";
+        }else {
+            $dateSql = "i.date LIKE :date";
+        }*/
+        if($city === ''){
+            $citySql = "i.location != :location";
+        }else {
+            $citySql = "i.location = :location";
+        }
+        if($language === ''){
+            $languageSql = "i.language != :language";
+        }else {
+            $languageSql = "i.language = :language";
+        }
+      
+      
+        return $this->createQueryBuilder('i')
+            ->Where('i.isPublished = :isPublished')
+            ->setParameter('isPublished', true)
+            
+            ->andWhere( $citySql)
+            ->andWhere( $languageSql)
+            ->andWhere( $titleSql )
+           // ->andWhere( $dateSql )
+            ->andWhere( 'i.date BETWEEN :begin AND :end')
+        
+
+            ->setParameter(':location', $city)
+            ->setParameter(':language', $language)
+            ->setParameter(':title', '%'.$title.'%')
+            //->setParameter(':date', '%'.$date.'%')
+            ->setParameter('begin', $yearBegin)
+            ->setParameter('end', $yearEnd)
+            
+
+
+            ->orderBy('i.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+       
+    }
     
 }

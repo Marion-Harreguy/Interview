@@ -40,7 +40,7 @@ class SearchController extends AbstractController
         $name = $request->query->get("name");
         $interviewed = $request->query->get("interviewed");
         $tags = $request->query->get("tags");
-        
+
 
         // on vérifie les donnée du parametre
         // on les stocke 
@@ -59,7 +59,7 @@ class SearchController extends AbstractController
         // on vérifie les donnée du parametre
         // on les stocke 
         if ($request->query->get("city")) {
-            $city = $request->query->get("city"); 
+            $city = $request->query->get("city");
         } else {
             $city = '';
         }
@@ -73,15 +73,15 @@ class SearchController extends AbstractController
         // on vérifie les données du parametre
         // on les stocke 
         if ($request->query->get("openSource")) {
-               $openSource = true;
-        }else {
+            $openSource = '';
+        } else {
             $openSource = '';
         }
 
 
 
         $yearBegin = $request->query->get("yearBegin");
-        $yearEnd = $request->query->get("yearEnd") + 1 ;
+        $yearEnd = strval($request->query->get("yearEnd") + 1);
 
         // if ($tags && $tags != null) {
 
@@ -93,9 +93,9 @@ class SearchController extends AbstractController
         //     $critere["openLicence"] = boolval($openSource);
         // }
 
-      
-       
-       
+
+
+
         //dd($title, $date, $city, $language);
 
         // aucun param en get => 19 rel
@@ -105,20 +105,30 @@ class SearchController extends AbstractController
         // pram titleprecis lyon/anglais => 1 rel
         // param date 2018 => 1 rel 
         // param date 2010 / francais /lyon => 1 rel
-        if(
-            $title 
+
+        if (
+            $title
             //OR $date 
-            OR $city 
-            OR $language 
-            OR $openSource
-        ){
-            $interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource, $yearBegin, $yearEnd);
-            
-        }else {
+            or $city
+            or $language
+
+        ) {
+
+            if ($request->query->get("openSource")) {
+                $openSource = $request->query->get("openSource");
+                $interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource, $yearBegin, $yearEnd);
+            } else {
+
+                $interviewResult = $interviewRepository->findAllWithCrit($title, $city, $language,$yearBegin, $yearEnd);
+            }
+
+
+
+            //$interviewResult = $interviewRepository->findWithCrit($title, $city, $language, $openSource, $yearBegin, $yearEnd);
+        } else {
             $interviewResult = $interviewRepository->findAllPublished();
-            
         }
-       
+
 
 
 
