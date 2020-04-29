@@ -141,7 +141,7 @@ class InterviewController extends AbstractController
             $coordinates = [];
             for ($i = 0; $i < count($data["meta"]["coordinates"]); $i++) {
 
-                $coordinates[] = intval($data["meta"]["coordinates"][$i]);
+                $coordinates[] = floatval($data["meta"]["coordinates"][$i]);
             }
 
             if (count($coordinates) == 2) {
