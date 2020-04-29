@@ -214,6 +214,12 @@ class InterviewController extends AbstractController
             foreach ($interviewedList as $dataInterviewed) {
 
                 if (!empty($dataInterviewed["email"])) {
+                    
+                    if ($dataInterviewed["email"] == "anonyme@inter.view") {
+                        $interviewed = $interviewedRepository->findOneBy(["email" => "anonyme@inter.view"]);
+                        $interview->addInterviewed($interviewed);
+                    }
+
                     $interviewed = $interviewedRepository->findOneBy(["email" => $dataInterviewed["email"]]);
                     $interview->removeInterviewed($interviewedRepository->findOneBy(["email" => "anonyme@inter.view"]));
 
