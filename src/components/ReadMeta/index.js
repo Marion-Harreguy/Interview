@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.scss';
@@ -19,6 +19,9 @@ const ReadMeta = ({
   const downloadInterview = () => {
     // Here Baptist will get the data and make his code
   };
+
+  const [categoryList, setCategoryList] = useState([]);
+  const [saveIcon, setSaveIcon] = useState('');
 
   const createInitiales = (name) => {
     let initiales = name.match(/\b\w/g) || [];
@@ -57,8 +60,6 @@ const ReadMeta = ({
     }
   };
 
-  const [categoryList, setCategoryList] = useState([]);
-
   // Table where interview-categories will be saved
   // if user decides to save it in his library
 
@@ -93,21 +94,24 @@ const ReadMeta = ({
     const isItSavedThis = isItSaved(interviewMeta.id);
     if (document.querySelector('.read__categories').style.display !== 'block' && isItSavedThis !== 'saved') {
       document.querySelector('.read__categories').style.display = 'block';
-      $('.tools__save').css('background-image', `url(${bookmarkSave})`);
+      setSaveIcon('check');
+      //$('.tools__save').css('background-image', `url(${bookmarkSave})`);
     }
 
     // If saving menu is opened, interview needs to be added to library
     else if (document.querySelector('.read__categories').style.display === 'block') {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
       document.querySelector('.read__categories').style.display = 'none';
-      $('.tools__save').css('background-image', `url(${bookmarkOn})`);
+      setSaveIcon('saved');
+     // $('.tools__save').css('background-image', `url(${bookmarkOn})`);
       updateUserPut();
     }
 
     // If article was already saved, and needs to be unsaved
     else {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
-      $('.tools__save').css('background-image', `url(${bookmarkEmpty})`);
+      setSaveIcon('not-saved');
+      //$('.tools__save').css('background-image', `url(${bookmarkEmpty})`);
       //`url(${bookmarkEmpty})`;
       updateUserPut();
     }
@@ -120,6 +124,10 @@ const ReadMeta = ({
     });
     return saved;
   };
+
+  useEffect(() => {
+    setSaveIcon(isItSaved(interviewMeta.id));
+  }, [interviewMeta.id]);
 
   return (
     <aside className="left__menu left__menu--bottom left__menu--read">
@@ -137,7 +145,7 @@ const ReadMeta = ({
                 <button className="tools__modify" type="button" label="Modifier" />
               </NavLink>
             ) : (
-              <button className={`tools__save tools__save--${isItSaved(interviewMeta.id)}`} type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />
+              <button className={`tools__save tools__save--${saveIcon}`} type="button" onClick={(event) => saveMenu(event.target)} label="Ajouter à la biblothèque" />
             )
         }
         {

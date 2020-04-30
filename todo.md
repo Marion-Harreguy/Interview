@@ -5,6 +5,8 @@ Régler les bugs :
 Pb :
 — Petites icones bookmark disparaissent
 — Sections s'ouvrent au deuxième clic ??
+— Initiales envoyées en BDD pour les interviews©
+— Timeline moteur curseur décalé
 
 JEUDI:
 — Mise en ligne

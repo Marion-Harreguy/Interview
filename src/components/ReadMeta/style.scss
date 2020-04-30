@@ -27,6 +27,11 @@ input:-webkit-autofill:focus {
 .interview__data, .interview__subdata {
   font-size: 1.2em;
   margin: 5px;
+  cursor: default;
+}
+
+.interview__data--interviewed, .interview__data--author {
+  cursor: pointer;
 }
 
 .interview__subdata {
@@ -92,6 +97,11 @@ input:-webkit-autofill:focus {
 .tools__save--not-saved {
   background-image: url('../../assets/icons/bookmark.png');
 }
+
+.tools__save--check {
+  background-image: url('../../assets/icons/bookmark-save.png');
+}
+
 
 .tools__close {
   background-image: url('../../assets/icons/cross.png');
