@@ -27,7 +27,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus {
   -webkit-text-fill-color: white!important;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 .interview__add {
   margin-left: 45px;
@@ -172,7 +172,7 @@ input:-webkit-autofill:focus {
     display: none;
     position: absolute;
     border: solid 1px white;
-    width: 90%;
+    width: 81%;
     padding: 20px;
     background-color: #414a52;
     border-radius: 15px;
@@ -238,4 +238,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-top: 20px;
   border-radius: 0 !important;
   vertical-align: top;
+}
+
+.write__tools button, .write__tools button:focus, .write__tools button:active, .write__tools button:hover {
+  background-color: transparent;
+  border: none;
+  border-radius: 0 !important;
+  outline: none;
+  opacity: 0.8;
+}
+.write__tools button:hover {
+  opacity: 1;
 }

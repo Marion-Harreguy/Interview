@@ -21,7 +21,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus {
   -webkit-text-fill-color: white!important;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 .interview__data, .interview__subdata {
@@ -182,7 +182,7 @@ input:-webkit-autofill:focus {
   display: none;
   position: absolute;
   border: solid 1px white;
-  width: 90%;
+  width: 81%;
   padding: 20px;
   background-color: #414a52;
   border-radius: 15px;
@@ -207,5 +207,17 @@ input:-webkit-autofill:focus {
   display: inline-block;
   height: 20px;
   margin-bottom: 2px;
+}
+
+.read__tools button, .read__tools button:focus, .read__tools button:active, .read__tools button:hover {
+  background-color: transparent;
+  border: none;
+  border-radius: 0 !important;
+  outline: none;
+  opacity: 0.8;
+}
+
+.read__tools button:hover {
+  opacity: 1;
 }
 

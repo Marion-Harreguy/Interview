@@ -21,7 +21,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus {
   -webkit-text-fill-color: white!important;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 .left__footer p {
@@ -48,18 +48,55 @@ input:-webkit-autofill:focus {
     background-color: #414A52;
     border: white 1px solid;
     z-index: 5;
-    width: 95%;
+    width: calc(100% - 40px);
+    margin-left: 20px;
     border-radius: 15px 15px 0px 0px;
+    padding: 20px 20px 0px 20px;
+    margin-top: 110vh;
+    position: absolute;
 }
 
-.contact__button {
+.contact__close {
     background-image: url('./../../assets/icons/cross.png');
     background-repeat: no-repeat;
-    background-size: 7px;
+    background-size: contain;
     background-position: center;
-    height: 2vh;
-    padding-left: 10px;
-    margin-left: 7px;
-    margin-top: 7px;
-    margin-right: 4px;
+    height: 25px;
+    width: 25px;
+    border: none !important;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 3;
+}
+
+.right__contact h5 {
+  font-family: 'Source-Regular';
+  margin-top: 15px;
+}
+
+.right__contact h4 {
+  font-family: 'Source-Regular';
+  margin-bottom: 0;
+}
+
+.contact p {
+  margin-top: 20px;
+}
+
+.contact {
+  margin-bottom: 40px;
+}
+
+.contact a, .contact a:hover {
+  text-decoration: underline;
+}
+
+.legal__mentions {
+  height: 100%;
+}
+
+.legal__mentions--scroll {
+  height: 92%;
+  overflow: scroll;
 }

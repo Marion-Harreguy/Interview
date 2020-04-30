@@ -6,7 +6,7 @@ import './style.scss';
 const Footer = ({ logOut, isConnected }) => {
 
   const toggleOpened = () => {
-    $('.right__contact').animate({ marginTop: '0' }, 500);
+    $('.right__contact').animate({ marginTop: '10px' }, 500);
   };
 
   return (

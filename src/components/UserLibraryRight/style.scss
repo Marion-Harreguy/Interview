@@ -2,7 +2,26 @@
   font-family: 'Source-Regular';
   text-align: center;
   width: 100%;
-  margin-bottom: 10px;
+  margin-top: -10px;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+.tuto {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.tuto__scroll {
+  height: calc(100% - 20px);
+  overflow: scroll;
+}
+
+.tuto em {
+  font-size: 0.8em;
+  opacity: 0.8;
+  line-height: 10px;
 }
 
 input:-webkit-autofill,
@@ -28,7 +47,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus {
   -webkit-text-fill-color: white!important;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 .instructions {
@@ -47,13 +66,17 @@ input:-webkit-autofill:focus {
   font-family: 'Source-Regular';
   font-size: 1.5rem;
   cursor: pointer;
-  border-bottom: solid .1px white;
+  border-bottom: dashed 1px white;
   padding-bottom: 7px;
 }
 
 .tuto p {
   line-height: 1.2rem;
   display: block;
+}
+
+.tuto__mode__p {
+  line-height: 1.2rem;
 }
 
 .tuto {
@@ -69,8 +92,9 @@ input:-webkit-autofill:focus {
   background-color: none !important;
   background-size: contain;
   background-repeat: no-repeat;
-  margin-right: 8px;
+  margin-right: 9px;
   margin-top: 2px;
+  vertical-align: top;
 }
 
 .tuto__round {
@@ -84,8 +108,14 @@ input:-webkit-autofill:focus {
   width: 20px !important;
   height: 20px !important;
   background-size: 12px !important;
+  vertical-align: bottom;
+  margin-top: 0 !important;
 }
 
+.tuto__content {
+  margin-top: 0 !important;
+  font-family: 'Source-Bold';
+}
 .tuto__pencil {
   background-image: url('../../assets/icons/pencil.png');
 }
@@ -135,4 +165,8 @@ input:-webkit-autofill:focus {
 }
 .tuto__clock {
   background-image: url('../../assets/icons/clock.png');
+}
+
+.tuto__quote {
+  background-image: url('../../assets/icons/quote.png');
 }

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import HeaderContainer from '../../containers/HeaderContainer';
 import UserLibraryContainer from '../../containers/UserLibraryContainer';
 import UserLibraryRight from '../UserLibraryRight';
-import LegalMentions from '../LegalMentions';
+// import LegalMentions from '../LegalMentions';
 import ReadMetaContainer from '../../containers/ReadMetaContainer';
 import ReadContentContainer from '../../containers/ReadContentContainer';
 import WriteContentContainer from '../../containers/WriteContentContainer';
@@ -168,7 +168,7 @@ const App = ({ isConnected = false, userCategories, automaticLog, updateUserGet 
             }}
           />
           {/* How to do GET search route ? */}
-          <Route path="/legal-mention" component={LegalMentions} />
+          {/* <Route path="/legal-mention" component={LegalMentions} /> */}
           {/* How to handle log out
           <Route path="/logout" component={Logout} /> 
           Toggle ? */}
@@ -191,7 +191,7 @@ const App = ({ isConnected = false, userCategories, automaticLog, updateUserGet 
           />
           <Route component={PageNotFound} />
         </Switch>
-      </div>
+      </div> 
     </main>
   </div>
 )};

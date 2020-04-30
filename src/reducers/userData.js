@@ -2,7 +2,6 @@
 /* eslint-disable prefer-const */
 import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW, DELETE_CATEGORY, MODIFY_USER_STRUCTURE, UNPUBLISH_INTERVIEW } from '../actions';
 import history from '../history';
-import { SrcAlphaSaturateFactor } from 'three';
 
 export const initialState = {
   connection: {
@@ -53,16 +52,14 @@ const categoryColors = [
   '#FFFE9E',
   '#ABFFC2',
   '#CA9DFF',
-  '#FF8587',
-  '#7DC0FF',
-  '#FF96A4',
-  '#FFD38C',
-  '#96FFAC',
+  '#FFA4AB',
+  '#7DFFFF',
+  '#FF6372',
   '#FFFF56',
-  '#A54FFF',
-  '#36CAFF',
-  '#FFD191',
-  '#00FFA7',
+  '#FFA1F6',
+  '#36A5F7',
+  '#FFBD7A',
+  '#00ECB3',
   'grey',
 ];
 
