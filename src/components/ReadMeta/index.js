@@ -107,7 +107,7 @@ const ReadMeta = ({
     // If article was already saved, and needs to be unsaved
     else {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
-      $('.tools__save').css('background-image', `url(${pencil})`);
+      $('.tools__save').css('background-image', `url(${bookmarkEmpty})`);
       //`url(${bookmarkEmpty})`;
       updateUserPut();
     }
