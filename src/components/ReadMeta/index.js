@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.scss';
 import $ from 'jquery';
+import bookmarkEmpty from '../../assets/icons/bookmark.png';
+import bookmarkSave from '../../assets/icons/bookmark-on.png';
+import bookmarkOn from '../../assets/icons/bookmark-save.png';
 
 const ReadMeta = ({
   interviewMeta,
@@ -90,21 +93,21 @@ const ReadMeta = ({
     const isItSavedThis = isItSaved(interviewMeta.id);
     if (document.querySelector('.read__categories').style.display !== 'block' && isItSavedThis !== 'saved') {
       document.querySelector('.read__categories').style.display = 'block';
-      document.querySelector('.tools__save').style.backgroundImage = "url(/a41f8aa1665f78a62484651e8d8671eb.png)";
+      document.querySelector('.tools__save').style.backgroundImage = `url(${bookmarkSave})`;
     }
 
     // If saving menu is opened, interview needs to be added to library
     else if (document.querySelector('.read__categories').style.display === 'block') {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
       document.querySelector('.read__categories').style.display = 'none';
-      document.querySelector('.tools__save').style.backgroundImage = "url(/f8e8bb64237b6dbd4a5c95ac901177d9.png)";
+      document.querySelector('.tools__save').style.backgroundImage = `url(${bookmarkOn})`;
       updateUserPut();
     }
 
     // If article was already saved, and needs to be unsaved
     else {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
-      document.querySelector('.tools__save').style.backgroundImage = "url(/33b3bc6a9fdc212620382c0b6115a550.png)";
+      document.querySelector('.tools__save').style.backgroundImage = `url(${bookmarkEmpty})`;
       updateUserPut();
     }
   };

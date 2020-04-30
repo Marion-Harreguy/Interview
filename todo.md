@@ -2,6 +2,11 @@ Régler les bugs :
 — Quand session expirée, rend une page grise au lieu de rediriger vers le login [1]
 — Détail : + pour créer un entretien dans UserCategory va dans entretiens au publié pdt 1 scd quand on ajoute ou suppr des catégories
 
+Pb :
+— Petites icones bookmark disparaissent ok?
+— Sections s'ouvrent au deuxième clic
+— 404 au read : ajouter htaccess
+
 JEUDI:
 — gérer la 404
 — Mise en ligne
