@@ -93,21 +93,22 @@ const ReadMeta = ({
     const isItSavedThis = isItSaved(interviewMeta.id);
     if (document.querySelector('.read__categories').style.display !== 'block' && isItSavedThis !== 'saved') {
       document.querySelector('.read__categories').style.display = 'block';
-      document.querySelector('.tools__save').style.backgroundImage = `url(${bookmarkSave})`;
+      $('.tools__save').css('background-image', `url(${bookmarkSave})`);
     }
 
     // If saving menu is opened, interview needs to be added to library
     else if (document.querySelector('.read__categories').style.display === 'block') {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
       document.querySelector('.read__categories').style.display = 'none';
-      document.querySelector('.tools__save').style.backgroundImage = `url(${bookmarkOn})`;
+      $('.tools__save').css('background-image', `url(${bookmarkOn})`);
       updateUserPut();
     }
 
     // If article was already saved, and needs to be unsaved
     else {
       saveInterview({ id: interviewMeta.id, title: interviewMeta.title, categoryList });
-      document.querySelector('.tools__save').style.backgroundImage = `url(${bookmarkEmpty})`;
+      $('.tools__save').css('background-image', `url(${pencil})`);
+      //`url(${bookmarkEmpty})`;
       updateUserPut();
     }
   };

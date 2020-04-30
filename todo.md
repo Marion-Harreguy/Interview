@@ -5,10 +5,8 @@ Régler les bugs :
 Pb :
 — Petites icones bookmark disparaissent
 — Sections s'ouvrent au deuxième clic ??
-— 404 au read : ajouter htaccess
 
 JEUDI:
-— gérer la 404
 — Mise en ligne
 — Commenter et cleaner le code
 — CSS pour les autres navigateurs : gérer les input
