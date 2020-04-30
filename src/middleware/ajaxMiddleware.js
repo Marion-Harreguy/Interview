@@ -162,7 +162,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(automaticLog(userLogs));
         })
         .catch((error) => {
-          // window.alert('Identifiants invalides');
+          window.alert('Identifiants invalides');
         });
       break;
 
