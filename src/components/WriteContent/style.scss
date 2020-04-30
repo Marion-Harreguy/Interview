@@ -236,6 +236,7 @@ input:-webkit-autofill:focus {
   outline: none;
   resize:none;
   height: 55px;
+  width: calc(100% - 50px);
 }
 
 .interview__context {

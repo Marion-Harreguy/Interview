@@ -26,54 +26,54 @@ input:-webkit-autofill:focus {
 }
 /* RECHERCHE */
 
-.search__form__date {
-  margin-top: 13px;
-  width: 100%;
-}
+// .search__form__date {
+//   margin-top: 13px;
+//   width: 100%;
+// }
 
-.date__timeline {
-  height: 30px;
-  position: relative;
-  margin-bottom: 15px;
-}
+// .date__timeline {
+//   height: 30px;
+//   position: relative;
+//   margin-bottom: 15px;
+// }
 
-.timeline__line {
-  position: absolute;
-  top: 3px;
-  height: 2px;
-  border-bottom: 1.5px solid white;
-  width: calc(90% - 3px);
-}
+// .timeline__line {
+//   position: absolute;
+//   top: 3px;
+//   height: 2px;
+//   border-bottom: 1.5px solid white;
+//   width: calc(90% - 3px);
+// }
 
-.timeline__cursor {
-  position: absolute;
-  width: 25px;
-  height: 30px;
-  cursor: grab;
-}
+// .timeline__cursor {
+//   position: absolute;
+//   width: 25px;
+//   height: 30px;
+//   cursor: grab;
+// }
 
-.timeline__cursor__dot {
-  margin-left: 12px;
-  width: 3px;
-  border-radius: 1px;
-  height: 10px;
-  background-color: white;
-}
+// .timeline__cursor__dot {
+//   margin-left: 12px;
+//   width: 3px;
+//   border-radius: 1px;
+//   height: 10px;
+//   background-color: white;
+// }
 
-.timeline__cursor__date {
-  margin-top: 5px;
-}
+// .timeline__cursor__date {
+//   margin-top: 5px;
+// }
 
-.timeline__cursor--end {
-}
+// .timeline__cursor--end {
+// }
 
-.search__form__button--submit {
-  padding: 2px 14px;
-  margin-left: calc(50% - 76px);
-  bottom: 25px;
-  position: absolute;
-  font-size: 1.2em;
-}
+// .search__form__button--submit {
+//   padding: 2px 14px;
+//   margin-left: calc(50% - 76px);
+//   bottom: 25px;
+//   position: absolute;
+//   font-size: 1.2em;
+// }
 
 /* .search__form__button--royalty {
   width: 12px;
@@ -81,19 +81,19 @@ input:-webkit-autofill:focus {
   padding: 0;
 } */
 
-.search__form--overflow {
-  width: 100%;
-  height: calc(100% - 50px);
-  overflow-y: scroll;
-}
+// .search__form--overflow {
+//   width: 100%;
+//   height: calc(100% - 50px);
+//   overflow-y: scroll;
+// }
 
-.search__form__date h4 {
-  font-size: 1.2em;
-}
+// .search__form__date h4 {
+//   font-size: 1.2em;
+// }
 
-.search__form {
-  height:90%;
-}
+// .search__form {
+//   height:90%;
+// }
 
 /* MODE LISTE */
 

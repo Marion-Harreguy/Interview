@@ -104,7 +104,7 @@ const WriteContent = ({
                       {
                         (writeInterview.meta.interviewed.length <= 1 ) ? ( 
                           <span className="interview__initiales interview__initiales--answer">{createInitiales(writeInterview.meta.interviewed[0].firstname+' '+writeInterview.meta.interviewed[0].lastname)}</span>) : (
-                          <select id="interviewed-initiales" className="interview__initiales interview__initiales--answer--select interview__initiales--answer" name="interviewed-initiales" onChange={(event) => chooseInitiales({indexQuestion, indexAnswer, value: event.target.value})}>
+                          <select id="interviewed-initiales" className="interview__initiales interview__initiales--answer--select interview__initiales--answer" name="interviewed-initiales" onChange={(event) => {chooseInitiales({indexQuestion, indexAnswer, value: event.target.value}), writeInterviewPut(interviewId)} } value={answer.interviewed}>
                             {
                             writeInterview.meta.interviewed.map((interviewed) => (
                               <option value={createInitiales(`${interviewed.firstname} ${interviewed.lastname}`)}>{createInitiales(`${interviewed.firstname} ${interviewed.lastname}`)}</option>

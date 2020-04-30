@@ -156,7 +156,7 @@ const UserLibrary = ({
 
                       <div className="home__category home__category--all" >
                         <input className="category-button category-button--all" type="checkbox" onChange={toggleNoTags} id="all-tags" checked={noTags} name='category-all'/>
-                        <label htmlFor="all-tags">Sans catégories</label>
+                        <label htmlFor="all-tags">Sans catégorie</label>
                       </div>
 
                       {
@@ -195,7 +195,7 @@ const UserLibrary = ({
                       </NavLink>
                       )}
                   </h3>
-                  <div className={`section__list section__list--${library[sectionTitle] ? 'open' : 'closed'}`}>
+                  <div className={`section__list section__list--${library[sectionTitle] ? 'open' : 'closed'}`} style={{height : library[sectionTitle] ? 'auto' : 0}}>
 
                     { sectionContent.map((interview) => {
                       // ternaire
