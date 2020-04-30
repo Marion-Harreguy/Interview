@@ -27,7 +27,6 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
       for (let interviewedIndex = 0; interviewedIndex < interviewedList.length; interviewedIndex ++) {
         let currentInitiales = interviewedList[interviewedIndex].querySelector('p').innerHTML.replace('(e)', '').match(/\b\w/g) || [];
         currentInitiales = ((currentInitiales.shift() || '') + (currentInitiales.pop() || '')).toUpperCase();
-        console.log(interviewedList[interviewedIndex].innerHTML);
         if (currentInitiales === content) {
           interviewedList[interviewedIndex].querySelector('p').style.fontFamily = 'Source-SemiBold';
         }

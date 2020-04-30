@@ -6,7 +6,6 @@ const UserLibraryRight = () => {
 
   const toggleSection = (currentTarget) => {
     const toToggle = document.querySelector('.'+currentTarget.parentElement.className.replace('tuto__','instructions--'));
-    console.log(toToggle);
     const isOpen = toToggle.clientHeight > 0;
     if (!isOpen) {
       toToggle.style.height = 'auto';

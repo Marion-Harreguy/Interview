@@ -72,8 +72,6 @@ const userData = (state = initialState, action = {}) => {
       newWrittingDashboard = newWrittingDashboard.filter((interview) => interview.id != action.payload);
       newWrittingDashboard.splice(0, 1);
       const newPublishedDashboard = [ ...state.dashboard.publishedInterviews, { ...publishingInterviewInfos } ];
-      // console.log(newWrittingDashboard);
-      // console.log(newPublishedDashboard);
       return {
         ...state,
         dashboard: {
@@ -88,8 +86,6 @@ const userData = (state = initialState, action = {}) => {
       newUnpublishedDashboard = newUnpublishedDashboard.filter((interview) => interview.id != action.payload);
       newUnpublishedDashboard.splice(0, 1);
       const newUnwrittingDashboard = [ ...state.dashboard.writtingInterviews, { ...unpublishingInterviewInfos } ];
-      // console.log(newWrittingDashboard);
-      // console.log(newPublishedDashboard);
       return {
         ...state,
         dashboard: {
@@ -254,7 +250,6 @@ const userData = (state = initialState, action = {}) => {
           newSavedInterview.splice(alreadySaved, 1);
         }
       }
-      // console.log(new);
       return {
         ...state,
         dashboard: {
@@ -346,7 +341,6 @@ const userData = (state = initialState, action = {}) => {
         },
       };
     case LOG_OUT:
-      console.log("loging out");
       localStorage.clear();
       history.push('/');
       return {

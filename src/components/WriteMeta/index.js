@@ -48,7 +48,6 @@ const WriteMeta = ({
   useEffect(() => {
     setTimeout(() => {
       categories = interviewMeta.isPublished ? dashboard.publishedInterviews.find((interview) => interview.id == interviewId).categories : dashboard.writtingInterviews.find((interview) => interview.id == interviewId).categories;
-      console.log(categories);
         
       for (let indexCategory = 0; indexCategory < categories.length; indexCategory ++){
         if(document.getElementById(categories[indexCategory])) document.getElementById(categories[indexCategory]).checked = true;
@@ -109,7 +108,6 @@ const WriteMeta = ({
         .then((response) => {
           const x = response.data.results[0].locations[0].latLng.lat;
           const y = response.data.results[0].locations[0].latLng.lng;
-          console.log(x, y);
           changeCoordinates([x, y]);
           writeInterviewPut(interviewId);
         },
@@ -130,7 +128,6 @@ const WriteMeta = ({
   const turnStringToTable = (tagString) => {
     if (tagString.length > 0 && tagString.includes(' ')) {
       const tagTable = tagString.split(' ');
-      console.log(tagTable);
       return tagTable;
     }
     return [tagString];
@@ -215,7 +212,6 @@ const WriteMeta = ({
   const blankInterviewed = () => {
     // Add interviewed button click
     // If there is interviewed created alreade
-    console.log('blank interview was called');
     if (interviewMeta.interviewed[0].firstname === 'Anonyme') {
       changeInterviewed({ target: {name: 'firstname', value: '' }, index: 0 });
       changeInterviewed({ target: {name: 'lastname', value: '' }, index: 0 });
@@ -244,10 +240,9 @@ const WriteMeta = ({
 
   // const addInterviewedCheck = () => {
   //   if (interviewMeta.interviewed[0].firstname !== 'Anonyme') {
-  //     console.log("New interviewed");
   //     addInterviewed();
   //   }
-  //   else console.log("Changing from anonymous");
+  //   else
   // };
 
   return (

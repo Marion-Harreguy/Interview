@@ -9,7 +9,6 @@ const ResultsTimeline = ({ resultList }) => {
     let resultByYear = {};
     resultList.map((interview) => {
       const yearOnly = Number(interview.date.substring(0, 4));
-      console.log(yearOnly);
       if (resultByYear[yearOnly]) resultByYear[yearOnly].push(interview);
       else resultByYear[yearOnly] = [interview];
     });

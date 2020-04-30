@@ -204,7 +204,6 @@ const readInterview = (state = initialState, action = {}) => {
         }];
       }
       else newInterviewedDelete = state.meta.interviewed.filter((interviewed, index) => index !== action.payload);
-      console.log(newInterviewedDelete);
       return {
         ...state,
         meta: {
@@ -368,7 +367,6 @@ const readInterview = (state = initialState, action = {}) => {
         },
       };
     case LOAD_WRITE_INTERVIEW:
-      console.log(action.payload);
       return {
         ...state,
         ...action.payload,
@@ -383,7 +381,6 @@ const readInterview = (state = initialState, action = {}) => {
       };
 
     case FILL_AUTHOR:
-      console.log(initialState);
       return {
         ...initialState,
         meta: {

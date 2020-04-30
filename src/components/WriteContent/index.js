@@ -29,7 +29,6 @@ const WriteContent = ({
 
       setTimeout(() => {
         const allTextAreas = document.querySelectorAll('textarea');
-        console.log(allTextAreas);
         for (let indexTA = 0; indexTA < allTextAreas.length; indexTA ++ ) {
           fitSize(allTextAreas[indexTA]);
         }
@@ -65,7 +64,6 @@ const WriteContent = ({
   const lastAnswerFocus = () => {
     setTimeout(() => {
       const inputList = document.querySelectorAll('.answer__content');
-      console.log(inputList);
       inputList[(inputList.length-1)].focus();
     }, 10);
   };
@@ -73,7 +71,6 @@ const WriteContent = ({
   const lastQuestionFocus = () => {
     setTimeout(() => {
       const inputList = document.querySelectorAll('.question__content');
-      console.log(inputList);
       inputList[(inputList.length-1)].focus();
     }, 10);
   };

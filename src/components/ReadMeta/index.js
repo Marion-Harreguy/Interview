@@ -15,7 +15,6 @@ const ReadMeta = ({
   // Generate & download a PDF
   const downloadInterview = () => {
     // Here Baptist will get the data and make his code
-    console.log("downloading the interview");
   };
 
   const createInitiales = (name) => {
@@ -81,7 +80,6 @@ const ReadMeta = ({
     // Remove the first value (which might leave an empty array)
     categories.splice(0, 1);
     setCategoryList(categories);
-    console.log(categories);
   };
 
   // Save interview in user library
@@ -90,7 +88,6 @@ const ReadMeta = ({
     // + article was not saved
     // open category selection
     const isItSavedThis = isItSaved(interviewMeta.id);
-    console.log(isItSavedThis);
     if (document.querySelector('.read__categories').style.display !== 'block' && isItSavedThis !== 'saved') {
       document.querySelector('.read__categories').style.display = 'block';
       document.querySelector('.tools__save').style.backgroundImage = "url(/a41f8aa1665f78a62484651e8d8671eb.png)";

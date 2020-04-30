@@ -86,7 +86,6 @@ export default (store) => (next) => (action) => {
       })
         .then(() => {
           // user is connected and his localstorage token works
-          console.log(action.type + ": success !");
           store.dispatch(automaticLogOk(action.payload));
         })
         .catch((error) => {
@@ -110,7 +109,6 @@ export default (store) => (next) => (action) => {
             username: store.getState().newUser.user.email,
             password: store.getState().newUser.user.password,
           };
-          console.log(userConnect);
           axios({
             url: 'http://184.73.143.2/api/login_check',
             method: 'post',
@@ -141,11 +139,9 @@ export default (store) => (next) => (action) => {
 
     case FORGOTTEN_PASSWORD_SUBMIT:
       // TODO : Make ajax request
-      console.log("L'utilisateur "+email+" a oublié son mot de passe");
       break;
 
     case LOGIN_SUBMIT:
-      console.log(userConnect);
       axios({
         url: 'http://184.73.143.2/api/login_check',
         method: 'post',
@@ -157,7 +153,6 @@ export default (store) => (next) => (action) => {
         .then((response) => {
           const decodedToken = jwtDecode(response.data.token);
 
-          console.log(action.type + ": success !");
           const userLogs = {
             id: decodedToken.id,
             token: response.data.token,
@@ -172,7 +167,6 @@ export default (store) => (next) => (action) => {
       break;
 
     case UPDATE_USER_PUT:
-      console.log(userInfo.dashboard);
       axios({
         url: `http://184.73.143.2/api/users/${userId()}`,
         method: 'put',
@@ -182,7 +176,6 @@ export default (store) => (next) => (action) => {
         data: JSON.stringify(userInfo),
       })
         .then((response) => {
-          console.log(action.type + ": success !");
           store.dispatch(updateUserState(response.data));
         })
         .catch((error) => {
@@ -199,7 +192,6 @@ export default (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.log(action.type + ": success !");
           store.dispatch(updateUserState(response.data));
           if (store.getState().userData.library.categoryDisplay.length === 0) {
             store.dispatch(createCategoryDisplay());
@@ -219,8 +211,6 @@ export default (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.log(action.type + ": success !");
-          console.log(response.data);
           if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
           if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
         })
@@ -236,7 +226,6 @@ export default (store) => (next) => (action) => {
       break;
 
     case WRITE_INTERVIEW_PUT:
-      console.log(interviewInfo());
       axios({
         url: `http://184.73.143.2/api/interviews/${action.payload}`,
         method: 'put',
@@ -246,7 +235,6 @@ export default (store) => (next) => (action) => {
         data: JSON.stringify(interviewInfo()),
       })
         .then(() => {
-          console.log(action.type + ": success !");
           store.dispatch(interviewGet({interviewId : action.payload, reducer: 'write'}));
         })
         .catch((error) => {
@@ -263,7 +251,6 @@ export default (store) => (next) => (action) => {
         },
       })
         .then(() => {
-          console.log(action.type + ": success !");
           store.dispatch(deleteInterview(action.payload));
           history.push('/');
         })
@@ -273,7 +260,6 @@ export default (store) => (next) => (action) => {
       break;
 
     case WRITE_INTERVIEW_CREATE:
-      console.log(interviewInfo());
       axios({
         url: 'http://184.73.143.2/api/interviews/',
         method: 'post',
@@ -283,7 +269,6 @@ export default (store) => (next) => (action) => {
         data: JSON.stringify(interviewInfo()),
       })
         .then((response) => {
-          console.log(action.type + ": success !");
           store.dispatch(loadId(response.data));
           history.push(`/update/${response.data.id}`);
         })
@@ -307,9 +292,7 @@ export default (store) => (next) => (action) => {
         data: JSON.stringify(newUser),
       })
         .then((response) => {
-          console.log(action.type + ": success !");
           store.dispatch(uploadResults(response.data));
-          console.log(response.data);
         })
         .catch((error) => {
           // window.alert(errorMessages[error.response.status]);
