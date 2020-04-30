@@ -28,6 +28,7 @@ import {
   uploadResults,
   interviewGet,
   loadId,
+  checkUserDashboard,
 } from '../actions';
 import { render } from 'enzyme';
 
@@ -90,7 +91,8 @@ export default (store) => (next) => (action) => {
         })
         .catch((error) => {
           // window.alert(errorMessages[error.response.status]);
-          store.dispatch(logOut());
+          localStorage.clear();
+          // store.dispatch(logOut());
           history.push('/');
         });
       break;
@@ -212,12 +214,16 @@ export default (store) => (next) => (action) => {
       })
         .then((response) => {
           if (action.payload.reducer === 'read') store.dispatch(loadReadInterview(response.data));
-          if (action.payload.reducer === 'write') store.dispatch(loadWriteInterview(response.data));
+          if (action.payload.reducer === 'write') {
+            store.dispatch(checkUserDashboard({ id: action.payload.interviewId, title: response.data.meta.title }));
+            store.dispatch(loadWriteInterview(response.data));
+          }
         })
         .catch((error) => {
           // window.alert(errorMessages[error.response.status]);
           if (action.payload.reducer === 'write' && error.response.status === 403) {
             history.push(`/update/${action.payload.interviewId}`);
+            // store.dispatch(checkUserDashboard({ id: action.payload.interviewId, title: response.data.meta.title }));
           }
           if (error.response.status === 404) {
             history.push('/404');

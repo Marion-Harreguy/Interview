@@ -14,7 +14,7 @@ const Contact = () => {
       <button type="button" className="contact__close" onClick={() => toggleClosed()} label="Fermer" />
       <div className="contact col-12 col-lg-4 col-xl-4">
       <h4>Notre équipe</h4>
-        <p>La plateforme Inter.view a été développée dans le cadre de la formation O'clock par Marion Harreguy, Arnaud Ola, Gaël Glotin et Laura Piccolo.</p>
+        <p>La plateforme Inter.view a été développée dans le cadre de la formation O'clock par Marion Harreguy, Arnaud Oltra, Gaël Glotin et Laura Piccolo.</p>
         <a href="mailto:hello.laurapiccolo@gmail.com">Contactez-nous ici !</a>
       </div>
       <div className="legal__mentions col-12 col-lg-8 col-xl-8">

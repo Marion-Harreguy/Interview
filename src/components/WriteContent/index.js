@@ -19,6 +19,7 @@ const WriteContent = ({
   dataUser,
   dataStructure,
   chooseInitiales,
+  checkUserBoard,
 }) => {
 
   // If the interview is new, create a new one in API
@@ -26,6 +27,7 @@ const WriteContent = ({
   useEffect(() => {
     if (interviewId) {
       interviewGet({ interviewId, reducer: 'write' });
+      //checkUserDashboard(interviewId);
 
       setTimeout(() => {
         const allTextAreas = document.querySelectorAll('textarea');

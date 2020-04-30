@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-const */
-import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW, DELETE_CATEGORY, MODIFY_USER_STRUCTURE, UNPUBLISH_INTERVIEW } from '../actions';
+import { LOG_OUT, CHANGE_ORDER, TOGGLE_SECTION, TOGGLE_CATEGORY, ADD_CATEGORY_CHANGE, ADD_CATEGORY_SUBMIT, CHANGE_FORM_DISABLED, SAVE_INTERVIEW, ADD_WRITTING_INTERVIEW, CHANGE_INTERVIEW_CATEGORIES, UPDATE_USER_STATE, NEW_USER_SUCCESS, CREATE_CATEGORY_DISPLAY, AUTOMATIC_LOG_OK, DELETE_INTERVIEW, MODIFY_USER_INFO, PUBLISH_INTERVIEW, DELETE_CATEGORY, MODIFY_USER_STRUCTURE, UNPUBLISH_INTERVIEW, CHECK_USER_DASHBOARD } from '../actions';
 import history from '../history';
 
 export const initialState = {
@@ -68,6 +68,7 @@ const userData = (state = initialState, action = {}) => {
   switch (action.type) {
     case PUBLISH_INTERVIEW:
       const publishingInterviewInfos = state.dashboard.writtingInterviews.find((interview) => interview.id == action.payload);
+      //console.log(publishingInterviewInfos);
       let newWrittingDashboard = [ {id:0}, ...state.dashboard.writtingInterviews];
       newWrittingDashboard = newWrittingDashboard.filter((interview) => interview.id != action.payload);
       newWrittingDashboard.splice(0, 1);
@@ -78,6 +79,21 @@ const userData = (state = initialState, action = {}) => {
           ...state.dashboard,
           writtingInterviews: [ ...newWrittingDashboard ],
           publishedInterviews: [ ...newPublishedDashboard ],
+        },
+      };
+    case CHECK_USER_DASHBOARD:
+      const isThereWrite = state.dashboard.writtingInterviews.find((interview) => Number(interview.id) === Number(action.payload.id));
+      const isTherePublished = state.dashboard.publishedInterviews.find((interview) => Number(interview.id) === Number(action.payload.id));
+      let newWrittingInterviewss = [...state.dashboard.writtingInterviews];
+      if (!isThereWrite && !isTherePublished) {
+        const newWrittingInterview = { id: action.payload.id, title: action.payload.title, categories: [] };
+        newWrittingInterviewss.push(newWrittingInterview);
+      }
+      return {
+        ...state,
+        dashboard: {
+          ...state.dashboard,
+          writtingInterviews: [ ...newWrittingInterviewss ],
         },
       };
     case UNPUBLISH_INTERVIEW:

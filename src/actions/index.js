@@ -57,6 +57,7 @@ export const FILL_AUTHOR = 'FILL_AUTHOR';
 export const CHANGE_COORDINATES = 'CHANGE_COORDINATES';
 export const CHOOSE_INITIALES = 'CHOOSE_INITIALES';
 export const DELETE_INTERVIEWED = 'DELETE_INTERVIEWED';
+export const CHECK_USER_DASHBOARD = 'CHECK_USER_DASHBOARD';
 
 // AJAX REQUESTS
 export const UPDATE_USER_PUT = 'UPDATE_USER_PUT';
@@ -288,6 +289,11 @@ export const chooseInitiales = (payload) => ({
 
 export const deleteInterviewed = (payload) => ({
   type: DELETE_INTERVIEWED,
+  payload,
+});
+
+export const checkUserDashboard = (payload) => ({
+  type: CHECK_USER_DASHBOARD,
   payload,
 });
 
