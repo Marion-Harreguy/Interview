@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import './style.scss';
 import $ from 'jquery';
 import bookmarkEmpty from '../../assets/icons/bookmark.png';
-import bookmarkSave from '../../assets/icons/bookmark-on.png';
-import bookmarkOn from '../../assets/icons/bookmark-save.png';
+import bookmarkSave from '../../assets/icons/bookmark-save.png';
+import bookmarkOn from '../../assets/icons/bookmark-on.png';
 
 const ReadMeta = ({
   interviewMeta,

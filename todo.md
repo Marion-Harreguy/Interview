@@ -3,8 +3,8 @@ Régler les bugs :
 — Détail : + pour créer un entretien dans UserCategory va dans entretiens au publié pdt 1 scd quand on ajoute ou suppr des catégories
 
 Pb :
-— Petites icones bookmark disparaissent ok?
-— Sections s'ouvrent au deuxième clic
+— Petites icones bookmark disparaissent
+— Sections s'ouvrent au deuxième clic ??
 — 404 au read : ajouter htaccess
 
 JEUDI:
@@ -15,6 +15,6 @@ JEUDI:
 
 Pour la démo :
 — Masquer input recherche pas fonctionnels
-— Messages inscription et connexion
+— Messages inscription et connexion -> Si connexion pas ok ?
 — Ajouter fausses interviews
 
