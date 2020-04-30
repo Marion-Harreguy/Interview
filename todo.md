@@ -4,13 +4,13 @@ Régler les bugs :
 
 Pb :
 — Petites icones bookmark disparaissent
-— Sections s'ouvrent au deuxième clic ??
+— Sections s'ouvrent au deuxième clic ?? [pas pour moi(gael)]
 — Initiales envoyées en BDD pour les interviews©
 — Timeline moteur curseur décalé
 
 JEUDI:
-— Mise en ligne
-— Commenter et cleaner le code
+— Mise en ligne => [ok, check d'un helper a 14h]
+— Commenter et cleaner le code => [console.log retiré, manque les commentaires]
 — CSS pour les autres navigateurs : gérer les input
 
 Pour la démo :
