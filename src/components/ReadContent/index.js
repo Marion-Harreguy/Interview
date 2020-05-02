@@ -47,7 +47,7 @@ const ReadContent = ({ interview, interviewId, interviewGet }) => {
 
       { // Mapping on each questions
       interviewContent.map((set, index) => (
-        <div key={`question-${index}`}>
+        <div key={`question-${index}`} className="interview__set">
           <div className="interview__question">
             <span className="interview__initiales interview__initiales--question" onMouseOver={(event) => highlightPerson({ person: 'author', content: event.target.innerHTML})} onMouseOut={unhighlight}>{authorInitiales}</span>
             <p className="question__content">

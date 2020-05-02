@@ -8,15 +8,25 @@ const ResultSelected = ({ interview }) => (
       <div className="result-interview__meta-list">
         <h5 className="result-interview__meta result-interview__meta--title">{interview.title}</h5>
         <p className="result-interview__meta result-interview__meta--date">{interview.date}</p>
-        <p className="result-interview__meta result-interview__meta--place">{interview.city}</p>
+        <p className="result-interview__meta result-interview__meta--place">{interview.location}</p>
         <p className="result-interview__meta result-interview__meta--language">{interview.language}</p>
         <p className="result-interview__meta result-interview__meta--author">{`${interview.author.firstname} ${interview.author.lastname}`}</p>
 
-        { interview.interviewed.map((interviewed) => (
-          <p key={`question-${interviewed.id}`} className="result-interview__meta result-interview__meta--interviewed">{`${interviewed.firstname} ${interviewed.lastname}`}</p>
-        ))}
-
-        <p className="result-interview__meta result-interview__meta--structure">{interview.interviewed[0].structure.name}</p>
+        { interview.interviewed.map((interviewed) => {
+          if (interviewed.firstname === 'Anonyme') {
+            return (
+              <p key={`question-${interviewed.id}`} className="result-interview__meta result-interview__meta--interviewed">{interviewed.firstname}</p>
+            )
+          }
+          else {
+            return (
+            <div style={{display: 'inline-block'}}>
+              <p key={`question-${interviewed.id}`} className="result-interview__meta result-interview__meta--interviewed">{`${interviewed.firstname} ${interviewed.lastname}`}</p>
+              <p className="result-interview__meta result-interview__meta--structure">{interviewed.structure.name}</p>
+            </div>
+            );
+          }
+        })}
       </div>
       <div className="result-interview__tag-list">
         { interview.tags.map((tag) => (

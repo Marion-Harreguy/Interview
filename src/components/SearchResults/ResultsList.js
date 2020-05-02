@@ -18,12 +18,21 @@ const ResultsList = ({ resultList }) => (
             <p className="result-interview__meta result-interview__meta--language">{interview.language}</p>
             <p className="result-interview__meta result-interview__meta--author">{`${interview.author.firstname} ${interview.author.lastname}`}</p>
             {
-              interview.interviewed.map((interviewed) => (
-                <div key={interviewed.id}>
-                  <p className="result-interview__meta result-interview__meta--interviewed">{`${interviewed.firstname} ${interviewed.lastname}`}</p>
-                  <p className="result-interview__meta result-interview__meta--structure">{interviewed.structure.name}</p>
-                </div>
-              ))
+              interview.interviewed.map((interviewed) => {
+                if (interviewed.firstname !== 'Anonyme') {
+                  return (
+                    <div key={interviewed.id}>
+                      <p className="result-interview__meta result-interview__meta--interviewed">{`${interviewed.firstname} ${interviewed.lastname}`}</p>
+                      <p className="result-interview__meta result-interview__meta--structure">{interviewed.structure.name}</p>
+                    </div>
+                  );
+                }
+                else {
+                  return (
+                      <p className="result-interview__meta result-interview__meta--interviewed">{interviewed.firstname}</p>
+                  );
+                }
+            })
             }
           </div>
           <div className="result-interview__tag-list">

@@ -17,12 +17,12 @@ const Introduction = () => (
     <div className="presentation__img"><img alt="Mode chronologique" src={PictureC} /></div>
     <div className="presentation__img"><img alt="Mode carte" src={PictureA} /></div>
 
-    <p className="presentation__content">&bull; Liste par ordre alphabétique</p>
-    <p className="presentation__content">&bull; Frise chronologique</p>
-    <p className="presentation__content">&bull; Cartographie</p>
+    <p className="presentation__content presentation__content--modes">Liste par ordre alphabétique</p>
+    <p className="presentation__content presentation__content--modes">Frise chronologique</p>
+    <p className="presentation__content presentation__content--modes">Cartographie</p>
 
     <p className="presentation__content">Enregistrez les représentations générées afin d'enrichir votre travail.</p>
-    <p className="presentation__content">Publier vos propres entretiens, et faites-en faire profiter vos pairs.</p>
+    <p className="presentation__content">Publier vos propres entretiens, et faites-en profiter vos pairs.</p>
   </div>
 );
 

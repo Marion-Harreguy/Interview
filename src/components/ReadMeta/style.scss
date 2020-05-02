@@ -48,7 +48,7 @@ input:-webkit-autofill:focus {
   margin-bottom: 0px;
 }
 
-.interview__data span {
+.interview__data--author span, .interview__data--interviewed span {
   cursor: pointer;
 }
 
@@ -172,16 +172,6 @@ input:-webkit-autofill:focus {
   height: fit-content;
 }
 
-.read__tags {
-  padding: 1px 8px 1px 8px;
-  border-radius: 15px;
-  border: solid 0.5px grey;
-  display: inline-block;
-  color: grey;
-  font-size: 0.8em;
-  cursor: default;
-}
-
 .tools__quote {
   background-image: url('./../../assets/icons/quote.png');
   background-size: contain;
@@ -192,7 +182,7 @@ input:-webkit-autofill:focus {
   display: none;
   position: absolute;
   border: solid 1px white;
-  width: 81%;
+  width: calc(100% - 75px);
   padding: 20px;
   background-color: #414a52;
   border-radius: 15px;
@@ -230,4 +220,19 @@ input:-webkit-autofill:focus {
 .read__tools button:hover {
   opacity: 1;
 }
+
+.interview__content .interview__set:last-child {
+  padding-bottom: 30px;
+ }
+
+ .read__tags {
+  padding: 1px 8px 1px 8px;
+  border-radius: 15px;
+  border: solid 0.5px grey;
+  display: inline-block;
+  color: grey;
+  font-size: 0.8em;
+  cursor: default;
+}
+
 

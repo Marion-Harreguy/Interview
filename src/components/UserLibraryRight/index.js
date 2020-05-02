@@ -21,7 +21,7 @@ const UserLibraryRight = () => {
     <h2>Guide de la plateforme</h2>
     <div className="tuto__scroll">
       <div className="tuto__perso">
-        <h3 onClick={(event) => toggleSection(event.currentTarget)}> Espace perso</h3>
+        <h3 onClick={(event) => toggleSection(event.currentTarget)}>Espace perso</h3>
         <div className="instructions instructions--perso">
         <p><span className="tuto__pencil" />Modifiez votre profil</p>
         <p><span className="tuto__plus tuto__round" />Commencez un nouvel entretien (seulement disponible sur les écrans larges)</p>
@@ -56,13 +56,13 @@ const UserLibraryRight = () => {
         </div>
       </div>
       <div className="tuto__search">
-        <h3 onClick={(event) => toggleSection(event.currentTarget)}>Espace Recherche</h3>
+        <h3 onClick={(event) => toggleSection(event.currentTarget)}>Espace recherche</h3>
         <div className="instructions instructions--search">
         <p>Entrez autant de critères que vous le souhaitez dans le moteur de recherche et visualisez les résultats selon trois modes.
         </p>
-          <p className="tuto__mode__p"><span className="tuto__list tuto__round tuto__mode" />Liste: par ordre alphabétique des titres.</p>
-          <p className="tuto__mode__p"><span className="tuto__planet tuto__round tuto__mode"/>Cartographie: lieux du déroulement des entretiens, ou des structure liées aux entretiens</p>
-          <p className="tuto__mode__p"><span className="tuto__clock tuto__round tuto__mode"/>Chronologie: dates du déroulement des entretiens</p>
+          <p className="tuto__mode__p"><span className="tuto__list tuto__round tuto__mode" />Liste : par ordre alphabétique des titres.</p>
+          <p className="tuto__mode__p"><span className="tuto__planet tuto__round tuto__mode"/>Cartographie : lieux du déroulement des entretiens, ou des structure liées aux entretiens</p>
+          <p className="tuto__mode__p"><span className="tuto__clock tuto__round tuto__mode"/>Chronologie : dates du déroulement des entretiens</p>
           {/* <span className="tuto__bookmark-save"/>Enregistrez une recherche pour la relancer à tout moment depuis votre bibliothèque. */}
           </div>
       </div> 

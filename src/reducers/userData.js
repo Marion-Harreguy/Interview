@@ -246,25 +246,13 @@ const userData = (state = initialState, action = {}) => {
         },
       };
     case SAVE_INTERVIEW:
-      let alreadySaved = false;
-      let newSavedInterview = state.dashboard.savedInterviews.map((interview, index) => {
-        if (interview.id !== action.payload.id) return interview;
-        else alreadySaved = index;
-      });
-      if(state.dashboard.savedInterviews.length === 1) {
-        newSavedInterview = [];
-      }
-      else {
-        if (!alreadySaved) {
-          newSavedInterview.push({
-            id: action.payload.id,
-            name: action.payload.name,
-            categories: [...action.payload.categoryList],
-          });
-        }
-        else {
-          newSavedInterview.splice(alreadySaved, 1);
-        }
+      let newSavedInterview = state.dashboard.savedInterviews.filter((interview) => interview.id !== action.payload.id);
+      if (newSavedInterview.length === state.dashboard.savedInterviews.length) {
+        newSavedInterview.push({
+          id: action.payload.id,
+          name: action.payload.name,
+          categories: [...action.payload.categoryList],
+        });
       }
       return {
         ...state,

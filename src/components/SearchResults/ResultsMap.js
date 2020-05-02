@@ -59,6 +59,22 @@ const ResultsMap = ({ resultList }) => {
       const feature = map.getFeaturesAtPixel(event.pixel)[0];
       if (feature) {
         setChosenInterview({...resultList.find((interview) => interview.coordinates[0] === feature.getGeometry().getCoordinates()[1] && interview.coordinates[1] === feature.getGeometry().getCoordinates()[0])});
+        for (let featureIndex = 0; featureIndex < featuresList.length; featureIndex ++) {
+          featuresList[featureIndex].setStyle(new Style({
+            image: new Circle({
+              radius: 8,
+              stroke: new Stroke({ color: "#bf4b4c", width: 1.5 }),
+              fill: new Fill({ color: "white" }),
+            }),
+          }));
+        }
+        feature.setStyle(new Style({
+          image: new Circle({
+            radius: 8,
+            stroke: new Stroke({ color: "#bf4b4c", width: 1.5 }),
+            fill: new Fill({ color: "#bf4b4c" }),
+          }),
+        }));
       }
     });
 

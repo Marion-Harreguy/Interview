@@ -26,9 +26,17 @@ input:-webkit-autofill:focus {
 }
 
 .presentation__content {
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
+  margin-top: 0.4rem;
   line-height: 1.5rem;
+}
+
+.presentation__content--modes {
+  width: 33%;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: -3px;
+  margin-bottom: 20px;
 }
 
 .right__presentation {
@@ -42,7 +50,7 @@ input:-webkit-autofill:focus {
 }
 
 .presentation__title {
-  text-align: center;
+  text-align: left;
   font-size: 1.5em;
   margin-bottom: 20px;
 }

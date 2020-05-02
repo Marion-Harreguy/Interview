@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ResultSelected from './ResultSelected';
+import $ from 'jquery';
 
 const ResultsTimeline = ({ resultList }) => {
 
@@ -33,6 +34,11 @@ const ResultsTimeline = ({ resultList }) => {
     return (Number(interviewYear.substring(0, 4))-1990)/(currentYear()-1990)*100 + "%";
   };
 
+  const selectDot = (target) => {
+    $('.map__group__dot').attr('class', 'map__group__dot');
+    target.className = 'map__group__dot map__group__dot--selected';
+  };
+
   return (
 
     <div className="research__results research__results--timeline">
@@ -57,7 +63,7 @@ const ResultsTimeline = ({ resultList }) => {
               <div className="map__group__dot-list">
                 {
                 year[1].map((interview) => (
-                  <div className="map__group__dot" onClick={() => displayInterview(interview.id)} key={interview.id}/>
+                  <div className="map__group__dot" onClick={(event) => {selectDot(event.target), displayInterview(interview.id)}} key={interview.id}/>
                 ))}
               </div>
             </div>
