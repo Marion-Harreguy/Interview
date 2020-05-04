@@ -182,11 +182,12 @@ input:-webkit-autofill:focus {
   display: none;
   position: absolute;
   border: solid 1px white;
-  width: calc(100% - 75px);
+  width: calc(100% - 70px);
   padding: 20px;
   background-color: #414a52;
   border-radius: 15px;
   text-align:left;
+  z-index: 2;
 }
 
 .read__quote-menu textarea, .right textarea:-internal-autofill-selected, .right textarea:-webkit-autofill, .right textarea:-webkit-autofill:focus, .right textarea:-webkit-autofill:hover, .right textarea:active, .right textarea:focus {

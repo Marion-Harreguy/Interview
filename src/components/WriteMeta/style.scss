@@ -29,8 +29,8 @@ input:-webkit-autofill:focus {
   -webkit-text-fill-color: white!important;
   font-size: 1em;
 }
-.interview__add {
-  margin-left: 45px;
+.interview__content--write .interview__add {
+  margin-left: 50px;
 }
 
 .interview__content--write::-webkit-scrollbar {
@@ -172,11 +172,12 @@ input:-webkit-autofill:focus {
     display: none;
     position: absolute;
     border: solid 1px white;
-    width: calc(100% - 75px);
+    width: calc(100% - 70px);
     padding: 20px;
     background-color: #414a52;
     border-radius: 15px;
     text-align: right;
+    z-index: 2;
   }
 
 .write__delete-menu p,  .write__publish-menu p, .write__unpublish-menu p {
@@ -238,6 +239,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-top: 20px;
   border-radius: 0 !important;
   vertical-align: top;
+  z-index: 1;
 }
 
 .write__tools button, .write__tools button:focus, .write__tools button:active, .write__tools button:hover {
