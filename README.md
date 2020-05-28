@@ -2,78 +2,52 @@
 
 Inter.view est une plateforme en ligne servant à la fois à la retranscription et à la mutualisation des entretiens. L’idée est de donner un accès plus large aux entretiens menés dans la recherche, qui restent la plupart du temps dans les ordinateurs personnels des chercheurs, alors qu’ils pourraient constituer une riche source de connaissances et de données pour le reste de la communauté.
 
-[Démo](http://workshops-passerelles.fr/videos/inter-view.mp4)
+# Démo live
+[Inter.view](https://www.youtube.com/watch?v=g8Z467sAvUE)
 
-## Team & Rôles
+# Team & Rôles
 
-### Product Owner -> Laura Piccolo (React)
-
-- sera généralement le développeur à l'origine du projet
-
-- donne son avis sur la priorité des tâches lors des sprints plannings
-
-- s'assure que le projet réalisé reste cohérent avec l'objectif
-
-### Scrum Master -> Marion Harreguy (Symfony)
-
-- animer les stand-up meeting et les réunions ainsi que la bonne communication de l'équipe
-
-- s'assure que chaque tâche est bien effectuée et répartie pour tout le monde
-
-- utilise un outil pour gérer les tâches du projet (Trello par exemple)
-
-### Lead developer front -> Gaël Glotin (React)
-
-### Lead developer back -> Arnaud Oltra (Symfony)
-
-- supervise la partie "front" et “back” du développement
-
-- effectue les choix techniques sur la partie "front" et “back” si nécessaire
-
-- gérer les codes reviews
-
-- référent des librairies utilisées
-
-- référent technique qui s'occupe de documenter son domaine
-
-### Git master et référents techniques -> Arnaud Oltra (Symfony) + la team !
-
-- maîtriser l'outil Git
+| Role | Personne | Spécialité |
+|--|--| -- |
+|Product Owner  | Laura Piccolo | React |
+|Scrum Master | Marion Harreguy| Symfony |
+|Lead developer front|Gaël Glotin| React |
+|Lead developer back|Arnaud Oltra |Symfony|
 
 # Repôt Github
 
 [https://github.com/O-clock-Asgard/projet-interview](https://github.com/O-clock-Asgard/projet-interview)
 
-# Liste des tâches
 
-[Carnet de bord](https://docs.google.com/spreadsheets/d/1MTR6vezimNlrmLM_G3sqDUa5UczjbbWrjkDWS7ioAiE/edit#gid=250267684)
+# Durée
 
-# Trello
+- 4 sprints d'1 semaine : 
+    - cahier des charges, carnets de bord équipe & perso, Trello, wireframes, dictionnaire de données, MCD, MLD, veille technologique
+    - code, recettages
+    - présentation live sur Twitch
+- méthode Agile
 
-tableau
+# Fonctionnalités principales
 
-[https://trello.com/b/VAP7diq3/interview](https://trello.com/b/VAP7diq3/interview)
+**Profil Anonyme** 
 
-invitation
+Le visiteur a accès à la page de présentation d'Inter.View. Il a la possibilité de s'inscrire (s'il est "anonyme") ou de se connecter pour accéder à la plateforme et à son espace perso.
 
-[https://trello.com/invite/b/VAP7diq3/18b205c1990c5ac3c2a186a424903091/interview](https://trello.com/invite/b/VAP7diq3/18b205c1990c5ac3c2a186a424903091/interview)
+**Profil Utilisateur** 
 
-# Carnet de bord TEAM
+- Espace perso
+    - informations relatives à l’utilisateur
+    - bibliothèque centralisant les entretiens publiés / en cours d’édition / enregistrés avec un classement de type "catégories" propres à chaque utilisateur
 
-[Carnet de bord](https://docs.google.com/spreadsheets/d/1MTR6vezimNlrmLM_G3sqDUa5UczjbbWrjkDWS7ioAiE/edit#gid=250267684)
+- Espace écriture
+    - Rédaction d’un entretien via un formulaire de données avec champs obligatoires
+    - Edition d’un entretien via un formulaire
+    - Suppression d’un entretien
 
-# Issues
+- Espace lecture
+    - Lire et enregistrer l'entretien pour l'ajouter à la bibliothèque de l'utilisateur
+    - Possibilité de télécharger l'entretien en format PDF avec le critère "libre de droit"
 
-[https://github.com/O-clock-Asgard/Projects/blob/master/.github/ISSUE_TEMPLATE/demande-d-aide---bug.md](https://github.com/O-clock-Asgard/Projects/blob/master/.github/ISSUE_TEMPLATE/demande-d-aide---bug.md)
-
-  
-
-# Draw
-
-  
-
-Arborescence du site
-
-[https://app.diagrams.net/#G1URjw552I0TT5GXFzn9vkBASEI-bVeWvJ](https://app.diagrams.net/#G1URjw552I0TT5GXFzn9vkBASEI-bVeWvJ)
- 
-
+- Espace recherche
+    - Moteur de recherche selon 3 modes de critères :
+    Liste / Frise chronologique (timeline) / Cartographie (map)
